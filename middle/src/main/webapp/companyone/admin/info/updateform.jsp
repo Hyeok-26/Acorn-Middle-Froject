@@ -1,32 +1,10 @@
-<%@page import="test.dao.UsingDao"%>
-<%@page import="test.dao.Com1EmpDao"%>
-<%@page import="test.dao.Com1CeoDao"%>
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-	//점장이 로그인한 상태로 개인정보 조회
-	//필요한 정보 : 사원번호, 비밀번호, 이름,  이메일 , 전화번호, 소속회사, 소속지점
-	int empno = (int)session.getAttribute("empno");
-	//비밀번호는 비밀번호 수정 페이지에서...
-	//이름 뽑아오기
-	String ename = (String)session.getAttribute("ename");
-	
-	// DB에서 점장정보 뽑아오기
-	Com1EmpDao dao=Com1EmpDao.getInstance();
-	//dao로 로그인한 사원번호에 해당하는 사람의 정보 가져오기
-	Com1EmpDto dto=dao.getData(empno);
-	session.setAttribute("dto", dto);
-		
-	//소속회사의 정보는 comid를 통해서 test_using_app에서 comname를 뽑아야 한다.
-	//로그인한 점장의 comId 가져오기
-	int comid=dto.getComId();
-	//로그인한 점장의 회사이름 뽑기
-	UsingDao dao_using=UsingDao.getInstance();
-	String comname=dao_using.getComName(comid);
-	
-	session.setAttribute("comname", comname);
+	Com1EmpDto dto = (Com1EmpDto)session.getAttribute("dto");
+	String comname = (String) session.getAttribute("comname");
 	
 %>
 <!DOCTYPE html>
@@ -65,10 +43,11 @@
         border-bottom: none; /* 마지막 줄 구분선 제거 */
     }
     
-    .btn{
+    #modify{
     	background-color: #28A745;
     	border-color: #28A745;
     }
+   
    
 </style>
 </head>
@@ -78,8 +57,9 @@
 			<jsp:param value="index" name="current" />
 		</jsp:include>
 		<div class="container">
-			<h1 class="mb-2">회원정보조회 페이지</h1>
-			<div class="tbl_row_wrap">
+			<h1 class="mb-4">회원정보수정 페이지</h1>
+			<form action="${pageContext.request.contextPath}/admin_rae/update.jsp" method="post" id="updateform">
+				<div class="tbl_row_wrap">
 				<table class="tbl_row">
 					<colgroup>
 						<col style="width:264px;">
@@ -87,61 +67,63 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<th scope="row">회사Id</th>
-							<td><%=dto.getComId() %></td>
+							<th scope="row">화사ID</th>
+							<td><input type="text" id="comid" name="comid" value="<%=dto.getComId() %>" readonly /></td>
 						</tr>
 						<tr>
 							<th scope="row">소속지점(storenum)</th>
-							<td><%=dto.getStoreNum() %></td>
+							<td><input type="text" id="storenum" name="storenum" value="<%=dto.getStoreNum() %>" readonly /></td>
 						</tr>
 						<tr>
 							<th scope="row">아이디</th>
-							<td><%=dto.getEmpNo() %></td>
+							<td><input type="text" id="empno" name="empno" value="<%=dto.getEmpNo() %>" readonly /></td>
 						</tr>
 						<tr>
 							<th scope="row">이름</th>
-							<td><%=dto.geteName() %></td>
+							<td><input type="text" id="ename" name="ename" value="<%=dto.geteName() %>" required/></td>
 						</tr>
 						<tr>
 							<th scope="row">역할</th>
-							<td><%=dto.getRole() %></td>
+							<td><input type="text" id="role" name="role" value="<%=dto.getRole() %>" readonly/></td>
 						</tr>
 						<tr>
 							<th scope="row">전화번호</th>
-							<td><%=dto.geteCall() %></td>
+							<td><input type="text" id="phonenum" name="phonenum" value="<%=dto.geteCall() %>" required/></td>
 						</tr>
 						<tr>
 							<th scope="row">비밀번호</th>
-							<td><%=dto.getePwd() %></td>
+							<td><input type="text" id="epwd" name="epwd" value="<%=dto.getePwd() %>" required/></td>
 						</tr>
 						<tr>
 							<th scope="row">월급</th>
-							<td><%=dto.getSal() %></td>
+							<td><input type="text" id="sal" name="sal" value="<%=dto.getSal() %>"/></td>
 						</tr>
 						<tr>
 							<th scope="row">시급</th>
-							<td><%=dto.getHsal() %></td>
+							<td><input type="text" id="hsal" name="hsal" value="<%=dto.getHsal() %>"/></td>
 						</tr>
 						<tr>
 							<th scope="row">근무시간</th>
-							<td><%=dto.getWorktime() %></td>
+							<td><input type="text" id="worktime" name="worktime" value="<%=dto.getWorktime() %>"/></td>
 						</tr>
 						<tr>
 							<th scope="row">이메일</th>
-							<td><%=dto.getEmail() %></td>
+							<td><input type="text" id="email" name="email" value="<%=dto.getEmail() %>" required/></td>
 						</tr>
 						<tr>
 							<th scope="row">입사일</th>
-							<td><%=dto.getHiredate() %></td>
+							<td><input type="text" id="hiredate" name="hiredate" value="<%=dto.getHiredate() %>"/></td>
 						</tr>
 						<tr>
 							<th scope="row">근무계약서</th>
-							<td><%=dto.getContract() %></td>
+							<td><input type="text" id="contract" name="contract" value="<%=dto.getContract() %>"/></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<a href="${pageContext.request.contextPath}/admin_rae/updateform2.jsp" class="btn btn-primary mt-3" role="button" >개인정보수정</a>
+				<input id="modify" class="btn btn-primary mt-3" type="submit" value="수정하기">
+				<input class="btn btn-danger mt-3" type="reset" value="리셋" >
+			</form>
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
