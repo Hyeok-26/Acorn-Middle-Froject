@@ -202,7 +202,7 @@
 			
 			
 			
-			<%-- 리스트 --%>	
+			<%-- 퇴사자 리스트 --%>	
 			<div style="height:400px;">
 				<table class="table table-striped">
 					<thead class="table-dark">
@@ -224,7 +224,7 @@
 								</tbody>
 								</table>
 								<div class=" justify-content-center align-items-center vh-100">
-								  <div class="p-3 bg-light">퇴사자가 아직 없습니다!</div>
+								  <div class="p-3 bg-light">퇴사자 정보가 없습니다!</div>
 								</div>
 								
 							</c:when>
@@ -238,7 +238,7 @@
 										<td>${qmember.hiredate }</td>
 										<td>${qmember.quitdate }</td>
 										<td>${qmember.eCall }</td>
-										<th><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @submit.prevent="onCancle">복귀</a></th>
+										<th><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @click.prevent="onCancle">복귀</a></th>
 									</tr>
 								</c:forEach>
 									</tbody>
@@ -301,6 +301,7 @@
 			},
 			methods:{
 				clickSearchBtn(){
+					this.isExist = false;
 					fetch("searchInfo.jsp?empno="+this.search_empno)
 					.then(res => res.json())
 					.then(data=>{
@@ -313,15 +314,40 @@
 					
 					// 만약 없는 사원번호를 입력했을 경우
 					if(!this.isExist){
-						
+						alert("없는 사원번호 입니다.");
 					}
 				},
 				onCancle(e){
 					// 복귀 처리 할 사람의 정보 추출
+					const empno = e.target.parentElement.parentElement.childNodes[0].innerText;
+					const ename = e.target.parentElement.parentElement.childNodes[2].innerText;
 					
 					// 복귀 처리 한 번 더 물어보기
-					const answer = confirm("을(를) 복귀 처리 하시겠습니까?");
+					const answer = confirm(ename+"("+empno+")" +" 을(를) 복귀 처리 하시겠습니까?");
 					
+					// 대답이 긍정이라면 복귀 처리 하기
+					if(answer){
+						fetch("cancleQuit.jsp",{
+							method:"POST",
+							headers:{"Content-Type":"application/x-www-form-urlencoded; charset=utf-8"},
+							body: "empno="+empno
+						})
+						.then(res => res.json())
+						.then(data=>{
+							console.log(data);
+							if(data.isAddSuccess && data.isDeleteSuccess){
+								alert(ename+"("+empno+") 을(를) 복귀 처리 하였습니다.");
+							} else if(data.isAddSuccess){
+								alert("QUIT 테이블에서 삭제 실패. 개발자 확인 요망!");
+							} else {
+								alert("EMP 테이블에 추가 실패. 개발자 확인 요망!");
+							}
+							location.href = "quitForm.jsp";
+						})
+						.catch((err)=>{
+							console.log(err);
+						});
+					}
 				},
 				onSubmit(e){
 					// 폼 입력이 제대로 이루어 졌는지 확인
@@ -362,9 +388,11 @@
 							} else {
 								alert("QUIT 테이블에 추가 실패. 개발자 확인 요망!");
 							}
+							location.href = "quitForm.jsp";
+						})
+						.catch((err)=>{
+							console.log(err);
 						});
-						
-						location.href = "quitForm.jsp";
 					}
 				}
 			}

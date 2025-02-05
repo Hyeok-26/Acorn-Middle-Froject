@@ -1,9 +1,9 @@
+<%@page import="test.dto.Com1QuitDto"%>
 <%@page import="test.dto.Com1EmpDto"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@page import="test.dao.Com1QuitDao"%>
 <%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%
 	// 정보 추가에 필요한 데이터 추출 : 사원번호(empno), 퇴사일자(quitdate)
 	int empno = Integer.parseInt(request.getParameter("empno"));
