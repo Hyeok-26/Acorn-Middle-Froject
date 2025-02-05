@@ -24,7 +24,7 @@
 %>
 	<script>
 		alert("사원 계정 로그인 성공!");
-		window.location.href = "../emp_cheon/index.jsp";
+		window.location.href = "../companyone/staff/staffMain.jsp";
 	</script>
 <%
 	}else{
