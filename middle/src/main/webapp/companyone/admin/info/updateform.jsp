@@ -58,7 +58,7 @@
 		</jsp:include>
 		<div class="container">
 			<h1 class="mb-4">회원정보수정 페이지</h1>
-			<form action="${pageContext.request.contextPath}/admin_rae/update.jsp" method="post" id="updateform">
+			<form action="${pageContext.request.contextPath}/companyone/admin/info/update.jsp" method="post" id="updateform">
 				<div class="tbl_row_wrap">
 				<table class="tbl_row">
 					<colgroup>

@@ -56,7 +56,7 @@
 						<div class="card-body">
 							<h5 class="card-title">개인정보조회</h5>
 						</div>
-						<a href="${pageContext.request.contextPath}/admin_rae/info.jsp"
+						<a href="${pageContext.request.contextPath}/companyone/admin/info/view.jsp"
 							class="stretched-link"></a>
 					</div>
 				</div>

@@ -46,14 +46,14 @@
 %>
 	<script>
 		alert("수정 성공!");
-		window.location.href = "<%= request.getContextPath() %>/admin_rae/index.jsp";
+		window.location.href = "<%= request.getContextPath() %>/companyone/admin/adminMain.jsp";
 	</script>
 <%
 	} else{
 %>
 	<script>
 		alert("수정 실패!");
-		 window.location.href = "<%= request.getContextPath() %>/updateform2.jsp";
+		 window.location.href = "<%= request.getContextPath() %>/companyone/admin/info/updateform.jsp";
 	</script>
 <%
 	}
