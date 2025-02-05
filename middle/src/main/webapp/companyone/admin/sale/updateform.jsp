@@ -35,7 +35,6 @@
         <tr>
           <td><input type="month" id="salemonth" name="salemonth"/></td>
           <td><input type="number" id="monthlysal" name="monthlysal"/></td>
-          <td></td>
         </tr>
       </tbody>
     </table>

@@ -5,20 +5,11 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 <%
-	///매출 폼에서 입력한 값 받아옴
-	String salemonth=request.getParameter("salemonth");
-	int monthlysal=Integer.parseInt(request.getParameter("monthlysal"));
-	
-	//dto에 입력값 담고
-	Com1SaleDto dto=new Com1SaleDto();
-	dto.setSalemonth(salemonth);
-	dto.setMonthlysal(monthlysal);
-	
-	//dao를 통해서 올리기
-	boolean isSuccess=Com1SaleDao.getInstance().insert(dto);
-	
-	//getlist list가 null 아닐 때 
-	List<Com1SaleDto> list=Com1SaleDao.getInstance().getList();
+	//세션에 담은 storenum 가져오기
+	int storenum = (int)session.getAttribute("storenum");
+	//storenum에 해당하는 데이터 리스트 가져오기
+	List<Com1SaleDto> list=Com1SaleDao.getInstance().getList(storenum);
+	request.setAttribute("list", list);
 
 	
 %>	
@@ -54,11 +45,16 @@
 				</tr>
 			</thead>
 			<tbody>
-
+			<c:forEach var="tmp" items="${list }">
+				<tr>
+					<td>${tmp.salemonth }</td>
+					<td>${tmp.monthlysal }</td>
+					<td>${tmp.diff }</td>
+				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 	</div>
-
   <!-- 푸터 -->
   <jsp:include page="/include/footer.jsp" />
 </body>

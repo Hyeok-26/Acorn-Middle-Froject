@@ -208,7 +208,6 @@ public class Com1SaleDao {
 	            dto.setSalemonth(rs.getString("salemonth"));
 	            dto.setMonthlysal(rs.getInt("monthlysal"));
 	            dto.setDiff(rs.getInt("diff")); // 차이값 추가
-
 	            list.add(dto);
 	        }
 	    } catch (Exception e) {
