@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>진세님 출퇴근 페이지</title>
+<title>출퇴근 페이지</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
@@ -44,7 +44,7 @@
 <body>
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2">
-		<h1>출/퇴근</h1>
+		<h1>출/퇴근 기록</h1>
 		<div class="time-container">
 			<div class="clock">
         		<h1>00:00:00</h1>

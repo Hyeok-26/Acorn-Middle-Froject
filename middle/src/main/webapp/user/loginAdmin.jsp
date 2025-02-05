@@ -24,7 +24,7 @@
 %>
 	<script>
 		alert("점장 계정 로그인 성공!");
-		window.location.href = "../admin_rae/index.jsp";
+		window.location.href = "../companyone/admin/adminMain.jsp";
 	</script>
 <%
 	} else{
