@@ -214,6 +214,7 @@
 							<th>입사일</th>
 							<th>퇴사일</th>
 							<th>전화번호</th>
+							<th>복귀</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -237,6 +238,7 @@
 										<td>${qmember.hiredate }</td>
 										<td>${qmember.quitdate }</td>
 										<td>${qmember.eCall }</td>
+										<th><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @submit.prevent="onCancle">복귀</a></th>
 									</tr>
 								</c:forEach>
 									</tbody>
@@ -314,6 +316,13 @@
 						
 					}
 				},
+				onCancle(e){
+					// 복귀 처리 할 사람의 정보 추출
+					
+					// 복귀 처리 한 번 더 물어보기
+					const answer = confirm("을(를) 복귀 처리 하시겠습니까?");
+					
+				},
 				onSubmit(e){
 					// 폼 입력이 제대로 이루어 졌는지 확인
 					const data = new FormData(e.target);
@@ -323,7 +332,7 @@
 					const quitdate = e.target.quitdate.value;
 					
 					// 만약 사원 번호(사원 정보)가 없는 경우
-					if(empno == "" || empno == 'null'){
+					if(empno == ""){
 						alert("사원 번호를 입력하세요");
 					// 정보가 조회되지 않은 경우
 					} else if(ename == "") {
@@ -331,7 +340,7 @@
 					} else if(ename == 'null'){
 						alert("정보가 없습니다");	
 					// 만약 퇴사일을 선택하지 않은 경우
-					} else if(quitdate == "" || quitdate == 'null') {
+					} else if(quitdate == "") {
 						alert("퇴사일을 입력하세요");
 					// 위 경우가 모두 아니라면 퇴사 처리 진행
 					} else {
