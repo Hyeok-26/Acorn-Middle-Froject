@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>급여계산기</title>
+<title>급여계산 페이지</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	#app{
@@ -23,7 +23,7 @@
 <body>
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container" id="app">
-		<h1>급여 계산기</h1>
+		<h1>급여 계산</h1>
 	    <fieldset>
 	    	<legend>월급/시급 선택</legend>
 	    	<label>
