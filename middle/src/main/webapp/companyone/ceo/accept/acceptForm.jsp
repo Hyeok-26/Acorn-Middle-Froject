@@ -1,0 +1,98 @@
+<%-- 안전빵용 페이지 --%>
+<%@page import="test.dao.Com1WaitDao"%>
+<%@page import="test.dto.Com1WaitDto"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<%
+	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
+	session.setAttribute("current_page", "accept-form");
+
+	// 로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
+	String comname = (String)session.getAttribute("comname");
+	String ename = (String)session.getAttribute("ename");
+
+	// DB 에서 대기자 목록 가져오기
+	List<Com1WaitDto> list_admin =  Com1WaitDao.getInstance().getListAdmin();
+	
+	
+	String empInsertMessage = request.getParameter("empInsertMessage");
+	String waitDeleteMessage = request.getParameter("waitDeleteMessage");
+    if (empInsertMessage != null || waitDeleteMessage != null) {
+%>
+    <script>
+        <% if (empInsertMessage != null) { %>
+            alert('<%= empInsertMessage %>');
+        <% } %>
+        <% if (waitDeleteMessage != null) { %>
+            alert('<%= waitDeleteMessage %>');
+        <% } %>
+    </script>
+<% } %>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/ceo/accept-form.jsp</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+	/* div{ border:1px solid red; } */
+</style>
+</head>
+<body>
+	<jsp:include page="/include/resource.jsp"></jsp:include>
+	
+	<%-- 공통 네비바 --%>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	
+	<div class="container" >
+		<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
+		<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+		
+		<%-- 현재 접속 상태 표시 --%>
+		<div class="container">
+		<p><%=comname %>의  <%=ename %>님 접속 중</p>
+		</div>
+		
+		<div style="width:900px"  class="contents mb-5 mx-auto text-center" >
+			<h3>회원가입 대기자 명단</h3>
+			<div style="height:400px; margin:10px;">
+				<table class="table table-striped ">
+					<thead class="table-dark">
+						<tr>
+							<th>이름</th>
+							<th>지점</th>
+							<th>직책</th>
+							<th>상세보기</th>
+							<th>승인</th>
+							<th>거절</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="item" items="<%=list_admin %>">
+							<tr>
+								<td>${item.eName }</td>
+								<td>${item.storeNum }</td>
+								<td>${item.role }</td>
+								<td>상세보기</td>
+								<td><a href="addAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
+								<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">거절</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+			
+			<%-- 페이징 --%>
+			<nav>
+			</nav>
+			
+		</div>
+	
+	</div>
+	
+	<jsp:include page="/include/footer.jsp" />
+	
+</body>
+</html>
