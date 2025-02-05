@@ -1,12 +1,25 @@
+<%@page import="test.dao.Com1Dao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<%
+	String comname = request.getParameter("comname");
+	
+	boolean isSuccess = Com1Dao.getInstance().insert(comname);
+	
+	if(isSuccess){
+%>
+	<script>
+		alert("회사가 성공적으로 추가되었습니다!");
+		window.location.href = "../developer1234.jsp"; 
+	</script>
+<%
+	} else {
+%>
+	<script>
+		alert("회사 추가에 실패했습니다. 다시 시도해주세요.");
+		window.location.href = "../developer1234.jsp"; 
+	</script>
+<%
+	}
+%>
+    

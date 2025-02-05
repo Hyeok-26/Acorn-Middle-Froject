@@ -67,7 +67,7 @@
 						<div class="card-body">
 							<h5 class="card-title">매출관리</h5>
 						</div>
-						<a href="${pageContext.request.contextPath}/admin_rae/sale.jsp"
+						<a href="${pageContext.request.contextPath}/companyone/admin/sale/view.jsp"
 							class="stretched-link"></a>
 					</div>
 				</div>
@@ -106,7 +106,7 @@
 						<div class="card-body">
 							<h5 class="card-title">사원승인</h5>
 						</div>
-						<a href="acceptStaff.jsp" class="stretched-link"></a>
+						<a href="${pageContext.request.contextPath}/companyone/admin/accept/acceptStaff.jsp" class="stretched-link"></a>
 					</div>
 				</div>
 

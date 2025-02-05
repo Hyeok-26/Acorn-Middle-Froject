@@ -21,12 +21,12 @@
 		<%if(isSuccess){ %>
 			<p class="alert alert-success">
 				<strong><%=num %></strong>번 사원의 정보를 삭제했습니다.
-				<a class="alert-link" href="EmpStatus.jsp">확인</a>
+				<a class="alert-link" href="view.jsp">확인</a>
 			</p>
 		<%}else{ %>
 			<p class="alert alert-danger">
 				삭제 실패!
-				<a class="alert-link" href="EmpStatus.jsp">확인</a>
+				<a class="alert-link" href="view.jsp">확인</a>
 			</p>
 		<%} %>
 	</div>

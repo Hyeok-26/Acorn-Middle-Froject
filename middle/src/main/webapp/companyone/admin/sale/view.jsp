@@ -41,7 +41,7 @@
   <div class="container flex-grow-1 my-4">
     <!-- 버튼 -->
     <div class="d-flex justify-content-between mb-3">
-      <a href="${pageContext.request.contextPath}/admin_rae/sale-insert-form.jsp" class="btn btn-success mt-3" role="button" >매출추가</a>
+      <a href="${pageContext.request.contextPath}/companyone/admin/sale/updateform.jsp" class="btn btn-success mt-3" role="button" >매출추가</a>
     </div>
  
     <!-- 테이블 -->

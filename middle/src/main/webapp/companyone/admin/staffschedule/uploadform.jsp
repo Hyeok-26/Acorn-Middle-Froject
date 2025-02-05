@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int num = Integer.parseInt(request.getParameter("storenum"));
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,11 +31,12 @@
                 <div class="col-lg-6">
                     <div class="card shadow-sm p-4">
 						<h1 class="text-center mb-4">직원 스케줄 업로드</h1>
-						<form action="ScheduleUpload.jsp" method="post"  enctype="multipart/form-data" id="myForm">
+						<form action="upload.jsp?storenum=<%=num %>" method="post"  enctype="multipart/form-data" id="SchForm">
                             <div class="mb-3">
                             	<input class="form-control" type="month" id="name" name="title" /> <br />
                                 <label for="imgEmpSchedule" class="form-label">스케줄 이미지 업로드</label>
                                 <input type="file" class="form-control" id="imgEmpSchedule" name="imgEmpSchedule" accept="image/*" required onchange="previewImage(event)">
+                                <input type="hidden" name="srcurl" id="srcurl" />
                             </div>							
                             
                             <%-- 이미지 미리보기 --%>
@@ -67,6 +71,26 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         }
+        
+		document.querySelector("#imgEmpSchedule").addEventListener("change", (event)=>{
+			const files = event.target.files;
+			if(files.length > 0){
+				//파일로 부터 데이터를 읽어들일 객체 생성
+				const reader=new FileReader();
+				//로딩이 완료(파일데이터를 모두 읽었을때) 되었을때 실행할 함수 등록
+				//onload에 함수를 넣어두면, 이 함수는 다 읽으면 자동으로 호출
+				reader.onload=(event)=>{ 
+					//읽은 파일 데이터 얻어내기 
+					const data=event.target.result; //읽은파일데이터가 들어있음. data가 이미지 데이터임
+					document.querySelector("#srcurl").value=data;
+					console.log("hi")
+					console.log(data)
+				};
+				//파일을 DataURL 형식의 문자열로 읽어들이기 //파일배열에 0번방에 선택한 이미지가 존재하는것.(그걸 읽음!)
+				reader.readAsDataURL(files[0]); //읽는작업은 여기서!
+			}	
+		});        
+
 
     </script>
     

@@ -4,7 +4,7 @@
 <%
 
 	int num = Integer.parseInt(request.getParameter("storenum"));
-	String date = 	request.getParameter("date");
+	String date = request.getParameter("date");
 	Com1SchDao dao=Com1SchDao.getInstance();
 	boolean isSuccess= dao.delete(num);
 
@@ -22,12 +22,12 @@
 		<%if(isSuccess){ %>
 			<p class="alert alert-success">
 				<strong><%=num %>호점 <%=date %>월</strong>근무표를 삭제했습니다.
-				<a class="alert-link" href="EmpSchedule.jsp">확인</a>
+				<a class="alert-link" href="view.jsp?storenum=<%=num %>">확인</a>
 			</p>
 		<%}else{ %>
 			<p class="alert alert-danger">
 				삭제 실패!
-				<a class="alert-link" href="EmpSchedule.jsp">확인</a>
+				<a class="alert-link" href="view.jsp?storenum=<%=num %>">확인</a>
 			</p>
 		<%} %>
 	</div>
