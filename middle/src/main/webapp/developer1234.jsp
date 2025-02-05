@@ -37,7 +37,7 @@
 			
 		<div id="companyContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
 			<h1>회사 등록</h1>
-			<form action="admin/insertCompany.jsp" method="get">
+			<form action="developer/insertCompany.jsp" method="get">
 				<label for="comname">회사 이름</label>
 				<input type="text" id="comname" name="comname" style="padding: 10px; width: 100%;">
 				<br />
@@ -47,7 +47,7 @@
 
 		<div id="storeContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
 			<h1>체인점 등록</h1>
-			<form action="admin/insertStore.jsp" method="get">
+			<form action="developer/insertStore.jsp" method="get">
 				<label for="storecall">매장 전화번호</label>
 				<input type="text" id="storecall" name="storecall" style="padding: 10px; width: 100%;">
 				<br />
@@ -57,7 +57,7 @@
 
 		<div id="ceoContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
 			<h1>관리자 등록</h1>
-			<form action="admin/insertCeo.jsp" method="get">
+			<form action="developer/insertCeo.jsp" method="get">
 				<label for="comid">회사코드</label>
 				<input type="text" id="comid" name="comid" style="padding: 10px; width: 100%;">
 				<label for="ename">이름</label>
