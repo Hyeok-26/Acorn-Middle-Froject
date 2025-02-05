@@ -169,7 +169,7 @@ td a:hover {
 		</table>
 
 		<div class="btn-container">
-			<a href="../index.jsp">메인 페이지로</a> <a href="logout.jsp">로그아웃</a>
+			<a href="${pageContext.request.contextPath }/index.jsp">메인 페이지로</a> <a href="logout.jsp">로그아웃</a>
 		</div>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

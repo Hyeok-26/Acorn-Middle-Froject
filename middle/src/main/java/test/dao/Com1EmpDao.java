@@ -98,7 +98,8 @@ public class Com1EmpDao {
 				dto.setHsal(rs.getInt("hsal"));
 				dto.setWorktime(rs.getInt("worktime"));
 				dto.setEmail(rs.getString("email"));
-				dto.setHiredate(rs.getString("hiredate"));
+				//dto.setHiredate(rs.getString("hiredate"));
+				dto.setHiredate((rs.getString("hiredate")).substring(0,(rs.getString("hiredate")).indexOf(" ")));
 				dto.setContract(rs.getString("contract"));
 			}
 		} catch (Exception e) {
