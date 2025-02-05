@@ -3,8 +3,8 @@
 <%@page import="java.util.List"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+	pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp"%>
 <%
 
 	int comid = (int)session.getAttribute("comid");
@@ -36,244 +36,264 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 목록 페이지</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
-	.tab-button {
-        padding: 10px 20px;
-        cursor: pointer;
-        font-weight: bold;
-        background-color: #f1f1f1;
-        border: 1px solid #ddd;
-        transition: background-color 0.3s ease;
-        display: inline-block;
-    }
+.tab-button {
+	padding: 10px 20px;
+	cursor: pointer;
+	font-weight: bold;
+	background-color: #f1f1f1;
+	border: 1px solid #ddd;
+	transition: background-color 0.3s ease;
+	display: inline-block;
+}
 
-    .active-tab {
-        background-color: #dcdcdc;
-        border-bottom: 2px solid #999;
-    }
+.active-tab {
+	background-color: #dcdcdc;
+	border-bottom: 2px solid #999;
+}
 
-    .tab-content {
-        padding: 20px;
-        background-color: #fff;
-        border-top: 1px solid #ddd;
-        display: none;
-    }
-	table {
-	    width: 100%;
-	    border-collapse: collapse;
-	    margin-bottom: 20px;
-	    table-layout: fixed; 
-	}
-	
-	th, td {
-	    border: 1px solid #ddd;
-	    padding: 12px;
-	    text-align: center;
-	    background-color: #fff;
-	    font-size: 16px;  
-	    white-space: normal; 
-	    overflow-wrap: break-word;
-	    text-overflow: ellipsis;
-	    word-wrap: break-word;
-	}
-	
-	th {
-	    background-color: #f5f5f5;
-	    font-weight: bold;
-	    color: #333;
-	    border-bottom: 2px solid #bbb;
-	}
-	
-	tbody tr:nth-child(even) {
-	    background-color: #f9f9f9;
-	}
-	
-	tbody tr:hover {
-	    background-color: #eef;
-	}
+.tab-content {
+	padding: 20px;
+	background-color: #fff;
+	border-top: 1px solid #ddd;
+	display: none;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	table-layout: fixed;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 12px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 16px;
+	white-space: normal;
+	overflow-wrap: break-word;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+}
+
+th {
+	background-color: #f5f5f5;
+	font-weight: bold;
+	color: #333;
+	border-bottom: 2px solid #bbb;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+	background-color: #eef;
+}
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 	<div class="container">
-	<p>
-		회사코드 : <%=comid %> 회사번호 : <%=comname %> 사원번호 : <%=empno %> 역할 : <%=role %> 이름 : <%=ename %>
-	</p>
+		<p>
+			회사코드 :
+			<%=comid %>
+			회사번호 :
+			<%=comname %>
+			사원번호 :
+			<%=empno %>
+			역할 :
+			<%=role %>
+			이름 :
+			<%=ename %>
+		</p>
 	</div>
-	<div class="container flex-fill" style="width:100%; margin-top: 50px;">
-		<div class="tab-button" id="employeeTab" onclick="switchTab('employee')">전체 직원</div>
+	<div class="container flex-fill" style="width: 100%; margin-top: 50px;">
+		<div class="tab-button" id="employeeTab"
+			onclick="switchTab('employee')">전체 직원</div>
 		<div class="tab-button" id="adminTab" onclick="switchTab('admin')">점장</div>
 		<div class="tab-button" id="staffTab" onclick="switchTab('staff')">직원</div>
-		<div class="tab-button" id="storeNumTab" onclick="switchTab('storeNum')">호점</div>
-		
-		<div id="employeeContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
+		<div class="tab-button" id="storeNumTab"
+			onclick="switchTab('storeNum')">호점</div>
+
+		<div id="employeeContent" class="tab-content"
+			style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
 			<h1>전체 직원</h1>
-				<table>
-				    <thead>
-				        <tr>
-				            <th>호점</th>
-				            <th>사원번호</th>
-				            <th>이름</th>
-				            <th>직급</th>
-				            <th>전화번호</th>
-				            <th>이메일</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				        <% if (employeeList != null && !employeeList.isEmpty()) { 
-				            for (Com1EmpDto emp : employeeList) { %>
-				                <tr>
-				                    <td><%= emp.getStoreNum() %></td>
-				                    <td><%= emp.getEmpNo() %></td>
-				                    <td><%= emp.geteName() %></td>
-				                    <td><%= emp.getRole() %></td>
-				                    <td><%= emp.geteCall() %></td>
-				                    <td><%= emp.getEmail() %></td>
-				                </tr>
-				        <%  } 
-				           } else { %>
-				            <tr>
-				                <td colspan="11">등록된 직원 정보가 없습니다.</td>
-				            </tr>
-				        <% } %>
-				    </tbody>
-				</table>
-		</div>
-		
-		<div id="adminContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
-			<h1>점장</h1>
-				<table>
-				    <thead>
-				        <tr>
-				            <th>호점</th>
-				            <th>사원번호</th>
-				            <th>이름</th>
-				            <th>직급</th>
-				            <th>전화번호</th>
-				            <th>월급</th>
-				            <th>이메일</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				        <% if (adminList != null && !adminList.isEmpty()) { 
-				            for (Com1EmpDto admin : adminList) { %>
-				                <tr>
-				                    <td><%= admin.getStoreNum() %></td>
-				                    <td><%= admin.getEmpNo() %></td>
-				                    <td><%= admin.geteName() %></td>
-				                    <td><%= admin.getRole() %></td>
-				                    <td><%= admin.geteCall() %></td>
-				                    <td><%= admin.getSal() %></td>
-				                    <td><%= admin.getEmail() %></td>
-				                </tr>
-				        <%  } 
-				           } else { %>
-				            <tr>
-				                <td colspan="11">등록된 관리자 정보가 없습니다.</td>
-				            </tr>
-				        <% } %>
-				    </tbody>
-				</table>
-		</div>
-		
-		<div id="staffContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
-			<h1>직원</h1>
 			<table>
-			    <thead>
-			        <tr>
-			            <th>호점</th>
-			            <th>사원번호</th>
-			            <th>이름</th>
-			            <th>직급</th>
-			            <th>전화번호</th>
-			            <th>월급</th>
-			            <th>시급</th>
-			            <th>이메일</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			        <% if (staffList != null && !staffList.isEmpty()) { 
-			            for (Com1EmpDto staff : staffList) { %>
-			                <tr>
-			                    <td><%= staff.getStoreNum() %></td>
-			                    <td><%= staff.getEmpNo() %></td>
-			                    <td><%= staff.geteName() %></td>
-			                    <td><%= staff.getRole() %></td>
-			                    <td><%= staff.geteCall() %></td>
-			                    <td><%= staff.getSal() %></td>
-			                    <td><%= staff.getHsal() %></td>
-			                    <td><%= staff.getEmail() %></td>
-			                </tr>
-			        <%  } 
-			           } else { %>
-			            <tr>
-			                <td colspan="11">등록된 관리자 정보가 없습니다.</td>
-			            </tr>
-			        <% } %>
-			    </tbody>
+				<thead>
+					<tr>
+						<th>호점</th>
+						<th>사원번호</th>
+						<th>이름</th>
+						<th>직급</th>
+						<th>전화번호</th>
+						<th>이메일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (employeeList != null && !employeeList.isEmpty()) { 
+				            for (Com1EmpDto emp : employeeList) { %>
+					<tr>
+						<td><%= emp.getStoreNum() %></td>
+						<td><%= emp.getEmpNo() %></td>
+						<td><%= emp.geteName() %></td>
+						<td><%= emp.getRole() %></td>
+						<td><%= emp.geteCall() %></td>
+						<td><%= emp.getEmail() %></td>
+					</tr>
+					<%  } 
+				           } else { %>
+					<tr>
+						<td colspan="11">등록된 직원 정보가 없습니다.</td>
+					</tr>
+					<% } %>
+				</tbody>
 			</table>
 		</div>
-		
-		<div id="storeNumContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
+
+		<div id="adminContent" class="tab-content"
+			style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
+			<h1>점장</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>호점</th>
+						<th>사원번호</th>
+						<th>이름</th>
+						<th>직급</th>
+						<th>전화번호</th>
+						<th>월급</th>
+						<th>이메일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (adminList != null && !adminList.isEmpty()) { 
+				            for (Com1EmpDto admin : adminList) { %>
+					<tr>
+						<td><%= admin.getStoreNum() %></td>
+						<td><%= admin.getEmpNo() %></td>
+						<td><%= admin.geteName() %></td>
+						<td><%= admin.getRole() %></td>
+						<td><%= admin.geteCall() %></td>
+						<td><%= admin.getSal() %></td>
+						<td><%= admin.getEmail() %></td>
+					</tr>
+					<%  } 
+				           } else { %>
+					<tr>
+						<td colspan="11">등록된 관리자 정보가 없습니다.</td>
+					</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="staffContent" class="tab-content"
+			style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
+			<h1>직원</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>호점</th>
+						<th>사원번호</th>
+						<th>이름</th>
+						<th>직급</th>
+						<th>전화번호</th>
+						<th>월급</th>
+						<th>시급</th>
+						<th>이메일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (staffList != null && !staffList.isEmpty()) { 
+			            for (Com1EmpDto staff : staffList) { %>
+					<tr>
+						<td><%= staff.getStoreNum() %></td>
+						<td><%= staff.getEmpNo() %></td>
+						<td><%= staff.geteName() %></td>
+						<td><%= staff.getRole() %></td>
+						<td><%= staff.geteCall() %></td>
+						<td><%= staff.getSal() %></td>
+						<td><%= staff.getHsal() %></td>
+						<td><%= staff.getEmail() %></td>
+					</tr>
+					<%  } 
+			           } else { %>
+					<tr>
+						<td colspan="11">등록된 관리자 정보가 없습니다.</td>
+					</tr>
+					<% } %>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="storeNumContent" class="tab-content"
+			style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
 			<h2>지점별 직원 목록</h2>
 			<form method="get" id="storeForm">
-			    <label for="storenum">지점 선택: </label>
-			    <select name="storenum" id="storenum" onchange="switchTab('storeNum'); document.getElementById('storeForm').submit();">
-			        <option value="">-- 지점을 선택하세요 --</option>
-			        <% for (Integer storeNum : storeNumbers) { %>
-			            <option value="<%= storeNum %>" <%= (storeNum == storenum) ? "selected" : "" %>>
-			                <%= storeNum %>호점
-			            </option>
-			        <% } %>
-			    </select>
+				<label for="storenum">지점 선택: </label> <select name="storenum"
+					id="storenum"
+					onchange="switchTab('storeNum'); document.getElementById('storeForm').submit();">
+					<option value="">-- 지점을 선택하세요 --</option>
+					<% for (Integer storeNum : storeNumbers) { %>
+					<option value="<%= storeNum %>"
+						<%= (storeNum == storenum) ? "selected" : "" %>>
+						<%= storeNum %>호점
+					</option>
+					<% } %>
+				</select>
 			</form>
-			
+
 			<br />
-			
-			<% if (storenum != -1) { %> 
-			    <h3><%= storenum %>호점 직원 목록</h3>
-			    <table border="1" cellspacing="0" cellpadding="8">
-			        <thead>
-			            <tr>
-			                <th>호점</th>
-			                <th>사원번호</th>
-			                <th>이름</th>
-			                <th>직급</th>
-			                <th>전화번호</th>
-			                <th>월급</th>
-			                <th>시급</th>
-			                <th>이메일</th>
-			            </tr>
-			        </thead>
-			        <tbody>
-			            <% if (storeEmpList != null && !storeEmpList.isEmpty()) { 
+
+			<% if (storenum != -1) { %>
+			<h3><%= storenum %>호점 직원 목록
+			</h3>
+			<table border="1" cellspacing="0" cellpadding="8">
+				<thead>
+					<tr>
+						<th>호점</th>
+						<th>사원번호</th>
+						<th>이름</th>
+						<th>직급</th>
+						<th>전화번호</th>
+						<th>월급</th>
+						<th>시급</th>
+						<th>이메일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% if (storeEmpList != null && !storeEmpList.isEmpty()) { 
 			                for (Com1EmpDto emp : storeEmpList) { %>
-			                    <tr>
-			                    	<%for(int num: storeNumbers){ %>
-			                       	 	<td><%=num %></td>
-			                        <%} %>
-			                        <td><%= emp.getEmpNo() %></td>
-			                        <td><%= emp.geteName() %></td>
-			                        <td><%= emp.getRole() %></td>
-			                        <td><%= emp.geteCall() %></td>
-			                        <td><%= emp.getSal() %></td>
-			                        <td><%= emp.getHsal() %></td>
-			                        <td><%= emp.getEmail() %></td>
-			                    </tr>
-			            <%  } 
+					<tr>
+						<%for(int num: storeNumbers){ %>
+						<td><%=num %></td>
+						<%} %>
+						<td><%= emp.getEmpNo() %></td>
+						<td><%= emp.geteName() %></td>
+						<td><%= emp.getRole() %></td>
+						<td><%= emp.geteCall() %></td>
+						<td><%= emp.getSal() %></td>
+						<td><%= emp.getHsal() %></td>
+						<td><%= emp.getEmail() %></td>
+					</tr>
+					<%  } 
 			               } else { %>
-			                <tr>
-			                    <td colspan="11">해당 지점에 등록된 직원 정보가 없습니다.</td>
-			                </tr>
-			            <% } %>
-		         	<% } %>
-		        </tbody>
-		    </table>
+					<tr>
+						<td colspan="11">해당 지점에 등록된 직원 정보가 없습니다.</td>
+					</tr>
+					<% } %>
+					<% } %>
+				</tbody>
+			</table>
 		</div>
 	</div>
-	
-	<%@ include file="/include/footer.jsp" %>
-	
+
+	<%@ include file="/include/footer.jsp"%>
+
 	<script>
 	    function switchTab(tab) {
 	        const tabs = ['employee', 'admin', 'staff', 'storeNum'];
