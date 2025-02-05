@@ -66,8 +66,8 @@
                         <li><a href="#" class="btn btn-outline-primary btn-block mb-2">지점별 재무 현황</a></li>
                         <li><a href="#" class="btn btn-outline-primary btn-block mb-2">가맹점 관리</a></li>
                         <li><a href="#" class="btn btn-outline-primary btn-block mb-2">손익 상태</a></li>
-                        <li><a href="${pageContext.request.contextPath }/ceo_eugene/accept-form.jsp" class="btn btn-outline-primary btn-block mb-2">회원 가입 승인</a></li>
-                        <li><a href="${pageContext.request.contextPath }/ceo_eugene/quit-form.jsp" class="btn btn-outline-primary btn-block mb-2">퇴사자 관리</a></li>
+                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2">회원 가입 승인</a></li>
+                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2">퇴사자 관리</a></li>
                     </ul>
                 </div>
             </div>
@@ -81,9 +81,9 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li><a href="#section4" class="btn btn-outline-success btn-block mb-2">매출 관리</a></li>
-                        <li><a href="#section5" class="btn btn-outline-success btn-block mb-2">직원 관리</a></li>
-                        <li><a href="#section6" class="btn btn-outline-success btn-block mb-2">알바 시간표</a></li>
+                        <li><a href="#" class="btn btn-outline-success btn-block mb-2">매출 관리</a></li>
+                        <li><a href="#" class="btn btn-outline-success btn-block mb-2">직원 관리</a></li>
+                        <li><a href="#" class="btn btn-outline-success btn-block mb-2">알바 시간표</a></li>
                     </ul>
                 </div>
             </div>
@@ -97,10 +97,10 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li><a href="#section7" class="btn btn-outline-warning btn-block mb-2">프로필 관리</a></li>
-                        <li><a href="#section8" class="btn btn-outline-warning btn-block mb-2">스케줄 조회</a></li>
-                        <li><a href="#section9" class="btn btn-outline-warning btn-block mb-2">출/퇴근</a></li>
-                        <li><a href="#section10" class="btn btn-outline-warning btn-block mb-2">급여 계산</a></li>
+                        <li><a href="#" class="btn btn-outline-warning btn-block mb-2">프로필 관리</a></li>
+                        <li><a href="#" class="btn btn-outline-warning btn-block mb-2">스케줄 조회</a></li>
+                        <li><a href="#" class="btn btn-outline-warning btn-block mb-2">출/퇴근</a></li>
+                        <li><a href="#" class="btn btn-outline-warning btn-block mb-2">급여 계산</a></li>
                     </ul>
                 </div>
             </div>
