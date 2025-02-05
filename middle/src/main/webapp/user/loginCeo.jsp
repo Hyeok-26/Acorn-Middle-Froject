@@ -25,7 +25,7 @@
 %> 
 	<script>
 		alert("관리자 계정 로그인 성공!");
-		window.location.href = "../companyone/ce0/ceoMain.jsp";
+		window.location.href = "../companyone/ceo/ceoMain.jsp";
 	</script>
 <%
 		} else {
