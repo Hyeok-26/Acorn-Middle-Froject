@@ -108,19 +108,14 @@ th, td {
 			<br />
 
 			<% if (storenum != -1) { %>
-			<h3><%= storenum %>호점 직원 목록
+			<h3><%= storenum %>호점 매출 목록
 			</h3>
 			<table border="1" cellspacing="0" cellpadding="8">
 				<thead>
 					<tr>
-						<th>호점</th>
-						<th>사원번호</th>
-						<th>이름</th>
-						<th>직급</th>
-						<th>전화번호</th>
-						<th>월급</th>
-						<th>시급</th>
-						<th>이메일</th>
+						<th>월</th>
+						<th>월 매출</th>
+						<th>작성일자</th>
 					</tr>
 				</thead>
 				<tbody>

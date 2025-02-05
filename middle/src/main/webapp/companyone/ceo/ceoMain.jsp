@@ -66,14 +66,14 @@
 	</div>
 	<div class="container">
 		<p>
-			<a href="quit/quitform.jsp" style="text-decoration: none; color: inherit;">
+			<a href="quit/quitForm.jsp" style="text-decoration: none; color: inherit;">
 				<button>퇴사자 관리</button>
     		</a>
 		</p>
 	</div>
 	<div class="container">
 		<p>
-			<a href="sales/salesmanage.jsp" style="text-decoration: none; color: inherit;">
+			<a href="sale/salemanage.jsp" style="text-decoration: none; color: inherit;">
        			<button>매출 관리</button>
        		</a>
 		</p>
