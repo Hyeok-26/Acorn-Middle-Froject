@@ -142,6 +142,7 @@ public class Com1EmpDao {
 			pstmt.setInt(6, dto.getWorktime());
 			pstmt.setString(7, dto.getEmail());
 			pstmt.setString(8, dto.getContract());
+			pstmt.setInt(9, dto.getEmpNo());
 			// sql 문을 실행하고 변화된 row 의 개수를 리턴받기
 			rowCount = pstmt.executeUpdate();
 		} catch (Exception e) {

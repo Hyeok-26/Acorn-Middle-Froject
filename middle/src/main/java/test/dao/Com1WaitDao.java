@@ -214,4 +214,54 @@ public class Com1WaitDao {
 		}
 		return list;
 	}
+
+	public Com1WaitDto getData(int empno) {
+		
+		Com1WaitDto dto = new Com1WaitDto();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			//Connection Pool 로 부터 Connection 객체 하나 가져오기 
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문 작성
+			String sql = """
+					select comid, storenum, empno, ename, role, ecall, epwd, email
+					from test_com1_wait
+					where empno=?
+					""";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 값 바인딩할게 있으면 여기서 하기
+			pstmt.setInt(1, empno);
+			//sql 문 실행하고 결과를 ResultSet 객체로 리턴받기
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				dto.setComId(rs.getInt("comid"));
+				dto.setStoreNum(rs.getInt("storenum"));
+				dto.setEmpNo(empno);
+				dto.seteName(rs.getString("ename"));
+				dto.setRole(rs.getString("role"));
+				dto.seteCall(rs.getString("ecall"));
+				dto.setePwd(rs.getString("epwd"));
+				dto.setEmail(rs.getString("email"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+			}
+		}
+		return dto;
+	}
 }
