@@ -41,9 +41,9 @@
 <script>
     <% if (isSuccess) { %>
         alert("프로필이 성공적으로 수정되었습니다.");
-        location.href = "<%= request.getContextPath() %>/emp_cheon/protected/empProfile.jsp";
+        location.href = "<%= request.getContextPath() %>/staff/info/profile.jsp";
     <% } else { %>
         alert("기존 비밀번호가 일치하지 않습니다.");
-        location.href = "<%= request.getContextPath() %>/emp_cheon/protected/profile_update_form.jsp";
+        location.href = "<%= request.getContextPath() %>/staff/info/profile_update_form.jsp";
     <% } %>
 </script>

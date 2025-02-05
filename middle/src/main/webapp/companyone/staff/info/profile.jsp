@@ -1,5 +1,5 @@
-<%@page import="test.dao.Com1EmpDao"%>
 <%@page import="test.dto.Com1EmpDto"%>
+<%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -136,7 +136,7 @@
 				<td><%=dto.getHiredate() %></td>
 			</tr>
 			<tr>
-				<th><a href="">근로 계약서 보기</a></th>
+				<th><a href="/contract.jsp">근로 계약서 보기</a></th>
 			</tr>
 			<%--
 			<tr>
@@ -145,7 +145,7 @@
 			 --%>
 		</table>
 		<div class="btn-container">
-            <a href="../index.jsp">메인 페이지로</a>
+            <a href="../staffMain.jsp">메인 페이지로</a>
             <a href="logout.jsp">로그아웃</a>
         </div>
 	</div>
