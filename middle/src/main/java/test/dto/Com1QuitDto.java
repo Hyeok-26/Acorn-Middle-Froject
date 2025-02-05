@@ -15,7 +15,35 @@ public class Com1QuitDto {
 	private int endRowNum;
 	private String condition;
 	private String keyword;
+	private String ePwd;
+	private int sal;
 	
+	public String getePwd() {
+		return ePwd;
+	}
+	public void setePwd(String ePwd) {
+		this.ePwd = ePwd;
+	}
+	public int getSal() {
+		return sal;
+	}
+	public void setSal(int sal) {
+		this.sal = sal;
+	}
+	public int getHsal() {
+		return hsal;
+	}
+	public void setHsal(int hsal) {
+		this.hsal = hsal;
+	}
+	public int getWorktime() {
+		return worktime;
+	}
+	public void setWorktime(int worktime) {
+		this.worktime = worktime;
+	}
+	private int hsal;
+	private int worktime;
 	
 	public int getStartRowNum() {
 		return startRowNum;

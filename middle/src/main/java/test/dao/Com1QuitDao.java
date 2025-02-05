@@ -21,7 +21,98 @@ public class Com1QuitDao {
 		return dao;
 	}
 	
+	// 퇴사자의 정보를 삭제하는 메소드
+	public boolean delete(int empno) {
+		
+		Connection conn = null;
+        PreparedStatement pstmt = null;
+        int rowCount = 0;
+        try {
+            conn = new DbcpBean().getConn();
+            String sql = """
+                delete from test_com1_emp
+                WHERE empno=?
+            """;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, empno);
+            rowCount = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) {
+					pstmt.close();
+				}
+                if (conn != null) {
+					conn.close();
+				}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
+	// 퇴사자의 정보를 추출하는 메소드
+	public Com1QuitDto getData(int empno) {
+		// Dto 만들기
+		Com1QuitDto dto = new Com1QuitDto();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// DB 연결
+			conn = new DbcpBean().getConn();
+			// SELECT SQL 문
+			String sql = """
+					SELECT * FROM test_com1_quit
+					WHERE empno=?
+					""";
+			
+			// ? 값 바인딩
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, empno);
+			
+			// SQL문 실행
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				dto.setComId(rs.getInt("comid"));
+				dto.setStoreNum(rs.getInt("storenum"));
+				dto.setEmpNo(empno);
+				dto.seteName(rs.getString("ename"));
+				dto.setRole(rs.getString("role"));
+				dto.seteCall(rs.getString("ecall"));
+				dto.setePwd(rs.getString("epwd"));
+				dto.setSal(rs.getInt("sal"));
+				dto.setHsal(rs.getInt("hsal"));
+				dto.setWorktime(rs.getInt("worktime"));
+				dto.setEmail(rs.getString("email"));
+				dto.setHiredate((rs.getString("hiredate")).substring(0,(rs.getString("hiredate")).indexOf(" ")));
+				dto.setContract(rs.getString("contract"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+			}
+		}
+		return dto;
+	}
 	
 	// 새 데이터 추가하는 메소드 
 	public boolean insert(Com1EmpDto dto, String quitdate) {
@@ -32,8 +123,8 @@ public class Com1QuitDao {
 			conn = new DbcpBean().getConn();
 			String sql = """
 					INSERT INTO test_com1_quit
-					(comid, storenum, empno, ename, role, ecall, email, hiredate, quitdate)
-					VALUES(?, ?, ?, ?,?,?,?,TO_DATE(?,'YYYY-MM-DD HH24:MI:SS'),TO_DATE(?,'YYYY-MM-DD'))
+					(COMID, STORENUM, EMPNO, ENAME, ROLE, ECALL, EMAIL, CONTRACT, EPWD, SAL, HSAL, WORKTIME, HIREDATE, QUITDATE)
+					VALUES(?,?,?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'YYYY-MM-DD HH:'),TO_DATE(?,'YYYY-MM-DD'))
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.

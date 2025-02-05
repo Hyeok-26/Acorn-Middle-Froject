@@ -202,7 +202,7 @@
 			
 			
 			
-			<%-- 리스트 --%>	
+			<%-- 퇴사자 리스트 --%>	
 			<div style="height:400px;">
 				<table class="table table-striped">
 					<thead class="table-dark">
@@ -238,7 +238,7 @@
 										<td>${qmember.hiredate }</td>
 										<td>${qmember.quitdate }</td>
 										<td>${qmember.eCall }</td>
-										<th><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @submit.prevent="onCancle">복귀</a></th>
+										<th><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @click.prevent="onCancle">복귀</a></th>
 									</tr>
 								</c:forEach>
 									</tbody>
@@ -318,10 +318,31 @@
 				},
 				onCancle(e){
 					// 복귀 처리 할 사람의 정보 추출
+					const empno = e.target.parentElement.parentElement.childNodes[0].innerText;
+					const ename = e.target.parentElement.parentElement.childNodes[2].innerText;
 					
 					// 복귀 처리 한 번 더 물어보기
-					const answer = confirm("을(를) 복귀 처리 하시겠습니까?");
+					const answer = confirm(ename+"("+empno+")" +" 을(를) 복귀 처리 하시겠습니까?");
 					
+					// 대답이 긍정이라면 복귀 처리 하기
+					if(answer){
+						fetch("cancleQuit.jsp",{
+							method:"POST",
+							headers:{"Content-Type":"application/x-www-form-urlencoded; charset=utf-8"},
+							body: "empno="+empno
+						})
+						.then(res => res.json())
+						.then(data=>{
+							console.log(data);
+							if(data.isAddSuccess && data.isDeleteSuccess){
+								alert(ename+"("+empno+") 을(를) "+quitdate+" 일자로 퇴사 처리 하였습니다.");
+							} else if(data.isAddSuccess){
+								alert("EMP 테이블에서 삭제 실패. 개발자 확인 요망!");
+							} else {
+								alert("QUIT 테이블에 추가 실패. 개발자 확인 요망!");
+							}
+						});
+					}
 				},
 				onSubmit(e){
 					// 폼 입력이 제대로 이루어 졌는지 확인
