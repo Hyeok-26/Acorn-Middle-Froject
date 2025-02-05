@@ -40,9 +40,9 @@
 						
 						<%--업로드 버튼--%>
 						<div class="d-flex justify-content-between mb-3">
-			     	    <a href="ScheduleUploadform.jsp" class="btn btn-primary mt-3" role="button" >근무표업로드</a>
+			     	    <a href="uploadform.jsp?storenum=<%=num %>" class="btn btn-primary mt-3" role="button" >근무표업로드</a>
 			     	    <%--삭제 버튼--%>
-			     	    <a href="Schdelete.jsp?storenum=<%=num %>&date=<%=schdate %>" class="btn btn-danger mt-3" role="button" >근무표삭제</a>
+			     	    <a href="delete.jsp?storenum=<%=num %>&date=<%=schdate %>" class="btn btn-danger mt-3" role="button" >근무표삭제</a>
 			    	    </div>
                     	<img src="<%=srcurl %>" alt="직원근무표" id="" />
                   </div>
