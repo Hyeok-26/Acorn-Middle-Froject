@@ -62,10 +62,10 @@
         <h2 class="text-center mb-4">직원 메인 페이지</h2>
         <h3>환영합니다, ${ename}님!</h3>
         <div class="btn-container">
-        	<button><a href="${pageContext.request.contextPath }/staff/log/log.jsp">출/퇴근</a></button>
-            <button><a href="${pageContext.request.contextPath }/staff/schedule/schedule.jsp">스케줄</a></button>
-            <button><a href="${pageContext.request.contextPath }/staff/sal/salary.jsp">급여</a></button>
-            <button><a href="${pageContext.request.contextPath }/staff/info/Profile.jsp">프로필 관리</a></button>
+        	<button><a href="${pageContext.request.contextPath }/companyone/staff/log/log.jsp">출/퇴근</a></button>
+            <button><a href="${pageContext.request.contextPath }/companyone/staff/schedule/schedule.jsp">스케줄</a></button>
+            <button><a href="${pageContext.request.contextPath }/companyone/staff/salary/salary.jsp">급여</a></button>
+            <button><a href="${pageContext.request.contextPath }/companyone/staff/info/profile.jsp">프로필 관리</a></button>
         </div>
     </div>
 <jsp:include page="/include/footer.jsp" />
