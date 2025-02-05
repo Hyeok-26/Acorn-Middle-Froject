@@ -77,7 +77,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/ceo/quit-form.jsp</title>
+<title>퇴사자 관리 페이지</title>
 <style>
 	/* div{ border:1px solid red; } */
 
@@ -103,7 +103,7 @@
 			<div class="controlbar mb-3" style="display:flex">
 				
 				<%-- 조회 --%>
-				<form class="input-group" action="quit-form.jsp">
+				<form class="input-group" action="quitForm.jsp">
 					<select name="condition" class="btn btn-outline-dark dropdown-toggle">
 							<option value="ename" ${dto.condition eq 'ename' ? 'selected' : ''}>이름</option>
 							<option value="storenum" ${dto.condition eq 'storenum' ? 'selected' : ''}>지점</option>
@@ -133,25 +133,18 @@
 					    <%-- 퇴사자 추가 버튼을 누르면 나오는 창 --%>
 					    <div class="modal-body ">
 					    	
-					    	<%-- 데이터 조회 
+					    	<%-- 데이터 조회 --%>
 						    <div class="mb-3 row" >
 						    	<div class="col-3"><label for="search_empno" class="form-label">사원번호*</label></div>
 						    	<div class="col-6"><input v-model="search_empno" type="text" class="form-control" id="search_empno" placeholder="사원번호를 입력하세요..."></div>
 						    	<div class="col-3"><button @click="clickSearchBtn" class="btn btn-primary">조회</button></div>
-							</div>--%>
-							<div class="mb-3 d-flex align-items-center">
-		                         <label for="search_empno" class="form-label me-2 w-25 text-end">사원번호</label>
-		                         <div class="d-flex w-75">
-		                             <input v-model="search_empno" type="text" class="form-control me-2 w-50 text-end" id="search_empno" placeholder="사원번호 입력...">
-		                             <button @click="clickSearchBtn">조회</button>
-		                         </div>
-		                     </div>
+							</div>
 							
 							
 							<%-- 조회된 데이터 보여줌 --%>
-						    <form action="addQuit.jsp">
+						    <form action="addQuit.jsp" @submit.prevent="onSubmit">
 						    
-						    	<div class="mb-3 row" style="display:flex">
+						    	<div class="mb-3 row" style="display:none">
 						    		<div class="col-3"><label for="empno" class="form-label">사원번호 </label></div>
 						    		<div class="col-9"><input v-model="search_empno" type="text" class="form-control" id="empno" name="empno"  readonly></div>
 								</div>
@@ -196,7 +189,7 @@
 								</div>
 						      
 						      	<%-- 이 데이터로 퇴사자 처리 --%>
-					      		<button class="btn btn-primary">퇴사 처리</button>
+					      		<button class="btn btn-primary" id="addQuitBtn">퇴사 처리</button>
 						    </form>
 					    </div>
 					  </div>
@@ -224,19 +217,32 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="qmember" items="${list}">
-							<tr>
-								<td>${qmember.empNo }</td>
-								<td>${qmember.eName }</td>
-								<td>${qmember.storeNum }</td>
-								<td>${qmember.role }</td>
-								<td>${qmember.hiredate }</td>
-								<td>${qmember.quitdate }</td>
-								<td>${qmember.eCall }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+						<%-- 데이터가 없는 경우 --%>
+						<c:choose>
+							<c:when test="${totalRow eq 0}">
+								</tbody>
+								</table>
+								<div class=" justify-content-center align-items-center vh-100">
+								  <div class="p-3 bg-light">퇴사자가 아직 없습니다!</div>
+								</div>
+								
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="qmember" items="${list}">
+									<tr>
+										<td>${qmember.empNo }</td>
+										<td>${qmember.eName }</td>
+										<td>${qmember.storeNum }</td>
+										<td>${qmember.role }</td>
+										<td>${qmember.hiredate }</td>
+										<td>${qmember.quitdate }</td>
+										<td>${qmember.eCall }</td>
+									</tr>
+								</c:forEach>
+									</tbody>
+									</table>
+							</c:otherwise>
+						</c:choose>
 			</div>
 			
 			
@@ -250,19 +256,19 @@
 					<!-- Prev 버튼 -->
 					<c:if test="${startPageNum ne 1}">
 						<li class="page-item">
-							<a class="page-link" href="quit-form.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
+							<a class="page-link" href="quitForm.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
 						</li>
 					</c:if>
 					<!-- 페이지 번호 -->
 					<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
 						<li class="page-item ${i == pageNum ? 'active' : ''}">
-							<a class="page-link" href="quit-form.jsp?pageNum=${i}${findQuery}">${i}</a>
+							<a class="page-link" href="quitForm.jsp?pageNum=${i}${findQuery}">${i}</a>
 						</li>
 					</c:forEach>
 					<!-- Next 버튼 -->
 					<c:if test="${endPageNum < totalPageCount}">
 						<li class="page-item">
-							<a class="page-link" href="quit-form.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a>
+							<a class="page-link" href="quitForm.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a>
 						</li>
 					</c:if>
 				</ul>		
@@ -293,7 +299,7 @@
 			},
 			methods:{
 				clickSearchBtn(){
-					fetch("${pageContext.request.contextPath }/ceo_eugene/member-info.jsp?empno="+this.search_empno)
+					fetch("searchInfo.jsp?empno="+this.search_empno)
 					.then(res => res.json())
 					.then(data=>{
 						this.isExist = data.isExist;	// 존재여부
@@ -306,6 +312,50 @@
 					// 만약 없는 사원번호를 입력했을 경우
 					if(!this.isExist){
 						
+					}
+				},
+				onSubmit(e){
+					// 폼 입력이 제대로 이루어 졌는지 확인
+					const data = new FormData(e.target);
+				
+					const empno = e.target.empno.value;
+					const ename = e.target.ename.value
+					const quitdate = e.target.quitdate.value;
+					
+					// 만약 사원 번호(사원 정보)가 없는 경우
+					if(empno == "" || empno == 'null'){
+						alert("사원 번호를 입력하세요");
+					// 정보가 조회되지 않은 경우
+					} else if(ename == "") {
+						alert("조회 버튼을 눌러주세요")
+					} else if(ename == 'null'){
+						alert("정보가 없습니다");	
+					// 만약 퇴사일을 선택하지 않은 경우
+					} else if(quitdate == "" || quitdate == 'null') {
+						alert("퇴사일을 입력하세요");
+					// 위 경우가 모두 아니라면 퇴사 처리 진행
+					} else {
+						const queryString = new URLSearchParams(data).toString();
+						const url = e.target.action;
+						
+						fetch(url,{
+							method:"POST",
+							headers:{"Content-Type":"application/x-www-form-urlencoded; charset=utf-8"},
+							body: queryString
+						})
+						.then(res => res.json())
+						.then(data=>{
+							console.log(data);
+							if(data.isAddSuccess && data.isDeleteSuccess){
+								alert(ename+"("+empno+") 을(를) "+quitdate+" 일자로 퇴사 처리 하였습니다.");
+							} else if(data.isAddSuccess){
+								alert("EMP 테이블에서 삭제 실패. 개발자 확인 요망!");
+							} else {
+								alert("QUIT 테이블에 추가 실패. 개발자 확인 요망!");
+							}
+						});
+						
+						location.href = "quitForm.jsp";
 					}
 				}
 			}

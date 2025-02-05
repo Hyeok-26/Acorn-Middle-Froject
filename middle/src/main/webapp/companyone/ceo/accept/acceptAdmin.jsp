@@ -5,15 +5,14 @@
 <%@page import="test.dao.Com1WaitDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	System.out.println(1);
+
 	// 정보 추가에 필요한 데이터 추출 : 사원번호(empno)
 	int empno = Integer.parseInt(request.getParameter("empno"));
-	System.out.println(empno);
+
 	
-	System.out.println(2);
 	// 대기 리스트에서 해당 empno에 맞는 사람의 정보 추출
 	Com1WaitDto dto_wait = Com1WaitDao.getInstance().getData(empno);
-	System.out.println(3);
+
 	// 직원 테이블에 그 사람 정보 추가
 	Com1EmpDto dto_emp = new Com1EmpDto();
 	dto_emp.setComId(dto_wait.getComId());
@@ -25,13 +24,13 @@
 	dto_emp.setePwd(dto_wait.getePwd());
 	dto_emp.setEmail(dto_wait.getEmail());
 	boolean isAddSuccess = Com1EmpDao.getInstance().insert(dto_emp);
-	System.out.println(4);
+
 	// 대기 리스트에서는 그 사람 정보 삭제
 	boolean isDeleteSuccess = Com1WaitDao.getInstance().delete(empno);
-	System.out.println(5);
+
 	String empInsertMessage = (isAddSuccess) ? "사원 등록 성공" : "사원 등록 실패";
 	String waitDeleteMessage = (isDeleteSuccess) ? "대기 목록에서 삭제 성공" : "대기 목록 삭제 실패";
-	System.out.println(6);
+
 	// URL 파라미터로 메시지 전달
 	String redirectUrl = "accept-form.jsp?empInsertMessage=" + URLEncoder.encode(empInsertMessage, "UTF-8") + "&waitDeleteMessage=" + URLEncoder.encode(waitDeleteMessage, "UTF-8");
 	response.sendRedirect(redirectUrl);

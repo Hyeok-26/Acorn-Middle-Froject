@@ -12,7 +12,7 @@
 	// 로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
 	String comname = (String)session.getAttribute("comname");
 	String ename = (String)session.getAttribute("ename");
-
+  
 	// DB 에서 대기자 목록 가져오기
 	List<Com1WaitDto> list_admin =  Com1WaitDao.getInstance().getListAdmin();
 	
