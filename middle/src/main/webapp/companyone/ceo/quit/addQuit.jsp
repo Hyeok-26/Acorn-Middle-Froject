@@ -10,11 +10,10 @@
 	String quitdate = request.getParameter("quitdate");
 	
 	// 퇴사처리할 사람 정보 DTO 가져오기
-	Com1QuitDto dto_quit = Com1QuitDao.getInstance().getData(empno);
-	
+	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
 	
 	// quit 테이블에서 그 사람 row 추가
-	boolean isAddSuccess = Com1EmpDao.getInstance().insert(dto_quit,quitdate);
+	boolean isAddSuccess = Com1QuitDao.getInstance().insert(dto,quitdate);
 	
 	// emp 테이블에서 그 사람 row 삭제
 	boolean isDeleteSuccess = Com1EmpDao.getInstance().delete(empno);

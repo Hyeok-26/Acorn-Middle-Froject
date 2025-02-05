@@ -23,18 +23,25 @@ public class Com1QuitDao {
 	
 	// 퇴사자의 정보를 삭제하는 메소드
 	public boolean delete(int empno) {
-		
+		// DB 연결
 		Connection conn = null;
         PreparedStatement pstmt = null;
+        
         int rowCount = 0;
         try {
             conn = new DbcpBean().getConn();
+            
+            // SQL 문 생성
             String sql = """
-                delete from test_com1_emp
+                DELETE from test_com1_quit
                 WHERE empno=?
             """;
+            
+            // ? 값 바인딩
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, empno);
+            
+            // SQL 실행
             rowCount = pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,6 +57,9 @@ public class Com1QuitDao {
                 e.printStackTrace();
             }
         }
+        
+        System.out.println("삭제 처리 결과 row 개수: " + rowCount);
+        // 결과 처리
         if (rowCount > 0) {
 			return true;
 		} else {
@@ -124,7 +134,7 @@ public class Com1QuitDao {
 			String sql = """
 					INSERT INTO test_com1_quit
 					(COMID, STORENUM, EMPNO, ENAME, ROLE, ECALL, EMAIL, CONTRACT, EPWD, SAL, HSAL, WORKTIME, HIREDATE, QUITDATE)
-					VALUES(?,?,?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'YYYY-MM-DD HH:'),TO_DATE(?,'YYYY-MM-DD'))
+					VALUES(?,?,?,?,?,?,?,?,?,?,?,?,TO_DATE(?,'YYYY-MM-DD HH24:MI:SS'),TO_DATE(?,'YYYY-MM-DD HH24:MI:SS'))
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
@@ -135,8 +145,13 @@ public class Com1QuitDao {
 			pstmt.setString(5, dto.getRole());
 			pstmt.setString(6, dto.geteCall());
 			pstmt.setString(7, dto.getEmail());
-			pstmt.setString(8, dto.getHiredate());
-			pstmt.setString(9, quitdate);
+			pstmt.setString(8, dto.getContract());
+			pstmt.setString(9, dto.getePwd());
+			pstmt.setInt(10, dto.getSal());
+			pstmt.setInt(11, dto.getHsal());
+			pstmt.setInt(12, dto.getWorktime());
+			pstmt.setString(13, dto.getHiredate());
+			pstmt.setString(14, quitdate);
 			
 			// sql 문을 실행하고 변화된 row 의 개수를 리턴받기
 			rowCount = pstmt.executeUpdate();

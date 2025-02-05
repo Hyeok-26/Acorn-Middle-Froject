@@ -224,7 +224,7 @@
 								</tbody>
 								</table>
 								<div class=" justify-content-center align-items-center vh-100">
-								  <div class="p-3 bg-light">퇴사자가 아직 없습니다!</div>
+								  <div class="p-3 bg-light">퇴사자 정보가 없습니다!</div>
 								</div>
 								
 							</c:when>
@@ -301,6 +301,7 @@
 			},
 			methods:{
 				clickSearchBtn(){
+					this.isExist = false;
 					fetch("searchInfo.jsp?empno="+this.search_empno)
 					.then(res => res.json())
 					.then(data=>{
@@ -313,7 +314,7 @@
 					
 					// 만약 없는 사원번호를 입력했을 경우
 					if(!this.isExist){
-						
+						alert("없는 사원번호 입니다.");
 					}
 				},
 				onCancle(e){
@@ -335,12 +336,16 @@
 						.then(data=>{
 							console.log(data);
 							if(data.isAddSuccess && data.isDeleteSuccess){
-								alert(ename+"("+empno+") 을(를) "+quitdate+" 일자로 퇴사 처리 하였습니다.");
+								alert(ename+"("+empno+") 을(를) 복귀 처리 하였습니다.");
 							} else if(data.isAddSuccess){
-								alert("EMP 테이블에서 삭제 실패. 개발자 확인 요망!");
+								alert("QUIT 테이블에서 삭제 실패. 개발자 확인 요망!");
 							} else {
-								alert("QUIT 테이블에 추가 실패. 개발자 확인 요망!");
+								alert("EMP 테이블에 추가 실패. 개발자 확인 요망!");
 							}
+							location.href = "quitForm.jsp";
+						})
+						.catch((err)=>{
+							console.log(err);
 						});
 					}
 				},
@@ -383,9 +388,11 @@
 							} else {
 								alert("QUIT 테이블에 추가 실패. 개발자 확인 요망!");
 							}
+							location.href = "quitForm.jsp";
+						})
+						.catch((err)=>{
+							console.log(err);
 						});
-						
-						location.href = "quitForm.jsp";
 					}
 				}
 			}
