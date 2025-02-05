@@ -78,7 +78,7 @@
 						<div class="card-body">
 							<h5 class="card-title">직원관리</h5>
 						</div>
-						<a href="/employee-management" class="stretched-link"></a>
+					<a href="${pageContext.request.contextPath}/companyone/admin/staffstatus/view.jsp" class="stretched-link"></a>
 					</div>
 				</div>
 				<%--직원 스케줄  --%>
@@ -87,7 +87,7 @@
 						<div class="card-body">
 							<h5 class="card-title">직원스케줄관리</h5>
 						</div>
-						<a href="/employee-management" class="stretched-link"></a>
+					<a href="${pageContext.request.contextPath}/companyone/admin/staffschedule/view.jsp?storenum=<%=storenum %>" class="stretched-link"></a>
 					</div>
 				</div>
 				
@@ -97,7 +97,7 @@
 						<div class="card-body">
 							<h5 class="card-title">직원월급</h5>
 						</div>
-						<a href="/employee-management" class="stretched-link"></a>
+					<a href="${pageContext.request.contextPath}/companyone/admin/staffsalary/view.jsp" class="stretched-link"></a>
 					</div>
 				</div>
 				<%--상담문의--%>
