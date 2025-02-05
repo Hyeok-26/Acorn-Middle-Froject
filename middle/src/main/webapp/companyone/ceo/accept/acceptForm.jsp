@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <%
 	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
-	session.setAttribute("current_page", "accept-form");
+	session.setAttribute("current_page", "acceptForm");
 
 	// 로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
 	String comname = (String)session.getAttribute("comname");
@@ -76,7 +76,7 @@
 								<td>${item.storeNum }</td>
 								<td>${item.role }</td>
 								<td>상세보기</td>
-								<td><a href="addAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
+								<td><a href="acceptAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
 								<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">거절</a></td>
 							</tr>
 						</c:forEach>

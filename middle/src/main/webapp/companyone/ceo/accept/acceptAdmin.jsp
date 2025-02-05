@@ -33,7 +33,7 @@
 	String waitDeleteMessage = (isDeleteSuccess) ? "대기 목록에서 삭제 성공" : "대기 목록 삭제 실패";
 	System.out.println(6);
 	// URL 파라미터로 메시지 전달
-	String redirectUrl = "accept-form.jsp?empInsertMessage=" + URLEncoder.encode(empInsertMessage, "UTF-8") + "&waitDeleteMessage=" + URLEncoder.encode(waitDeleteMessage, "UTF-8");
+	String redirectUrl = "acceptForm.jsp?empInsertMessage=" + URLEncoder.encode(empInsertMessage, "UTF-8") + "&waitDeleteMessage=" + URLEncoder.encode(waitDeleteMessage, "UTF-8");
 	response.sendRedirect(redirectUrl);
 %>
 

@@ -1,10 +1,10 @@
-<%@page import="test.dao.UsingDao"%>
+<%@page import="test.dao.Com1Dao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	String comname = request.getParameter("comname");
 	
-	boolean isSuccess = UsingDao.getInstance().insert(comname);
+	boolean isSuccess = Com1Dao.getInstance().insert(comname);
 	
 	if(isSuccess){
 %>
