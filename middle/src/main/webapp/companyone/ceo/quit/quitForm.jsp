@@ -1,3 +1,5 @@
+<%@page import="java.util.regex.Matcher"%>
+<%@page import="java.util.regex.Pattern"%>
 <%@page import="java.util.List"%>
 <%@page import="test.dao.Com1QuitDao"%>
 <%@page import="test.dto.Com1QuitDto"%>
@@ -13,10 +15,19 @@
 
 	// 검색 조건이 있는지 request 영역 확인
 	String condition = request.getParameter("condition");
-	String keyword = request.getParameter("keyword");
+	String keyword = (String)request.getParameter("keyword");
 	
-	System.out.println("condition: " +condition);
-	System.out.println("keyword: "+ keyword);
+				
+	// 만약 직책명으로 키워드 검색 시 소문자가 섞여 있다면 대문자로 바꿔주기
+	if(condition != null && keyword != null){
+		Pattern pattern = Pattern.compile("[a-z]");
+		Matcher matcher = pattern.matcher(keyword);
+		boolean result_reg = matcher.find();
+		if(condition.equals("role") && result_reg){
+			keyword = keyword.toUpperCase();
+		}
+	}
+	
 	
 	String findQuery=null;
 	Com1QuitDto dto = new Com1QuitDto();
@@ -100,37 +111,52 @@
 			
 			
 			<%--상단 컨트롤 바--%>
-			<div class="controlbar mb-3" style="display:flex">
+			<div class="controlbar mb-3"  style="display:flex">
 				
 				<%-- 조회 --%>
-				<form class="input-group" action="quitForm.jsp">
-					<select name="condition" class="btn btn-outline-dark dropdown-toggle">
-							<option value="ename" ${dto.condition eq 'ename' ? 'selected' : ''}>이름</option>
-							<option value="storenum" ${dto.condition eq 'storenum' ? 'selected' : ''}>지점</option>
-							<option value="role" ${dto.condition eq 'role' ? 'selected' : ''}>직책</option>
-							<option value="empno" ${dto.condition eq 'empno' ? 'selected' : ''}>사원번호</option>
-					</select>
-					<input type="text" name="keyword" value="${dto.keyword}" placeholder=" 입력하세요.." />
-					
-					<button type="submit" class="btn btn-dark">검색</button>
-				</form>
-				
-				
-				<%-- 추가 --%>
-				<div class="d-grid gap-2 col-2 mx-auto">
-					<button class="btn btn-primary" id="add_quit" data-bs-toggle="modal" data-bs-target="#exampleModal">퇴사자 추가</button>
+				<div>
+					<form class="input-group" action="quitForm.jsp">
+						<select name="condition" class="btn btn-outline-dark dropdown-toggle">
+								<option value="ename" ${dto.condition eq 'ename' ? 'selected' : ''}>이름</option>
+								<option value="storenum" ${dto.condition eq 'storenum' ? 'selected' : ''}>지점</option>
+								<option value="role" ${dto.condition eq 'role' ? 'selected' : ''}>직책</option>
+								<option value="empno" ${dto.condition eq 'empno' ? 'selected' : ''}>사원번호</option>
+						</select>
+						<input type="text" name="keyword" value="${dto.keyword}" placeholder=" 입력하세요.." />
+						
+						<button type="submit" class="btn btn-dark">검색</button>
+					</form>
 				</div>
 				
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<%-- 정렬 버튼 --%>
+				<div>
+					<form class="input-group" action="quitForm.jsp">
+						<button class="btn btn-outline-dark" disabled>정렬</button >
+						<select name="lineup" id="lineup" class="btn btn-outline-dark dropdown-toggle">
+							<option value="quitdate">퇴사일</option>
+							<option value="hiredate">입사일</option>
+							<option value="empno">사원번호</option>
+							<option value="ename">이름</option>
+							<option value="storenum">지점</option>
+						</select>
+					</form>
+				</div>
+				
+				<%-- 퇴사자 추가 버튼 --%>
+				<div>
+					<button class="btn btn-primary" id="add_quit" data-bs-toggle="modal" data-bs-target="#showModal">퇴사자 추가</button>
+				</div>
+				
+				<%-- 퇴사자 추가 버튼을 누르면 나오는 모달 창 --%>
+				<div class="modal fade" id="showModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 					  <div class="modal-content">
 					  
 					    <div class="modal-header">
-					      <h1 class="modal-title fs-5" id="exampleModalLabel">퇴사자 추가</h1>
+					      <h1 class="modal-title fs-5" id="showModalLabel">퇴사자 추가</h1>
 					      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					    </div>
 					    
-					    <%-- 퇴사자 추가 버튼을 누르면 나오는 창 --%>
 					    <div class="modal-body ">
 					    	
 					    	<%-- 데이터 조회 --%>
@@ -296,26 +322,25 @@
 			el:".container",
 			data:{
 				search_empno:"",
-				isExist:false,
 				dto:""
 			},
 			methods:{
 				clickSearchBtn(){
-					this.isExist = false;
 					fetch("searchInfo.jsp?empno="+this.search_empno)
 					.then(res => res.json())
 					.then(data=>{
-						this.isExist = data.isExist;	// 존재여부
-						this.dto = data.dto;			// 인적사항
+						// 만약 없는 사원번호를 입력했을 경우
+						if(!data.isExist){
+							alert("없는 사원번호 입니다.");
+						} else {
+							this.dto = data.dto;
+						}
 					})
 					.catch((err)=>{
 						console.log(err);
 					});
 					
-					// 만약 없는 사원번호를 입력했을 경우
-					if(!this.isExist){
-						alert("없는 사원번호 입니다.");
-					}
+					
 				},
 				onCancle(e){
 					// 복귀 처리 할 사람의 정보 추출

@@ -13,7 +13,9 @@
 	dto.setHiredate(hiredate); */
 	
 	// 조회 결과
-	boolean isExist = dto == null ? false : true;
+	boolean isExist = dto.geteName() == null ? false : true;
+	System.out.println("dto: " + dto);
+	System.out.println("isExist: " + isExist);
 %>
 {
 	"isExist":<%=isExist %>,
