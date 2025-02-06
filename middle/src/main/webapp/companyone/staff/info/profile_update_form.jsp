@@ -1,3 +1,4 @@
+<%@page import="test.dao.UsingDao"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,9 @@
 <%
 	int empno = (int) session.getAttribute("empno");
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
+	
+	int comid = dto.getComId();
+	String comname = UsingDao.getInstance().getComName(comid);
 %>
 <!DOCTYPE html>
 <html>
@@ -36,12 +40,12 @@
 			<h1>프로필 수정</h1>
 			<form action="profile_update.jsp" method="post" id="myForm">
 				<div class="mb-3">
-					<label class="form-label">회사번호</label> <input class="form-control"
-						type="text" name="comid" value="<%=dto.getComId()%>" readonly />
+					<label class="form-label">회사</label> <input class="form-control"
+						type="text" name="comid" value="<%=comname%>" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label">사원번호</label> <input class="form-control"
-						type="text" name="empno" value="<%=dto.getEmpNo()%>" readonly />
+					<label class="form-label">소속 지점</label> <input class="form-control"
+						type="text" name="empno" value="<%=dto.getStoreNum()%>" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label">이름</label> <input class="form-control"

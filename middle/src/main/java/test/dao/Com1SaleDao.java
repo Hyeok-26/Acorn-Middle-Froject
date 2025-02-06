@@ -66,39 +66,39 @@ public class Com1SaleDao {
 
 	// 삭제
 	// ?호점의 ?일 매출 삭제
-	public boolean delete(String saleDate, int storeNum) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int rowCount = 0;
-		try {
-			conn = new DbcpBean().getConn();
-			String sql = """
-					    delete from test_com1_sales
-					    WHERE storeNum=? and saleDate=?
-					""";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(2, storeNum);
-			pstmt.setString(1, saleDate);
-
-			rowCount = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		if (rowCount > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	public boolean delete(String saleDate, int storeNum) {
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		int rowCount = 0;
+//		try {
+//			conn = new DbcpBean().getConn();
+//			String sql = """
+//					    delete from test_com1_sales
+//					    WHERE storeNum=? and saleDate=?
+//					""";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(2, storeNum);
+//			pstmt.setString(1, saleDate);
+//
+//			rowCount = pstmt.executeUpdate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (pstmt != null)
+//					pstmt.close();
+//				if (conn != null)
+//					conn.close();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		if (rowCount > 0) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 
 	// 수정
 	// ?호점의 ?월 매출 수정

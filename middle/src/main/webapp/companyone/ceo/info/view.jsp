@@ -8,12 +8,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-int empno = (int)session.getAttribute("empno");
-int comid = (int)session.getAttribute("comid");
-UsingDao udao = UsingDao.getInstance();
-String comname = udao.getComName(comid);
-Com1CeoDao dao = Com1CeoDao.getInstance();
-Com1CeoDto dto = dao.getData(empno);
+	int empno = (int)session.getAttribute("empno");
+	int comid = (int)session.getAttribute("comid");
+	String comname = UsingDao.getInstance().getComName(comid);
+	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
 %>
 
 

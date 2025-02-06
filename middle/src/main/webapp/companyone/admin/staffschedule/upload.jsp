@@ -6,7 +6,8 @@
 	int num = Integer.parseInt(request.getParameter("storenum"));
 	String month = request.getParameter("title");
 	String srcurl = request.getParameter("srcurl");
-
+	
+	System.out.println(srcurl);
 	
 	Com1SchDto dto = new Com1SchDto();
 	dto.setStoreNum(num);

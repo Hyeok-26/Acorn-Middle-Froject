@@ -233,7 +233,6 @@ public class Com1QuitDao {
 	
 	
 	
-	
 	// 리스트 정보를 가져오는 메소드
 	public List<Com1QuitDto> getList(Com1QuitDto dto) {
 		List<Com1QuitDto> list = new ArrayList<>();
@@ -243,25 +242,38 @@ public class Com1QuitDao {
 		
 		try {
 			conn = new DbcpBean().getConn();
-			
+			System.out.println("dto.getLineup(): " + dto.getLineup());
 			// SQL 문 생성
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT * FROM ");
 			sql.append("(SELECT result1.*, ROWNUM AS rnum FROM ");
-			sql.append("(SELECT empno, ename, storenum, role, ecall, TO_CHAR(hiredate, 'YYYY.MM.DD HH24:MI') AS hiredate, TO_CHAR(quitdate, 'YYYY.MM.DD HH24:MI') AS quitdate FROM test_com1_quit ");
+			sql.append("(SELECT empno, ename, storenum, role, ecall, TO_CHAR(hiredate, 'YYYY.MM.DD') AS hiredate, TO_CHAR(quitdate, 'YYYY.MM.DD') AS quitdate FROM test_com1_quit ");
+			
+			// 만약 키워드 검색 옵션 값이 있다면
 			if(dto.getCondition() != null && dto.getKeyword() != null && !dto.getKeyword().isEmpty()) {
 				sql.append("WHERE ").append(dto.getCondition()).append(" LIKE ? ");
 			}
-			sql.append("ORDER BY quitdate DESC) result1) WHERE rnum BETWEEN ? AND ?");
+			// 만약 정렬 옵션 값이 있다면 (날짜도 제외)
+			if(dto.getLineup() != null && dto.getLineup() != "" && !dto.getLineup().isEmpty() && dto.getLineup() != "quitdate") {
+				sql.append("ORDER BY ").append(dto.getLineup()).append(" ASC) ");
+			} else {
+				// 정렬 옵션이 없다면 기본으로 퇴사날짜로 정렬
+				sql.append("ORDER BY quitdate DESC) ");
+			}
+			
+			sql.append("result1) WHERE rnum BETWEEN ? AND ?");
 			
 			// ? 바인딩
 			pstmt = conn.prepareStatement(sql.toString());
+			System.out.println(sql);
 			int paramIndex = 1;
+			// 만약 키워드 검색 옵션 값이 있다면
 			if(dto.getCondition() != null && dto.getKeyword() != null && !dto.getKeyword().isEmpty()) {
 				pstmt.setString(paramIndex++, "%" + dto.getKeyword() + "%");
 			}
 			pstmt.setInt(paramIndex++, dto.getStartRowNum());
 			pstmt.setInt(paramIndex, dto.getEndRowNum());
+			
 			// 쿼리 실행 및 결과 추출
 			rs = pstmt.executeQuery();
 			while(rs.next()) {

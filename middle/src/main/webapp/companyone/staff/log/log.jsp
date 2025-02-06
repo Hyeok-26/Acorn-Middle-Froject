@@ -1,10 +1,17 @@
+<%@page import="test.dao.Com1EmpLogDao"%>
+<%@page import="test.dto.Com1EmpLogDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int empno = (int)session.getAttribute("empno");
+	Com1EmpLogDto dto = new Com1EmpLogDto();
+	dto.setEmpno(empno);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>출퇴근 페이지</title>
+<title>진세님 출퇴근 페이지</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
@@ -44,7 +51,7 @@
 <body>
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2">
-		<h1>출/퇴근 기록</h1>
+		<h1>출/퇴근</h1>
 		<div class="time-container">
 			<div class="clock">
         		<h1>00:00:00</h1>
@@ -56,42 +63,68 @@
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script>
-		const clock = document.querySelector(".clock");
-		const clockTitle = clock.querySelector("h1");
-		const startBtn = document.getElementById("startBtn");
-		const endBtn = document.getElementById("endBtn");
 		//시간 함수
 		function Time(){
 		    const date = new Date();
 		    const hour = date.getHours(); //시
 		    const minute = date.getMinutes(); //분
 		    const second = date.getSeconds(); //초
-		    clockTitle.innerText = `\${hour}:\${minute}:\${second}`;
-		    console.log(`\${hour}:\${minute}:\${second}`);
+		    $(".clock h1").text(`\${hour}:\${minute}:\${second}`);
+		    return `\${hour}:\${minute}:\${second}`;
 		}
 		//시계 표현
 		function show(){
 		    Time();
 		    setInterval(Time,1000);
-		    console.log();
 		}
 		show();
-		//근무 시작
-		startBtn.addEventListener("click", function() {
-		    startBtn.disabled = true; 
-		    endBtn.disabled = false; 
-		    alert("출근!!");
-		});
-		//근무 끝
-		endBtn.addEventListener("click", function() {
-		    startBtn.disabled = false; 
-		    endBtn.disabled = true; 
-		    alert("퇴근!!");
-		});
-
+		
 		// 초기 상태 설정: 퇴근 버튼 비활성화
 		endBtn.disabled = true;
-	</script>
+		
+		$("#startBtn").click(() => {
+            startBtn.disabled = true;
+            endBtn.disabled = false;
+
+            $.ajax({
+                url: 'workStartLog.jsp',
+                method: 'post',
+                data: {
+                    empno: '<%= empno %>',
+                },
+                success: (res) => {
+                    alert("출근 완료!");
+                },
+                error: (err) => {
+                    console.error("출근 기록 실패:", err);
+                    startBtn.disabled = false;
+                    endBtn.disabled = true;
+                }
+            });
+        });
+
+        // 퇴근 버튼 클릭 시
+        $("#endBtn").click(() => {
+            $.ajax({
+                url: 'workEndLog.jsp',
+                method: 'post',
+                data: {
+                    empno: '<%= empno %>',
+                },
+                success: (res) => {
+                    alert("퇴근 완료!");
+                    startBtn.disabled = false;
+                    endBtn.disabled = true;
+                },
+                error: (err) => {
+                    console.error("퇴근 기록 실패:", err);
+                    startBtn.disabled = true;
+                    endBtn.disabled = false;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

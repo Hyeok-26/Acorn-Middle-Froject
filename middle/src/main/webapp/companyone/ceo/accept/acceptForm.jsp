@@ -13,8 +13,13 @@
 	String comname = (String)session.getAttribute("comname");
 	String ename = (String)session.getAttribute("ename");
   
+	
+	// 로딩 데이터
+	Com1WaitDto dto = new Com1WaitDto();
 	// DB 에서 대기자 목록 가져오기
 	List<Com1WaitDto> list_admin =  Com1WaitDao.getInstance().getListAdmin();
+	
+	
 	
 	
 	String empInsertMessage = request.getParameter("empInsertMessage");
@@ -70,18 +75,32 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="item" items="<%=list_admin %>">
-							<tr>
-								<td>${item.eName }</td>
-								<td>${item.storeNum }</td>
-								<td>${item.role }</td>
-								<td>상세보기</td>
-								<td><a href="acceptAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
-								<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">거절</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+						
+						<c:choose>
+							<%-- 데이터가 없는 경우 --%>
+							<c:when test="<%=list_admin.isEmpty() %>">
+								</tbody>
+								</table>
+								<div class=" justify-content-center align-items-center vh-100">
+								  <div class="p-3 bg-light">점장의 가입 요청 정보가 없습니다!</div>
+								</div>
+							</c:when>
+							<%-- 데이터가 있는 경우 --%>
+							<c:otherwise>
+								<c:forEach var="item" items="<%=list_admin %>">
+									<tr>
+										<td>${item.eName }</td>
+										<td>${item.storeNum }</td>
+										<td>${item.role }</td>
+										<td>상세보기</td>
+										<td><a href="acceptAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
+										<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">거절</a></td>
+									</tr>
+								</c:forEach>
+								</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
 			</div>
 			
 			<%-- 페이징 --%>

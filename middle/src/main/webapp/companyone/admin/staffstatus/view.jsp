@@ -40,6 +40,7 @@
 						<th>일한시간</th>
 						<th>이메일</th>
 						<th>근로계약서보기</th>
+						<th>근로시간변경</th>
 						<th>삭제</th>
 					</tr>
 				</thead>
@@ -56,7 +57,7 @@
 						<td><%=tmp.getWorktime()%></td>
 						<td><%=tmp.getEmail()%></td>										
 						<td>
-							<a href="contract.jsp?empno=<%=tmp.getEmpNo()%>&ename=<%=tmp.geteName()%>&contract=<%=tmp.getContract()%>">
+							<a href="contract.jsp?empno=<%=tmp.getEmpNo()%>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
 							  <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
 							  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5z"/>
@@ -64,6 +65,13 @@
 							<span>근로계약서</span>
 							</a>
 						</td>
+						<td><a href="salupdateform.jsp?empno=<%=tmp.getEmpNo()%>">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+						  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+						  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+						</svg>
+						<span class="visually-hidden">근로시간변경</span>
+						</a></td>
 						<td>
 							<a href="delete.jsp?empno=<%=tmp.getEmpNo()%>"> 
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash" viewBox="0 0 16 16">

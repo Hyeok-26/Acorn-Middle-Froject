@@ -7,17 +7,33 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	// 현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
-	session.setAttribute("current_page", "quit-form");
+	session.setAttribute("current_page", "quitForm");
+
+
+
 
 	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
 	String comname = (String)session.getAttribute("comname");
 	String ename = (String)session.getAttribute("ename");
 
+	
+	
+	
+	
+	
+	// 페이지 로딩 uri
+	String findQuery="";
+	// 로딩 데이터
+	Com1QuitDto dto = new Com1QuitDto();
+	
+		
+	
+	
+	
+	
 	// 검색 조건이 있는지 request 영역 확인
 	String condition = request.getParameter("condition");
 	String keyword = (String)request.getParameter("keyword");
-	
-				
 	// 만약 직책명으로 키워드 검색 시 소문자가 섞여 있다면 대문자로 바꿔주기
 	if(condition != null && keyword != null){
 		Pattern pattern = Pattern.compile("[a-z]");
@@ -27,18 +43,29 @@
 			keyword = keyword.toUpperCase();
 		}
 	}
-	
-	
-	String findQuery=null;
-	Com1QuitDto dto = new Com1QuitDto();
-	
-	// 검색 조건이 있는 경우 dto 에 키워드 값 담기
+	// 검색 조건이 있는 경우 dto 에 값 담기
 	if(condition != null && keyword != null){
 		dto.setCondition(condition);
 		dto.setKeyword(keyword);
 		findQuery = "&condition="+condition+"&keyword="+keyword;
 	}
 	
+	
+	
+	
+	
+	// 정렬 조건이 있는지 확인
+	String lineup = request.getParameter("lineup");
+	// 정렬 조건이 있는 경우 dto 에 값 담기
+	if(lineup != null && lineup != ""){
+		dto.setLineup(lineup);
+	}
+
+	
+	
+	
+	
+	// 페이징 처리
 	final int PAGE_ROW_COUNT = 6;		//한 페이지에 표시할 개수
 	final int PAGE_DISPLAY_COUNT = 3;	// 하단 페이지에 표시할 개수
 	int pageNum = 1;	// 페이징 초기값 
@@ -69,7 +96,10 @@
 	dto.setStartRowNum(startRowNum);
 	dto.setEndRowNum(endRowNum);
 	
-	// 여기까지 dto 준비 끝 (키워드값, 페이징값)
+	
+	
+	
+	
 	
 	// 리스트 목록 데이터 가져오기
 	List<Com1QuitDto> list =  Com1QuitDao.getInstance().getList(dto);
@@ -111,10 +141,11 @@
 			
 			
 			<%--상단 컨트롤 바--%>
-			<div class="controlbar mb-3"  style="display:flex">
+			<div class="controlbar d-flex mb-3" > <%-- display:flex ; margin-bottom:3px;--%>
 				
-				<%-- 조회 --%>
-				<div>
+				<%-- 조회 버튼--%>
+				<div class="p-2">
+					<%-- 
 					<form class="input-group" action="quitForm.jsp">
 						<select name="condition" class="btn btn-outline-dark dropdown-toggle">
 								<option value="ename" ${dto.condition eq 'ename' ? 'selected' : ''}>이름</option>
@@ -124,26 +155,53 @@
 						</select>
 						<input type="text" name="keyword" value="${dto.keyword}" placeholder=" 입력하세요.." />
 						
-						<button type="submit" class="btn btn-dark">검색</button>
+						<button type="submit" class="btn btn-outline-dark">검색</button>
 					</form>
+					--%>
+					<div class="input-group">
+						<select v-model="condition"  name="condition" class="btn btn-outline-dark dropdown-toggle">
+								<option value="ename">이름</option>
+								<option value="storenum">지점</option>
+								<option value="role">직책</option>
+								<option value="empno">사원번호</option>
+						</select>
+						<input v-model="keyword" type="text" name="keyword" placeholder=" 입력하세요.." />
+						<button @click="onSearch" class="btn btn-outline-dark">검색</button>
+					</div>
 				</div>
+				
+				
 				
 				<%-- 정렬 버튼 --%>
-				<div>
+				<div class="p-2">
+					<%--
 					<form class="input-group" action="quitForm.jsp">
-						<button class="btn btn-outline-dark" disabled>정렬</button >
-						<select name="lineup" id="lineup" class="btn btn-outline-dark dropdown-toggle">
-							<option value="quitdate">퇴사일</option>
-							<option value="hiredate">입사일</option>
-							<option value="empno">사원번호</option>
-							<option value="ename">이름</option>
-							<option value="storenum">지점</option>
+						<button type="button" class="btn btn-outline-dark">정렬 조건</button>
+						<select name="lineup" onchange="submit()" class="btn btn-outline-dark dropdown-toggle">
+								<option value="quitdate" ${dto.lineup eq 'quitdate' ? 'selected' : ''}>퇴사일</option>
+								<option value="hiredate" ${dto.lineup eq 'hiredate' ? 'selected' : ''}>입사일</option>
+								<option value="empno" ${dto.lineup eq 'empno' ? 'selected' : ''}>사원번호</option>
+								<option value="ename" ${dto.lineup eq 'ename' ? 'selected' : ''}>이름</option>
+								<option value="storenum" ${dto.lineup eq 'storenum' ? 'selected' : ''}>지점</option>
 						</select>
 					</form>
+					--%>
+					<div class="input-group">
+						<button type="button" class="btn btn-outline-dark" disabled>정렬 조건</button>
+						<select v-model="lineup" name="lineup" @change="onSearch" class="btn btn-outline-dark dropdown-toggle">
+								<option value="">선택</option>
+								<option value="quitdate">퇴사일</option>
+								<option value="hiredate">입사일</option>
+								<option value="empno">사원번호</option>
+								<option value="ename">이름</option>
+								<option value="storenum">지점</option>
+						</select>
+					</div>
 				</div>
 				
+				
 				<%-- 퇴사자 추가 버튼 --%>
-				<div>
+				<div class="ms-auto p-2">
 					<button class="btn btn-primary" id="add_quit" data-bs-toggle="modal" data-bs-target="#showModal">퇴사자 추가</button>
 				</div>
 				
@@ -322,9 +380,21 @@
 			el:".container",
 			data:{
 				search_empno:"",
-				dto:""
+				dto:"",
+				lineup:"${dto.lineup}",
+				condition:"${empty dto.condition ? 'ename' : dto.condition}",
+				keyword:"${empty dto.keyword ? '' : dto.keyword}"
 			},
 			methods:{
+				onSearch(){
+					if(this.keyword == ""){
+						location.href="quitForm.jsp?lineup="+this.lineup;
+					}else{
+						location.href="quitForm.jsp?condition="+this.condition+"&keyword="+this.keyword+"&lineup="+this.lineup;
+					}
+					
+				},
+				// 모달창에서 사원 조회
 				clickSearchBtn(){
 					fetch("searchInfo.jsp?empno="+this.search_empno)
 					.then(res => res.json())
@@ -342,6 +412,7 @@
 					
 					
 				},
+				// 퇴사자 복귀
 				onCancle(e){
 					// 복귀 처리 할 사람의 정보 추출
 					const empno = e.target.parentElement.parentElement.childNodes[0].innerText;
@@ -374,10 +445,10 @@
 						});
 					}
 				},
+				// 퇴사자 추가 
 				onSubmit(e){
 					// 폼 입력이 제대로 이루어 졌는지 확인
 					const data = new FormData(e.target);
-				
 					const empno = e.target.empno.value;
 					const ename = e.target.ename.value
 					const quitdate = e.target.quitdate.value;
@@ -420,7 +491,8 @@
 						});
 					}
 				}
-			}
+			}//methods
+			
 		});
 	</script>
 </body>
