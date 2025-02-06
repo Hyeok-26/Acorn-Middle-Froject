@@ -97,7 +97,7 @@
 			id="myTabContent">
 			<div class="table-responsive">
 				<table
-					class="table table-hover table-striped text-center align-middle">
+					class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
 							<th>호점</th>
