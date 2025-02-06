@@ -198,7 +198,7 @@ public class Com1SaleDao {
 					SELECT extract(year from salesDate) AS year, extract(month from salesDate) AS month, storeNum,
 					       SUM(dailySales) AS monthlySales
 					FROM test_com1_sales
-					WHERE storeNum=? AND YEAR(salesDate)=? AND MONTH(salesDate)=?
+					WHERE storeNum=? AND extract(year from salesDate)=? AND extract(month from salesDate)=?
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, storeNum);
@@ -241,7 +241,7 @@ public class Com1SaleDao {
 					SELECT extract(year from salesDate) AS year, storeNum,
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
-					WHERE storeNum=? AND YEAR(salesDate)=?
+					WHERE storeNum=? AND extract(year from salesDate)=?
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, storeNum);
@@ -283,7 +283,7 @@ public class Com1SaleDao {
 					SELECT extract(year from salesDate) AS year, extract(month from salesDate) AS month,
 					       SUM(dailySales) AS monthlySales
 					FROM test_com1_sales
-					WHERE YEAR(salesDate)=? AND MONTH(salesDate)=?
+					WHERE extract(year from salesDate)=? AND extract(month from salesDate)=?
 					order by storenum asc
 					     """;
 			pstmt = conn.prepareStatement(sql);
@@ -327,7 +327,7 @@ public class Com1SaleDao {
 					SELECT extract(year from salesDate) AS year,
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
-					WHERE YEAR(salesDate)=?
+					WHERE extract(year from salesDate)=?
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
