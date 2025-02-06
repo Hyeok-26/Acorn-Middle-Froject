@@ -36,8 +36,8 @@ public class Com1SaleDao {
 			conn = new DbcpBean().getConn();
 			String sql = """
 					insert into test_com1_sales
-					(saleDate, storeNum, dailySales)
-					values(?,?,?)
+					(salesDate, storeNum, dailySales)
+					values(TO_DATE(?,'YYYY-MM-DD'),?,?)
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
