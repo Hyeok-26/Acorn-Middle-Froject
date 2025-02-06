@@ -13,7 +13,7 @@
     <a class="nav-link ${current_page eq 'acceptForm' ? 'active' : ''}" href="${pageContext.request.contextPath }/companyone/ceo/accept/acceptForm.jsp">가입 승인</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link ${current_page eq 'emolyeeManageForm' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/ceo/employee/employeemanage.jsp">직원 현황</a>
+    <a class="nav-link ${current_page eq 'manageForm' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/ceo/employee/manageForm.jsp">직원 현황</a>
   </li>
   <li class="nav-item">
     <a class="nav-link ${current_page eq 'yet' ? 'active' : ''}" href="#">매출 관리</a>
