@@ -6,11 +6,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
 <%
 	//세션에 담은 storenum 가져오기
-	int storenum = (int)session.getAttribute("storenum");
+	//int storenum = (int)session.getAttribute("storenum");
 	//storenum에 해당하는 데이터 리스트 가져오기
-	List<Com1SaleDto> list=Com1SaleDao.getInstance().getList(storenum);
-	request.setAttribute("list", list);
-
+	//List<Com1SaleDto> list=Com1SaleDao.getInstance().getList(storenum);
+	//request.setAttribute("list", list);
+	
 	
 %>	
 <!DOCTYPE html>

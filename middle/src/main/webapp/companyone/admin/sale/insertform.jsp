@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>매출추가 페이지</title>
+<jsp:include page="/include/resource.jsp"></jsp:include>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+  <!-- 네비게이션 바 -->
+  <jsp:include page="/include/navbar.jsp">
+    <jsp:param value="index" name="current" />
+  </jsp:include>
+
+  <!-- 메인 컨텐츠 -->
+  <div class="container flex-grow-1 my-4">
+  <form action="${pageContext.request.contextPath}/companyone/admin/sale/insert.jsp" method="get">
+  	<!-- 버튼 -->
+    <div class="d-flex justify-content-between mb-3">
+      <button type="submit" class="btn btn-success" id="addBtn">매출추가</button>
+    </div>
+
+    <!-- 테이블 -->
+    <table class="table table-bordered table-hover text-center">
+      <thead class="table-success">
+        <tr>
+          <th>날짜</th>
+          <th>매출</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="date" id="saledate" name="saledate" required/></td>
+          <td><input type="number" id="dailySales" name="dailySales" min="0" required/></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  <%--YYYYMMDD 형식으로 전환 --%>
+		<script>
+		document.querySelector("#addBtn").addEventListener("click",()=>{
+			console.log("aaa")
+			const dateInput = document.querySelector("#saledate").value;
+			if (dateInput) {
+				dateInput = dateInput.replace(/-/g, ""); // YYYY-MM-DD → YYYYMMDD 변환
+				document.querySelector("#saledate").value = dateInput;
+			}
+		});
+		</script>
+	</div>
+  <!-- 푸터 -->
+  <jsp:include page="/include/footer.jsp" />
+</body>
+</html>
