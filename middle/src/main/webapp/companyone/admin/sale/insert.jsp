@@ -10,7 +10,7 @@
 <%
 	// 입력한 데이터 가져오기 날짜, 매출
 	String salesDate=request.getParameter("salesdate");
-	System.out.println("saleateStr:" +salesDate);
+	//System.out.println("saleateStr:" +salesDate);
 	
 	//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	//Date utilDate = sdf.parse(saledateStr);
@@ -19,7 +19,7 @@
 	int dailySales=Integer.parseInt(request.getParameter("dailySales"));
 	//세션에 있는 storenum 가져오기
 	
-	System.out.println(session.getAttribute("storenum"));
+	//System.out.println(session.getAttribute("storenum"));
 	int storenum=(int)session.getAttribute("storenum");
 	
 	// DTO 객체 생성

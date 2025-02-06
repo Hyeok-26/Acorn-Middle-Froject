@@ -37,6 +37,7 @@
 	
 	// 몇 호점 리스트 정보 가져오기
 	List<Integer> storeList = Com1Dao.getInstance().getStoreNumList();
+	pageContext.setAttribute("storeList", storeList);
 	
 	System.out.println("condition: " + condition);
 %>
@@ -83,7 +84,7 @@
 		  		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">몇 호점 별 직원</a>
 		  		<ul class="dropdown-menu">
 		  			<%-- <c:forEach var="num" items="${storeList}"> 이건 왜 안되여??--%>
-		  			<c:forEach var="num" items="<%=storeList %>">
+		  			<c:forEach var="num" items="${storeList }">
 		  				<li><a class="dropdown-item" href="manageForm.jsp?condition=store&storenum=${num}">${num}</a></li>
 		  			</c:forEach>
 			    </ul>
