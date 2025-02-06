@@ -13,7 +13,7 @@
 	String newPassword=request.getParameter("newPassword");	
 	boolean isSuccess=false;
 
-	if(newcall!=null&&newPassword!=null){
+	if(newcall!=null||newPassword!=null){
 		dto.seteCall(newcall);
 		Com1CeoDao.getInstance().update(dto);
 		dto.setePwd(newPassword);

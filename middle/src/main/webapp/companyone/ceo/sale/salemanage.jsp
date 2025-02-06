@@ -1,76 +1,95 @@
 <%@page import="test.dao.Com1Dao"%>
-<%@page import="test.dto.Com1SaleDto"%>
+<%@page import="test.dto.Com1Dto"%>
 <%@page import="test.dao.Com1SaleDao"%>
+<%@page import="test.dto.Com1SaleDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%
-
-	int comid = (int)session.getAttribute("comid");
+//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
+	session.setAttribute("current_page", "emolyeeManageForm");
+	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
 	String comname = (String)session.getAttribute("comname");
-	int empno = (int)session.getAttribute("empno");
-	String role = (String)session.getAttribute("role");
-	String ename = (String)session.getAttribute("ename");
-	
+    String ename = (String)session.getAttribute("ename");
 	Com1SaleDao SaleDao = Com1SaleDao.getInstance();
-	Com1Dao com1Dao = Com1Dao.getInstance();
+	List<Integer> storenums = Com1Dao.getInstance().getStoreNumList();
+	List<Com1SaleDto> listall = SaleDao.getListAll();
+	//List<Com1SaleDto> listyear=SaleDao.getListYear();
+	//int year = SaleDao.getListYear();
+	//List<Com1SaleDto> listmonth=SaleDao.getListMonth(year);
 	
-	List<Integer> storeNumbers = com1Dao.getStoreNumList();
-
+	
+	Com1Dao com1Dao = Com1Dao.getInstance();
 	String storenumParam = request.getParameter("storenum");
-    int storenum = -1;  
-	List<Com1SaleDto> SaleList = SaleDao.getList();
-    List<Com1SaleDto> storeEmpList = null;
+   	int storenum = -1; 	
+  	List<Com1SaleDto> storeList = null;
 
-    if (storenumParam != null && !storenumParam.isEmpty()) {
-        storenum = Integer.parseInt(storenumParam);
-        storeEmpList = SaleDao.getList(); 
-    }
+
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
-.sidebar-item {
-	text-align: center;
-	padding: 10px;
+.tab-button {
+	padding: 10px 20px;
 	cursor: pointer;
+	font-weight: bold;
+	background-color: #f1f1f1;
+	border: 1px solid #ddd;
+	transition: background-color 0.3s ease;
+	display: inline-block;
 }
-
-.sidebar-item:hover {
-	background-color: lightgrey; /* 배경색 변경 */
-	color: white; /* 텍스트 색상 변경 */
+.active-tab {
+	background-color: #dcdcdc;
+	border-bottom: 2px solid #999;
 }
-/* 테이블 헤더 고정 */
-th {
-	position: sticky;
-	top: 0;
-	background-color: #f1f1f1; /* 배경색 고정 */
-	z-index: 1; /* 헤더가 다른 콘텐츠 위에 오도록 설정 */
+.tab-content {
+	padding: 20px;
+	background-color: #fff;
+	border-top: 1px solid #ddd;
+	display: none;
 }
-
-/* 테이블 스타일 */
 table {
 	width: 100%;
 	border-collapse: collapse;
-	border: 1px solid #ccc;
+	margin-bottom: 20px;
+	table-layout: fixed;
 }
-
 th, td {
-	padding: 8px;
 	border: 1px solid #ddd;
+	padding: 12px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 16px;
+	white-space: normal;
+	overflow-wrap: break-word;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+}
+th {
+	background-color: #f5f5f5;
+	font-weight: bold;
+	color: #333;
+	border-bottom: 2px solid #bbb;
+}
+tbody tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+tbody tr:hover {
+	background-color: #eef;
 }
 </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container">
 		<p>
-			회사코드 :
+		<%-->	회사코드 :
 			<%=comid %>
 			회사번호 :
 			<%=comname %>
@@ -79,128 +98,135 @@ th, td {
 			역할 :
 			<%=role %>
 			이름 :
-			<%=ename %>
+			<%=ename %> --%>
 		</p>
 	</div>
 	<div class="container flex-fill" style="width: 100%; margin-top: 50px;">
-		<div class="tab-button" id="employeeTab" onclick="switchTab('employee')">전체 직원</div>
-		<div class="tab-button" id="adminTab" onclick="switchTab('admin')">점장</div>
-		<div class="tab-button" id="staffTab" onclick="switchTab('staff')">직원</div>
-		<div class="tab-button" id="storeNumTab"onclick="switchTab('storeNum')">호점</div>
-
-
-		<div id="storeNumContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
-			
-			<form method="get" id="storeForm">
-				<label for="storenum">지점 선택: </label> 
-				<select name="storenum"	id="storenum"
-					onchange="document.getElementById('storeForm').submit();">
-					<option value="">-- 지점을 선택하세요 --</option>
-					<% for (Integer storeNum : storeNumbers) { %>
-					<option value="<%= storeNum %>"
-						<%= (storeNum == storenum) ? "selected" : "" %>>
-						<%= storeNum %>호점
-					</option>
-					<% } %>
-				</select>
+		<div class="tab-button" id="allTab" onclick="switchTab('all')">전체 매출</div>
+		<div class="tab-button" id="allyearTab" onclick="switchTab('allyear')">전체 연매출</div>
+		<div class="tab-button" id="allmonthTab" onclick="switchTab('allmonth')">전체 월매출</div>
+	
+		<div id="allContent" class="tab-content"
+			style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
+			<form action="storeReport.jsp" method="POST">
+				<label> 
+					<input type="radio" name="store" value="all">전체매출
+				</label> 
+				<label> 
+				<input type="radio" name="store" value="yearall">매장 전체 연매출
+				</label> 
+				<label> 
+				<input type="radio" name="store" value="monthall">매장 전체 월매출
+				</label>
+				<label> 
+					<input type="radio" name="store" value="storeyear">매장별	연매출
+				</label> 
+				<label> 
+					<input type="radio" name="store" value="storemonth">매장별 월매출
+				</label>
+				<button type="submit">조회</button>
 			</form>
 
-			<br />
 
-			<% if (storenum != -1) { %>
-			<h3><%= storenum %>호점 매출 목록
-			</h3>
-			<table border="1" cellspacing="0" cellpadding="8">
+			<table style="width: 100%; border-collapse: collapse;">
 				<thead>
-					<tr>
-						<th>월</th>
-						<th>월 매출</th>
-						<th>작성일자</th>
+					<tr >
+						<th>호점</th>
+						<th>날짜</th>
+						<th>매출</th>
 					</tr>
 				</thead>
 				<tbody>
-					<% if (storeEmpList != null && !storeEmpList.isEmpty()) { 
-			                for (Com1SaleDto tmp : storeEmpList) { %>
+					<%
+					int totalSales = 0; // 총합을 저장할 변수 선언
+
+					if (listall != null && !listall.isEmpty()) {
+						for (Com1SaleDto tmp : listall) {
+					%>
 					<tr>
-						<%for(int num: storeNumbers){ %>
-						<td><%=num %></td>
-						<%} %>
-						<td><%=tmp.getSalemonth() %></td>
-						<td><%=tmp.getMonthlysal() %></td>
-						<td><%=tmp.getCreated_at() %></td>
+						<td><%=tmp.getStoreNum()%></td>
+						<td><%=tmp.getSaleDate()%></td>
+						<td><%=tmp.getDailySales()%></td>
 					</tr>
-					<%  } 
-			               } else { %>
+					<%
+					totalSales += tmp.getDailySales(); // 매출을 합산
+					}
+					}
+					%>
 					<tr>
-						<td colspan="11">해당 지점에 등록된 직원 정보가 없습니다.</td>
+						<td>총합</td>
+						<td><%=totalSales%></td>
+						<!-- 총합 출력 -->
 					</tr>
-					<% } %>
-					<% } %>
 				</tbody>
 			</table>
 		</div>
+		<div id="allyearContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
+			
+			<label for="store">지점 입력: </label>
+			<input type="text" id="store" name="store" placeholder="지점명을 입력하세요" required>
+			
+			
+			<h3>지점별 연매출</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>호점</th>
+						<th>날짜</th>
+						<th>매출</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+		<div id="allmonthContent" class="tab-content"
+			style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
+			
+			
+			<h3>지점별 월매출 목록</h3>
+	
+			<table border="1" cellspacing="0" cellpadding="8">
+				<thead>
+					<tr>
+						<th>호점</th>
+						<th>날짜</th>
+						<th>이름</th>
+					</tr>
+				</thead>
+		
+			</table>
+		</div>
 	</div>
-
-	<jsp:include page="/include/footer.jsp" />
+	<%@ include file="/include/footer.jsp"%>
 	<script>
-	    // 시작 날짜와 종료 날짜를 계산하는 함수
-	    function updateEndDate() {
-	        const startDate = document.getElementById("startDate").value;
-	        const endDateInput = document.getElementById("endDate");
+	    function switchTab(tab) {
+	        const tabs = ['all', 'allyear', 'allmonth'];
 	
-	        if (!startDate) return;
+	        tabs.forEach(t => {
+	            document.getElementById(t + 'Content').style.display = 'none';
+	            document.getElementById(t + 'Tab').classList.remove('active-tab');
+	        });
 	
-	        const start = new Date(startDate);
-	
-	        // 종료 날짜를 오늘로 기본 설정
-	        let endDate = new Date(start);
-	
-	        // 종료 날짜 초기화
-	        endDateInput.value = "";
-	
-	        // 자동으로 계산된 종료 날짜를 갱신
-	        document.getElementById("today").checked = false;
-	        document.getElementById("week").checked = false;
-	        document.getElementById("month").checked = false;
+	        document.getElementById(tab + 'Content').style.display = 'block';
+	        document.getElementById(tab + 'Tab').classList.add('active-tab');
 	    }
 	
-	    // 체크박스를 클릭했을 때 종료 날짜를 설정하는 함수
-	    function setEndDate(period) {
-	        const startDate = document.getElementById("startDate").value;
-	        const endDateInput = document.getElementById("endDate");
-	
-	        if (!startDate) return;
-	
-	        const start = new Date(startDate);
-	        let endDate;
-	
-	        switch (period) {
-	            case 'today':
-	                // 당일은 시작 날짜와 동일
-	                endDate = new Date(start);
-	                break;
-	            case 'week':
-	                // 일주일 후 종료 날짜
-	                endDate = new Date(start);
-	                endDate.setDate(start.getDate() + 7);
-	                break;
-	            case 'month':
-	                // 한 달 후 종료 날짜
-	                endDate = new Date(start);
-	                endDate.setMonth(start.getMonth() + 1);
-	                break;
-	            default:
-	                return;
+	    window.onload = function() {
+	        const tabs = ['all', 'allyear', 'allmonth'];
+	        tabs.forEach(t => {
+	            document.getElementById(t + 'Content').style.display = 'none';
+	            document.getElementById(t + 'Tab').classList.remove('active-tab');
+	        });
+	        const urlParams = new URLSearchParams(window.location.search);
+	        if (urlParams.has('storenum')) {
+	            switchTab('storeNum');
 	        }
-	
-	        // 종료 날짜를 해당 날짜로 설정
-	        endDateInput.value = endDate.toISOString().split('T')[0];
-	
-	        // 체크박스 상태 갱신
-	        document.getElementById("today").checked = (period === 'today');
-	        document.getElementById("week").checked = (period === 'week');
-	        document.getElementById("month").checked = (period === 'month');
-		}
+	    };
 	</script>
 </body>
 </html>
+
+
+

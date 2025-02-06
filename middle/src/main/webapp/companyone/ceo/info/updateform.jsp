@@ -4,15 +4,21 @@
 	pageEncoding="UTF-8"%>
 
 <%
+
 	int empno = (int) session.getAttribute("empno");
-	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
+	Com1CeoDao dao = Com1CeoDao.getInstance();
+	Com1CeoDto dto = dao.getData(empno);
+	
+	// 로그인한 사용자의 정보를 DB에서 가져오기 (예시)
+	Com1CeoDto ceoInfo = Com1CeoDao.getInstance().getData(empno); // 사원번호를 이용하여 CEO 정보를 조회
 %>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/ceo/updateform_ceo</title>
+<title>/ceo/protected/updateform_ceo</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 </style>
@@ -26,7 +32,7 @@
 				<div class="mb-2">
 					<label class="form-label" for="ename">이름</label>
 					<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
-						@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" placeholder="<%=dto.geteName() %>" required />
+						@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" placeholder="<%=dto.geteName() %>" readonly />
 					<div class="invalid-feedback">이름을 올바르게 입력하세요.</div>
 				</div>
 				<div class="mb-2">
@@ -36,12 +42,6 @@
 					<small class="form-text">하이픈(-)을 포함하여 기재해주세요.</small>
 					<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
 				</div>
-			</div>
-			<div class="mb-2">
-				<label class="form-label" for="password">기존 비밀번호</label> 
-				<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-					type="password" name="password" id="password" />
-				<div class="invalid-feedback">반드시 입력하세요</div>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPassword">새 비밀번호</label> 
@@ -56,7 +56,7 @@
 				    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
 				<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
 			</div>
-			<button class="btn btn-success" type="submit" :disabled="!isEnameValid || !isEcallValid || !isPwdValid || !isNewPwdValid">수정하기</button>
+			<button class="btn btn-success" type="submit">수정하기</button>
 			<button class="btn btn-danger" type="reset">리셋</button>
 		</form>
 	</div>
