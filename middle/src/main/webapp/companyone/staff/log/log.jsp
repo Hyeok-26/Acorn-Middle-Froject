@@ -65,9 +65,6 @@
 	<jsp:include page="/include/footer.jsp" />
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script>
-		
-		const startBtn = document.getElementById("startBtn");
-		const endBtn = document.getElementById("endBtn");
 		//시간 함수
 		function Time(){
 		    const date = new Date();
@@ -92,13 +89,12 @@
             endBtn.disabled = false;
 
             $.ajax({
-                url: 'workLog.jsp',
+                url: 'workStartLog.jsp',
                 method: 'post',
                 data: {
                     empno: '<%= empno %>',
                 },
                 success: (res) => {
-                    console.log(res);
                     alert("출근 완료!");
                 },
                 error: (err) => {
@@ -112,13 +108,12 @@
         // 퇴근 버튼 클릭 시
         $("#endBtn").click(() => {
             $.ajax({
-                url: 'workLog.jsp',
+                url: 'workEndLog.jsp',
                 method: 'post',
                 data: {
                     empno: '<%= empno %>',
                 },
                 success: (res) => {
-                    console.log(res);
                     alert("퇴근 완료!");
                     startBtn.disabled = false;
                     endBtn.disabled = true;

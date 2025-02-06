@@ -63,9 +63,11 @@ public class Com1EmpLogDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-						update test_com1_emp_log
-                        set check_out = SYSDATE, working_hours = (SYSDATE - check_in) * 24
-                        where empno = ? and check_out is null and working_date = TRUNC(SYSDATE)
+						UPDATE test_com1_emp_log
+						SET check_out = SYSDATE
+						WHERE empno = ? 
+						AND check_out IS NULL 
+						AND TRUNC(working_date) = TRUNC(SYSDATE)
             """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getEmpno());
