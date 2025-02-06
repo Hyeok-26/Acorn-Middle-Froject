@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	int num = Integer.parseInt(request.getParameter("storenum"));
+	int empno = Integer.parseInt(request.getParameter("empno"));
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>직원스케줄업로드폼</title>
+<title>계약서 업로드 폼</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
     /* 이미지 미리보기 스타일 */
@@ -30,12 +30,11 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="card shadow-sm p-4">
-						<h1 class="text-center mb-4">직원 스케줄 업로드</h1>
-						<form action="upload.jsp?storenum=<%=num %>" method="post"  id="SchForm">
+						<h1 class="text-center mb-4">근로계약서 업로드</h1>
+						<form action="conupload.jsp?empno=<%=empno%>" method="post"  id="ConForm">
                             <div class="mb-3">
-                            	<input class="form-control" type="month" id="name" name="title" /> <br />
-                                <label for="imgEmpSchedule" class="form-label">스케줄 이미지 업로드</label>
-                                <input type="file" class="form-control" id="imgEmpSchedule" accept="image/*" required onchange="previewImage(event)">
+                                <label for="imgcon" class="form-label">근로계약서 업로드</label>
+                                <input type="file" class="form-control" id="imgcon" accept="image/*" required onchange="previewImage(event)">
                                 <input type="hidden" name="srcurl" id="srcurl" />
                             </div>							
                             
@@ -72,7 +71,7 @@
             reader.readAsDataURL(event.target.files[0]);
         }
         
-		document.querySelector("#imgEmpSchedule").addEventListener("change", (event)=>{
+		document.querySelector("#imgcon").addEventListener("change", (event)=>{
 			const files = event.target.files;
 			if(files.length > 0){
 				//파일로 부터 데이터를 읽어들일 객체 생성

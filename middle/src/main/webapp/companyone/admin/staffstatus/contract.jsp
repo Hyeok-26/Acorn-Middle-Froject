@@ -38,12 +38,17 @@
             <div class="row justify-content-center">
                 <div class="col-lg">
                     <div class="card shadow-lg p-5 rounded-4">
+                    	
+                    	
+						
 						<% if (Contract != null && !Contract.trim().isEmpty()) { %>     
                     	<h1><%=empno%> <%=dto.geteName()%> 사원의 근로계약서</h1>
+                    	<a href="conupdate.jsp?empno=<%=empno %>" class="btn btn-danger mt-3" role="button" >계약서삭제</a>
 						<img src="<%=dto.getContract()%>" alt="근로계약서" id="imgsrcurl" />	
                         <% } else {%>
                         <h1><%=empno%> <%=dto.geteName()%> 사원의 </h1>
                         <h3>근로계약서가 업로드되지 않았습니다.</h3>
+                        <a href="conuploadform.jsp?empno=<%=empno %>" class="btn btn-primary mt-3" role="button" >계약서업로드</a>
                         <% }%>
 						
 						

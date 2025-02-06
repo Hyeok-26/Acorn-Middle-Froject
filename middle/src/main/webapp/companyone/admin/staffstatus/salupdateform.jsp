@@ -25,6 +25,10 @@
         border: 1px solid black;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+    .invalid-feedback{
+		display:none;
+		color: red; 
+	}
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -56,6 +60,8 @@
 				<div class="mb-3">
 					<label class="form-label">월급</label> 
 					<input class="form-control" type="text" name="sal" id="sal" value="<%=dto.getSal()%>" required oninput="salInput()" />
+					<div class="invalid-feedback">알맞은 값을 입력하세요.</div>
+					<div class="valid-feedback">알맞은 값입니다.</div>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">시급</label> 
@@ -77,6 +83,7 @@
 	<jsp:include page="/include/footer.jsp" />
 	<script>
     function salInput() {
+    	
         let sal = document.getElementById("sal");
         let hsal = document.getElementById("hsal");
         let worktime = document.getElementById("worktime");
@@ -86,7 +93,7 @@
             worktime.setAttribute("readonly","");
             hsal.value = "0";
             worktime.value = "0";
-
+        	
         } else {
             hsal.removeAttribute("readonly");
            	worktime.removeAttribute("readonly");
@@ -107,6 +114,43 @@
         	sal.removeAttribute("readonly");
         }
     }
+    
+    //버튼비활성화
+    let isValid=false;
+	const checkForm= ()=>{
+		if(isValid){
+			//type속성이 submit인 요소
+			document.querySelector("[type=submit]").removeAttribute("disabled");
+		}else{
+			//type속성이 submit인 요소를 찾아서 disabled="disabled"속성을 추가한다.
+			document.querySelector("[type=submit]").setAttribute("disabled", "disabled");
+		}
+	};
+    
+    const reg= /^[1-9]\d*$/;  
+	document.querySelector("#sal").addEventListener("input", (event)=>{
+		//일단 is-valid, is-invalid클래스를 모두 지우고
+		event.target.classList.remove("is-valid", "is-invalid");
+		
+		//현재까지 입력한 아이디를 읽어온다.
+		let inputcontent=event.target.value;
+		
+		//만일 정규표현식을 통과하지못했다면
+		if(!reg.test(inputcontent)){
+			event.target.classList.add("is-invalid");
+			//아이디의 상태값변경
+			isValid=false;
+		}else{
+			event.target.classList.add("is-valid");
+			//아이디의 상태값변경
+			isValid=true;
+		}
+		checkForm();
+	});
+	
+
+	
+    
 </script>
 
 </body>
