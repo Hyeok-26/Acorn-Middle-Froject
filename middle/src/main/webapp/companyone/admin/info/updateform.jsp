@@ -88,23 +88,18 @@
 						</tr>
 						<tr>
 							<th scope="row">비밀번호</th>
-							<td><input type="text" id="epwd" name="epwd" value="<%=dto.getePwd() %>" required/></td>
+							<td><input type="password" id="epwd" name="epwd"  value="<%=dto.getePwd() %>" required/></td>
 						</tr>
 						<tr>
 							<th scope="row">비밀번호확인</th>
-							<td><input type="text" /></td>
+							<td>
+								<input type="password" id="epwdConfirm" />
+            					<span id="pwdError" style="color: red; font-size: 14px; margin-left: 10px;"></span>
+							</td>
 						</tr>
 						<tr>
 							<th scope="row">월급</th>
 							<td><input type="text" id="sal" name="sal" value="<%=dto.getSal() %>"/></td>
-						</tr>
-						<tr>
-							<th scope="row">시급</th>
-							<td><input type="text" id="hsal" name="hsal" value="<%=dto.getHsal() %>"/></td>
-						</tr>
-						<tr>
-							<th scope="row">근무시간</th>
-							<td><input type="text" id="worktime" name="worktime" value="<%=dto.getWorktime() %>"/></td>
 						</tr>
 						<tr>
 							<th scope="row">이메일</th>
@@ -119,6 +114,27 @@
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
-
+	<script>
+	    document.addEventListener("DOMContentLoaded", function () {
+	        const epwd = document.getElementById("epwd");
+	        const epwdConfirm = document.getElementById("epwdConfirm");
+	        const pwdError = document.getElementById("pwdError");
+	        const modifyBtn = document.getElementById("modify");
+	
+	        function checkPasswordMatch() {
+	            if (epwd.value !== epwdConfirm.value) {
+	                pwdError.textContent = "비밀번호가 일치하지 않습니다!";
+	                modifyBtn.disabled = true;  // 수정 버튼 비활성화
+	            } else {
+	                pwdError.textContent = "";
+	                modifyBtn.disabled = false; // 수정 버튼 활성화
+	            }
+	        }
+	
+	        epwd.addEventListener("input", checkPasswordMatch);
+	        epwdConfirm.addEventListener("input", checkPasswordMatch);
+	    });
+</script>
+	
 </body>
 </html>
