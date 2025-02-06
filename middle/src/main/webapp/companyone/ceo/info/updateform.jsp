@@ -30,13 +30,16 @@
 		<form action="update.jsp" method="get" id="callupdateForm">
 			<div>
 				<div class="mb-2">
-					<label class="form-label" for="ename">관리자 이름</label> 
-					<input class="form-control" type="text" id="ename" value="<%=dto.geteName() %>" readonly />
+					<label class="form-label" for="ename">이름</label>
+					<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
+						@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" placeholder="<%=dto.geteName() %>" required />
+					<div class="invalid-feedback">이름을 올바르게 입력하세요.</div>
 				</div>
 				<div class="mb-2">
-					<label class="form-label" for="callnum">연락처</label> 
-					<input class="form-control" placeholder="<%=dto.geteCall() %>" @input="onCallInput" :class="{'is-invalid': !isCallValid && isCallDirty, 'is-valid':isCallValid}"
-						type="text" name="callnum" id="callnum" />
+					<label class="form-label" for="ecall">연락처</label> 
+					<input class="form-control" placeholder="<%=dto.geteCall() %>" @input="onEcallInput" :class="{'is-invalid': !isEcallValid && isEcallDirty, 'is-valid':isEcallValid}"
+						type="text" name="ecall" id="ecall" v-model="ecall"/>
+					<small class="form-text">하이픈(-)을 포함하여 기재해주세요.</small>
 					<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
 				</div>
 			</div>
@@ -50,14 +53,16 @@
 				<label class="form-label" for="newPassword">새 비밀번호</label> 
 				<input class="form-control" type="password" name="newPassword" id="newPassword" @input="onNewPwdInput" v-model="newPassword"
 					:class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid':isNewPwdValid}" />
-				<small class="form-text">반드시 입력하고 아래의 확인란과 동일해야 합니다</small>
-				<div class="invalid-feedback">새 비밀번호를 확인하세요</div>
+				<small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
-				<input class="form-control" type="password" id="newPassword2" @input="onNewPwdInput" v-model="newPassword2" />
+				<input class="form-control" type="password" id="newPassword2" 
+				    @input="onNewPwdConfirmInput" v-model="newPassword2"
+				    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
+				<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
 			</div>
-			<button class="btn btn-success" type="submit" :disabled="!isPwdValid || !isNewPwdValid">수정하기</button>
+			<button class="btn btn-success" type="submit" :disabled="!isEnameValid || !isEcallValid || !isPwdValid || !isNewPwdValid">수정하기</button>
 			<button class="btn btn-danger" type="reset">리셋</button>
 		</form>
 	</div>
@@ -68,32 +73,68 @@
 			data:{
 				isPwdValid:false,
 				isNewPwdValid:false,
-				isCallValid:false,
-				callnum:"",
+				isEcallValid:false,
+				isEnameValid: false,
+		        isEnameDirty: false,
+				ename: "",
 				newPassword:"",
 				newPassword2:"",
-				isCallDirty:false,
+				isNewPwdMatch: false,
+				isNewPwdMatchDirty: false,
+				isEcallDirty:false,
 				isPwdDirty:false,  //비밀번호 입력란에 한번이라도 입력했는지 여부
 				isNewPwdDirty:false //새비밀번호 입력한에 한번이라도 입력했는지 여부 
 			},
 			methods:{
-				onCallInput(e){
+				onEnameInput(e) {
+					this.ename = e.target.value; 
+	                const reg_ename = /^[가-힣]{2,5}$/; 
+	                this.isEnameDirty = true;
+	                this.isEnameValid = reg_ename.test(this.ename);
+	            },
+				onEcallInput(){
 					//현재까지 입력한 비밀번호
-					const callnum=e.target.value;
+					
 					//공백이 아닌 한글자가 한번이상 반복 되어야 통과 되는 정규표현식
-					const reg_callnum=/^01[016789]-\d{3,4}-\d{4}$/;
-					if(reg_callnum.test(callnum)){
-						this.isCallValid=true;
-					}else{
-						this.isCallValid=false;
-					}
-					this.isCallDirty=true;
+					const reg_ecall=/^01[016789]-\d{3,4}-\d{4}$/;
+					this.isEcallDirty = true;
+					this.isEcallValid = reg_ecall.test(this.ecall);
+					//if(reg_ecall.test(ecall)){
+						//this.isEcallValid=true;
+					//}else{
+						//this.isEcallValid=false;
+					//}
+					//this.isEcallDirty=true;
+					//this.isEcallValid = reg_ecall.test(this.ecall);
+					
+					if (this.isEcallValid) {
+	                    fetch("../../../checkEcall", {
+	                        method: 'POST',
+	                        headers: {
+	                            'Content-Type': 'application/x-www-form-urlencoded'
+	                        },
+	                        body: 'ecall=' + encodeURIComponent(this.ecall)
+	                    })
+	                    .then(res => res.json())  
+	                    .then(data => {
+	                        if (data.isDuplicate) {
+	                        	alert('이미 등록된 전화번호입니다.');  
+	                            this.isEcallValid = false; 
+	                            this.ecall = "";
+	                        } else {
+	                            alert('사용 가능한 전화번호입니다.'); 
+	                        }
+	                    })
+	                    .catch(error => {
+	                        alert('에러 발생: ' + error); 
+	                    });
+	                }  
 				},
 				onPwdInput(e){
 					//현재까지 입력한 비밀번호
 					const pwd=e.target.value;
 					//공백이 아닌 한글자가 한번이상 반복 되어야 통과 되는 정규표현식
-					const reg_pwd=/[\S]+/;
+					const reg_pwd=/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 					if(reg_pwd.test(pwd)){
 						this.isPwdValid=true;
 					}else{
@@ -101,21 +142,15 @@
 					}
 					this.isPwdDirty=true;
 				},
-				onNewPwdInput(){
-					//공백이 아닌 글자를 하나이상 입력했는지 확인할 정규 표현식
-					const reg_pwd=/[\S]+/;
-					//만일 정규표현식도 통과하고 그리고 두개의 비밀번호가 같다면 
-					if(reg_pwd.test(this.newPassword) && (this.newPassword === this.newPassword2)){
-						//새 비밀번호 유효성 여부를 true 로 변경
-						this.isNewPwdValid = true;
-					}else{//그렇지 않다면
-						//새 비밀번호 유효성 여부를 false 로 변경 
-						this.isNewPwdValid = false;
-					}
-					this.isNewPwdDirty=true;
+				onNewPwdInput() {
+			        const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+			        this.isNewPwdValid = reg_pwd.test(this.newPassword); 
+			    },
+			    onNewPwdConfirmInput() {
+			        this.isNewPwdMatch = this.newPassword === this.newPassword2; 
+			        this.isNewPwdMatchDirty = true; 
 				}
-			}
-		});
+		}});
 	</script>
 	<jsp:include page="/include/footer.jsp" />
 </body>
