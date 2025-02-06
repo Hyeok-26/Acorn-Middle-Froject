@@ -123,9 +123,14 @@
 			<div class="mb-2">
 				<label class="form-label" for="email">이메일</label> <input
 					v-model="email" @input="onEmailInput"
-					:class="{'is-valid':isEmailValid, 'is-invalid': !isEmailValid && isEmailDirty}"
+					:class="{'is-valid': isEmailValid, 'is-invalid': !isEmailValid && isEmailDirty}"
 					class="form-control" type="email" name="email" id="email" />
-				<div class="invalid-feedback">이메일 형식에 맞게 입력하세요.</div>
+				<div v-if="!isEmailValid && isEmailDirty" class="invalid-feedback">
+					이메일 형식에 맞게 입력하세요.</div>
+				<div v-if="isEmailValid && !isEmailAvailable"
+					class="invalid-feedback">이미 등록된 이메일입니다.</div>
+				<div v-if="isEmailValid && isEmailAvailable" class="valid-feedback">
+					사용 가능한 이메일입니다.</div>
 			</div>
 			<button class="btn btn-dark" type="submit"
 				v-bind:disabled="!isEnameValid || !isPwdValid || !isEmailValid || role === '' || storenum === '' || comid === ''">
@@ -152,6 +157,7 @@
             isEcallDirty: false,
             isEmailValid: false,
             isEmailDirty: false,
+            isEmailValid: false,
             isPwdValid: false,
             isPwdDirty: false,
             hasLetter: false,  
@@ -227,19 +233,19 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.isDuplicate) {
-                        	alert('이미 등록된 이메일입니다.');
-                            this.isEmailValid = false; 
-                            this.email = "";
+                        	alert("이미 등록된 이메일입니다.");
+                            this.isEmailValid = false;
+                            this.isEmailAvailable = false; 
+                            this.email = ''; 
                         } else {
-                        	alert('사용 가능한 이메일입니다.'); 
+                            this.isEmailAvailable = true; 
                         }
-                    })
-                    .catch(error => {
-                        alert('에러 발생: ' + error); 
                     });
-                } 
+                } else {
+                    this.isEmailAvailable = false; 
+                }
             }
-        }
+    	} 
     });
 </script>
 </body>
