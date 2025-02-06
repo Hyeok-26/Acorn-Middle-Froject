@@ -10,7 +10,7 @@
 	String message = request.getParameter("message");
     if ("fail".equals(message)) {
 %>
-<script>
+	<script>
         alert("실패! 다시 회원가입 페이지로 이동합니다!");
         window.location.href = "signup.jsp";
     </script>
@@ -90,8 +90,8 @@
 				<label class="form-label" for="pwd">비밀번호</label> <input
 					v-model="pwd" @input="onPwdInput"
 					:class="{'is-valid': isPwdValid, 'is-invalid': !isPwdValid && isPwdDirty}"
-					class="form-control" type="password" name="pwd" id="pwd" /> <small
-					class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
+					class="form-control" type="password" name="pwd" id="pwd" /> 
+				<small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
 			</div>
 
 			<ul class="text-danger small">
