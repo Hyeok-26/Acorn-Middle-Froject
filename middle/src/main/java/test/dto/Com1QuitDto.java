@@ -17,6 +17,14 @@ public class Com1QuitDto {
 	private String keyword;
 	private String ePwd;
 	private int sal;
+	private String lineup;
+
+	public String getLineup() {
+		return lineup;
+	}
+	public void setLineup(String lineup) {
+		this.lineup = lineup;
+	}
 	
 	public String getePwd() {
 		return ePwd;
