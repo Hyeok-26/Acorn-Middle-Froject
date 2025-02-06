@@ -49,69 +49,70 @@
 	<jsp:include page="/include/resource.jsp"></jsp:include>
 	<%-- 공통 네비바 --%>
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
-	
-	<div class="container" >
-		<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
-		<jsp:include page="/include/ceoNav.jsp"></jsp:include>
-		
-		<%-- 현재 접속 상태 표시 --%>
-		<div class="container">
-		<p><%=comname %>의  <%=ename %>님 접속 중</p>
-		</div>
-		
-		<%-- 정보 표시 --%>
-		<div style="width:900px"  class="contents mb-5 mx-auto text-center" >
-			<h3>회원가입 대기자 명단</h3>
-			<div style="height:400px; margin:10px;">
-				<table class="table table-striped ">
-					<thead class="table-dark">
-						<tr>
-							<th>이름</th>
-							<th>지점</th>
-							<th>직책</th>
-							<th>상세보기</th>
-							<th>승인</th>
-							<th>거절</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<c:choose>
-							<%-- 데이터가 없는 경우 --%>
-							<c:when test="<%=list_admin.isEmpty() %>">
-								</tbody>
-								</table>
-								<div class=" justify-content-center align-items-center vh-100">
-								  <div class="p-3 bg-light">점장의 가입 요청 정보가 없습니다!</div>
-								</div>
-							</c:when>
-							<%-- 데이터가 있는 경우 --%>
-							<c:otherwise>
-								<c:forEach var="item" items="<%=list_admin %>">
-									<tr>
-										<td>${item.eName }</td>
-										<td>${item.storeNum }</td>
-										<td>${item.role }</td>
-										<td>상세보기</td>
-										<td><a href="acceptAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
-										<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">거절</a></td>
-									</tr>
-								</c:forEach>
-								</tbody>
-								</table>
-							</c:otherwise>
-						</c:choose>
-			</div>
-			
-			<%-- 페이징 --%>
-			<nav>
-			</nav>
-			
-		</div>
-	
+	<%-- 현재 접속 상태 표시 --%>
+	<div class="container">
+	<p><%=comname %>의  <%=ename %>님 접속 중</p>
 	</div>
 	
-	<jsp:include page="/include/footer.jsp" />
+	
+	<%-- 본문 --%>
+	<div class="contents text-center mt-3 mx-auto" style="width:900px;">
+		<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
+		<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+		<h4>회원가입 대기자 명단</h4>
+		
+		<div style="height:400px; margin:10px;">
+			<table class="table table-striped ">
+				<thead class="table-dark">
+					<tr>
+						<th>이름</th>
+						<th>지점</th>
+						<th>직책</th>
+						<th>상세보기</th>
+						<th>승인</th>
+						<th>거절</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					<c:choose>
+						<%-- 데이터가 없는 경우 --%>
+						<c:when test="<%=list_admin.isEmpty() %>">
+							</tbody>
+							</table>
+							<div class=" justify-content-center align-items-center vh-100">
+							  <div class="p-3 bg-light">점장의 가입 요청 정보가 없습니다!</div>
+							</div>
+						</c:when>
+						<%-- 데이터가 있는 경우 --%>
+						<c:otherwise>
+							<c:forEach var="item" items="<%=list_admin %>">
+								<tr>
+									<td>${item.eName }</td>
+									<td>${item.storeNum }</td>
+									<td>${item.role }</td>
+									<td>상세보기</td>
+									<td><a href="acceptAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
+									<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">거절</a></td>
+								</tr>
+							</c:forEach>
+							</tbody>
+							</table>
+						</c:otherwise>
+					</c:choose>
+		</div>
+		
+		<%-- 페이징 --%>
+		<nav>
+		</nav>
+		
+	</div>
+	
+	
+	<!-- 푸터 -->
+	<div class="position-fixed bottom-0 w-100">
+  	<jsp:include page="/include/footer.jsp" />
+  	</div>
 	
 </body>
 </html>
