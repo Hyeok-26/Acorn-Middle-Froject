@@ -61,6 +61,7 @@
 				<button id="endBtn" class="btn btn-primary">퇴근</button>
 			</div>
 		</div>
+		<a href="log_table.jsp">근태관리 확인</a> 
 	</div>
 	<jsp:include page="/include/footer.jsp" />
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>

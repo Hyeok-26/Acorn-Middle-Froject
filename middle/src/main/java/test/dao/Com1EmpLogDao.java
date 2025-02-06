@@ -2,7 +2,9 @@ package test.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import test.dto.Com1EmpDto;
 import test.dto.Com1EmpLogDto;
 import test.util.DbcpBean;
 
@@ -93,4 +95,53 @@ public class Com1EmpLogDao {
 		}
 	}
 
+	public Com1EmpLogDto getData(int empno) {
+
+		Com1EmpLogDto dto = new Com1EmpLogDto();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			
+			conn = new DbcpBean().getConn();
+			
+			String sql = """
+					select * from test_com1_emp_log
+					where empno = ?
+					""";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, empno);
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				dto.setLogid(rs.getInt("logid"));
+				dto.setEmpno(empno);
+				dto.setCheckIn(rs.getTimestamp("checkIn"));
+				dto.setCheckOut(rs.getTimestamp("checkOut"));
+				dto.setWorkingDate(rs.getDate("workingDate"));
+				dto.setWorkingHours(rs.getDouble("workingHours"));
+				dto.setOvertime(rs.getDouble("overtime"));
+				dto.setRemarks(rs.getString("remarks"));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+			}
+		}
+		return dto;
+	}
 }
