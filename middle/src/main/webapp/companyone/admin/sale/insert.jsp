@@ -17,8 +17,10 @@
     //java.sql.Date saledate = new java.sql.Date(utilDate.getTime());
 	
 	int dailySales=Integer.parseInt(request.getParameter("dailySales"));
-	//세션에 있는 storenum 가져오기
 	
+	
+	
+	//세션에 있는 storenum 가져오기
 	System.out.println(session.getAttribute("storenum"));
 	int storenum=(int)session.getAttribute("storenum");
 	
@@ -38,7 +40,7 @@
 %>
 	<script>
 		alert("입력 성공!");
-		window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/view.jsp";
+		window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/salemanage.jsp";
 	</script>
 <%
 	} else{

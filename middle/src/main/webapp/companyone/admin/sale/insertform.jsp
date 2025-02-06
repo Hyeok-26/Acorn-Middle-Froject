@@ -19,9 +19,14 @@
   <div class="container flex-grow-1 my-4">
   <form action="${pageContext.request.contextPath}/companyone/admin/sale/insert.jsp" method="get">
   	<!-- 버튼 -->
-    <div class="d-flex justify-content-between mb-3">
-      <button type="submit" class="btn btn-success" id="addBtn">매출추가</button>
-    </div>
+    <div class="d-flex align-items-center gap-2 mb-3">
+	    <button type="submit" class="btn btn-success" id="addBtn">매출추가</button>
+	    <button type="button" class="btn btn-primary" id="viewBtn"
+		    onclick="location.href='<%= request.getContextPath() %>/companyone/admin/sale/salemanage.jsp'">
+		    매출조회
+		</button>
+	</div>
+
 
     <!-- 테이블 -->
     <table class="table table-bordered table-hover text-center">
@@ -49,6 +54,7 @@
 				document.querySelector("#saledate").value = dateInput;
 			}
 		});
+		
 		</script>
 	</div>
   <!-- 푸터 -->
