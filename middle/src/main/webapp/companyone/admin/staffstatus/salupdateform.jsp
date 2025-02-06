@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%
 	int empno = Integer.parseInt(request.getParameter("empno"));
+	String returnurl = request.getParameter("returnurl");
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto= dao.getData(empno);
 
@@ -33,7 +34,7 @@
 		<div class="container">
 		
 			<h1>근무시간변경</h1>
-			<form action="salupdate.jsp" method="post" id="myForm">
+			<form action="salupdate.jsp?returnurl=<%=returnurl%>" method="post" id="myForm">
 			
 				<div class="mb-3">
 					<label class="form-label">회사ID</label> 
@@ -54,15 +55,15 @@
 				
 				<div class="mb-3">
 					<label class="form-label">월급</label> 
-					<input class="form-control" type="text" name="sal" value="<%=dto.getSal()%>" required />
+					<input class="form-control" type="text" name="sal" id="sal" value="<%=dto.getSal()%>" required oninput="salInput()" />
 				</div>
 				<div class="mb-3">
 					<label class="form-label">시급</label> 
-					<input class="form-control" type="text" name="hsal" value="<%=dto.getHsal()%>" required />
+					<input class="form-control" type="text" name="hsal" id="hsal" value="<%=dto.getHsal()%>" required oninput="hsalInput()"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">근무시간</label> 
-					<input class="form-control" type="test" name="worktime" value="<%=dto.getWorktime()%>" required />
+					<input class="form-control" type="test" name="worktime" id="worktime" value="<%=dto.getWorktime()%>" required oninput="hsalInput()"/>
 				</div>
 				<button class="btn btn-success" type="submit" >수정하기</button>
 				<button class="btn btn-danger" type="reset">리셋</button>
@@ -74,6 +75,39 @@
 	</div> <%--메인 --%>
 	<%--푸터 --%>
 	<jsp:include page="/include/footer.jsp" />
+	<script>
+    function salInput() {
+        let sal = document.getElementById("sal");
+        let hsal = document.getElementById("hsal");
+        let worktime = document.getElementById("worktime");
+
+        if (sal.value.trim() !== "") {
+            hsal.setAttribute("readonly","");
+            worktime.setAttribute("readonly","");
+            hsal.value = "0";
+            worktime.value = "0";
+
+        } else {
+            hsal.removeAttribute("readonly");
+           	worktime.removeAttribute("readonly");
+        }
+    }
+
+    function hsalInput() {
+        let sal = document.getElementById("sal");
+        let hsal = document.getElementById("hsal");
+        let worktime = document.getElementById("worktime");
+
+        if (hsal.value.trim() !== "" || worktime.value.trim() !== "") {
+        	sal.setAttribute("readonly","");
+            
+            sal.value = "0";
+        }
+        else {
+        	sal.removeAttribute("readonly");
+        }
+    }
+</script>
 
 </body>
 </html>

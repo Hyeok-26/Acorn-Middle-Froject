@@ -42,7 +42,6 @@
 			<p class="alert alert-danger">
 				업로드 실패
 				<a class="alert-link" href="uploadform.jsp?storenum=<%=num %>">다시 업로드해주세요</a>
-				<%=num %> <%=month %> <%=srcurl %>
 			</p>
 		<% } %>
 	

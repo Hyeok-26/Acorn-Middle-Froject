@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
+	String returnurl = request.getParameter("returnurl");
 	int empno = Integer.parseInt(request.getParameter("empno"));
 	String ename = request.getParameter("ename");
 	int sal = Integer.parseInt(request.getParameter("sal"));
@@ -37,7 +37,7 @@
 		<%if(isSuccess){ %>
 			<p class="alert alert-success">
 				<strong><%=empno %> <%=ename %></strong>사원의 급여 및 근무시간 정보가 수정되었습니다.
-				<a class="alert-link" href="view.jsp">변경정보 확인하기</a>
+				<a class="alert-link" href="<%=returnurl %>">변경정보 확인하기</a>
 			</p>
 		<%}else{ %>
 			<p class="alert alert-danger">
