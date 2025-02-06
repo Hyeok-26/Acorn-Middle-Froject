@@ -36,8 +36,8 @@ public class Com1SaleDao {
 			conn = new DbcpBean().getConn();
 			String sql = """
 					insert into test_com1_sales
-					(salesDate, storeNum, dailySales)
-					values(TO_DATE(?,'YYYY-MM-DD HH24:MI:SS'),?,?)
+					(saleDate, storeNum, dailySales)
+					values(?,?,?)
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
@@ -101,7 +101,7 @@ public class Com1SaleDao {
 //	}
 
 	// 수정
-	// ?호점의 ?월 매출 수정
+	// 매출 수정
 	public boolean update(Com1SaleDto dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -140,10 +140,10 @@ public class Com1SaleDao {
 	}
 
 	// 하나의 데이터 얻어오기
-	// ?호점 하나의 일 매출 데이터 얻어오기
-	public Com1SaleDto getData(String saleDate, int storeNum) {
+	// 특정 날짜에 해당하는 일매출 반환
+	public int getStoreDate(String saleDate, int storeNum) {
 		// Dto 객체 선언
-		Com1SaleDto dto = null;
+		int today_sal = 0; 
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -153,7 +153,7 @@ public class Com1SaleDao {
 			conn = new DbcpBean().getConn();
 			// 실행할 SQL 문 작성
 			String sql = """
-					    SELECT saleDate, storeNum, dailySales
+					    SELECT dailySales
 					    FROM test_com1_sales
 					    WHERE saleDate=? and storeNum=?
 					""";
@@ -166,11 +166,51 @@ public class Com1SaleDao {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				// Dto 객체 생성 후 값 설정
-				dto = new Com1SaleDto();
-				dto.setSaleDate(rs.getString("saleDate"));
-				dto.setStoreNum(rs.getInt("storeNum"));
-				dto.setDailySales(rs.getInt("dailySales"));
+				today_sal = (int)rs.getInt("dailySales");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return today_sal;
+	}
 
+	// list 가져오기
+	// 특정 매장의 특정 월매출을 반환 1줄
+	public Com1SaleDto getStoreMonth(int storeNum, int year, int month) {
+		Com1SaleDto dto = new Com1SaleDto();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = """
+					SELECT extract(year from salesDate) AS year, extract(month from salesDate) AS month, storeNum,
+					       SUM(dailySales) AS monthlySales
+					FROM test_com1_sales
+					WHERE storeNum=? AND YEAR(salesDate)=? AND MONTH(salesDate)=?
+					     """;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, storeNum);
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, month);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				dto.setYear(rs.getInt("year"));
+				dto.setMonth(rs.getInt("month"));
+				dto.setStoreNum(rs.getInt("storenum"));
+				dto.setMonthlySales(rs.getInt("monthlySales"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -188,10 +228,9 @@ public class Com1SaleDao {
 		return dto;
 	}
 
-	// list 가져오기
-	// ?호점 ?월 매출정보 가져오기
-	public List<Com1SaleDto> getListStoreMonth(int storeNum, int year, int month) {
-		List<Com1SaleDto> list = new ArrayList<>();
+	// 특정 매장의 특정 연매출 반환
+	public Com1SaleDto getStoreYear(int storeNum, int year) {
+		Com1SaleDto dto = new Com1SaleDto();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -199,54 +238,10 @@ public class Com1SaleDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-					SELECT YEAR(salesDate) AS year, MONTH(salesDate) AS month, storeNum,
-					       SUM(dailySales) AS monthlySales
-					FROM test_com1_sales
-					WHERE storeNum=? AND YEAR(salesDate)=? AND MONTH(salesDate)=?
-					GROUP BY year, month, storeNum;
-					     """;
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, storeNum);
-			pstmt.setInt(2, year);
-			pstmt.setInt(3, month);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Com1SaleDto dto = new Com1SaleDto();
-				dto.setDailySales(rs.getInt("dailySales"));
-				list.add(dto);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
-		}
-		return list;
-	}
-
-	// ?호점 ?연 매출정보 가져오기
-	public List<Com1SaleDto> getListStoreYear(int storeNum, int year) {
-		List<Com1SaleDto> list = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			conn = new DbcpBean().getConn();
-			String sql = """
-					SELECT YEAR(salesDate) AS year, storeNum,
+					SELECT extract(year from salesDate) AS year, storeNum,
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
 					WHERE storeNum=? AND YEAR(salesDate)=?
-					GROUP BY year, storeNum;
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, storeNum);
@@ -255,9 +250,9 @@ public class Com1SaleDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Com1SaleDto dto = new Com1SaleDto();
-				dto.setDailySales(rs.getInt("dailySales"));
-				list.add(dto);
+				dto.setYear(rs.getInt("year"));
+				dto.setStoreNum(rs.getInt("storeNum"));
+				dto.setYearlySales(rs.getInt("yearlySales"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -272,11 +267,11 @@ public class Com1SaleDao {
 			} catch (Exception e) {
 			}
 		}
-		return list;
+		return dto;
 	}
 
-	// 전체매장 ?월 매출정보 가져오기
-	public List<Com1SaleDto> getListMonth(int year, int month) {
+	// 특정 매장의 모든 월매출 반환
+	public List<Com1SaleDto> getStoreMonthlySales(int year, int month) {
 		List<Com1SaleDto> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -285,11 +280,11 @@ public class Com1SaleDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-					SELECT YEAR(salesDate) AS year, MONTH(salesDate) AS month,
+					SELECT extract(year from salesDate) AS year, extract(month from salesDate) AS month,
 					       SUM(dailySales) AS monthlySales
 					FROM test_com1_sales
 					WHERE YEAR(salesDate)=? AND MONTH(salesDate)=?
-					GROUP BY year, month;
+					order by storenum asc
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
@@ -298,7 +293,9 @@ public class Com1SaleDao {
 
 			while (rs.next()) {
 				Com1SaleDto dto = new Com1SaleDto();
-				dto.setDailySales(rs.getInt("dailySales"));
+				dto.setYear(rs.getInt("year"));
+				dto.setMonth(rs.getInt("month"));
+				dto.setMonthlySales(rs.getInt("monthlySales"));
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -317,7 +314,7 @@ public class Com1SaleDao {
 		return list;
 	}
 
-	// 전체매장 ?연 매출정보 가져오기
+	// 모든 매장의 연간매출을 반환
 	public List<Com1SaleDto> getListYear(int year) {
 		List<Com1SaleDto> list = new ArrayList<>();
 		Connection conn = null;
@@ -327,11 +324,10 @@ public class Com1SaleDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-					SELECT YEAR(salesDate) AS year,
+					SELECT extract(year from salesDate) AS year,
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
 					WHERE YEAR(salesDate)=?
-					GROUP BY year, storeNum;
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
@@ -340,7 +336,8 @@ public class Com1SaleDao {
 
 			while (rs.next()) {
 				Com1SaleDto dto = new Com1SaleDto();
-				dto.setDailySales(rs.getInt("dailySales"));
+				dto.setYear(rs.getInt("year"));
+				dto.setYearlySales(rs.getInt("yearlySales"));
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -359,7 +356,7 @@ public class Com1SaleDao {
 		return list;
 	}
 
-	
+	// 모든 매장번호, 일매출, 해당하는 일 반환
 	public List<Com1SaleDto> getListAll() {
 	    List<Com1SaleDto> list = new ArrayList<>();
 	    Connection conn = null;

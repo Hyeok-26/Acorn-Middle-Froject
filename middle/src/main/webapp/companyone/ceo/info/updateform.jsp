@@ -4,21 +4,15 @@
 	pageEncoding="UTF-8"%>
 
 <%
-
 	int empno = (int) session.getAttribute("empno");
-	Com1CeoDao dao = Com1CeoDao.getInstance();
-	Com1CeoDto dto = dao.getData(empno);
-	
-	// 로그인한 사용자의 정보를 DB에서 가져오기 (예시)
-	Com1CeoDto ceoInfo = Com1CeoDao.getInstance().getData(empno); // 사원번호를 이용하여 CEO 정보를 조회
+	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
 %>
-
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/ceo/protected/updateform_ceo</title>
+<title>/ceo/updateform_ceo</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 </style>
