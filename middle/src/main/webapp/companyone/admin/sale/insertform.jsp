@@ -33,7 +33,7 @@
       </thead>
       <tbody>
         <tr>
-          <td><input type="date" id="saledate" name="saledate" required/></td>
+          <td><input type="date" id="salesdate" name="salesdate" required/></td>
           <td><input type="number" id="dailySales" name="dailySales" min="0" required/></td>
         </tr>
       </tbody>
@@ -43,10 +43,10 @@
 		<script>
 		document.querySelector("#addBtn").addEventListener("click",()=>{
 			console.log("aaa")
-			const dateInput = document.querySelector("#saledate").value;
+			const dateInput = document.querySelector("#salesdate").value;
 			if (dateInput) {
-				dateInput = dateInput.replace(/-/g, ""); // YYYY-MM-DD → YYYYMMDD 변환
-				document.querySelector("#saledate").value = dateInput;
+				//dateInput = dateInput.replace(/-/g, ""); // YYYY-MM-DD → YYYYMMDD 변환
+				document.querySelector("#salesdate").value = dateInput;
 			}
 		});
 		</script>

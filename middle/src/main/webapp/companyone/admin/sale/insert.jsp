@@ -9,8 +9,8 @@
     pageEncoding="UTF-8"%>
 <%
 	// 입력한 데이터 가져오기 날짜, 매출
-	String saleateStr=request.getParameter("saledate");
-	System.out.println("saleateStr:" +saleateStr);
+	String salesDate=request.getParameter("salesdate");
+	System.out.println("saleateStr:" +salesDate);
 	
 	//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	//Date utilDate = sdf.parse(saledateStr);
@@ -26,7 +26,7 @@
 	Com1SaleDto dto=new Com1SaleDto();
 		
 	// 데이터 저장 
-	dto.setSaleDate(saleateStr);
+	dto.setSaleDate(salesDate);
 	dto.setDailySales(dailySales);
 	dto.setStoreNum(storenum);
 	
