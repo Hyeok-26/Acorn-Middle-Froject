@@ -1,36 +1,29 @@
 package test.dto;
 
 public class Com1SaleDto {
-	private int year;
-	private int month;
-	private int day;
-	private int dailysale;
-	public int getYear() {
-		return year;
-	}
-	public void setYear(int year) {
-		this.year = year;
-	}
-	public int getMonth() {
-		return month;
-	}
-	public void setMonth(int month) {
-		this.month = month;
-	}
-	public int getDay() {
-		return day;
-	}
-	public void setDay(int day) {
-		this.day = day;
-	}
-	public int getDailysale() {
-		return dailysale;
-	}
-	public void setDailysale(int dailysale) {
-		this.dailysale = dailysale;
-	}
+	private String saleDate;
+	private int storeNum;
+	private int dailySales;
 	
-	
+	public String getSaleDate() {
+		return saleDate;
+	}
+	public void setSaleDate(String saleDate) {
+		this.saleDate = saleDate;
+	}
+	public int getStoreNum() {
+		return storeNum;
+	}
+	public void setStoreNum(int storeNum) {
+		this.storeNum = storeNum;
+	}
+	public int getDailySales() {
+		return dailySales;
+	}
+	public void setDailySales(int dailySales) {
+		this.dailySales = dailySales;
+	}
+		
 }	
 	 
 
