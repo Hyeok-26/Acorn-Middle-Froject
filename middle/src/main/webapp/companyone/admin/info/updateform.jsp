@@ -5,7 +5,7 @@
 <%
 	Com1EmpDto dto = (Com1EmpDto)session.getAttribute("dto");
 	String comname = (String) session.getAttribute("comname");
-	
+
 %>
 <!DOCTYPE html>
 <html>
@@ -67,8 +67,8 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<th scope="row">화사ID</th>
-							<td><input type="text" id="comid" name="comid" value="<%=dto.getComId() %>" readonly /></td>
+							<th scope="row">회사이름</th>
+							<td><input type="text" id="comname" name="comname" value="<%=comname %>" readonly /></td>
 						</tr>
 						<tr>
 							<th scope="row">소속지점(storenum)</th>
@@ -83,16 +83,16 @@
 							<td><input type="text" id="ename" name="ename" value="<%=dto.geteName() %>" required/></td>
 						</tr>
 						<tr>
-							<th scope="row">역할</th>
-							<td><input type="text" id="role" name="role" value="<%=dto.getRole() %>" readonly/></td>
-						</tr>
-						<tr>
 							<th scope="row">전화번호</th>
 							<td><input type="text" id="phonenum" name="phonenum" value="<%=dto.geteCall() %>" required/></td>
 						</tr>
 						<tr>
 							<th scope="row">비밀번호</th>
 							<td><input type="text" id="epwd" name="epwd" value="<%=dto.getePwd() %>" required/></td>
+						</tr>
+						<tr>
+							<th scope="row">비밀번호확인</th>
+							<td><input type="text" /></td>
 						</tr>
 						<tr>
 							<th scope="row">월급</th>
@@ -109,14 +109,6 @@
 						<tr>
 							<th scope="row">이메일</th>
 							<td><input type="text" id="email" name="email" value="<%=dto.getEmail() %>" required/></td>
-						</tr>
-						<tr>
-							<th scope="row">입사일</th>
-							<td><input type="text" id="hiredate" name="hiredate" value="<%=dto.getHiredate() %>"/></td>
-						</tr>
-						<tr>
-							<th scope="row">근무계약서</th>
-							<td><input type="text" id="contract" name="contract" value="<%=dto.getContract() %>"/></td>
 						</tr>
 					</tbody>
 				</table>

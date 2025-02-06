@@ -87,6 +87,10 @@
 					</colgroup>
 					<tbody>
 						<tr>
+							<th scope="row">회사명</th>
+							<td><%=comname %></td>
+						</tr>
+						<tr>
 							<th scope="row">회사Id</th>
 							<td><%=dto.getComId() %></td>
 						</tr>
@@ -136,12 +140,12 @@
 						</tr>
 						<tr>
 							<th scope="row">근무계약서</th>
-							<td><%=dto.getContract() %></td>
+							<td><a href="#">계약서</a></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<a href="${pageContext.request.contextPath}/companyone/admin/info/updateform.jsp" class="btn btn-primary mt-3" role="button" >개인정보수정</a>
+			<a href="${pageContext.request.contextPath}/companyone/admin/info/updateform.jsp" class="btn btn-primary mt-2" role="button" >개인정보수정</a>
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
