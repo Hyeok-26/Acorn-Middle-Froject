@@ -24,7 +24,7 @@
 	int comid=dto.getComId();
 	//로그인한 점장의 회사이름 뽑기
 	UsingDao dao_using=UsingDao.getInstance();
-	String comname=dao_using.getComName(comid);
+	String comname=dao_using.getComName(comid);	
 	
 	session.setAttribute("comname", comname);
 	
