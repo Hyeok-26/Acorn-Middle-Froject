@@ -31,11 +31,11 @@
                 <div class="col-lg-6">
                     <div class="card shadow-sm p-4">
 						<h1 class="text-center mb-4">직원 스케줄 업로드</h1>
-						<form action="upload.jsp?storenum=<%=num %>" method="post"  enctype="multipart/form-data" id="SchForm">
+						<form action="upload.jsp?storenum=<%=num %>" method="post"  id="SchForm">
                             <div class="mb-3">
                             	<input class="form-control" type="month" id="name" name="title" /> <br />
                                 <label for="imgEmpSchedule" class="form-label">스케줄 이미지 업로드</label>
-                                <input type="file" class="form-control" id="imgEmpSchedule" name="imgEmpSchedule" accept="image/*" required onchange="previewImage(event)">
+                                <input type="file" class="form-control" id="imgEmpSchedule" accept="image/*" required onchange="previewImage(event)">
                                 <input type="hidden" name="srcurl" id="srcurl" />
                             </div>							
                             
