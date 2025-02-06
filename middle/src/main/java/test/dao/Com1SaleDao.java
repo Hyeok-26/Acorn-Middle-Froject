@@ -37,7 +37,7 @@ public class Com1SaleDao {
 			String sql = """
 					insert into test_com1_sales
 					(salesDate, storeNum, dailySales)
-					values(TO_DATE(?,'YYYY-MM-DD'),?,?)
+					values(?,?,?)
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
@@ -111,7 +111,7 @@ public class Com1SaleDao {
 			String sql = """
 					update test_com1_sales
 					set dailySales=?
-					where storeNum=? and saleDate=?
+					where storeNum=? and salesDate=?
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
@@ -155,7 +155,7 @@ public class Com1SaleDao {
 			String sql = """
 					    SELECT dailySales
 					    FROM test_com1_sales
-					    WHERE saleDate=? and storeNum=?
+					    WHERE salesDate=? and storeNum=?
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩

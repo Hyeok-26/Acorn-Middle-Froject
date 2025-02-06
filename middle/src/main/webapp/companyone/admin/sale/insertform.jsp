@@ -39,7 +39,7 @@
       </tbody>
     </table>
   </form>
-  <%--YYYYMMDD 형식으로 전환 --%>
+  <%--YYYYMMDD 형식으로 전환  이거 없어도 돼요!--%>
 		<script>
 		document.querySelector("#addBtn").addEventListener("click",()=>{
 			console.log("aaa")
