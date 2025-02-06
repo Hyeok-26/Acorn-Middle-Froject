@@ -23,6 +23,8 @@
 	Com1EmpDao empDao = Com1EmpDao.getInstance();
 	if(condition.equals("all")){			
 		List<Com1EmpDto> empList = empDao.getList();
+		pageContext.setAttribute("condition", "all");
+		pageContext.setAttribute("empList", empList);
 	} else if(condition.equals("admin")){	
 		List<Com1EmpDto> adminList = empDao.getListAdmin();
 	} else if(condition.equals("staff")){	
@@ -65,6 +67,7 @@
 		<h4>근무 직원 현황</h4>
 		
 		<!-- 조회 조건 -->
+		<div>
 		<ul class="nav nav-tabs">
 		  	<li class="nav-item">
 		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=all">전체 직원</a>
@@ -86,48 +89,47 @@
 			    </ul>
 		  	</li>
 		</ul>
+		</div>
 		
 		
 		<!-- 조회 결과 -->
-		<div class="tab-content" id="myTabContent">
-			<table>
-				<thead>
-					<tr>호점</tr>
-					<tr>사원 번호</tr>
-					<tr>이름</tr>
-					<tr>직급</tr>
-					<tr>전화번호</tr>
-					<tr>월급</tr>
-					<tr>이메일</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test='${condition eq "all"}'>
-							<script>console.log("여긴 들어옴")</script>
-		  					<c:forEach var="tmp" items="${empList}">
-		  						<td>${tmp.storeNum }</td>
-		  						<td>${tmp.empNo }</td>
-		  						<td>${tmp.eName }</td>
-		  						<td>${tmp.role }</td>
-		  						<td>${tmp.eCall }</td>
-		  						<td>${tmp.sal }</td>
-		  						<td>${tmp.email }</td>
-		  					</c:forEach>
-		  				</c:when>
-		  				<c:when test='${condition eq "admin"}'>
-		  					<c:forEach var="tmp" items="${adminList}"></c:forEach>
-		  				</c:when>
-		  				<c:when test='${condition eq "staff"}'>
-		  					<c:forEach var="tmp" items="${staffList}"></c:forEach> 
-		  				</c:when>
-		  				<c:otherwise>
-		  					
-		  				</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
-			
+		<div class="tab-content p-3 bg-light rounded shadow-sm"
+			id="myTabContent">
+			<div class="table-responsive">
+				<table
+					class="table table-hover table-striped text-center align-middle">
+					<thead class="table-dark">
+						<tr>
+							<th>호점</th>
+							<th>사원 번호</th>
+							<th>이름</th>
+							<th>직급</th>
+							<th>전화번호</th>
+							<th>월급</th>
+							<th>이메일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${condition eq 'all'}">
+								<c:forEach var="tmp" items="${empList}">
+									<tr>
+										<td>${tmp.storeNum }</td>
+										<td>${tmp.empNo }</td>
+										<td>${tmp.eName }</td>
+										<td>${tmp.role }</td>
+										<td>${tmp.eCall }</td>
+										<td>${tmp.sal }</td>
+										<td>${tmp.email }</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</tbody>
+				</table>
+			</div>
 		</div>
+
 	</div>
 					
 		
