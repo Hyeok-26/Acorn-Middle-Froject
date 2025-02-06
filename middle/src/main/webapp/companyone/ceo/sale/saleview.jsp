@@ -1,21 +1,33 @@
+<%@page import="test.dao.Com1SaleDao"%>
+<%@page import="java.util.List"%>
+<%@page import="test.dto.Com1SaleDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>매출 조회</title>
-</head>
-<body>
+
 
 <% 
     // 선택된 값 가져오기
-    String storeOption = request.getParameter("store");
+	int year = Integer.parseInt(request.getParameter("year"));
+	int month = Integer.parseInt(request.getParameter("month"));
+	int storenum =Integer.parseInt(request.getParameter("storenum"));
+    
+	Com1SaleDao saledao = Com1SaleDao.getInstance();
+
+	List<Com1SaleDto> listyear= saledao.getListYear(year);
+	List<Com1SaleDto> liststoremonth= saledao.getStoreMonthlySales(year, month);
+	Com1SaleDto storeyear= saledao.getStoreYear(storenum, year);
+	Com1SaleDto storemonth= saledao.getStoreMonth(storenum, year, month);
+	
+	
+	
+    String storeOption = request.getParameter("sale");
 
     // 선택된 값에 따라 처리
     if (storeOption != null) {
         switch (storeOption) {
             case "all":
                 // 전체매출 조회 로직
+                
                 out.println("전체매출을 조회합니다.");
                 break;
             case "yearall":
@@ -42,5 +54,3 @@
     }
 %>
 
-</body>
-</html>

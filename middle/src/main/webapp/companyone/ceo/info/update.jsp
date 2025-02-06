@@ -8,7 +8,7 @@
 	Com1CeoDto dto = dao.getData(empno);
 	
 
-	String newcall=request.getParameter("callnum");
+	String newcall=request.getParameter("ecall");
 	String password=request.getParameter("password");
 	String newPassword=request.getParameter("newPassword");	
 	boolean isSuccess=false;
