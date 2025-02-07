@@ -155,7 +155,7 @@
 				<td><%=dto.getHiredate() %></td>
 			</tr>
 			<tr>
-				<th><a href="">근로 계약서 보기</a></th>
+				<th><a href="contract.jsp">근로 계약서 보기</a></th>
 			</tr>
 			<%--
 			<tr>
