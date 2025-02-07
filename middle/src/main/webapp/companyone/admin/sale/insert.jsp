@@ -12,8 +12,7 @@
 	String salesDate=request.getParameter("salesdate");
 	//System.out.println("saleateStr:" +salesDate);
 	
-
-	int dailySales=Integer.parseInt(request.getParameter("dailySales"));
+	int dailySales=Integer.parseInt(request.getParameter("dailysales"));
 	
 	int storenum=(int)session.getAttribute("storenum");
 	
@@ -21,7 +20,7 @@
 	Com1SaleDto dto=new Com1SaleDto();
 		
 	// 데이터 저장 
-	dto.setSaleDate(salesDate);
+	dto.setSalesDate(salesDate);
 	dto.setDailySales(dailySales);
 	dto.setStoreNum(storenum);
 	

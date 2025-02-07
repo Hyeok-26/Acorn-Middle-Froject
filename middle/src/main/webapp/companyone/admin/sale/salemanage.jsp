@@ -3,36 +3,39 @@
 <%@page import="test.dao.Com1SaleDao"%>
 <%@page import="test.dto.Com1SaleDto"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-	//지점번호
-	int storenum=(int)session.getAttribute("storenum");
-	//?호점 일별 매출, ?호점 월별 매출, ?호점 연별 매출 모든 매출 리스트가 나오게
-	//1. 일별 매출 가져오기
-	
-	//2. 				
-			
+	int storenum = (int)session.getAttribute("storenum"); // 몇호점 점장인지 알아내기
 
-	// 2. 로그인 상태 확인: 세션에서 로그인한 사용자의 회사명(comname)과 이름(ename) 가져오기
-	String comname = (String)session.getAttribute("comname");
-    String ename = (String)session.getAttribute("ename");
-
-    // 3. 매출 관련 DAO 객체 생성
-	Com1SaleDao SaleDao = Com1SaleDao.getInstance();
-
-    // 4. 전체 매장의 번호 목록 가져오기
-	List<Integer> storenums = Com1Dao.getInstance().getStoreNumList();
-
-    // 5. 전체 매출 내역 가져오기
-	List<Com1SaleDto> listall = SaleDao.getListAll();
+    String condition = request.getParameter("condition");
+    if (condition == null) {
+        condition = "none";
+    }
     
-    // 6. 특정 매장의 매출 정보를 저장할 변수 초기화
-	Com1Dao com1Dao = Com1Dao.getInstance();
-	String storenumParam = request.getParameter("storenum"); 
-   	int storenum = -1; 	
-  	List<Com1SaleDto> storeList = null;
+    System.out.println("condition 값: " + condition); // 콘솔 출력 확인
+
+	pageContext.setAttribute("condition", condition);
+	
+	Com1SaleDao saledao = Com1SaleDao.getInstance();
+	List<Com1SaleDto> list = new ArrayList<>();
+
+	if(condition.equals("day")){
+		String saleDate = (String)session.getAttribute("saleDate");
+		int daySal = saledao.getStoreDate(saleDate, storenum);
+		session.setAttribute("saleDate", saleDate);
+		session.setAttribute("daySal", daySal);
+	} else if(condition.equals("monthSal")){
+		int year = (int)session.getAttribute("year");
+		int month = (int)session.getAttribute("month");
+		Com1SaleDto dto = saledao.getStoreMonth(storenum, year, month);
+	} else if(condition.equals("yearSal")){ //conditon.equals("yearSal");
+		int year = (int)session.getAttribute("year");
+		Com1SaleDto dto = saledao.getStoreYear(storenum, year);
+	}
+	
 %>
 
 <!DOCTYPE html>
@@ -106,7 +109,7 @@ tbody tr:hover {
 <body class="d-flex flex-column min-vh-100">
 
     <!-- 네비게이션 바 포함 -->
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<%-- <jsp:include page="/include/navbar.jsp"></jsp:include> --%>
 
 	<div class="container">
 		<!-- 현재 로그인한 사용자 정보 출력 (추후 주석 해제 가능) -->
@@ -124,109 +127,57 @@ tbody tr:hover {
 		</p>
 	</div>
 
-	<div class="container flex-fill" style="width: 100%; margin-top: 50px;">
+	<div class="contents text-center mt-3 mx-auto" style="width:900px;">
+		<!-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 -->
+		<%-- <jsp:include page="/include/ceoNav.jsp"></jsp:include> --%>
+		<h4>매출 현황</h4>
+		
+		<input type="date" id="salesdate" name="salesdate" required/>
+    	
+		<!-- 조회 조건 -->
+		<div>
+		<ul class="nav nav-tabs">
+		  	<li class="nav-item">
+		  		<a class="nav-link" aria-current="page" href="salemanage.jsp?condition=day">하루 매출</a>
+		  	</li>
+		  	<li class="nav-item">
+		  		<a class="nav-link" aria-current="page" href="salemanage.jsp?condition=month">달 매출</a>
+		  	</li>
+		  	<li class="nav-item">
+		  		<a class="nav-link" aria-current="page" href="salemanage.jsp?condition=year">년 매출</a>
+		  	</li>
+		</ul>
+		</div>
 
-        <!-- 탭 메뉴 -->
-		<div class="tab-button" id="allTab" onclick="switchTab('all')">전체 매출</div>
-		<div class="tab-button" id="allyearTab" onclick="switchTab('allyear')">전체 연매출</div>
-		<div class="tab-button" id="allmonthTab" onclick="switchTab('allmonth')">전체 월매출</div>
-	
-		<!-- 전체 매출 탭 -->
-		<div id="allContent" class="tab-content" style="display: block;">
-			<form action="storeReport.jsp" method="POST">
-				<!-- 조회 옵션 -->
-				<label> 
-					<input type="radio" name="store" value="all">전체매출
-				</label> 
-				<label> 
-				    <input type="radio" name="store" value="yearall">매장 전체 연매출
-				</label> 
-				<label> 
-				    <input type="radio" name="store" value="monthall">매장 전체 월매출
-				</label>
-				<label> 
-					<input type="radio" name="store" value="storeyear">매장별 연매출
-				</label> 
-				<label> 
-					<input type="radio" name="store" value="storemonth">매장별 월매출
-				</label>
-				<button type="submit">조회</button>
-			</form>
-
-            <!-- 전체 매출 테이블 -->
-			<table>
-				<thead>
-					<tr>
-						<th>호점</th>
-						<th>날짜</th>
-						<th>매출</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-					int totalSales = 0;
-					if (listall != null && !listall.isEmpty()) {
-						for (Com1SaleDto tmp : listall) {
-					%>
-					<tr>
-						<td><%=tmp.getStoreNum()%></td>
-						<td><%=tmp.getSaleDate()%></td>
-						<td><%=tmp.getDailySales()%></td>
-					</tr>
-					<%
-					totalSales += tmp.getDailySales();
-					}
-					}
-					%>
-					<tr>
-						<td>총합</td>
-						<td><%=totalSales%></td>
-					</tr>
-				</tbody>
-			</table>
+       <div class="tab-content p-3 bg-light rounded shadow-sm" id="myTabContent">
+    		<div>
+    			<h1>날짜 선택하기</h1>
+    			<input type="date" id="salesdate" name="salesdate" required/>
+    			<button>날짜 선택</button>
+    		</div>
+			<div class="table-responsive">
+				<table class="table table-hover text-center align-middle">
+					<thead class="table-dark">
+						<tr>
+							<th>?호점</th>
+							<th>선택한 날짜</th>
+							<th>일매출</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${condition eq 'day'}">
+									<tr>
+										<td>${storenum }</td>
+										<td>${saleDate }</td>
+										<td>${daySal }</td>
+									</tr>
+							</c:when>
+						</c:choose>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-
-    <!-- 하단 푸터 포함 -->
-	<%@ include file="/include/footer.jsp"%>
-
-	<script>
-		function switchTab(tab) {
-		    // 1. 탭 목록을 배열로 정의 (탭 전환 시 모든 탭을 비활성화할 때 사용)
-		    const tabs = ['all', 'allyear', 'allmonth'];
-	
-		    // 2. 모든 탭을 숨기고 비활성화
-		    tabs.forEach(t => {
-		        // 각 탭의 콘텐츠 영역을 숨김 (display: none;)
-		        document.getElementById(t + 'Content').style.display = 'none';
-	
-		        // 각 탭의 활성화 상태를 제거 (active-tab 클래스 삭제)
-		        document.getElementById(t + 'Tab').classList.remove('active-tab');
-		    });
-	
-		    // 3. 클릭한 탭만 보이도록 설정
-		    // 클릭한 탭의 콘텐츠를 표시 (display: block;)
-		    document.getElementById(tab + 'Content').style.display = 'block';
-	
-		    // 클릭한 탭 버튼을 활성화 상태로 변경 (active-tab 클래스 추가)
-		    document.getElementById(tab + 'Tab').classList.add('active-tab');
-		}
-
-
-	    // 페이지 로드 시 URL에서 특정 파라미터(storenum) 확인 후 자동으로 탭 변경
-	    window.onload = function() {
-	        const tabs = ['all', 'allyear', 'allmonth'];
-	        tabs.forEach(t => {
-	            document.getElementById(t + 'Content').style.display = 'none';
-	            document.getElementById(t + 'Tab').classList.remove('active-tab');
-	        });
-
-	        const urlParams = new URLSearchParams(window.location.search);
-	        if (urlParams.has('storenum')) {
-	            switchTab('storeNum');
-	        }
-	    };
-	</script>
-
 </body>
 </html>

@@ -1,7 +1,7 @@
 package test.dto;
 
 public class Com1SaleDto {
-	private String saleDate;
+	private String salesDate;
 	private int storeNum;
 	private int dailySales;
 	private int year;
@@ -9,11 +9,11 @@ public class Com1SaleDto {
 	private int monthlySales;
 	private int yearlySales;
 	
-	public String getSaleDate() {
-		return saleDate;
+	public String getSalesDate() {
+		return salesDate;
 	}
-	public void setSaleDate(String saleDate) {
-		this.saleDate = saleDate;
+	public void setSalesDate(String salesDate) {
+		this.salesDate = salesDate;
 	}
 	public int getStoreNum() {
 		return storeNum;
@@ -50,7 +50,9 @@ public class Com1SaleDto {
 	}
 	public void setYearlySales(int yearlySales) {
 		this.yearlySales = yearlySales;
-	}	
+	}
+	
+	
 	
 }	
 	 

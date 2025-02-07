@@ -32,7 +32,7 @@
 	rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+	<jsp:include page="/include/adminNav.jsp">
 			<jsp:param value="index" name="current" />
 		</jsp:include>
 	<div class="container my-5">

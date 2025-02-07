@@ -90,7 +90,6 @@ tbody tr:hover {
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container">
 		<p>
 		<%-->	회사코드 :

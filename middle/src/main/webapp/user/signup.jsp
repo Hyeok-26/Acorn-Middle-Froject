@@ -163,7 +163,11 @@
             hasLetter: false,  
             hasNumber: false,  
             hasSpecial: false, 
-            hasMinLength: false
+            hasMinLength: false,
+           	comid:"",
+           	storenum:"",
+           	ecall:"",
+           	email:""
         },
         methods:{
             onEnameInput() {

@@ -37,8 +37,6 @@
 </style>
 </head>
 <body>
-<jsp:include page="/include/navbar.jsp"></jsp:include>
-
 	<div class="container">
 	<p>
 		<%=comname %>의  <%=ename %>님 접속 중
