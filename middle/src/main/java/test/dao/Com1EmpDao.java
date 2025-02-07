@@ -396,6 +396,7 @@ public class Com1EmpDao {
 				// Dto 만들고 list.add
 				Com1EmpDto dto = new Com1EmpDto();
 				dto.setComId(rs.getInt("comid"));
+				dto.setStoreNum(storenum);
 				dto.setEmpNo(rs.getInt("empno"));
 				dto.seteName(rs.getString("ename"));
 				dto.setRole(rs.getString("role"));

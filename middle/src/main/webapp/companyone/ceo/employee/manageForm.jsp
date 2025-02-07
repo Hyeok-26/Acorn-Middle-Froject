@@ -27,6 +27,9 @@
 	// DB 에서 정보 추출
 	Com1EmpDao empDao = Com1EmpDao.getInstance();
 	List<Com1EmpDto> list = new ArrayList<>();
+	
+	System.out.println("condition: " + condition);
+	
 	if(condition.equals("all")){			
 		list = empDao.getList();
 	} else if(condition.equals("admin")){	
@@ -48,7 +51,7 @@
 	
 	
 	
-	System.out.println("condition: " + condition);
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -92,7 +95,6 @@
 		  	<li class="nav-item dropdown">
 		  		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">몇 호점 별 직원</a>
 		  		<ul class="dropdown-menu">
-		  			<%-- <c:forEach var="num" items="${storeList}"> 이건 왜 안되여??--%>
 		  			<c:forEach var="num" items="${storeList }">
 		  				<li><a class="dropdown-item" href="manageForm.jsp?condition=store&storenum=${num}">${num}</a></li>
 		  			</c:forEach>
@@ -103,11 +105,9 @@
 		
 		
 		<!-- 조회 결과 -->
-		<div class="tab-content p-3 bg-light rounded shadow-sm"
-			id="myTabContent">
+		<div class="tab-content p-3 bg-light rounded shadow-sm" style="height:500px" id="myTabContent">
 			<div class="table-responsive">
-				<table
-					class="table table-hover text-center align-middle">
+				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
 							<th>호점</th>
@@ -120,26 +120,34 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:choose>
-							<c:when test="${condition eq 'all'}">
-								<c:forEach var="tmp" items="${list}">
-									<tr>
-										<td>${tmp.storeNum }</td>
-										<td>${tmp.empNo }</td>
-										<td>${tmp.eName }</td>
-										<td>${tmp.role }</td>
-										<td>${tmp.eCall }</td>
-										<td>${tmp.sal }</td>
-										<td>${tmp.email }</td>
-									</tr>
-								</c:forEach>
-							</c:when>
-						</c:choose>
-					</tbody>
-				</table>
+					<c:choose>
+						<%-- 데이터가 없는 경우 --%>
+						<c:when test="${empty list}">
+							</tbody>
+							</table>
+							<div class=" justify-content-center align-items-center vh-100">
+							  <div class="p-3 bg-light">직원 정보가 없습니다!</div>
+							</div>
+						</c:when>
+						<%-- 데이터가 있는 경우 --%>
+						<c:otherwise>
+							<c:forEach var="tmp" items="${list}">
+								<tr>
+									<td>${tmp.storeNum }</td>
+									<td>${tmp.empNo }</td>
+									<td>${tmp.eName }</td>
+									<td>${tmp.role }</td>
+									<td>${tmp.eCall }</td>
+									<td>${tmp.sal }</td>
+									<td style="width:300px">${tmp.email }</td>
+								</tr>
+							</c:forEach>
+							</tbody>
+							</table>
+						</c:otherwise>
+					</c:choose>
 			</div>
 		</div>
-
 	</div>
 			
 		
