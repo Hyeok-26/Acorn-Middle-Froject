@@ -6,6 +6,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	int empno = (int) session.getAttribute("empno");
+	session.setAttribute("current_page", "profile");
 
 	Com1EmpDao dao = Com1EmpDao.getInstance();
 	Com1EmpDto dto = dao.getData(empno);
@@ -18,7 +19,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/include/empNav.jsp"></jsp:include>
+<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
 		max-width: 800px;

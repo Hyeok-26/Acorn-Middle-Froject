@@ -4,6 +4,8 @@
     pageEncoding="UTF-8"%>
 <%
 	int empno = (int)session.getAttribute("empno");
+	session.setAttribute("current_page", "log");
+
 	Com1EmpLogDto dto = new Com1EmpLogDto();
 	dto.setEmpno(empno);
 %>
