@@ -10,12 +10,28 @@
 	//dao이용해서 회원목록 얻어오기
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	List<Com1EmpDto> list=dao.getListStaff();
+	
+	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>직원월급</title>
+<style>
+    .tabbutton {
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: bold;
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        transition: background-color 0.3s ease;
+    }
+    .activetab {
+        background-color: #dcdcdc; 
+        border-bottom: 2px solid #999; 
+    }    
+</style>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -24,77 +40,15 @@
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
 		<div class="container">
-			
-			<%--직원div --%>
-			<div class="row justify-content-center mb-3">
+		 
+		 	<div class="d-inline-block tabbutton" id="yetTab" onclick="switchTab('yet')">급여미입력</div>
+      		<div class="d-inline-block tabbutton" id="salTab" onclick="switchTab('sal')">직원</div>
+       		<div class="d-inline-block tabbutton" id="hsalTab" onclick="switchTab('hsal')">알바</div>
+       		
+			<%--미입력테이블div --%>
+			<div class="row justify-content-center mb-3" id="yetContent" >
             	<div class="col-xl">
-                	<div class="card p-4">
-						<h1 class="mb-4">직원 월급</h1>
-						<%--직원 월급 테이블--%>
-						<table class="table table-borederd table-hover text-center">
-							<thead class="table-dark">
-								<tr>
-									<th>사번</th>
-									<th>이름</th>
-									<th>월급</th>
-								</tr>
-							</thead>
-							<tbody>
-								<% for(Com1EmpDto tmp:list){
-									 if (tmp.getSal() != 0) {
-								%>
-								<tr>
-									<td><%=tmp.getEmpNo()%></td>
-									<td><%=tmp.geteName()%></td>
-									<td><%=tmp.getSal()%></td>
-								</tr>
-								<%} }%>
-							</tbody>
-						</table>
-           			</div>
-            	</div>
-            </div>				
-
-			<%--알바div --%>
-			<div class="row justify-content-center mb-3">
-            	<div class="col-xl">
-                	<div class="card p-4">          
-            	
-						<h1 class="mb-4">알바 월급</h1>
-						<%--알바 월급 테이블--%>
-						<table class="table table-borederd table-hover text-center">
-							<thead class="table-dark">
-								<tr>
-									<th>사번</th>
-									<th>이름</th>
-									<th>시급</th>
-									<th>일한시간</th>
-									<th>월급</th>
-								</tr>
-							</thead>
-							<tbody>
-								<% for(Com1EmpDto tmp:list){
-									 if (tmp.getHsal() != 0) {
-								%>
-								<tr>
-									<td><%=tmp.getEmpNo()%></td>
-									<td><%=tmp.geteName()%></td>
-									<td><%=tmp.getHsal()%></td>									
-									<td><%=tmp.getWorktime()%></td>
-									<td><%=tmp.getHsal()*tmp.getWorktime()%></td>	
-								</tr>
-							<%} }%>
-							</tbody>
-						</table>
-			    	</div>
-            	</div>
-            </div>
-            
-            <%--미입력테이블div --%>
-			<div class="row justify-content-center mb-3">
-            	<div class="col-xl">
-                	<div class="card p-4">          
-            	
+                	<div class="card p-4">        
 						<h1 class="mb-4">급여 미입력 사원정보</h1>
 						<%--미입력 테이블--%>
 						<table class="table table-borederd table-hover text-center">
@@ -133,11 +87,97 @@
             	</div>
             </div>
             
+            
+            
+			
+			<%--직원div --%>
+			<div class="row justify-content-center mb-3" id="salContent">
+            	<div class="col-xl">
+                	<div class="card p-4">
+						<h1 class="mb-4">직원</h1>
+						<%--직원 월급 테이블--%>
+						<table class="table table-borederd table-hover text-center">
+							<thead class="table-dark">
+								<tr>
+									<th>사번</th>
+									<th>이름</th>
+									<th>월급</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for(Com1EmpDto tmp:list){
+									 if (tmp.getSal() != 0) {
+								%>
+								<tr>
+									<td><%=tmp.getEmpNo()%></td>
+									<td><%=tmp.geteName()%></td>
+									<td><%=tmp.getSal()%></td>
+								</tr>
+								<%} }%>
+							</tbody>
+						</table>
+           			</div>
+            	</div>
+            </div>				
+
+			<%--알바div --%>
+			<div class="row justify-content-center mb-3" id="hsalContent">
+            	<div class="col-xl">
+                	<div class="card p-4">          
+            	
+						<h1 class="mb-4">알바</h1>
+						<%--알바 월급 테이블--%>
+						<table class="table table-borederd table-hover text-center">
+							<thead class="table-dark">
+								<tr>
+									<th>사번</th>
+									<th>이름</th>
+									<th>시급</th>
+									<th>일한시간</th>
+									<th>월급</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for(Com1EmpDto tmp:list){
+									 if (tmp.getHsal() != 0) {
+								%>
+								<tr>
+									<td><%=tmp.getEmpNo()%></td>
+									<td><%=tmp.geteName()%></td>
+									<td><%=tmp.getHsal()%></td>									
+									<td><%=tmp.getWorktime()%></td>
+									<td><%=tmp.getHsal()*tmp.getWorktime()%></td>	
+								</tr>
+							<%} }%>
+							</tbody>
+						</table>
+			    	</div>
+            	</div>
+            </div>
+            
+
+            
 		</div>	<%--container --%>
     </div> <%--main --%>
 
 	
 	<%--푸터 --%>
     <jsp:include page="/include/footer.jsp" />
+    
+    <script>
+	    function switchTab(tab) {
+	        const tabs = ['yet', 'sal', 'hsal'];
+	
+	        tabs.forEach(t => {
+	            document.getElementById(t + 'Content').style.display = 'none';
+	            document.getElementById(t + 'Tab').classList.remove('activetab');
+	        });
+	
+	        document.getElementById(tab + 'Content').style.display = 'block';
+	        document.getElementById(tab + 'Tab').classList.add('activetab');
+	    }
+	
+	    switchTab('yet');
+    </script>
 </body>
 </html>
