@@ -72,12 +72,12 @@
 						v-model="newPassword" @input="validateNewPassword"
 						:class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid': isNewPwdValid}" />
 					<small class="form-text">비밀번호 변경을 원할 경우만 입력하세요.</small>
-					<div class="invalid-feedback">비밀번호 조건을 확인하세요 (최소 6자 이상)</div>
+					<div class="invalid-feedback">비밀번호 조건을 확인하세요 (최소 8자 이상)</div>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">새 비밀번호 확인</label> <input
-						class="form-control" type="password" v-model="newPassword2"
-						@input="validateNewPassword"
+						class="form-control" type="password" name="newPassword2"
+						v-model="newPassword2" @input="validateNewPassword"
 						:class="{'is-invalid': newPassword !== newPassword2 && newPassword2 !== '', 'is-valid': newPassword === newPassword2 && newPassword2 !== ''}" />
 				</div>
 				<button class="btn btn-success" type="submit"
@@ -89,33 +89,42 @@
 	<jsp:include page="/include/footer.jsp" />
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
-        new Vue({
-            el: "#app",
-            data: {
-                comid: "<%=dto.getComId()%>",
-                empno: "<%=dto.getEmpNo()%>",
-                ename: "<%=dto.geteName()%>",
-                ecall: "<%=dto.geteCall()%>",
-                email: "<%=dto.getEmail()%>",
-                password: "",
-                newPassword: "",
-                newPassword2: "",
-                isPwdValid: false,
-                isNewPwdValid: false,
-                isPwdDirty: false,
-                isNewPwdDirty: false
-            },
-            methods: {
-                validateOldPassword() { 
-                    this.isPwdDirty = true; 
-                    this.isPwdValid = this.password.trim() !== "";
-                },
-                validateNewPassword() { 
-                    this.isNewPwdDirty = true;
-                    this.isNewPwdValid = this.newPassword.length >= 6 && this.newPassword === this.newPassword2;
-                }
-            }
-        });
-    </script>
+	    new Vue({
+	        el: "#app",
+	        data: {
+	            password: "",
+	            newPassword: "",
+	            newPassword2: "",
+	            isPwdValid: false,
+	            isNewPwdValid: false,
+	            isPwdDirty: false,
+	            isNewPwdDirty: false,
+	            hasLetter: false,
+	            hasNumber: false,
+	            hasSpecial: false,
+	            hasMinLength: false
+	        },
+	        methods: {
+	            validateOldPassword() {
+	                this.isPwdDirty = true;
+	                this.isPwdValid = this.password.trim() !== "";
+	            },
+	            validateNewPassword() {
+	                this.isNewPwdDirty = true;
+	                const regLetter = /[A-Za-z]/;
+	                const regNumber = /\d/;
+	                const regSpecial = /[\W_]/;
+	                const regMinLength = /^.{8,}$/;
+	
+	                this.hasLetter = regLetter.test(this.newPassword);
+	                this.hasNumber = regNumber.test(this.newPassword);
+	                this.hasSpecial = regSpecial.test(this.newPassword);
+	                this.hasMinLength = regMinLength.test(this.newPassword);
+	                
+	                this.isNewPwdValid = this.hasLetter && this.hasNumber && this.hasSpecial && this.hasMinLength;
+	            }
+	        }
+	    });
+	</script>
 </body>
 </html>
