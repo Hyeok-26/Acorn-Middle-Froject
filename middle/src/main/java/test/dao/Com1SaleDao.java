@@ -273,9 +273,9 @@ public class Com1SaleDao {
 		return dto;
 	}
 
-	// 특정 매장의 모든 월매출 반환
-	public List<Com1SaleDto> getListStoreMonthlySales(int year, int month) {
-		List<Com1SaleDto> list = new ArrayList<>();
+	// 모든 매장의 월매출 반환
+	public Com1SaleDto getStoreMonthlySales(int year, int month) {
+		Com1SaleDto dto = new Com1SaleDto();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -287,7 +287,8 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS monthlySales
 					FROM test_com1_sales
 					WHERE extract(year from salesDate)=? AND extract(month from salesDate)=?
-					order by month asc
+					GROUP BY extract(year from salesDate), extract(month from salesDate)
+					ORDER BY extract(year from salesDate) DESC, extract(month from salesDate) DESC
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
@@ -295,11 +296,9 @@ public class Com1SaleDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Com1SaleDto dto = new Com1SaleDto();
 				dto.setYear(rs.getInt("year"));
 				dto.setMonth(rs.getInt("month"));
 				dto.setMonthlySales(rs.getInt("monthlySales"));
-				list.add(dto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -314,12 +313,12 @@ public class Com1SaleDao {
 			} catch (Exception e) {
 			}
 		}
-		return list;
+		return dto;
 	}
 
-	// 모든 매장의 연간매출을 반환
-	public List<Com1SaleDto> getListStoreYearlySales(int year) {
-		List<Com1SaleDto> list = new ArrayList<>();
+	// 모든 매장의 연매출을 반환
+	public Com1SaleDto getStoreYearlySales(int year) {
+		Com1SaleDto dto = new Com1SaleDto();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -331,7 +330,8 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
 					WHERE extract(year from salesDate)=?
-					order by year asc
+					GROUP BY extract(year from salesDate), storeNum
+					ORDER BY year ASC, storeNum ASC
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
@@ -339,10 +339,8 @@ public class Com1SaleDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Com1SaleDto dto = new Com1SaleDto();
 				dto.setYear(rs.getInt("year"));
 				dto.setYearlySales(rs.getInt("yearlySales"));
-				list.add(dto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -357,7 +355,7 @@ public class Com1SaleDao {
 			} catch (Exception e) {
 			}
 		}
-		return list;
+		return dto;
 	}
 
 	// 모든 매장번호, 일매출, 해당하는 일 반환
