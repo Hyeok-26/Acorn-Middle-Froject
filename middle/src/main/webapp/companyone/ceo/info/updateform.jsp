@@ -25,29 +25,32 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container" id="app">
 		<h3>회원 정보 수정 양식</h3>
 		<form action="update.jsp" method="get" id="callupdateForm">
-			<div>
-				<div class="mb-2">
-					<label class="form-label" for="ename">이름</label>
-					<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
-						@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" placeholder="<%=dto.geteName() %>" readonly />
-					<div class="invalid-feedback">이름을 올바르게 입력하세요.</div>
-				</div>
-				<div class="mb-2">
-					<label class="form-label" for="ecall">연락처</label> 
-					<input class="form-control" placeholder="<%=dto.geteCall() %>" @input="onEcallInput" :class="{'is-invalid': !isEcallValid && isEcallDirty, 'is-valid':isEcallValid}"
-						type="text" name="ecall" id="ecall" v-model="ecall"/>
-					<small class="form-text">하이픈(-)을 포함하여 기재해주세요.</small>
-					<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
-				</div>
+			<div class="mb-2">
+				<label class="form-label" for="ename">이름</label>
+				<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
+					@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" placeholder="<%=dto.geteName() %>"/>
+				<div class="invalid-feedback">이름을 올바르게 입력하세요.</div>
+			</div>
+			<div class="mb-2">
+				<label class="form-label" for="ecall">연락처</label> 
+				<input class="form-control" placeholder="<%=dto.geteCall() %>" @input="onEcallInput" :class="{'is-invalid': !isEcallValid && isEcallDirty, 'is-valid':isEcallValid}"
+					type="text" name="ecall" id="ecall" v-model="ecall"/>
+				<small class="form-text">하이픈(-)을 포함하여 기재해주세요.</small>
+				<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
+			</div>
+			<div class="mb-2">
+				<label class="form-label" for="password">기존 비밀번호</label> 
+				<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
+					type="password" name="password" id="password" placeholder="<%=dto.getePwd() %>"/>
+				<div class="invalid-feedback">반드시 입력하세요</div>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPassword">새 비밀번호</label> 
 				<input class="form-control" type="password" name="newPassword" id="newPassword" @input="onNewPwdInput" v-model="newPassword"
-					:class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid':isNewPwdValid}" />
+					:class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid':isNewPwdValid}"/>
 				<small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
 			</div>
 			<div class="mb-2">
@@ -79,9 +82,15 @@
 				isEcallDirty:false,
 				isPwdDirty:false,  //비밀번호 입력란에 한번이라도 입력했는지 여부
 				isNewPwdDirty:false, //새비밀번호 입력한에 한번이라도 입력했는지 여부 
-				ename: "",
+				ename: ""
 			},
 			methods:{
+				onEnameInput(e) {
+					this.ename = e.target.value; 
+	                const reg_ename = /^[가-힣]{2,5}$/; 
+	                this.isEnameDirty = true;
+	                this.isEnameValid = reg_ename.test(this.ename);
+	            },
 				onEcallInput(){
 					//현재까지 입력한 비밀번호
 					
@@ -124,7 +133,7 @@
 					//현재까지 입력한 비밀번호
 					const pwd=e.target.value;
 					//공백이 아닌 한글자가 한번이상 반복 되어야 통과 되는 정규표현식
-					const reg_pwd=/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+					const reg_pwd= /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 					if(reg_pwd.test(pwd)){
 						this.isPwdValid=true;
 					}else{
@@ -139,13 +148,7 @@
 			    onNewPwdConfirmInput() {
 			        this.isNewPwdMatch = this.newPassword === this.newPassword2; 
 			        this.isNewPwdMatchDirty = true; 
-				},
-				onEnameInput(e) {
-		               this.ename = e.target.value; 
-		                   const reg_ename = /^[가-힣]{2,5}$/; 
-		                   this.isEnameDirty = true;
-		                   this.isEnameValid = reg_ename.test(this.ename);
-		               },
+				}
 		}});
 	</script>
 	<jsp:include page="/include/footer.jsp" />
