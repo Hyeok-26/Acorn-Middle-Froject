@@ -171,7 +171,6 @@
 			</div>
 			
 			
-			
 			<%-- 정렬 버튼 --%>
 			<div class="p-2">
 				<%--
@@ -287,7 +286,7 @@
 		
 		
 		<%-- 퇴사자 리스트 --%>	
-		<div style="height:400px;">
+		<div style="height:100px;">
 			<table class="table table-striped">
 				<thead class="table-dark">
 					<tr>

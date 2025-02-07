@@ -44,8 +44,7 @@
 			<div class="mb-2">
 				<label class="form-label" for="password">기존 비밀번호</label> 
 				<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-					type="password" name="password" id="password" placeholder="<%=dto.getePwd() %>"/>
-				<div class="invalid-feedback">반드시 입력하세요</div>
+					type="password" name="password" id="password" value="<%=dto.getePwd() %>" required/>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPassword">새 비밀번호</label> 

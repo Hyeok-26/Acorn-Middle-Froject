@@ -3,8 +3,9 @@ package test.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
-import test.dto.Com1EmpDto;
 import test.dto.Com1EmpLogDto;
 import test.util.DbcpBean;
 
@@ -95,9 +96,9 @@ public class Com1EmpLogDao {
 		}
 	}
 
-	public Com1EmpLogDto getData(int empno) {
+	public List<Com1EmpLogDto> getList(int empno) {
 
-		Com1EmpLogDto dto = new Com1EmpLogDto();
+		List<Com1EmpLogDto> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -116,6 +117,7 @@ public class Com1EmpLogDao {
 			
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
+				Com1EmpLogDto dto = new Com1EmpLogDto();
 				dto.setLogid(rs.getInt("logid"));
 				dto.setEmpno(empno);
 				dto.setCheckIn(rs.getTimestamp("checkIn"));
@@ -124,7 +126,7 @@ public class Com1EmpLogDao {
 				dto.setWorkingHours(rs.getDouble("workingHours"));
 				dto.setOvertime(rs.getDouble("overtime"));
 				dto.setRemarks(rs.getString("remarks"));
-				
+				list.add(dto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,7 +144,7 @@ public class Com1EmpLogDao {
 			} catch (Exception e) {
 			}
 		}
-		return dto;
+		return list;
 	}
 	
 	//삭제
