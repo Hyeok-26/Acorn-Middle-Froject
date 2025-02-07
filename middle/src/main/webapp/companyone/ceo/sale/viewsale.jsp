@@ -8,10 +8,10 @@
 
 <%
     //현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
-	//session.setAttribute("current_page", "salemanage");
+	session.setAttribute("current_page", "salemanage");
 	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
-	//String comname = (String)session.getAttribute("comname");
-    //String ename = (String)session.getAttribute("ename");
+	String comname = (String)session.getAttribute("comname");
+    String ename = (String)session.getAttribute("ename");
 	//SaleDao의 getList를 사용해서 saledao 리스트 생성
 	List<Com1SaleDto> list = Com1SaleDao.getInstance().getListAll();
 	List<Integer> storenumlist = Com1Dao.getInstance().getStoreNumList();
