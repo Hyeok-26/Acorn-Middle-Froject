@@ -64,10 +64,10 @@ Com1EmpDto dto=dao.getData(empno);
        <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>
    
        <div class="tab-content" id="salContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h1>${ename } 님 월급으로 급여 계산</h1>
+           <h1><%=dto.geteName() %> 님 월급으로 급여 계산</h1>
            <button class="btn btn-dark" id="salBtn" style="padding: 10px;" onclick="show('sal')">급여 조회</button>
            <div class="result" id="sal">
-           	   <label for="baseSal" style="padding: 10px; width: 100%;">기본급: ${sal }</label>
+           	   <label for="baseSal" style="padding: 10px; width: 100%;">기본급: <%=dto.getSal() %></label>
          	   <label for="pension" style="padding: 10px; width: 100%;">국민연금: </label>
                <label for="healthIns" style="padding: 10px; width: 100%;">건강보험료: </label>
                <label for="longIns" style="padding: 10px; width: 100%;">장기요양보험료: </label>
@@ -85,7 +85,7 @@ Com1EmpDto dto=dao.getData(empno);
        </div>
    
        <div class="tab-content" id="hsalContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h1>${ename } 님 시급으로 급여 계산</h1>
+           <h1><%=dto.geteName() %> 님 시급으로 급여 계산</h1>
            <input type="number" id=inputMsg1 min="0" step="0.01" placeholder="1주차 근무시간 입력"/><br>
 	       <input type="number" id=inputMsg2 min="0" step="0.01" placeholder="2주차 근무시간 입력"/><br>
 	       <input type="number" id=inputMsg3 min="0" step="0.01" placeholder="3주차 근무시간 입력"/><br>
@@ -93,7 +93,7 @@ Com1EmpDto dto=dao.getData(empno);
 	       <input type="number" id=inputMsg5 min="0" step="0.01" placeholder="5주차 근무시간 입력"/><br>
            <button class="btn btn-dark" id="hsalBtn" style="padding: 10px;" onclick="show('hsal')">급여 조회</button>
            <div class="result" id="hsal">
-           		<p>기본 시급: ${hsal } 원<p>
+           		<p>기본 시급: <%=dto.getHsal() %> 원<p>
            		<table id="hsalTable">
 					<thead>
 						<tr>
