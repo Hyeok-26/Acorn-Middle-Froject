@@ -11,8 +11,6 @@
 	String phonenum= request.getParameter("phonenum");
 	String epwd = request.getParameter("epwd");	
 	int sal=Integer.parseInt(request.getParameter("sal"));
-	int hsal=Integer.parseInt(request.getParameter("hsal"));
-	int worktime=Integer.parseInt(request.getParameter("worktime"));
 	String email=request.getParameter("email");
 	
 	// DTO 객체 생성
@@ -25,8 +23,6 @@
 	dto.seteCall(phonenum);
 	dto.setePwd(epwd);
 	dto.setSal(sal);
-	dto.setHsal(hsal);
-	dto.setWorktime(worktime);
 	dto.setEmail(email);
 	
 	//입력한 데이터로 수정하기
