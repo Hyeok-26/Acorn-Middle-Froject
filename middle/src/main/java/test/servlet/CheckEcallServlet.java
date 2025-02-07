@@ -23,7 +23,7 @@ public class CheckEcallServlet extends HttpServlet{
         
         if(role.equals("CEO")) {
         	isDuplicate = Com1CeoDao.getInstance().isDuplicateEcall(ecall);
-        }else {
+        }else{
         	isDuplicate = Com1EmpDao.getInstance().isDuplicateEcall(ecall);
         }
         

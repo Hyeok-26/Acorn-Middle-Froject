@@ -113,7 +113,7 @@
 			</form>
 		</div>
 	</div>
-	<jsp:include page="/include/footer.jsp" />
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 	    document.addEventListener("DOMContentLoaded", function () {
 	        const epwd = document.getElementById("epwd");
@@ -134,7 +134,8 @@
 	        epwd.addEventListener("input", checkPasswordMatch);
 	        epwdConfirm.addEventListener("input", checkPasswordMatch);
 	    });
-</script>
+	</script>
+	<jsp:include page="/include/footer.jsp" />
 	
 </body>
 </html>
