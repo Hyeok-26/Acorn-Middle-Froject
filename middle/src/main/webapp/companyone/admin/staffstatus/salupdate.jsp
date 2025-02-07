@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+
 	String returnurl = request.getParameter("returnurl");
 	int empno = Integer.parseInt(request.getParameter("empno"));
 	String ename = request.getParameter("ename");
@@ -28,7 +29,7 @@
 <jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<jsp:include page="/include/adminNav.jsp"></jsp:include>
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1"> 
 		<div class="container mt-5"> 

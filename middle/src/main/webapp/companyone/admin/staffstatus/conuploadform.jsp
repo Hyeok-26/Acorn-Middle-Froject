@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+
 	int empno = Integer.parseInt(request.getParameter("empno"));
 %>
 <!DOCTYPE html>
@@ -22,7 +23,7 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<jsp:include page="/include/adminNav.jsp"></jsp:include>
 	
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  

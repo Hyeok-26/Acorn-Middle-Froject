@@ -5,6 +5,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	session.setAttribute("current_page", "staffstatusview");
+
 	//dao이용해서 회원목록 얻어오기
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	List<Com1EmpDto> list=dao.getListStaff();
@@ -17,8 +19,8 @@
 <jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
-	
+	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
 		<div class="container">

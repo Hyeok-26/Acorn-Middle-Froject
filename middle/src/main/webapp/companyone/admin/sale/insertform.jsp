@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	session.setAttribute("current_page", "saleview");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +14,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
   <!-- 네비게이션 바 -->
-  <jsp:include page="/include/navbar.jsp">
+  <jsp:include page="/include/adminNav.jsp">
     <jsp:param value="index" name="current" />
   </jsp:include>
 
