@@ -49,7 +49,7 @@ List<Com1EmpLogDto> list=dao.getList(empno);
 						</tr>
 					</thead>
 					<tbody>
-					<%for(Com1EmpLogDto log:list) %>
+					<%for(Com1EmpLogDto log:list){ %>
 						<tr>
 							<td><%=log.getWorkingDate() %></td>
 							<td><%=log.getCheckIn() %></td>
@@ -57,7 +57,7 @@ List<Com1EmpLogDto> list=dao.getList(empno);
 							<td><%=log.getWorkingHours() %></td>
 							<td><%=log.getRemarks() %></td>
 						</tr>
-					<%}; %>
+					<%}%>
 					</tbody>
 				</table>
            
