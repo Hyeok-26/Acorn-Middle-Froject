@@ -7,7 +7,7 @@
 <%-- 직원 전용 네비바: 내 정보 보기 | 프로필 | 출퇴근 | 스케줄 | 급여관리 --%>
 <ul class="mb-5 nav justify-content-center nav-pills nav-fill">
   <li class="nav-item">
-    <a class="nav-link ${current_page eq 'staffMain' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/staff/staffMain.jsp">내 정보 보기</a>
+    <a class="nav-link ${current_page eq 'staffMain' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/staff/staffMain.jsp">메인 페이지</a>
   </li>
   <li class="nav-item">
     <a class="nav-link ${current_page eq 'profile' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/staff/info/profile.jsp">프로필 관리</a>

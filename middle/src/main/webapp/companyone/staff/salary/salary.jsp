@@ -5,10 +5,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 
-int empno=(int)session.getAttribute("empno");
-
-Com1EmpDao dao=Com1EmpDao.getInstance();
-Com1EmpDto dto=dao.getData(empno);
+	int empno=(int)session.getAttribute("empno");
+	session.setAttribute("current_page", "salary");
+	
+	Com1EmpDao dao=Com1EmpDao.getInstance();
+	Com1EmpDto dto=dao.getData(empno);
 
 %>
 <!DOCTYPE html>

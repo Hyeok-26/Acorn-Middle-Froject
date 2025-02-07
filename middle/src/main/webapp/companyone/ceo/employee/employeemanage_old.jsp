@@ -113,10 +113,6 @@ tbody tr:hover {
 </head>
 <!-- <body class=" d-flex flex-column min-vh-100"> -->
 <body>
-	<%-- 공통 네비바 --%>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
-	
-
 	<div class="container">
 		<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
 		<jsp:include page="/include/ceoNav.jsp"></jsp:include>

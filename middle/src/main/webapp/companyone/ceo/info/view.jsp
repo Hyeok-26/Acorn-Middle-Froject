@@ -126,7 +126,7 @@ td a:hover {
 </head>
 
 <body>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<%-- <jsp:include page="/include/navbar.jsp"></jsp:include> --%>
 	<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	<div class="container2">
