@@ -201,4 +201,80 @@ public class Com1CeoDao {
 		}
 		return list;
 	}
+	
+	public boolean isDuplicateEcall(String ecall) {
+		boolean isDuplicate = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "SELECT COUNT(*) FROM test_com1_ceo WHERE ecall = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ecall); // 전화번호 바인딩
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int count = rs.getInt(1); // COUNT 결과 가져오기
+				isDuplicate = count > 0; // 1개 이상이면 중복
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return isDuplicate;
+	}
+	
+	public boolean isDuplicateEmail(String email) {
+		boolean isDuplicate = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = "SELECT COUNT(*) FROM test_com1_ceo WHERE email = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email); // 전화번호 바인딩
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int count = rs.getInt(1); // COUNT 결과 가져오기
+				isDuplicate = count > 0; // 1개 이상이면 중복
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return isDuplicate;
+	}
 }
