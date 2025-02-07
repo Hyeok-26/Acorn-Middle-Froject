@@ -6,11 +6,12 @@
 <%
 
 	int empno = (int) session.getAttribute("empno");
-	Com1CeoDao dao = Com1CeoDao.getInstance();
-	Com1CeoDto dto = dao.getData(empno);
+	//Com1CeoDao dao = Com1CeoDao.getInstance();
+	//Com1CeoDto dto = dao.getData(empno);
+	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
 	
 	// 로그인한 사용자의 정보를 DB에서 가져오기 (예시)
-	Com1CeoDto ceoInfo = Com1CeoDao.getInstance().getData(empno); // 사원번호를 이용하여 CEO 정보를 조회
+	//Com1CeoDto ceoInfo = Com1CeoDao.getInstance().getData(empno); // 사원번호를 이용하여 CEO 정보를 조회
 %>
 
 
@@ -77,7 +78,8 @@
 				isNewPwdMatchDirty: false,
 				isEcallDirty:false,
 				isPwdDirty:false,  //비밀번호 입력란에 한번이라도 입력했는지 여부
-				isNewPwdDirty:false //새비밀번호 입력한에 한번이라도 입력했는지 여부 
+				isNewPwdDirty:false, //새비밀번호 입력한에 한번이라도 입력했는지 여부 
+				ename: "",
 			},
 			methods:{
 				onEcallInput(){
@@ -101,7 +103,7 @@
 	                        headers: {
 	                            'Content-Type': 'application/x-www-form-urlencoded'
 	                        },
-	                        body: 'ecall=' + encodeURIComponent(this.ecall)
+	                        body: 'ecall=' + encodeURIComponent(this.ecall) + '&role=' + encodeURIComponent('CEO')
 	                    })
 	                    .then(res => res.json())  
 	                    .then(data => {
@@ -137,7 +139,13 @@
 			    onNewPwdConfirmInput() {
 			        this.isNewPwdMatch = this.newPassword === this.newPassword2; 
 			        this.isNewPwdMatchDirty = true; 
-				}
+				},
+				onEnameInput(e) {
+		               this.ename = e.target.value; 
+		                   const reg_ename = /^[가-힣]{2,5}$/; 
+		                   this.isEnameDirty = true;
+		                   this.isEnameValid = reg_ename.test(this.ename);
+		               },
 		}});
 	</script>
 	<jsp:include page="/include/footer.jsp" />

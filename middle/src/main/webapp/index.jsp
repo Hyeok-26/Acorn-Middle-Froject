@@ -198,14 +198,16 @@
 		    <div class="container">
 		        <div class="row align-items-center">
 		            <div class="col-md-6">
-		                <img src="#"
+		                <img src="https://images.unsplash.com/photo-1591696205602-2f950c417cb9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 		            </div>
 		            <div class="col-md-6 text-end">
 		                <h3>매출 관리</h3>
-		                <p>매출 관리 페이지에 대한 설명 
-		                	<br /> 이 부분은 텍스트입니다.
-		                </p>
+		                <p>
+						    연매출, 월매출, 일매출을 손쉽게 조회할 수 있습니다.<br />
+						    원하는 기간을 선택하여 매출 흐름을 한눈에 파악하고, 데이터를 비교 분석할 수 있습니다.<br />
+						    직관적인 인터페이스를 통해 빠르고 정확한 매출 정보를 확인하세요.
+						</p>
 		            </div>
 		        </div>
 		    </div>
@@ -218,7 +220,7 @@
 		                </p>
 		            </div>
 		            <div class="col-md-6">
-		                <img src="#"
+		                <img src="https://images.unsplash.com/photo-1641122669951-3e2aff778d3b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 		            </div>
 		        </div>
@@ -226,7 +228,7 @@
 		    <div class="container">
 		        <div class="row align-items-center">
 		            <div class="col-md-6">
-		                <img src="#"
+		                <img src="https://images.unsplash.com/37/tEREUy1vSfuSu8LzTop3_IMG_2538.jpg?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 		            </div>
 		            <div class="col-md-6 text-end">

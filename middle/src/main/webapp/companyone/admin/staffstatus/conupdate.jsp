@@ -28,7 +28,6 @@
 			<p class="alert alert-success">
 				<strong><%=empno %> <%=dto.geteName() %></strong>사원의 계약서가 삭제되었습니다..
 				<a class="alert-link" href="contract.jsp?empno=<%=empno%>">계약서 확인</a>
-				<a class="alert-link" href="view.jsp">직원현황 확인하러가기</a>
 			</p>
 		<%}%>
 	

@@ -4,13 +4,14 @@
 <%
 
 	int empno = (int) session.getAttribute("empno");
-	Com1CeoDao dao = Com1CeoDao.getInstance();
-	Com1CeoDto dto = dao.getData(empno);
+	/* Com1CeoDao dao = Com1CeoDao.getInstance();
+	Com1CeoDto dto = dao.getData(empno); */
+	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
 	
 
-	String newcall=request.getParameter("ecall");
-	String password=request.getParameter("password");
-	String newPassword=request.getParameter("newPassword");	
+	String newcall = request.getParameter("ecall");
+	// String password = request.getParameter("password");
+	String newPassword = request.getParameter("newPassword");	
 	boolean isSuccess=false;
 
 	if(newcall!=null||newPassword!=null){
