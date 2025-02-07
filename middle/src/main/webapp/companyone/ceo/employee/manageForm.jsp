@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="test.dao.Com1Dao"%>
 <%@page import="test.dto.Com1EmpDto"%>
 <%@page import="java.util.List"%>
@@ -9,35 +10,43 @@
 	session.setAttribute("current_page", "manageForm");
 
 
+
 	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
 	String comname = (String)session.getAttribute("comname");
 	String ename = (String)session.getAttribute("ename");
 
 	
+	
 	// 보여줘야 할 목록 조건을 파라미터로 받기
 	String condition = (String)request.getParameter("condition");
 	if(condition == null) condition = "all";// default 값은 all	
+	pageContext.setAttribute("condition", condition);
 
+	
 	
 	// DB 에서 정보 추출
 	Com1EmpDao empDao = Com1EmpDao.getInstance();
+	List<Com1EmpDto> list = new ArrayList<>();
 	if(condition.equals("all")){			
-		List<Com1EmpDto> empList = empDao.getList();
-		pageContext.setAttribute("condition", "all");
-		pageContext.setAttribute("empList", empList);
+		list = empDao.getList();
 	} else if(condition.equals("admin")){	
-		List<Com1EmpDto> adminList = empDao.getListAdmin();
+		list = empDao.getListAdmin();
+		
 	} else if(condition.equals("staff")){	
-		List<Com1EmpDto> staffList = empDao.getListStaff();
+		list = empDao.getListStaff();
 	} else {				
 		int storenum = Integer.parseInt(request.getParameter("storenum"));
-		List<Com1EmpDto> storeEmpList = empDao.getListByStoreNum(storenum); 
+		list = empDao.getListByStoreNum(storenum); 
 	}
-
+	pageContext.setAttribute("list", list);
+	
+	
 	
 	// 몇 호점 리스트 정보 가져오기
 	List<Integer> storeList = Com1Dao.getInstance().getStoreNumList();
 	pageContext.setAttribute("storeList", storeList);
+	
+	
 	
 	System.out.println("condition: " + condition);
 %>
@@ -113,7 +122,7 @@
 					<tbody>
 						<c:choose>
 							<c:when test="${condition eq 'all'}">
-								<c:forEach var="tmp" items="${empList}">
+								<c:forEach var="tmp" items="${list}">
 									<tr>
 										<td>${tmp.storeNum }</td>
 										<td>${tmp.empNo }</td>
@@ -132,11 +141,8 @@
 		</div>
 
 	</div>
-					
+			
 		
-		
-		
-
 	<!-- 푸터 -->
 	<div class="position-fixed bottom-0 w-100">
   	<jsp:include page="/include/footer.jsp" />
