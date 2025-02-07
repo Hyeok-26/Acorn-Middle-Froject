@@ -17,6 +17,15 @@ Com1EmpDto dto=dao.getData(empno);
 <title>근로계약서</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
+	.container2 {
+		max-width: 800px;
+		margin: 40px auto;
+		background-color: #fff;
+		padding: 20px;
+		border-radius: 8px;
+		border: 1px solid black;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
 	#app{
 		height: auto;
 		min-height: 100%;
@@ -39,23 +48,24 @@ Com1EmpDto dto=dao.getData(empno);
 </head>
 <body>
 <jsp:include page="/include/empNav.jsp"></jsp:include>
-	<div class="container" id="app">
+	<div class="container2" id="app">
 		<h1>근로 계약서 보기</h1>
-		<form action="update_contract.jsp" method="post" id="contractForm" enctype="multipart/form-data">
+		<form action="contractUpdate.jsp?empno=<%=empno %>" method="post" id="contractForm">
 		
 		<div>
-			<label><strong><%=dto.geteName() %></strong>님의 근로계약서 입니다</label>
+			<label><strong><%=dto.geteName() %></strong> 님의 근로계약서 입니다</label>
 			<div>
 				<input type="file" name="contractFile" id="contractFile" accept="image/*"/>
-				<a href="javascript:" id="contractLink">
+				<input type="hidden" name="srcurl" id="srcurl" />
+				<a href="javascript:" name="contractLink" id="contractLink">
 					<%if(dto.getContract()==null){ %>
 						<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
 							<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
 							<path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 						</svg>
-							
+						<p>근로계약서를 업로드해주십시오</p>	
 					<%}else{ %>
-						<img id="contractImage" src="${pageContext.request.contextPath}/upload/<%=dto.getContract() %>" alt="계약서 이미지" />
+						<img id="contractImage" src="<%=dto.getContract() %>" alt="계약서 이미지" />
 					<%} %>
 				</a>
 			</div>
@@ -84,6 +94,8 @@ Com1EmpDto dto=dao.getData(empno);
 				reader.onload=(event)=>{
 					//읽은 파일 데이터 얻어내기 
 					const data=event.target.result;
+					//이미지 src 에 설정
+					document.querySelector("#srcurl").value=data;
 					const img=`<img src="\${data}" id="contractImage" alt="계약서 이미지">`;
 					document.querySelector("#contractLink").innerHTML=img;
 				};

@@ -156,6 +156,7 @@
 			</tr>
 			<tr>
 				<th><a href="contract.jsp">근로 계약서 보기</a></th>
+				<th><a href="contract.jsp?empno=<%=empno %>">근로 계약서 보기</a></th>
 			</tr>
 			<%--
 			<tr>

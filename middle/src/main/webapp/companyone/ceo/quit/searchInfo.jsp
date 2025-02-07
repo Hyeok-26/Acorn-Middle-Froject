@@ -8,9 +8,6 @@
 	int empno = Integer.parseInt(request.getParameter("empno"));
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
 	
-	/* SimpleDateFormat hiredate = new SimpleDateFormat(dto.getHiredate());
-	System.out.println("hiredate: " + hiredate.toString());
-	dto.setHiredate(hiredate); */
 	
 	// 조회 결과
 	boolean isExist = dto.geteName() == null ? false : true;

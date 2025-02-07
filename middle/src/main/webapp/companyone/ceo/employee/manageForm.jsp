@@ -92,11 +92,12 @@
 <style>
 	/* div{ border:1px solid red; } */
 </style>
+<!-- 페이지 로딩에 필요한 자원 -->
+<jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 <body>
-	<!-- 페이지 로딩에 필요한 자원 -->
-	<jsp:include page="/include/resource.jsp"></jsp:include>
-
+	<%-- 관리자 페이지 전용 네비바 --%>
+	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	
 	<!-- 현재 접속 상태 표시 -->
 	<div class="container">
@@ -106,8 +107,6 @@
 	
 	<!-- 본문 -->
 	<div class="contents text-center mt-3 mx-auto" style="width:900px;">
-		<!-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 -->
-		<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 		<h4>근무 직원 현황</h4>
 		
 		<!-- 조회 조건 -->
