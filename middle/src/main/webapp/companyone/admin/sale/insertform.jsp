@@ -42,7 +42,7 @@
       <tbody>
         <tr>
           <td><input type="date" id="salesdate" name="salesdate" required/></td>
-          <td><input type="number" id="dailySales" name="dailySales" min="0" required/></td>
+          <td><input type="number" id="dailySales" name="dailysales" min="0" required/></td>
         </tr>
       </tbody>
     </table>
