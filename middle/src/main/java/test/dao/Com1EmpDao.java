@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import test.dto.Com1EmpDto;
+import test.dto.Com1QuitDto;
 import test.util.DbcpBean;
 
 public class Com1EmpDao {
@@ -406,7 +407,8 @@ public class Com1EmpDao {
 				dto.setHsal(rs.getInt("hsal"));
 				dto.setWorktime(rs.getInt("worktime"));
 				dto.setEmail(rs.getString("email"));
-				dto.setHiredate(rs.getString("hiredate"));
+				//dto.setHiredate(rs.getString("hiredate")); 원래 코드 (시간은 안 가져오게 수정) - 최유진
+				dto.setHiredate((rs.getString("hiredate")).substring(0,(rs.getString("hiredate")).indexOf(" ")));
 				dto.setContract(rs.getString("contract"));
 				list.add(dto);
 			}
@@ -504,4 +506,140 @@ public class Com1EmpDao {
 
 		return isDuplicate;
 	}
+	
+	
+	// 리스트 개수만 가져오는 메소드
+	public int getCount(Com1EmpDto dto) {
+		
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = new DbcpBean().getConn();
+			
+			// 쿼리문 생성
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT COUNT(*) AS count FROM test_com1_emp");
+			// 조건이 '모두' 가 아니라면
+			if(!dto.getCondition().equals("ALL")) {
+				// 조건이 '지점'별 조회 라면
+				if(dto.getCondition().equals("STORE")) sql.append(" WHERE STORENUM = ? ");
+				// 조건이 '점장' 또는 '직원' 이라면
+				else sql.append(" WHERE ROLE = ? ");
+			}
+			
+			
+			
+			// 검색조건이 있는 경우 LIKE ? 에 값 바인딩
+			pstmt = conn.prepareStatement(sql.toString());
+			// 조건이 '모두' 가 아니라면
+			if(!dto.getCondition().equals("ALL")) {
+				// 조건이 '지점'별 조회 라면
+				if(dto.getCondition().equals("STORE")) pstmt.setInt(1, dto.getStoreNum());
+				// 조건이 '점장' 또는 '직원' 이라면
+				else pstmt.setString(1, dto.getCondition());
+			}
+			
+			
+			System.out.println(sql);
+			
+			// 쿼리 실행 및 결과 추출
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {e.printStackTrace();}
+		}
+		
+		return count;
+	}
+	
+	
+	// 리스트 정보를 가져오는 메소드 (페이징 처리와 함께 조회하기 위한 메소드 추가함 - 최유진)
+	public List<Com1EmpDto> getList2(Com1EmpDto dto) {
+		List<Com1EmpDto> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = new DbcpBean().getConn();
+			
+			// SQL 문 생성
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * FROM ");
+			sql.append("(SELECT result1.*, ROWNUM AS rnum FROM ");
+			sql.append("(SELECT empno, ename, storenum, role, ecall, email, sal, hsal, worktime, TO_CHAR(hiredate, 'YYYY.MM.DD') AS hiredate FROM test_com1_emp ");
+			
+			// 조건이 '모두' 가 아니라면
+			if(!dto.getCondition().equals("ALL")) {
+				// 조건이 '지점'별 조회 라면
+				if(dto.getCondition().equals("STORE")) sql.append("WHERE STORENUM = ? ");
+				// 조건이 '점장' 또는 '직원' 이라면
+				else sql.append("WHERE ROLE = ? ");
+			}
+			sql.append("ORDER BY hiredate DESC) result1) WHERE rnum BETWEEN ? AND ?");
+			
+			
+			// ? 바인딩
+			pstmt = conn.prepareStatement(sql.toString());
+			int paramIndex = 1;
+			// 조건이 '모두' 가 아니라면
+			if(!dto.getCondition().equals("ALL")) {
+				// 조건이 '지점'별 조회 라면
+				if(dto.getCondition().equals("STORE")) pstmt.setInt(paramIndex++, dto.getStoreNum());
+				// 조건이 '점장' 또는 '직원' 이라면
+				else pstmt.setString(paramIndex++, dto.getCondition());
+			}
+			pstmt.setInt(paramIndex++, dto.getStartRowNum());
+			pstmt.setInt(paramIndex, dto.getEndRowNum());
+			
+			
+			System.out.println(sql);
+			// 쿼리 실행 및 결과 추출
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Com1EmpDto tmp = new Com1EmpDto();
+				tmp.setEmpNo(rs.getInt("empno"));
+				tmp.seteName(rs.getString("ename"));
+				tmp.setStoreNum(rs.getInt("storenum"));
+				tmp.setRole(rs.getString("role"));
+				tmp.seteCall(rs.getString("ecall"));
+				tmp.setHiredate(rs.getString("email"));
+				tmp.setHiredate(rs.getString("sal"));
+				tmp.setHiredate(rs.getString("hsal"));
+				tmp.setHiredate(rs.getString("worktime"));
+				tmp.setHiredate(rs.getString("hiredate"));
+				list.add(tmp);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {e.printStackTrace();}
+		}
+		return list;
+	}
 }
+
+
+

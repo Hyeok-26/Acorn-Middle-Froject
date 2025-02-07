@@ -78,11 +78,11 @@
 		pageNum = Integer.parseInt(strPageNum);
 	}
 	
-	// row 기본값: 1 ~ 3 / 4 ~ 6
+	// row 기본값
 	int startRowNum = (pageNum-1)*PAGE_ROW_COUNT + 1;	// 시작 row 번호 
 	int endRowNum = PAGE_ROW_COUNT*pageNum;				// 마지막 row 번호
 	
-	// 하단 페이지 기본값: 1 ~ 2 / 3 ~ 4
+	// 하단 페이지 기본값
 	int startPageNum = ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT + 1;
 	int endPageNum = startPageNum+PAGE_DISPLAY_COUNT - 1;
 	
