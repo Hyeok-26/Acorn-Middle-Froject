@@ -165,7 +165,7 @@
 		        <div class="row align-items-center">
 		            <div class="col-md-6 text-end">
 		                <h3>매출 관리</h3>
-		                <p>지선 언니 여기다가 설명이용~
+		                <p>전체 연매출, 월매출, 지점별 매출 현황을 확인할 수 있습니다. 
 		                </p>
 		            </div>
 		            <div class="col-md-6">
