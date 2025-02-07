@@ -41,7 +41,7 @@ public class Com1SaleDao {
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
-			pstmt.setString(1, dto.getSaleDate());
+			pstmt.setString(1, dto.getSalesDate());
 			pstmt.setInt(2, dto.getStoreNum());
 			pstmt.setInt(3, dto.getDailySales());
 			// sql 문을 실행하고 변화된 row 의 개수를 리턴받기
@@ -117,7 +117,7 @@ public class Com1SaleDao {
 			// ? 에 값을 여기서 바인딩한다.
 			pstmt.setInt(1, dto.getDailySales());
 			pstmt.setInt(2, dto.getStoreNum());
-			pstmt.setString(3, dto.getSaleDate());
+			pstmt.setString(3, dto.getSalesDate());
 
 			// sql 문을 실행하고 변화된 row 의 개수를 리턴받기
 			rowCount = pstmt.executeUpdate();
@@ -141,7 +141,7 @@ public class Com1SaleDao {
 
 	// 하나의 데이터 얻어오기
 	// 특정 날짜에 해당하는 일매출 반환
-	public int getStoreDate(String saleDate, int storeNum) {
+	public int getStoreDate(String salesDate, int storeNum) {
 		// Dto 객체 선언
 		int today_sal = 0; 
 
@@ -159,7 +159,7 @@ public class Com1SaleDao {
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩
-			pstmt.setString(1, saleDate);
+			pstmt.setString(1, salesDate);
 			pstmt.setInt(2, storeNum);
 
 			// SQL 문 실행하고 결과를 ResultSet 객체로 받기
@@ -376,7 +376,7 @@ public class Com1SaleDao {
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
 	            Com1SaleDto dto = new Com1SaleDto();
-	            dto.setSaleDate(rs.getString("salesDate"));
+	            dto.setSalesDate(rs.getString("salesDate"));
 	            dto.setStoreNum(rs.getInt("storeNum"));
 	            dto.setDailySales(rs.getInt("dailySales"));
 	            
