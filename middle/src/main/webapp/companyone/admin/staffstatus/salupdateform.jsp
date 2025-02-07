@@ -35,9 +35,10 @@
 	<jsp:include page="/include/adminNav.jsp"></jsp:include>
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
-		<div class="container">
+		<div class="container" id ="app">
 		
-			<h1>근무시간변경</h1>
+			<h1>근무시간 급여변경</h1>
+			<p>알바는 시급과 근무시간만 기입 / 직원은 월급만 기입해주세요</p>
 			<form action="salupdate.jsp?returnurl=<%=returnurl%>" method="post" id="myForm">
 			
 				<div class="mb-3">
@@ -59,36 +60,85 @@
 				
 				<div class="mb-3">
 					<label class="form-label">월급</label> 
-					<input class="form-control" type="text" name="sal" id="sal" value="<%=dto.getSal()%>" required oninput="salInput()" />
-					<div class="invalid-feedback">알맞은 값을 입력하세요.</div>
-					<div class="valid-feedback">알맞은 값입니다.</div>
+					<input class="form-control" type="text" name="sal" id="sal" value="<%=dto.getSal()%>" required oninput="salInput()"
+						v-model="sal" @input="validatesal" 
+						:class="{'is-invalid': !issalValid && issalDirty, 'is-valid': issalValid}"/>
+					<div class="invalid-feedback">양수를 입력하세요.</div>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">시급</label> 
-					<input class="form-control" type="text" name="hsal" id="hsal" value="<%=dto.getHsal()%>" required oninput="hsalInput()"/>
+					<input class="form-control" type="text" name="hsal" id="hsal" value="<%=dto.getHsal()%>" required oninput="hsalInput()"
+						v-model="hsal"  @input="validatehsal"
+						:class="{'is-invalid': !ishsalValid && ishsalDirty, 'is-valid': ishsalValid}"/>
+						<div class="invalid-feedback">양수를 입력하세요.</div>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">근무시간</label> 
-					<input class="form-control" type="test" name="worktime" id="worktime" value="<%=dto.getWorktime()%>" required oninput="hsalInput()"/>
+					<input class="form-control" type="text" name="worktime" id="worktime" value="<%=dto.getWorktime()%>" required oninput="hsalInput()"
+						v-model="worktime" @input="validateworktime"
+						:class="{'is-invalid': !isworktimeValid && isworktimeDirty, 'is-valid': isworktimeValid}"/>
+						<div class="invalid-feedback">양수를 입력하세요.</div>
 				</div>
-				<button class="btn btn-success" type="submit" >수정하기</button>
-				<button class="btn btn-danger" type="reset">리셋</button>
-
-
+				<button class="btn btn-success" type="submit" id="subBtn" 
+					:disabled="!(issalValid || (ishsalValid && isworktimeValid))"
+				>수정하기</button>
+				<button class="btn btn-danger" type="reset">기존급여보기</button>
 			</form>
 	
 		</div>
 	</div> <%--메인 --%>
 	<%--푸터 --%>
 	<jsp:include page="/include/footer.jsp" />
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
+    new Vue({
+        el: "#app",
+        data: {
+            sal: "",
+            hsal: "",
+            worktime: "",
+			
+            issalDirty: false,
+            issalValid: false,
+            
+            ishsalValid: false,
+            ishsalDirty: false,
+            
+            isworktimeValid: false,
+            isworktimeDirty: false,
+        },
+        methods: {
+            validatesal() {
+            	this.hsal= "0";
+            	this.worktime= "0";
+            	this.issalDirty = true;
+                const reg= /^[1-9]\d*$/;
+                this.issalValid = reg.test(this.sal);
+                
+            },
+            validatehsal() {
+            	this.sal= "0";
+                this.ishsalDirty = true;
+                const reg= /^[1-9]\d*$/;
+                this.ishsalValid = reg.test(this.hsal);            	
+            },
+            validateworktime() {
+            	this.sal= "0";
+                this.isworktimeDirty = true;
+                const reg= /^[1-9]\d*$/;
+                this.isworktimeValid = reg.test(this.worktime);            	
+            }
+        }
+    }); 
+	//뷰
+	
+	/*
     function salInput() {
-    	
         let sal = document.getElementById("sal");
         let hsal = document.getElementById("hsal");
         let worktime = document.getElementById("worktime");
 
-        if (sal.value.trim() !== "") {
+        if (sal.value.trim() !== ""  ) {
             hsal.setAttribute("readonly","");
             worktime.setAttribute("readonly","");
             hsal.value = "0";
@@ -105,7 +155,7 @@
         let hsal = document.getElementById("hsal");
         let worktime = document.getElementById("worktime");
 
-        if (hsal.value.trim() !== "" || worktime.value.trim() !== "") {
+        if ( hsal.value.trim() !== "" || worktime.value.trim() !== "" ) {
         	sal.setAttribute("readonly","");
             
             sal.value = "0";
@@ -115,39 +165,9 @@
         }
     }
     
-    //버튼비활성화
-    let isValid=false;
-	const checkForm= ()=>{
-		if(isValid){
-			//type속성이 submit인 요소
-			document.querySelector("[type=submit]").removeAttribute("disabled");
-		}else{
-			//type속성이 submit인 요소를 찾아서 disabled="disabled"속성을 추가한다.
-			document.querySelector("[type=submit]").setAttribute("disabled", "disabled");
-		}
-	};
+    */
     
-    const reg= /^[1-9]\d*$/;  
-	document.querySelector("#sal").addEventListener("input", (event)=>{
-		//일단 is-valid, is-invalid클래스를 모두 지우고
-		event.target.classList.remove("is-valid", "is-invalid");
-		
-		//현재까지 입력한 아이디를 읽어온다.
-		let inputcontent=event.target.value;
-		
-		//만일 정규표현식을 통과하지못했다면
-		if(!reg.test(inputcontent)){
-			event.target.classList.add("is-invalid");
-			//아이디의 상태값변경
-			isValid=false;
-		}else{
-			event.target.classList.add("is-valid");
-			//아이디의 상태값변경
-			isValid=true;
-		}
-		checkForm();
-	});
-	
+    
 
 	
     

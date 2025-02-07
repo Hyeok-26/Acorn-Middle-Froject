@@ -52,6 +52,6 @@
         location.href = "profile.jsp";
     <% } else { %>
         alert("기존 비밀번호가 일치하지 않습니다.");
-        location.href = "<%= request.getContextPath() %>/companyone/staff/info/profile_update_form.jsp";
+        location.href = "<%= request.getContextPath() %>/companyone/staff/info/profileUpdateForm.jsp";
     <% } %>
 </script>
