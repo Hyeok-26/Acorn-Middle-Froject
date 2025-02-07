@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	session.setAttribute("current_page", "staffstatusview");
 	int empno = Integer.parseInt(request.getParameter("empno"));
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto= dao.getData(empno);
@@ -30,7 +31,7 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<jsp:include page="/include/adminNav.jsp"></jsp:include>
 			
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	session.setAttribute("current_page", "adminhome");
+	
 	String comname = (String)session.getAttribute("comname");
 	int storenum = (int)session.getAttribute("storenum");
 	int empno = (int)session.getAttribute("empno");
@@ -41,7 +43,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 	<div class="main flex-grow-1">
-		<jsp:include page="/include/navbar.jsp">
+		<jsp:include page="/include/adminNav.jsp">
 			<jsp:param value="index" name="current" />
 		</jsp:include>
 		<div class="container">
