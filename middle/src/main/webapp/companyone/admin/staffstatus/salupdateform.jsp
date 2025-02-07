@@ -80,7 +80,7 @@
 						<div class="invalid-feedback">양수를 입력하세요.</div>
 				</div>
 				<button class="btn btn-success" type="submit" id="subBtn" 
-					:disabled="!(issalValid || (ishsalValid && isworktimeValid))"
+					:disabled="!(issalValid && ishsalValid && isworktimeValid)"
 				>수정하기</button>
 				<button class="btn btn-danger" type="reset">기존급여보기</button>
 			</form>
@@ -111,6 +111,9 @@
             validatesal() {
             	this.hsal= "0";
             	this.worktime= "0";
+            	this.ishsalValid = true;
+            	this.isworktimeValid = true;
+            	
             	this.issalDirty = true;
                 const reg= /^[1-9]\d*$/;
                 this.issalValid = reg.test(this.sal);
@@ -118,12 +121,14 @@
             },
             validatehsal() {
             	this.sal= "0";
+            	this.issalValid = true;
                 this.ishsalDirty = true;
                 const reg= /^[1-9]\d*$/;
                 this.ishsalValid = reg.test(this.hsal);            	
             },
             validateworktime() {
             	this.sal= "0";
+            	this.issalValid = true;
                 this.isworktimeDirty = true;
                 const reg= /^[1-9]\d*$/;
                 this.isworktimeValid = reg.test(this.worktime);            	

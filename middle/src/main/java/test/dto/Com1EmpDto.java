@@ -15,6 +15,10 @@ public class Com1EmpDto {
 	private String email;
 	private String hiredate;
 	private String contract;
+	private int startRowNum;
+	private int endRowNum;
+	private String condition;
+	private String keyword;
 	
 	public int getComId() {
 		return comId;
@@ -94,4 +98,29 @@ public class Com1EmpDto {
 	public void setContract(String contract) {
 		this.contract = contract;
 	}
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	
 }

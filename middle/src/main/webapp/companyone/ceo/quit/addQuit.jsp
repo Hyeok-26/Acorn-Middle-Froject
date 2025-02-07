@@ -1,3 +1,4 @@
+<%@page import="test.dao.Com1EmpLogDao"%>
 <%@page import="test.dto.Com1QuitDto"%>
 <%@page import="test.dto.Com1EmpDto"%>
 <%@page import="test.dao.Com1EmpDao"%>
@@ -16,6 +17,7 @@
 	boolean isAddSuccess = Com1QuitDao.getInstance().insert(dto,quitdate);
 	
 	// emp 테이블에서 그 사람 row 삭제
+	boolean isDeleteLog = Com1EmpLogDao.getInstance().delete(empno);
 	boolean isDeleteSuccess = Com1EmpDao.getInstance().delete(empno);
 	
 	System.out.println("isAddSuccess 결과: " + isAddSuccess);

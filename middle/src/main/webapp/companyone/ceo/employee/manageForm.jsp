@@ -16,33 +16,53 @@
 	String ename = (String)session.getAttribute("ename");
 
 	
+	// DB 에서 조회할 때 넘겨줄 객체
+	Com1EmpDto dto = new Com1EmpDto();
 	
-	// 보여줘야 할 목록 조건을 파라미터로 받기
-	String condition = (String)request.getParameter("condition");
-	if(condition == null) condition = "all";// default 값은 all	
-	pageContext.setAttribute("condition", condition);
+	
+	// 보여줄 조건 기본 값
+	String condition = "ALL";
+	int storeNum = 1;
+	
+	
+	// 보여줄 조건을 파라미터로 받기
+	String strCondition = request.getParameter("condition"); 	// ALL | ADMIN | STAFF | STORE
+	String strStoreNum = request.getParameter("storenum"); 		// 1 | 2 | 3 ...
+	if(strCondition != null) condition = strCondition;
+	if(strStoreNum != null) storeNum = Integer.parseInt(strStoreNum);
+	dto.setCondition(condition);
+	dto.setStoreNum(storeNum);
+	
+	
+	
+	// 페이징 처리
+	final int PAGE_ROW_COUNT = 10;
+	final int PAGE_DISPLAY_COUNT = 3;
+	
+	// 페이지 값을 파라미터로 받기
+	int pageNum = 1;
+	String strPageNum = request.getParameter("pageNum");
+	if(strPageNum != null) pageNum = Integer.parseInt(strPageNum);
+	
+	// 보여줄 row 값
+	int startRowNum = (pageNum-1)*PAGE_ROW_COUNT + 1;
+	int endRowNum = PAGE_ROW_COUNT*pageNum;
+	dto.setStartRowNum(startRowNum);
+	dto.setEndRowNum(endRowNum);
+	
+	// 하단 페이징 값
+	int startPageNum = ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT + 1;
+	int endPageNum = startPageNum+PAGE_DISPLAY_COUNT - 1;
+	
+	// 페이지 수 계산
+	int totalRow = Com1EmpDao.getInstance().getCount(dto);
+	int totalPageCount =  (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+	if(endRowNum > totalPageCount) endPageNum = totalPageCount;
+	
 
-	
-	
 	// DB 에서 정보 추출
-	Com1EmpDao empDao = Com1EmpDao.getInstance();
-	List<Com1EmpDto> list = new ArrayList<>();
-	
-	System.out.println("condition: " + condition);
-	
-	if(condition.equals("all")){			
-		list = empDao.getList();
-	} else if(condition.equals("admin")){	
-		list = empDao.getListAdmin();
-		
-	} else if(condition.equals("staff")){	
-		list = empDao.getListStaff();
-	} else {				
-		int storenum = Integer.parseInt(request.getParameter("storenum"));
-		list = empDao.getListByStoreNum(storenum); 
-	}
+	List<Com1EmpDto> list = Com1EmpDao.getInstance().getList2(dto);
 	pageContext.setAttribute("list", list);
-	
 	
 	
 	// 몇 호점 리스트 정보 가져오기
@@ -50,8 +70,19 @@
 	pageContext.setAttribute("storeList", storeList);
 	
 	
+	// request 영역에 필요한 정보 저장
+	request.setAttribute("startPageNum", startPageNum);
+	request.setAttribute("endPageNum", endPageNum);
+	request.setAttribute("totalPageCount", totalPageCount);
+	request.setAttribute("pageNum", pageNum);
+	request.setAttribute("totalRow", totalRow);
+	request.setAttribute("condition", condition);
+	request.setAttribute("storenum", storeNum);
 	
 	
+	// 디버깅용..
+	System.out.println("pageNum: "+pageNum);
+	System.out.println("condition: "+condition);
 %>
 <!DOCTYPE html>
 <html>
@@ -65,7 +96,9 @@
 <body>
 	<!-- 페이지 로딩에 필요한 자원 -->
 	<jsp:include page="/include/resource.jsp"></jsp:include>
-
+	
+	<%-- 관리자 페이지 전용 네비바 --%>
+	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	
 	<!-- 현재 접속 상태 표시 -->
 	<div class="container">
@@ -75,28 +108,26 @@
 	
 	<!-- 본문 -->
 	<div class="contents text-center mt-3 mx-auto" style="width:900px;">
-		<!-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 -->
-		<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 		<h4>근무 직원 현황</h4>
 		
 		<!-- 조회 조건 -->
 		<div>
 		<ul class="nav nav-tabs">
 		  	<li class="nav-item">
-		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=all">전체 직원</a>
+		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ALL&pageNum=${pageNum}">전체 직원</a>
 		  	</li>
 		  	<li class="nav-item">
-		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=admin">점장</a>
+		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ADMIN&pageNum=${pageNum}">점장</a>
 		  	</li>
 		  	<li class="nav-item">
-		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=staff">직원</a>
+		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=STAFF&pageNum=${pageNum}">직원</a>
 		  	</li>
 		  	
 		  	<li class="nav-item dropdown">
 		  		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">몇 호점 별 직원</a>
 		  		<ul class="dropdown-menu">
 		  			<c:forEach var="num" items="${storeList }">
-		  				<li><a class="dropdown-item" href="manageForm.jsp?condition=store&storenum=${num}">${num}</a></li>
+		  				<li><a class="dropdown-item" href="manageForm.jsp?condition=STORE&storenum=${num}">${num}</a></li>
 		  			</c:forEach>
 			    </ul>
 		  	</li>
@@ -116,6 +147,7 @@
 							<th>직급</th>
 							<th>전화번호</th>
 							<th>월급</th>
+							<th>입사일</th>
 							<th>이메일</th>
 						</tr>
 					</thead>
@@ -132,15 +164,34 @@
 						<%-- 데이터가 있는 경우 --%>
 						<c:otherwise>
 							<c:forEach var="tmp" items="${list}">
-								<tr>
-									<td>${tmp.storeNum }</td>
-									<td>${tmp.empNo }</td>
-									<td>${tmp.eName }</td>
-									<td>${tmp.role }</td>
-									<td>${tmp.eCall }</td>
-									<td>${tmp.sal }</td>
-									<td style="width:300px">${tmp.email }</td>
-								</tr>
+								<c:choose>
+									<%-- 알바 경우 --%>
+									<c:when test="${tmp.sal eq 0}">
+										<tr>
+											<td>${tmp.storeNum }</td>
+											<td>${tmp.empNo }</td>
+											<td>${tmp.eName }</td>
+											<td>${tmp.role }</td>
+											<td>${tmp.eCall }</td>
+											<td>${tmp.hsal * tmp.worktime}</td>
+											<td>${tmp.hiredate }</td>
+											<td style="width:300px">${tmp.email }</td>
+										</tr>
+									</c:when>
+									<%-- 직원 경우 --%>
+									<c:otherwise>
+										<tr>
+											<td>${tmp.storeNum }</td>
+											<td>${tmp.empNo }</td>
+											<td>${tmp.eName }</td>
+											<td>${tmp.role }</td>
+											<td>${tmp.eCall }</td>
+											<td>${tmp.sal }</td>
+											<td>${tmp.hiredate }</td>
+											<td style="width:300px">${tmp.email }</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 							</tbody>
 							</table>
@@ -148,7 +199,41 @@
 					</c:choose>
 			</div>
 		</div>
+		
+		
+		
+		
+		<%-- 하단 페이징 버튼 --%>
+		<div class="mt-3 d-flex justify-content-center">
+			<nav>
+				<ul class="pagination mx-auto">
+					<!-- Prev 버튼 -->
+					<c:if test="${startPageNum ne 1}">
+						<li class="page-item">
+							<a class="page-link" href="manageForm.jsp?pageNum=${startPageNum - 1}&condition=${condition}">Prev</a>
+						</li>
+					</c:if>
+					<!-- 페이지 번호 -->
+					<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
+						<li class="page-item ${i == pageNum ? 'active' : ''}">
+							<a class="page-link" href="manageForm.jsp?pageNum=${i}&condition=${condition}">${i}</a>
+						</li>
+					</c:forEach>
+					<!-- Next 버튼 -->
+					<c:if test="${endPageNum < totalPageCount}">
+						<li class="page-item">
+							<a class="page-link" href="manageForm.jsp?pageNum=${endPageNum + 1}&condition=${condition}">Next</a>
+						</li>
+					</c:if>
+				</ul>		
+			</nav>
+		</div>
 	</div>
+			
+			
+	
+	
+			
 			
 		
 	<!-- 푸터 -->

@@ -273,8 +273,9 @@ public class Com1SaleDao {
 		return dto;
 	}
 
-	// 특정 매장의 모든 월매출 반환
-	public List<Com1SaleDto> getListStoreMonthlySales(int year, int month) {
+	// 모든 매장의 월매출 반환
+	public List<Com1SaleDto> getStoreMonthlySales(int year, int month, int storenum) {
+		//Com1SaleDto dto = new Com1SaleDto();
 		List<Com1SaleDto> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -287,15 +288,17 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS monthlySales
 					FROM test_com1_sales
 					WHERE extract(year from salesDate)=? AND extract(month from salesDate)=?
-					order by month asc
+					GROUP BY extract(year from salesDate), extract(month from salesDate), storenum=?
+					ORDER BY extract(year from salesDate) DESC, extract(month from salesDate) DESC
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
 			pstmt.setInt(2, month);
+			pstmt.setInt(3, storenum);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Com1SaleDto dto = new Com1SaleDto();
+				Com1SaleDto dto=new Com1SaleDto();
 				dto.setYear(rs.getInt("year"));
 				dto.setMonth(rs.getInt("month"));
 				dto.setMonthlySales(rs.getInt("monthlySales"));
@@ -317,9 +320,10 @@ public class Com1SaleDao {
 		return list;
 	}
 
-	// 모든 매장의 연간매출을 반환
-	public List<Com1SaleDto> getListStoreYearlySales(int year) {
-		List<Com1SaleDto> list = new ArrayList<>();
+	// 모든 매장의 연매출을 반환
+	public List<Com1SaleDto> getStoreYearlySales(int year, int storenum) {
+		//Com1SaleDto dto = new Com1SaleDto();
+		List<Com1SaleDto> list =new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -331,15 +335,17 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
 					WHERE extract(year from salesDate)=?
-					order by year asc
+					GROUP BY extract(year from salesDate), storeNum=?
+					ORDER BY year ASC, storeNum ASC
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
+			pstmt.setInt(1, storenum);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Com1SaleDto dto = new Com1SaleDto();
+				Com1SaleDto dto=new Com1SaleDto();
 				dto.setYear(rs.getInt("year"));
 				dto.setYearlySales(rs.getInt("yearlySales"));
 				list.add(dto);
