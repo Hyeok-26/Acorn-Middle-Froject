@@ -127,8 +127,7 @@
 <body>
 	<%-- 페이지 로딩에 필요한 자원 --%>
 	<jsp:include page="/include/resource.jsp"></jsp:include>
-	<%-- 공통 네비바 --%>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+
 	<%-- 현재 접속 상태 표시 --%>
 	<div class="container">
 	<p><%=comname %>의  <%=ename %>님 접속 중</p>
