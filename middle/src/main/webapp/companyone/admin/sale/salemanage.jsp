@@ -7,8 +7,13 @@
 	pageEncoding="UTF-8"%>
 
 <%
-    // 1. 현재 페이지 위치를 세션에 저장 (관리자 전용 네비바에서 현재 위치를 강조하는 용도)
-	session.setAttribute("current_page", "emolyeeManageForm");
+	//지점번호
+	int storenum=(int)session.getAttribute("storenum");
+	//?호점 일별 매출, ?호점 월별 매출, ?호점 연별 매출 모든 매출 리스트가 나오게
+	//1. 일별 매출 가져오기
+	
+	//2. 				
+			
 
 	// 2. 로그인 상태 확인: 세션에서 로그인한 사용자의 회사명(comname)과 이름(ename) 가져오기
 	String comname = (String)session.getAttribute("comname");

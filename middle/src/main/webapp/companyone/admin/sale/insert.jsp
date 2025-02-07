@@ -11,13 +11,11 @@
 	// 입력한 데이터 가져오기 날짜, 매출
 	String saleateStr=request.getParameter("saledate");
 	System.out.println("saleateStr:" +saleateStr);
-	
 	//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	//Date utilDate = sdf.parse(saledateStr);
     //java.sql.Date saledate = new java.sql.Date(utilDate.getTime());
 	
 	int dailySales=Integer.parseInt(request.getParameter("dailySales"));
-	
 	
 	
 	//세션에 있는 storenum 가져오기
@@ -31,6 +29,8 @@
 	dto.setSaleDate(saleateStr);
 	dto.setDailySales(dailySales);
 	dto.setStoreNum(storenum);
+	
+	session.setAttribute("dto", dto);
 	
 	//입력한 데이터로 수정하기
 	boolean isSuccess=Com1SaleDao.getInstance().insert(dto);
