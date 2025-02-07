@@ -1,15 +1,16 @@
+<%@page import="java.util.List"%>
 <%@page import="test.dto.Com1EmpLogDto"%>
 <%@page import="test.dao.Com1EmpLogDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%--
+<%
 
 int empno=(int)session.getAttribute("empno");
 
 Com1EmpLogDao dao=Com1EmpLogDao.getInstance();
-Com1EmpLogDto dto=dao.getData(empno);
+List<Com1EmpLogDto> list=dao.getList(empno);
 
---%>
+%>
 
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,7 @@ Com1EmpLogDto dto=dao.getData(empno);
 </head>
 <body>
 <div class="container" id="logTable">
-           	<h1><strong>${empno }</strong> 님 월별 근태 기록</h1>
+           	<h1><strong><%=empno %></strong> 님 월별 근태 기록</h1>
            		<table>
 					<thead>
 						<tr>
@@ -48,13 +49,15 @@ Com1EmpLogDto dto=dao.getData(empno);
 						</tr>
 					</thead>
 					<tbody>
+					<%for(Com1EmpLogDto log:list) %>
 						<tr>
-							<td>${workingDate }</td>
-							<td>${checkIn }</td>
-							<td>${checkOut }</td>
-							<td>${workingHours }</td>
-							<td>${remarks }</td>
+							<td><%=log.getWorkingDate() %></td>
+							<td><%=log.getCheckIn() %></td>
+							<td><%=log.getCheckOut() %></td>
+							<td><%=log.getWorkingHours() %></td>
+							<td><%=log.getRemarks() %></td>
 						</tr>
+					<%}; %>
 					</tbody>
 				</table>
            
