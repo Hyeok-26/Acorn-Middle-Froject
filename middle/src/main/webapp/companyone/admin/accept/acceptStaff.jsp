@@ -4,6 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	session.setAttribute("current_page", "acceptStaff");
+
 	List<Com1WaitDto> list = Com1WaitDao.getInstance().getListStaff();
 	String empInsertMessage = request.getParameter("empInsertMessage");
 	String waitDeleteMessage = request.getParameter("waitDeleteMessage");
@@ -30,7 +32,7 @@
 	rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="/include/navbar.jsp">
+	<jsp:include page="/include/adminNav.jsp"></jsp:include>
 			<jsp:param value="index" name="current" />
 		</jsp:include>
 	<div class="container my-5">
