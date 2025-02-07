@@ -199,6 +199,7 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS monthlySales
 					FROM test_com1_sales
 					WHERE storeNum=? AND extract(year from salesDate)=? AND extract(month from salesDate)=?
+					GROUP BY extract(year from salesDate), extract(month from salesDate), storeNum
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, storeNum);
@@ -242,6 +243,8 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
 					WHERE storeNum=? AND extract(year from salesDate)=?
+					GROUP BY extract(year from salesDate), storeNum
+					ORDER BY yearlySales DESC
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, storeNum);
