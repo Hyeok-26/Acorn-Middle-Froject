@@ -6,6 +6,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
+	session.setAttribute("current_page", "infoview");
+
 	//점장이 로그인한 상태로 개인정보 조회
 	//필요한 정보 : 사원번호, 비밀번호, 이름,  이메일 , 전화번호, 소속회사, 소속지점
 	int empno = (int)session.getAttribute("empno");

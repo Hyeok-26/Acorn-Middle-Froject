@@ -144,4 +144,40 @@ public class Com1EmpLogDao {
 		}
 		return dto;
 	}
+	
+	//삭제
+	public boolean delete(int empno) {
+		
+		Connection conn = null;
+        PreparedStatement pstmt = null;
+        int rowCount = 0;
+        try {
+            conn = new DbcpBean().getConn();
+            String sql = """
+                delete from test_com1_emp_log
+                WHERE empno=?
+            """;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, empno);
+            rowCount = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) {
+					pstmt.close();
+				}
+                if (conn != null) {
+					conn.close();
+				}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
