@@ -58,7 +58,7 @@ Com1EmpDto dto=dao.getData(empno);
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<jsp:include page="/include/navbar.jsp"></jsp:include>
+<jsp:include page="/include/empNav.jsp"></jsp:include>
    <div class="container flex-fill" style="width: 600px; height:600px; margin-top: 50px;">
        <div class="d-inline-block tab-button" id="salTab" onclick="switchTab('sal')">월급</div>
        <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>

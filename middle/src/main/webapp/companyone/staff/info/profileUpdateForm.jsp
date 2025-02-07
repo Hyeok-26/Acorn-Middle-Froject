@@ -33,12 +33,11 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
-
+	<jsp:include page="/include/empNav.jsp"></jsp:include>
 	<div id="app">
 		<div class="container2">
 			<h1>프로필 수정</h1>
-			<form action="profile_update.jsp" method="post" id="myForm">
+			<form action="profileUpdate.jsp" method="post" id="myForm">
 				<div class="mb-3">
 					<label class="form-label">회사</label> <input class="form-control"
 						type="text" name="comid" value="<%=comname%>" readonly />

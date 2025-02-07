@@ -18,7 +18,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
+<jsp:include page="/include/empNav.jsp"></jsp:include>
 <style>
 	.container2 {
 		max-width: 800px;
@@ -85,12 +85,12 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<jsp:include page="/include/empNav.jsp"></jsp:include>
 	<div class="container2">
 		<div
 			class="d-flex align-items-center justify-content-between border-bottom">
 			<h1 class="text-center flex-grow-1">프로필</h1>
-			<a href="profile_update_form.jsp" class="btn btn-link p-0"> <svg
+			<a href="profileUpdateForm.jsp" class="btn btn-link p-0"> <svg
 					xmlns="http://www.w3.org/2000/svg" width="25" height="25"
 					fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
 		            <path

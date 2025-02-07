@@ -49,7 +49,7 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<jsp:include page="/include/empNav.jsp"></jsp:include>
 	<div class="container2">
 		<h1>출/퇴근</h1>
 		<div class="time-container">
@@ -61,9 +61,11 @@
 				<button id="endBtn" class="btn btn-primary">퇴근</button>
 			</div>
 		</div>
-		<a href="log_table.jsp">근태관리 확인</a> 
+		<a href="logTable.jsp">근태관리 확인</a> 
 	</div>
-	<jsp:include page="/include/footer.jsp" />
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script>
 		//시간 함수

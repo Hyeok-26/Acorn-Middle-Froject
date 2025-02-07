@@ -38,7 +38,7 @@ Com1EmpDto dto=dao.getData(empno);
 </style>
 </head>
 <body>
-<jsp:include page="/include/navbar.jsp"></jsp:include>
+<jsp:include page="/include/empNav.jsp"></jsp:include>
 	<div class="container" id="app">
 		<h1>근로 계약서 보기</h1>
 		<form action="update_contract.jsp" method="post" id="contractForm" enctype="multipart/form-data">

@@ -8,7 +8,9 @@
 <jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 <body>
-	<jsp:include page="/include/navbar.jsp"></jsp:include>
-	<jsp:include page="/include/footer.jsp" />
+	<jsp:include page="/include/empNav.jsp"></jsp:include>
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 </body>
 </html>

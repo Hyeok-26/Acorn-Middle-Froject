@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 메인 페이지</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
+<jsp:include page="/include/empNav.jsp"></jsp:include>
 <style>
     .container {
         max-width: 800px;
@@ -57,7 +57,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="/include/navbar.jsp"></jsp:include>
+<jsp:include page="/include/empNav.jsp"></jsp:include>
     <div class="container">
         <h2 class="text-center mb-4">직원 메인 페이지</h2>
         <h3>환영합니다, ${ename}님!</h3>
@@ -68,6 +68,8 @@
             <button><a href="${pageContext.request.contextPath }/companyone/staff/info/profile.jsp">프로필 관리</a></button>
         </div>
     </div>
-<jsp:include page="/include/footer.jsp" />
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 </body>
 </html>

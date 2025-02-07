@@ -250,11 +250,13 @@
 		            <div class="col-md-6 text-end">
 		                <h3>프로필 관리</h3>
 		                <p>프로필 관리 페이지에 대한 설명
-		                	<br /> 이 부분은 텍스트입니다.
+		                	<br /> 직원 본인에 대한 전체적인 정보를 조회할 수 있습니다.<br />
+		                	매장명,호점,사원번호,개인정보를 한 눈에 확인할 수 있습니다.<br /> 
+		                	개인 정보에 관한 수정도 가능하며 근로계약서 확인도 가능합니다.
 		                </p>
 		            </div>
 		            <div class="col-md-6">
-		                <img src="#"
+		                <img src="https://media.istockphoto.com/id/502416015/ko/%EB%B2%A1%ED%84%B0/%EC%95%84%EB%B0%94%ED%83%80.jpg?s=612x612&w=0&k=20&c=Q3ysWAVKW_aJgBd0VpyD8h4-8wb5MA_dZL9O5RYd_dk="
 		                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 		            </div>
 		        </div>
@@ -262,13 +264,13 @@
 		    <div class="container">
 		        <div class="row align-items-center">
 		            <div class="col-md-6">
-		                <img src="#"
+		                <img src="https://media.istockphoto.com/id/1420323259/ko/%EC%82%AC%EC%A7%84/%EC%BA%98%EB%A6%B0%EB%8D%94%EC%97%90%EC%84%9C-%EC%98%A8%EB%9D%BC%EC%9D%B8-%EC%98%88%EC%95%BD-%EB%B0%8F-%EC%98%88%EC%95%BD.jpg?s=612x612&w=0&k=20&c=9PSqdhkf8rwfiTArlOOVf6Jw-GYdVgrORLbEdtRhUEo="
 		                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 		            </div>
 		            <div class="col-md-6 text-end">
 		                <h3>스케줄 조회</h3>
 		                <p>스케줄 조회 페이지에 대한 설명 
-		                	<br /> 이 부분은 텍스트입니다.
+		                	<br /> 올려진 근무표를 확인하고 자신의 스케줄을 확인할 수 있다.
 		                </p>
 		            </div>
 		        </div>
@@ -278,11 +280,12 @@
 		            <div class="col-md-6 text-end">
 		                <h3>출/퇴근</h3>
 		                <p>출퇴근 페이지에 대한 설명 
-		                	<br /> 이 부분은 텍스트입니다.
+		                	<br /> 자신의 출/퇴근을 기록할 수 있어 후에 조회나 회사에서 급여관리에 관해 <br /> 
+		                	보다 수월하게 관리를 진행할 수 있다.
 		                </p>
 		            </div>
 		            <div class="col-md-6">
-		                <img src="#"
+		                <img src="https://media.istockphoto.com/id/1088177456/ko/%EB%B2%A1%ED%84%B0/%EC%82%AC%EC%97%85-%EA%B3%84%ED%9A%8D%EC%9D%98-%EA%B5%AC%ED%98%84-%EC%9C%84%ED%95%9C-worktime%EC%9D%98-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8-%EC%82%AC%EC%9A%A9-%EC%A7%81%EC%9E%A5%EC%9D%98-%EC%B5%9C%EA%B3%A0-%EB%B3%B4%EA%B8%B0%EC%9D%98-%EB%B2%A1%ED%84%B0%EC%9E%85%EB%8B%88%EB%8B%A4.jpg?s=2048x2048&w=is&k=20&c=RCvTCOg6MAsx13Rpn50ZY4Ajb8KHUy5ME85xU4AqpXs="
 		                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 		            </div>
 		        </div>
@@ -290,13 +293,13 @@
 		    <div class="container">
 		        <div class="row align-items-center">
 		            <div class="col-md-6">
-		                <img src="#"
+		                <img src="https://media.istockphoto.com/id/1389255223/ko/%EB%B2%A1%ED%84%B0/%EA%B8%89%EC%97%AC-%EA%B8%89%EC%97%AC-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%98%A8%EB%9D%BC%EC%9D%B8-%EC%86%8C%EB%93%9D-%EA%B3%84%EC%82%B0-%EB%B0%8F-%EC%9E%90%EB%8F%99-%EC%A7%80%EB%B6%88-%EC%82%AC%EB%AC%B4%EC%8B%A4-%ED%9A%8C%EA%B3%84-%EA%B4%80%EB%A6%AC-%EB%98%90%EB%8A%94-%EC%9D%BC%EC%A0%95-%EA%B8%89%EC%97%AC-%EB%82%A0%EC%A7%9C-%EC%A7%81%EC%9B%90-%EC%9E%84%EA%B8%88-%EA%B0%9C%EB%85%90-%EC%98%A8%EB%9D%BC%EC%9D%B8-%EA%B8%89%EC%97%AC-%EC%BB%B4%ED%93%A8%ED%84%B0%EC%99%80-%ED%95%A8%EA%BB%98-%EC%84%9C-%EC%82%AC%EC%97%85%EA%B0%80.jpg?s=612x612&w=0&k=20&c=ZneAnVJfCPpBJyTlTQBypydYL6J6qhNgXPsT4-iEtC4="
 		                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 		            </div>
 		            <div class="col-md-6 text-end">
 		                <h3>급여 계산</h3>
 		                <p>급여 계산 페이지에 대한 설명 
-		                	<br /> 이 부분은 텍스트입니다.
+		                	<br /> 월급과 시급을 따로 계산할 수 있으며 자신의 월급에 대해 편하게 조회가 가능하다.
 		                </p>
 		            </div>
 		        </div>
