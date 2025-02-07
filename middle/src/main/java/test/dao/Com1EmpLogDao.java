@@ -116,14 +116,14 @@ public class Com1EmpLogDao {
 			pstmt.setInt(1, empno);
 			
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				Com1EmpLogDto dto = new Com1EmpLogDto();
 				dto.setLogid(rs.getInt("logid"));
 				dto.setEmpno(empno);
-				dto.setCheckIn(rs.getTimestamp("checkIn"));
-				dto.setCheckOut(rs.getTimestamp("checkOut"));
-				dto.setWorkingDate(rs.getDate("workingDate"));
-				dto.setWorkingHours(rs.getDouble("workingHours"));
+				dto.setCheckIn(rs.getTimestamp("check_In"));
+				dto.setCheckOut(rs.getTimestamp("check_Out"));
+				dto.setWorkingDate(rs.getDate("working_Date"));
+				dto.setWorkingHours(rs.getDouble("working_Hours"));
 				dto.setOvertime(rs.getDouble("overtime"));
 				dto.setRemarks(rs.getString("remarks"));
 				list.add(dto);

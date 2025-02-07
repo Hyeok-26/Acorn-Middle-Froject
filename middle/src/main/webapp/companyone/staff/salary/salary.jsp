@@ -6,6 +6,7 @@
 <%
 
 	int empno=(int)session.getAttribute("empno");
+	
 	session.setAttribute("current_page", "salary");
 	
 	Com1EmpDao dao=Com1EmpDao.getInstance();
@@ -20,6 +21,15 @@
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
+	.container2 {
+		max-width: 800px;
+		margin: 40px auto;
+		background-color: #fff;
+		padding: 20px;
+		border-radius: 8px;
+		border: 1px solid black;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
     .tab-button {
         padding: 10px 20px;
         cursor: pointer;
@@ -60,23 +70,24 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/empNav.jsp"></jsp:include>
+<div class="container2">
    <div class="container flex-fill" style="width: 600px; height:600px; margin-top: 50px;">
        <div class="d-inline-block tab-button" id="salTab" onclick="switchTab('sal')">월급</div>
        <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>
    
        <div class="tab-content" id="salContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h1><%=dto.geteName() %> 님 월급으로 급여 계산</h1>
+           <h3><%=dto.geteName() %> 님 월급으로 급여 계산</h3>
            <button class="btn btn-dark" id="salBtn" style="padding: 10px;" onclick="show('sal')">급여 조회</button>
            <div class="result" id="sal">
-           	   <label for="baseSal" style="padding: 10px; width: 100%;">기본급: <%=dto.getSal() %></label>
+           	   <label for="baseSal" style="padding: 10px; width: 100%;">기본급: <%=dto.getSal() %> 원</label>
          	   <label for="pension" style="padding: 10px; width: 100%;">국민연금: </label>
-               <label for="healthIns" style="padding: 10px; width: 100%;">건강보험료: </label>
-               <label for="longIns" style="padding: 10px; width: 100%;">장기요양보험료: </label>
-               <label for="empIns" style="padding: 10px; width: 100%;">고용보험료: </label>
-               <label for="totalSal" style="padding: 10px; width: 100%;">지급액 계: </label>
+               <label for="healthIns" style="padding: 10px; width: 100%;">건강보험료: <%=dto.getSal() %>*0.035</label>
+               <label for="longIns" style="padding: 10px; width: 100%;">장기요양보험료: <%=dto.getSal() %>*0.0045</label>
+               <label for="empIns" style="padding: 10px; width: 100%;">고용보험료: <%=dto.getSal() %>*0.0009</label>
+               <label for="totalSal" style="padding: 10px; width: 100%;">지급액 계: <%=dto.getSal() %></label>
                <p>--------------------------------------<p>
-               <label for="deduction" style="padding: 10px; width: 100%;">공제액 계: </label>
-               <label for="actualSal" style="padding: 10px; width: 100%;">실수령 액: </label>
+               <label for="deduction" style="padding: 10px; width: 100%;">공제액 계: <%=dto.getSal() %>*0.0854</label>
+               <label for="actualSal" style="padding: 10px; width: 100%;">실수령 액: <%=dto.getSal() %>*0.9146</label>
                <label for="payDate" style="padding: 10px; width: 100%;">지급일: </label>
            
            
@@ -86,7 +97,7 @@
        </div>
    
        <div class="tab-content" id="hsalContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h1><%=dto.geteName() %> 님 시급으로 급여 계산</h1>
+           <h3><%=dto.geteName() %> 님 시급으로 급여 계산</h3>
            <input type="number" id=inputMsg1 min="0" step="0.01" placeholder="1주차 근무시간 입력"/><br>
 	       <input type="number" id=inputMsg2 min="0" step="0.01" placeholder="2주차 근무시간 입력"/><br>
 	       <input type="number" id=inputMsg3 min="0" step="0.01" placeholder="3주차 근무시간 입력"/><br>
@@ -127,7 +138,7 @@
        
    </div>
    
-   
+</div>   
    <script>
        function switchTab(tab) {
            const tabs = ['sal', 'hsal'];
