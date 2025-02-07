@@ -37,7 +37,7 @@ public class Com1SaleDao {
 			String sql = """
 					insert into test_com1_sales
 					(salesDate, storeNum, dailySales)
-					values(TO_DATE(?,'YYYY-MM-DD'),?,?)
+					values(?,?,?)
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
@@ -111,7 +111,7 @@ public class Com1SaleDao {
 			String sql = """
 					update test_com1_sales
 					set dailySales=?
-					where storeNum=? and saleDate=?
+					where storeNum=? and salesDate=?
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값을 여기서 바인딩한다.
@@ -155,7 +155,7 @@ public class Com1SaleDao {
 			String sql = """
 					    SELECT dailySales
 					    FROM test_com1_sales
-					    WHERE saleDate=? and storeNum=?
+					    WHERE salesDate=? and storeNum=?
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩
@@ -271,7 +271,7 @@ public class Com1SaleDao {
 	}
 
 	// 특정 매장의 모든 월매출 반환
-	public List<Com1SaleDto> getStoreMonthlySales(int year, int month) {
+	public List<Com1SaleDto> getListStoreMonthlySales(int year, int month) {
 		List<Com1SaleDto> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -284,7 +284,7 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS monthlySales
 					FROM test_com1_sales
 					WHERE extract(year from salesDate)=? AND extract(month from salesDate)=?
-					order by storenum asc
+					order by month asc
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
@@ -315,7 +315,7 @@ public class Com1SaleDao {
 	}
 
 	// 모든 매장의 연간매출을 반환
-	public List<Com1SaleDto> getListYear(int year) {
+	public List<Com1SaleDto> getListStoreYearlySales(int year) {
 		List<Com1SaleDto> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -328,6 +328,7 @@ public class Com1SaleDao {
 					       SUM(dailySales) AS yearlySales
 					FROM test_com1_sales
 					WHERE extract(year from salesDate)=?
+					order by year asc
 					     """;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
@@ -367,6 +368,7 @@ public class Com1SaleDao {
 	        conn = new DbcpBean().getConn();
 	        String sql = """
 				SELECT *from test_com1_sales
+				order by storenum, salesDate asc
 	        """;
 	        pstmt = conn.prepareStatement(sql);
 	      

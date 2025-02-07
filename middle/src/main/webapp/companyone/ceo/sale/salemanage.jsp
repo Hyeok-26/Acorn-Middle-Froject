@@ -1,28 +1,32 @@
+<%@page import="test.dao.Com1SaleDao"%>
 <%@page import="test.dao.Com1Dao"%>
 <%@page import="test.dto.Com1Dto"%>
-<%@page import="test.dao.Com1SaleDao"%>
 <%@page import="test.dto.Com1SaleDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 //현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
-	session.setAttribute("current_page", "emolyeeManageForm");
+	session.setAttribute("current_page", "salemanage");
 	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
 	String comname = (String)session.getAttribute("comname");
     String ename = (String)session.getAttribute("ename");
-	Com1SaleDao SaleDao = Com1SaleDao.getInstance();
+	Com1SaleDao saledao = Com1SaleDao.getInstance();
+	
+	
 	List<Integer> storenums = Com1Dao.getInstance().getStoreNumList();
-	List<Com1SaleDto> listall = SaleDao.getListAll();
+	List<Com1SaleDto> listall = saledao.getListAll();
+	
+
 	//List<Com1SaleDto> listyear=SaleDao.getListYear();
 	//int year = SaleDao.getListYear();
 	//List<Com1SaleDto> listmonth=SaleDao.getListMonth(year);
 	
 	
-	Com1Dao com1Dao = Com1Dao.getInstance();
-	String storenumParam = request.getParameter("storenum");
-   	int storenum = -1; 	
-  	List<Com1SaleDto> storeList = null;
+	//Com1Dao com1Dao = Com1Dao.getInstance();
+	//String storenumParam = request.getParameter("storenum");
+   	//int storenum = -1; 	
+  	//List<Com1SaleDto> storeList = null;
 
 
 %>
@@ -108,26 +112,6 @@ tbody tr:hover {
 	
 		<div id="allContent" class="tab-content"
 			style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
-			<form action="storeReport.jsp" method="POST">
-				<label> 
-					<input type="radio" name="store" value="all">전체매출
-				</label> 
-				<label> 
-				<input type="radio" name="store" value="yearall">매장 전체 연매출
-				</label> 
-				<label> 
-				<input type="radio" name="store" value="monthall">매장 전체 월매출
-				</label>
-				<label> 
-					<input type="radio" name="store" value="storeyear">매장별	연매출
-				</label> 
-				<label> 
-					<input type="radio" name="store" value="storemonth">매장별 월매출
-				</label>
-				<button type="submit">조회</button>
-			</form>
-
-
 			<table style="width: 100%; border-collapse: collapse;">
 				<thead>
 					<tr >
@@ -150,7 +134,7 @@ tbody tr:hover {
 					</tr>
 					<%
 					totalSales += tmp.getDailySales(); // 매출을 합산
-					}
+						}
 					}
 					%>
 					<tr>
@@ -162,17 +146,17 @@ tbody tr:hover {
 			</table>
 		</div>
 		<div id="allyearContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: block;">
-			
-			<label for="store">지점 입력: </label>
-			<input type="text" id="store" name="store" placeholder="지점명을 입력하세요" required>
-			
+			<form action="saleview.jsp">
+				<label for="storenum">지점 입력: </label>
+				<input type="text" id="storenum" name="storenum" placeholder="지점명을 입력하세요" required>
+			</form>
 			
 			<h3>지점별 연매출</h3>
 			<table>
 				<thead>
 					<tr>
 						<th>호점</th>
-						<th>날짜</th>
+						<th>연도</th>
 						<th>매출</th>
 					</tr>
 				</thead>
@@ -187,7 +171,7 @@ tbody tr:hover {
 			
 			<h3>지점별 월매출 목록</h3>
 	
-			<table border="1" cellspacing="0" cellpadding="8">
+			<table>
 				<thead>
 					<tr>
 						<th>호점</th>

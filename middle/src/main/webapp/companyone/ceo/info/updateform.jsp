@@ -70,7 +70,7 @@
 				isEcallValid:false,
 				isEnameValid: false,
 		        isEnameDirty: false,
-				ename: "",
+				ecall: "",
 				newPassword:"",
 				newPassword2:"",
 				isNewPwdMatch: false,
@@ -80,12 +80,6 @@
 				isNewPwdDirty:false //새비밀번호 입력한에 한번이라도 입력했는지 여부 
 			},
 			methods:{
-				onEnameInput(e) {
-					this.ename = e.target.value; 
-	                const reg_ename = /^[가-힣]{2,5}$/; 
-	                this.isEnameDirty = true;
-	                this.isEnameValid = reg_ename.test(this.ename);
-	            },
 				onEcallInput(){
 					//현재까지 입력한 비밀번호
 					

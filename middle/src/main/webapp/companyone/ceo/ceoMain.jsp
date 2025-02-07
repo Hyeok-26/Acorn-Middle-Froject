@@ -60,7 +60,7 @@
 	</div>
 	<div class="container">
 		<p>
-			<a href="employee/employeemanage.jsp" style="text-decoration: none; color: inherit;">
+			<a href="employee/manageForm.jsp" style="text-decoration: none; color: inherit;">
         		<button>직원 관리</button>
         	</a>
     	</p>
