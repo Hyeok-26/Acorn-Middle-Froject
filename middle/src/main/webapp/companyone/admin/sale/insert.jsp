@@ -34,7 +34,7 @@
 %>
 	<script>
 		alert("입력 성공!");
-		window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/salemanage.jsp";
+		window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/salemanage2.jsp";
 	</script>
 <%
 	} else{
