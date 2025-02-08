@@ -31,26 +31,32 @@
 			<div class="mb-2">
 				<label class="form-label" for="ename">이름</label>
 				<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
-					@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" placeholder="<%=dto.geteName() %>"/>
+					@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" value="<%=dto.geteName() %>" required/>
 				<div class="invalid-feedback">이름을 올바르게 입력하세요.</div>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="ecall">연락처</label> 
-				<input class="form-control" placeholder="<%=dto.geteCall() %>" @input="onEcallInput" :class="{'is-invalid': !isEcallValid && isEcallDirty, 'is-valid':isEcallValid}"
-					type="text" name="ecall" id="ecall" v-model="ecall"/>
+				<input class="form-control" @input="onEcallInput" :class="{'is-invalid': !isEcallValid && isEcallDirty, 'is-valid':isEcallValid}"
+					type="text" name="ecall" id="ecall" v-model="ecall" value="<%=dto.geteCall() %>" required/>
 				<small class="form-text">하이픈(-)을 포함하여 기재해주세요.</small>
 				<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="password">기존 비밀번호</label> 
 				<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-					type="password" name="password" id="password" value="<%=dto.getePwd() %>" required/>
+					type="password" name="password" id="password" value="<%=dto.getePwd() %>" readonly/>
 			</div>
 			<div class="mb-2">
-				<label class="form-label" for="newPassword">새 비밀번호</label> 
-				<input class="form-control" type="password" name="newPassword" id="newPassword" @input="onNewPwdInput" v-model="newPassword"
-					:class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid':isNewPwdValid}"/>
-				<small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
+			    <label class="form-label" for="newPassword">새 비밀번호</label> 
+			    <input class="form-control" type="password" name="newPassword" id="newPassword"
+			        @input="onNewPwdInput" v-model="newPassword"
+			        :class="{
+			            'is-invalid': (!isNewPwdValid && isNewPwdDirty) || (isSameOriginPwd && isSameOriginPwdDirty), 
+			            'is-valid': isNewPwdValid && !isSameOriginPwd
+			        }"/>
+			    <small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
+			    <div class="invalid-feedback" v-if="!isNewPwdValid && isNewPwdDirty">비밀번호 형식이 올바르지 않습니다.</div>
+			    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> <!-- ✅ 추가 -->
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
@@ -68,12 +74,14 @@
 		new Vue({
 			el:"#app",
 			data:{
+				ename:"<%=dto.geteName()%>",
+	            ecall:"<%=dto.geteCall()%>",
+	            password: "<%=dto.getePwd()%>", 
 				isPwdValid:false,
 				isNewPwdValid:false,
 				isEcallValid:false,
 				isEnameValid: false,
 		        isEnameDirty: false,
-				ecall: "",
 				newPassword:"",
 				newPassword2:"",
 				isNewPwdMatch: false,
@@ -81,7 +89,8 @@
 				isEcallDirty:false,
 				isPwdDirty:false,  //비밀번호 입력란에 한번이라도 입력했는지 여부
 				isNewPwdDirty:false, //새비밀번호 입력한에 한번이라도 입력했는지 여부 
-				ename: ""
+				isSameOriginPwd: false, // 기존 비밀번호와 새 비밀번호 비교
+		        isSameOriginPwdDirty: false 
 			},
 			methods:{
 				onEnameInput(e) {
@@ -141,9 +150,12 @@
 					this.isPwdDirty=true;
 				},
 				onNewPwdInput() {
-			        const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-			        this.isNewPwdValid = reg_pwd.test(this.newPassword); 
-			    },
+				    const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+				    this.isNewPwdDirty = true;
+				    this.isNewPwdValid = reg_pwd.test(this.newPassword); 
+				    this.isSameOriginPwdDirty = this.isNewPwdDirty;  
+				    this.isSameOriginPwd = this.newPassword === this.password; 
+				},
 			    onNewPwdConfirmInput() {
 			        this.isNewPwdMatch = this.newPassword === this.newPassword2; 
 			        this.isNewPwdMatchDirty = true; 

@@ -141,7 +141,7 @@
 							<td><%=dto.getHiredate() %></td>
 						</tr>
 						<tr>
-							<th scope="row">근무계약서</th>
+							<th scope="row">근로계약서</th>
 							<td><a href="${pageContext.request.contextPath}/companyone/admin/staffstatus/contract.jsp?empno=<%=dto.getEmpNo()%>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
 							  <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>

@@ -95,7 +95,7 @@
 				<div class="mb-2">
 					<label class="form-label" for="password">기존 비밀번호</label> 
 					<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-						type="password" name="password" id="password" value="<%=dto.getePwd() %>"/>
+						type="password" name="password" id="password" value="<%=dto.getePwd() %>" readonly/>
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
@@ -106,6 +106,9 @@
 					<div v-if="!isNewPwdValid && isNewPwdDirty" class="invalid-feedback">
 					    비밀번호는 영문자, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.
 					</div>
+					<div v-if="isNewPwdSame" class="invalid-feedback">
+        				기존 비밀번호와 같습니다.
+    				</div>
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
@@ -133,57 +136,47 @@
 	</div>
 	<jsp:include page="/include/footer.jsp" />
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script>
-	new Vue({
-		el:"#app",
-		data:{
-			ename:"<%=dto.geteName()%>",
-			email:"<%=dto.getEmail()%>",
-			ecall:"<%=dto.geteCall()%>",
-			isPwdValid:false,
-			isNewPwdValid:false,
-			isEcallValid:false,
-			isEnameValid: false,
-	        isEnameDirty: false,
-	        isEmailDirty: false,
-	        isEmailValid: false,
-	        password: "",
-			newPassword:"",
-			newPassword2:"",
-			isNewPwdMatch: false,
-			isNewPwdMatchDirty: false,
-			isEcallDirty:false,
-			isPwdDirty:false,  //비밀번호 입력란에 한번이라도 입력했는지 여부
-			isNewPwdDirty:false, //새비밀번호 입력한에 한번이라도 입력했는지 여부
-		},
-		methods:{
-			onEnameInput(e) {
-				this.ename = e.target.value; 
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            ename:"<%=dto.geteName()%>",
+            email:"<%=dto.getEmail()%>",
+            ecall:"<%=dto.geteCall()%>",
+            password: "<%=dto.getePwd()%>",  
+            isPwdValid:false,
+            isNewPwdValid:false,
+            isEcallValid:false,
+            isEnameValid: false,
+            isEnameDirty: false,
+            isEmailDirty: false,
+            isEmailValid: false,
+            newPassword:"",
+            newPassword2:"",
+            isNewPwdMatch: false,
+            isNewPwdMatchDirty: false,
+            isEcallDirty:false,
+            isPwdDirty:false,  // 비밀번호 입력란에 한 번이라도 입력했는지 여부
+            isNewPwdDirty:false // 새 비밀번호 입력란에 한 번이라도 입력했는지 여부
+        },
+        computed: {
+            isNewPwdSame() {
+                return this.newPassword === this.password && this.newPassword !== "";
+            }
+        },
+        methods:{
+            onEnameInput(e) {
+                this.ename = e.target.value; 
                 const reg_ename = /^[가-힣]{2,5}$/; 
                 this.isEnameDirty = true;
                 this.isEnameValid = reg_ename.test(this.ename);
-                
-                // 이름이 유효하지 않으면 폼 전송을 막고 에러 메시지 출력
-                if (!this.isEnameValid) {
-                    alert('이름을 올바르게 입력하세요.');
-                }
             },
-			onEcallInput(){
-				//현재까지 입력한 비밀번호
-				
-				//공백이 아닌 한글자가 한번이상 반복 되어야 통과 되는 정규표현식
-				const reg_ecall=/^01[016789]-\d{3,4}-\d{4}$/;
-				this.isEcallDirty = true;
-				this.isEcallValid = reg_ecall.test(this.ecall);
-				//if(reg_ecall.test(ecall)){
-					//this.isEcallValid=true;
-				//}else{
-					//this.isEcallValid=false;
-				//}
-				//this.isEcallDirty=true;
-				//this.isEcallValid = reg_ecall.test(this.ecall);
-				
-				if (this.isEcallValid) {
+            onEcallInput(){
+                const reg_ecall=/^01[016789]-\d{3,4}-\d{4}$/;
+                this.isEcallDirty = true;
+                this.isEcallValid = reg_ecall.test(this.ecall);
+                
+                if (this.isEcallValid) {
                     fetch("../../../checkEcall", {
                         method: 'POST',
                         headers: {
@@ -194,7 +187,7 @@
                     .then(res => res.json())  
                     .then(data => {
                         if (data.isDuplicate) {
-                        	alert('이미 등록된 전화번호입니다.');  
+                            alert('이미 등록된 전화번호입니다.');  
                             this.isEcallValid = false; 
                             this.ecall = "";
                         } else {
@@ -205,28 +198,25 @@
                         alert('에러 발생: ' + error); 
                     });
                 }  
-			},
-			onPwdInput(e){
-				const pwd=e.target.value;
-				const reg_pwd= /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/
-				if(reg_pwd.test(pwd)){
-					this.isPwdValid=true;
-				}else{
-					this.isPwdValid=false;
-				}
-				this.isPwdDirty=true;
-			},
-			onNewPwdInput() {
-			    this.isNewPwdDirty = true;  // 입력을 시작했음을 표시
-			    const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
-			    this.isNewPwdValid = reg_pwd.test(this.newPassword); 
-			},
-		    onNewPwdConfirmInput() {
-		        this.isNewPwdMatch = this.newPassword === this.newPassword2; 
-		        this.isNewPwdMatchDirty = true; 
-			},
-			onEmailInput() {
-                const reg_email = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
+            },
+            onPwdInput(e){
+                const pwd=e.target.value;
+                const reg_pwd= /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
+                this.isPwdValid = reg_pwd.test(pwd);
+                this.isPwdDirty = true;
+            },
+            onNewPwdInput() {
+                this.isNewPwdDirty = true;
+                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
+                this.isNewPwdValid = reg_pwd.test(this.newPassword) && !this.isNewPwdSame;
+                this.isNewPwdMatch = this.newPassword === this.newPassword2;
+            },
+            onNewPwdConfirmInput() {
+                this.isNewPwdMatch = this.newPassword === this.newPassword2;
+                this.isNewPwdMatchDirty = true;
+            },
+            onEmailInput() {
+                const reg_email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 this.isEmailDirty = true;
                 this.isEmailValid = reg_email.test(this.email);
                 
@@ -241,7 +231,7 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.isDuplicate) {
-                        	alert("이미 등록된 이메일입니다.");
+                            alert("이미 등록된 이메일입니다.");
                             this.isEmailValid = false;
                             this.isEmailAvailable = false; 
                             this.email = ''; 
@@ -253,8 +243,10 @@
                     this.isEmailAvailable = false; 
                 }
             }
-	}});
+        }
+    });
 </script>
+
 	
 </body>
 </html>

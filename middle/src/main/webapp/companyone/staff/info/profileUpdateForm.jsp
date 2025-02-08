@@ -68,32 +68,33 @@
 					<div v-if="isEmailValid && isEmailAvailable" class="valid-feedback">
 						사용 가능한 이메일입니다.</div>
 				</div>
-				<div class="mb-3">
-					<label class="form-label">기존 비밀번호</label> <input
-						class="form-control" type="password" name="password" 
-						v-model="password" @input="validateOldPassword"
-						:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid': isPwdValid}" />
-					<div class="invalid-feedback">반드시 입력하세요</div>
+				<div class="mb-2">
+					<label class="form-label" for="password">기존 비밀번호</label> 
+					<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
+						type="password" name="password" id="password" value="<%=dto.getePwd() %>" readonly/>
 				</div>
-				<div class="mb-3">
-					<label class="form-label">새 비밀번호 (선택사항)</label> <input
-						class="form-control" type="password" name="newPassword"
-						v-model="newPassword" @input="validateNewPassword"
-						:class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid': isNewPwdValid}" />
-					<small class="form-text">비밀번호 변경을 원할 경우만 입력하세요.</small>
-					<div class="invalid-feedback">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</div>
+				<div class="mb-2">
+					<label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
+					<input class="form-control" type="password" name="newPassword" id="newPassword" 
+					    v-model="newPassword" @input="onNewPwdInput"
+					    :class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid': isNewPwdValid}" />
+					<small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
+					<div v-if="!isNewPwdValid && isNewPwdDirty" class="invalid-feedback">
+					    비밀번호는 영문자, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.
+					</div>
+					<div v-if="isNewPwdSame" class="invalid-feedback">
+        				기존 비밀번호와 같습니다.
+    				</div>
 				</div>
-				<div class="mb-3">
-					<label class="form-label">새 비밀번호 확인</label> <input
-						class="form-control" type="password" name="newPassword2"
-						v-model="newPassword2" @input="validateNewPassword"
-						:class="{'is-invalid': newPassword !== newPassword2 && newPassword2 !== '', 'is-valid': newPassword === newPassword2 && newPassword2 !== ''}" />
+				<div class="mb-2">
+					<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
+					<input class="form-control" type="password" name="newPassword2" id="newPassword2" 
+					    @input="onNewPwdConfirmInput" v-model="newPassword2"
+					    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
+					<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
 				</div>
-				<button class="btn btn-success" type="submit"
-					:disabled="!isPwdValid || (newPassword !== '' && !isNewPwdValid)">수정하기</button>
-				
-					<a class="btn btn-danger" href="${pageContext.request.contextPath }/companyone/staff/info/profileUpdateForm.jsp">리셋</a>
-				
+				<button class="btn btn-success" type="submit">수정하기</button>
+				<button class="btn btn-danger" type="reset">리셋</button>
 			</form>
 		</div>
 	</div>
@@ -101,87 +102,46 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 	    new Vue({
-	        el: "#app",
-	        data: {
-	        	email:"<%=dto.getEmail()%>",
-	        	ecall:"<%=dto.geteCall()%>",
-	            password: "",
-	            newPassword: "",
-	            newPassword2: "",
-	            //비밀번호 검증
-	            isPwdValid: false,
-	            isNewPwdValid: false,
-	            isPwdDirty: false,
-	            isNewPwdDirty: false,
-	            //이메일과 전화번호
-	            isEmailValid: false,
+	        el:"#app",
+	        data:{
+	            ename:"<%=dto.geteName()%>",
+	            email:"<%=dto.getEmail()%>",
+	            ecall:"<%=dto.geteCall()%>",
+	            password: "<%=dto.getePwd()%>",  
+	            isPwdValid:false,
+	            isNewPwdValid:false,
+	            isEcallValid:false,
+	            isEnameValid: false,
+	            isEnameDirty: false,
 	            isEmailDirty: false,
 	            isEmailValid: false,
-	            isEcallValid: false,
-	            isEcallDirty: false,
-	            //전화번호 검증 표현식
-	            hasLetter: false,
-	            hasNumber: false,
-	            hasSpecial: false,
-	            hasMinLength: false,
-	            hasSpace:false
+	            newPassword:"",
+	            newPassword2:"",
+	            isNewPwdMatch: false,
+	            isNewPwdMatchDirty: false,
+	            isEcallDirty:false,
+	            isPwdDirty:false,  // 비밀번호 입력란에 한 번이라도 입력했는지 여부
+	            isNewPwdDirty:false // 새 비밀번호 입력란에 한 번이라도 입력했는지 여부
 	        },
-	        methods: {
-	            validateOldPassword() {
-	                this.isPwdDirty = true;
-	                this.isPwdValid = this.password.trim() !== "";
+	        computed: {
+	            isNewPwdSame() {
+	                return this.newPassword === this.password && this.newPassword !== "";
+	            }
+	        },
+	        methods:{
+	            onEnameInput(e) {
+	                this.ename = e.target.value; 
+	                const reg_ename = /^[가-힣]{2,5}$/; 
+	                this.isEnameDirty = true;
+	                this.isEnameValid = reg_ename.test(this.ename);
 	            },
-	            validateNewPassword() {
-	                this.isNewPwdDirty = true;
-	                const regLetter = /[A-Za-z]/;
-	                const regNumber = /\d/;
-	                const regSpecial = /[\W_]/;
-	                const regMinLength = /^.{8,}$/;
-	                const space = /\s/;
-	
-	                this.hasLetter = regLetter.test(this.newPassword);
-	                this.hasNumber = regNumber.test(this.newPassword);
-	                this.hasSpecial = regSpecial.test(this.newPassword);
-	                this.hasMinLength = regMinLength.test(this.newPassword);
-	                this.hasSpace = space.test(this.newPassword);
-	                
-	                this.isNewPwdValid = this.hasLetter && this.hasNumber && this.hasSpecial && this.hasMinLength && !this.hasSpace;
-	            },
-	            onEmailInput() {
-	                const reg_email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-	                this.isEmailDirty = true;
-	                this.isEmailValid = reg_email.test(this.email);
-	                
-	                if (this.isEmailValid) {
-	                    fetch("${pageContext.request.contextPath }/checkEmail", {
-	                        method: 'POST',
-	                        headers: {
-	                            'Content-Type': 'application/x-www-form-urlencoded'
-	                        },
-	                        body: 'email=' + encodeURIComponent(this.email) + '&role=' + encodeURIComponent('STAFF')
-	                    })
-	                    .then(res => res.json())
-	                    .then(data => {
-	                        if (data.isDuplicate) {
-	                        	alert("이미 등록된 이메일입니다.");
-	                            this.isEmailValid = false;
-	                            this.isEmailAvailable = false; 
-	                            this.email = ''; 
-	                        } else {
-	                            this.isEmailAvailable = true; 
-	                        }
-	                    });
-	                } else {
-	                    this.isEmailAvailable = false; 
-	                }
-	            },
-	            onEcallInput() {
-	                const reg_ecall = /^01[016789]-\d{3,4}-\d{4}$/;
+	            onEcallInput(){
+	                const reg_ecall=/^01[016789]-\d{3,4}-\d{4}$/;
 	                this.isEcallDirty = true;
 	                this.isEcallValid = reg_ecall.test(this.ecall);
 	                
 	                if (this.isEcallValid) {
-	                    fetch("${pageContext.request.contextPath }/checkEcall", {
+	                    fetch("../../../checkEcall", {
 	                        method: 'POST',
 	                        headers: {
 	                            'Content-Type': 'application/x-www-form-urlencoded'
@@ -191,7 +151,7 @@
 	                    .then(res => res.json())  
 	                    .then(data => {
 	                        if (data.isDuplicate) {
-	                        	alert('이미 등록된 전화번호입니다.');  
+	                            alert('이미 등록된 전화번호입니다.');  
 	                            this.isEcallValid = false; 
 	                            this.ecall = "";
 	                        } else {
@@ -202,6 +162,50 @@
 	                        alert('에러 발생: ' + error); 
 	                    });
 	                }  
+	            },
+	            onPwdInput(e){
+	                const pwd=e.target.value;
+	                const reg_pwd= /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
+	                this.isPwdValid = reg_pwd.test(pwd);
+	                this.isPwdDirty = true;
+	            },
+	            onNewPwdInput() {
+	                this.isNewPwdDirty = true;
+	                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
+	                this.isNewPwdValid = reg_pwd.test(this.newPassword) && !this.isNewPwdSame;
+	                this.isNewPwdMatch = this.newPassword === this.newPassword2;
+	            },
+	            onNewPwdConfirmInput() {
+	                this.isNewPwdMatch = this.newPassword === this.newPassword2;
+	                this.isNewPwdMatchDirty = true;
+	            },
+	            onEmailInput() {
+	                const reg_email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	                this.isEmailDirty = true;
+	                this.isEmailValid = reg_email.test(this.email);
+	                
+	                if (this.isEmailValid) {
+	                    fetch("../../../checkEmail", {
+	                        method: 'POST',
+	                        headers: {
+	                            'Content-Type': 'application/x-www-form-urlencoded'
+	                        },
+	                        body: 'email=' + encodeURIComponent(this.email) + '&role=' + encodeURIComponent('STAFF')
+	                    })
+	                    .then(res => res.json())
+	                    .then(data => {
+	                        if (data.isDuplicate) {
+	                            alert("이미 등록된 이메일입니다.");
+	                            this.isEmailValid = false;
+	                            this.isEmailAvailable = false; 
+	                            this.email = ''; 
+	                        } else {
+	                            this.isEmailAvailable = true; 
+	                        }
+	                    });
+	                } else {
+	                    this.isEmailAvailable = false; 
+	                }
 	            }
 	        }
 	    });
