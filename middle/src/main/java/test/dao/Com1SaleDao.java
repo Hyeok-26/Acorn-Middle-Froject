@@ -376,7 +376,8 @@ public class Com1SaleDao {
 	    try {
 	        conn = new DbcpBean().getConn();
 	        String sql = """
-				SELECT *from test_com1_sales
+				SELECT storenum, To_char(salesDate, 'YYYY-MM-DD') salesDate, dailySales
+				from test_com1_sales
 				order by storenum, salesDate asc
 	        """;
 	        pstmt = conn.prepareStatement(sql);
@@ -404,6 +405,85 @@ public class Com1SaleDao {
 	    return list;
 	}
 	
+	
+	// 매장상관없이 연매출 -> 연도와 매출만 띄움
+	public List<Com1SaleDto> getListSalebyYear() {
+	    List<Com1SaleDto> list = new ArrayList<>();
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	        conn = new DbcpBean().getConn();
+	        String sql = """
+				SELECT TO_CHAR(salesdate, 'YYYY') AS year,
+	        		    	SUM(dailySales) AS yearlysales
+					FROM test_com1_sales
+					GROUP BY TO_CHAR(salesdate, 'YYYY');
+	        """;
+	        pstmt = conn.prepareStatement(sql);
+	  
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            Com1SaleDto dto = new Com1SaleDto();
+	            dto.setSalesDate(rs.getString("year"));
+	            dto.setYearlySales(rs.getInt("Yearlysales"));
+	            
+	            list.add(dto);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (pstmt != null) pstmt.close();
+	            if (conn != null) conn.close();
+	        } catch (Exception e) {
+	        }
+	    }
+	    return list;
+	}
+	
+	// 매장상관없이 월매출 -> 연도/월과 매출만 띄움
+	public List<Com1SaleDto> getListSalebyMonth() {
+	    List<Com1SaleDto> list = new ArrayList<>();
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	        conn = new DbcpBean().getConn();
+	        String sql = """
+					SELECT TO_CHAR(salesdate, 'YYYY-MM') AS month,
+	        		    	SUM(dailySales) AS monthlysales
+					FROM test_com1_sales
+					GROUP BY TO_CHAR(salesdate, 'YYYY-MM')
+					order by year, month desc
+	        """;
+	        pstmt = conn.prepareStatement(sql);
+	  
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            Com1SaleDto dto = new Com1SaleDto();
+	            dto.setSalesDate(rs.getString("month"));
+	            dto.setMonthlySales(rs.getInt("monthlysales"));
+	            list.add(dto);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (pstmt != null) pstmt.close();
+	            if (conn != null) conn.close();
+	        } catch (Exception e) {
+	        }
+	    }
+	    return list;
+	}
+	
+	
+	
 	// 매장별 전체 일 매출
 		public List<Com1SaleDto> getListbyStore(int storenum) {
 		    List<Com1SaleDto> list = new ArrayList<>();
@@ -414,7 +494,7 @@ public class Com1SaleDao {
 		    try {
 		        conn = new DbcpBean().getConn();
 		        String sql = """
-					SELECT salesDate, storeNum, dailySales 
+					SELECT To_char(salesDate, 'YYYY-MM-DD') salesDate, storeNum, dailySales 
 					from test_com1_sales
 					where storenum=?
 					order by storenum, salesDate asc
@@ -454,12 +534,13 @@ public class Com1SaleDao {
 		    try {
 		        conn = new DbcpBean().getConn();
 		        String sql = """
-					SELECT extract(year from salesDate) year, extract(month from salesDate) month, sum(dailySales) monthlySales 
-					from test_com1_sales
-					where storenum=?
-					group by extract(month from salesdate)
-					order by extract(year from salesdate) desc
-		        """;
+							SELECT TO_CHAR(salesdate, 'YYYY-MM') AS month,
+	        		    	SUM(dailySales) AS monthlysales
+		        		    FROM test_com1_sales
+		        		    where storenum =?
+		        		    GROUP BY TO_CHAR(salesdate, 'YYYY-MM')
+		        		    order by year, month desc
+						""";
 		        pstmt = conn.prepareStatement(sql);
 		        pstmt.setInt(1,storenum);
 		  

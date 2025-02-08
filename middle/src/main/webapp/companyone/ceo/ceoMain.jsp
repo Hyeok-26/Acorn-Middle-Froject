@@ -72,7 +72,7 @@
 	</div>
 	<div class="container">
 		<p>
-			<a href="sale/viewsale.jsp" style="text-decoration: none; color: inherit;">
+			<a href="sale/view.jsp" style="text-decoration: none; color: inherit;">
        			<button>매출 관리</button>
        		</a>
 		</p>
