@@ -240,9 +240,7 @@
 
 	
 	<!-- 푸터 -->
-	<div class="position-fixed bottom-0 w-100">
-		<jsp:include page="/include/footer.jsp" />
-	</div>
+<jsp:include page="/include/footer.jsp" />
 	
 	<script>
 	    function switchTab(tab) {
