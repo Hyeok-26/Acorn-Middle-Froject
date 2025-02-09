@@ -9,27 +9,16 @@
 	// 현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "quitForm");
 
-
-
-
 	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
 	String comname = (String)session.getAttribute("comname");
 	String ename = (String)session.getAttribute("ename");
 
-	
-	
-	
-	
-	
 	// 페이지 로딩 uri
 	String findQuery="";
 	// 로딩 데이터
 	Com1QuitDto dto = new Com1QuitDto();
 	
 		
-	
-	
-	
 	
 	// 검색 조건이 있는지 request 영역 확인
 	String condition = request.getParameter("condition");
@@ -51,9 +40,6 @@
 	}
 	
 	
-	
-	
-	
 	// 정렬 조건이 있는지 확인
 	String lineup = request.getParameter("lineup");
 	// 정렬 조건이 있는 경우 dto 에 값 담기
@@ -61,8 +47,6 @@
 		dto.setLineup(lineup);
 	}
 
-	
-	
 	
 	
 	// 페이징 처리
