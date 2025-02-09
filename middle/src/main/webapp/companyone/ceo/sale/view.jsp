@@ -63,7 +63,7 @@
 		<button class="tab-button nav-item nav-link" id="yearTab" onclick="switchTab('year')">전체 연매출</button>
 		<button class="tab-button nav-item nav-link" id="monthTab" onclick="switchTab('month')">전체 월매출</button>
 		<div class="tab-button nav-item nav-link" id="storeTab" onclick="switchTab('month')">
-			<form action="view.jsp" method="post" id="storeForm">
+			<form action="view.jsp" method="get" id="storeForm">
 				<label for="storenum">지점 선택: </label> 
 				<select name="storenum"	id="storenum" onchange="switchTab('store'); document.getElementById('storeForm').submit();">
 					<option value="storenum">-- 지점을 선택하세요 --</option>
