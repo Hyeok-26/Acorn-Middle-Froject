@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%
     int empno = (int) session.getAttribute("empno");
-	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
+	Com1EmpDto empdto = Com1EmpDao.getInstance().getData(empno);
 	
 	String newName = request.getParameter("ename");
 	String newCall = request.getParameter("ecall");
@@ -22,8 +22,8 @@
 	// 이름 업데이트
 	if (newName != null && !newName.isEmpty()) {
 	    if (newName.matches(reg_name)) {
-	        dto.seteName(newName);
-	        Com1EmpDao.getInstance().update(dto);
+	        empdto.seteName(newName);
+	        Com1EmpDao.getInstance().update(empdto);
 	        isSuccess = true;
 	    } else {
 %>
@@ -39,8 +39,8 @@
 	// 전화번호 업데이트
 	if (newCall != null && !newCall.isEmpty()) {
 	    if (newCall.matches(reg_call)) {
-	        dto.seteCall(newCall);
-	        Com1EmpDao.getInstance().update(dto);
+	        empdto.seteCall(newCall);
+	        Com1EmpDao.getInstance().update(empdto);
 	        isSuccess = true;
 	    } else {
 %>
@@ -56,8 +56,8 @@
 	// 비밀번호 업데이트
 	if (newPassword != null && !newPassword.isEmpty()) {
 	    if (newPassword.matches(reg_pwd)) { 
-	        dto.setePwd(newPassword);
-	        Com1EmpDao.getInstance().update(dto);
+	        empdto.setePwd(newPassword);
+	        Com1EmpDao.getInstance().update(empdto);
 	        isSuccess = true;
 	    } else {
 %>
@@ -73,8 +73,8 @@
 	// 이메일 업데이트
 		if (newEmail!= null && !newEmail.isEmpty()) {
 		    if (newEmail.matches(reg_email)) { 
-		        dto.setEmail(newEmail);
-		        Com1EmpDao.getInstance().update(dto);
+		        empdto.setEmail(newEmail);
+		        Com1EmpDao.getInstance().update(empdto);
 		        isSuccess = true;
 		    } else {
 	%>

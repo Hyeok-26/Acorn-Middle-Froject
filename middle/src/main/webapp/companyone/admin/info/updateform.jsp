@@ -6,10 +6,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	int empno = (int) session.getAttribute("empno");
-	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
+	Com1EmpDto empdto = Com1EmpDao.getInstance().getData(empno);
 	
-	int comid = dto.getComId();
+	int comid = empdto.getComId();
 	String comname = UsingDao.getInstance().getComName(comid);
+	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -69,33 +71,33 @@
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="storenum">소속 지점</label>
-					<input class="form-control" type="text" id="storenum" name="storenum" value="<%=dto.getStoreNum() %>" readonly />
+					<input class="form-control" type="text" id="storenum" name="storenum" value="<%=empdto.getStoreNum() %>" readonly />
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="empno">사원 번호</label>
-					<input class="form-control" type="text" id="empno" name="empno" value="<%=dto.getEmpNo() %>" readonly />
+					<input class="form-control" type="text" id="empno" name="empno" value="<%=empdto.getEmpNo() %>" readonly />
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="sal">월급</label>
-					<input class="form-control" type="text" id="sal" name="sal" value="<%=dto.getSal() %>" readonly />
+					<input class="form-control" type="text" id="sal" name="sal" value="<%=empdto.getSal() %>" readonly />
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="ename">이름</label>
 					<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
-						@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" value="<%=dto.geteName() %>" required/>
+						@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" value="<%=empdto.geteName() %>" required/>
 					<div class="invalid-feedback">이름을 올바르게 입력하세요.</div>
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="ecall">연락처</label> 
 					<input class="form-control" @input="onEcallInput" :class="{'is-invalid': !isEcallValid && isEcallDirty, 'is-valid':isEcallValid}"
-						type="text" name="ecall" id="ecall" v-model="ecall" value="<%=dto.geteCall() %>" required/>
+						type="text" name="ecall" id="ecall" v-model="ecall" value="<%=empdto.geteCall() %>" required/>
 					<small class="form-text">하이픈(-)을 포함하여 기재해주세요.</small>
 					<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="password">기존 비밀번호</label> 
 					<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-						type="password" name="password" id="password" value="<%=dto.getePwd() %>" readonly/>
+						type="password" name="password" id="password" value="<%=empdto.getePwd() %>" readonly/>
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
@@ -121,7 +123,7 @@
 					<label class="form-label" for="email">이메일</label> 
 					<input v-model="email" @input="onEmailInput"
 						:class="{'is-valid': isEmailValid, 'is-invalid': !isEmailValid && isEmailDirty}"
-						class="form-control" type="email" name="email" id="email" value="<%=dto.getEmail() %>" required/>
+						class="form-control" type="email" name="email" id="email" value="<%=empdto.getEmail() %>" required/>
 					<div v-if="!isEmailValid && isEmailDirty" class="invalid-feedback">
 						이메일 형식에 맞게 입력하세요.</div>
 					<div v-if="isEmailValid && !isEmailAvailable"
@@ -140,10 +142,10 @@
     new Vue({
         el:"#app",
         data:{
-            ename:"<%=dto.geteName()%>",
-            email:"<%=dto.getEmail()%>",
-            ecall:"<%=dto.geteCall()%>",
-            password: "<%=dto.getePwd()%>",  
+            ename:"<%=empdto.geteName()%>",
+            email:"<%=empdto.getEmail()%>",
+            ecall:"<%=empdto.geteCall()%>",
+            password: "<%=empdto.getePwd()%>",  
             isPwdValid:false,
             isNewPwdValid:false,
             isEcallValid:false,

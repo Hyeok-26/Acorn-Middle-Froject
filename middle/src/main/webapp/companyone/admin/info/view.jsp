@@ -18,12 +18,12 @@
 	// DB에서 점장정보 뽑아오기
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	//dao로 로그인한 사원번호에 해당하는 사람의 정보 가져오기
-	Com1EmpDto dto=dao.getData(empno);
-	session.setAttribute("dto", dto);
+	Com1EmpDto empdto=dao.getData(empno);
+	session.setAttribute("empdto", empdto);
 		
 	//소속회사의 정보는 comid를 통해서 test_using_app에서 comname를 뽑아야 한다.
 	//로그인한 점장의 comId 가져오기
-	int comid=dto.getComId();
+	int comid=empdto.getComId();
 	//로그인한 점장의 회사이름 뽑기
 	UsingDao dao_using=UsingDao.getInstance();
 	String comname=dao_using.getComName(comid);	
@@ -94,55 +94,55 @@
 						</tr>
 						<tr>
 							<th scope="row">회사Id</th>
-							<td><%=dto.getComId() %></td>
+							<td><%=empdto.getComId() %></td>
 						</tr>
 						<tr>
 							<th scope="row">소속지점(storenum)</th>
-							<td><%=dto.getStoreNum() %></td>
+							<td><%=empdto.getStoreNum() %></td>
 						</tr>
 						<tr>
 							<th scope="row">아이디</th>
-							<td><%=dto.getEmpNo() %></td>
+							<td><%=empdto.getEmpNo() %></td>
 						</tr>
 						<tr>
 							<th scope="row">이름</th>
-							<td><%=dto.geteName() %></td>
+							<td><%=empdto.geteName() %></td>
 						</tr>
 						<tr>
 							<th scope="row">역할</th>
-							<td><%=dto.getRole() %></td>
+							<td><%=empdto.getRole() %></td>
 						</tr>
 						<tr>
 							<th scope="row">전화번호</th>
-							<td><%=dto.geteCall() %></td>
+							<td><%=empdto.geteCall() %></td>
 						</tr>
 						<tr>
 							<th scope="row">비밀번호</th>
-							<td><%=dto.getePwd() %></td>
+							<td><%=empdto.getePwd() %></td>
 						</tr>
 						<tr>
 							<th scope="row">월급</th>
-							<td><%=dto.getSal() %></td>
+							<td><%=empdto.getSal() %></td>
 						</tr>
 						<tr>
 							<th scope="row">시급</th>
-							<td><%=dto.getHsal() %></td>
+							<td><%=empdto.getHsal() %></td>
 						</tr>
 						<tr>
 							<th scope="row">근무시간</th>
-							<td><%=dto.getWorktime() %></td>
+							<td><%=empdto.getWorktime() %></td>
 						</tr>
 						<tr>
 							<th scope="row">이메일</th>
-							<td><%=dto.getEmail() %></td>
+							<td><%=empdto.getEmail() %></td>
 						</tr>
 						<tr>
 							<th scope="row">입사일</th>
-							<td><%=dto.getHiredate() %></td>
+							<td><%=empdto.getHiredate() %></td>
 						</tr>
 						<tr>
 							<th scope="row">근로계약서</th>
-							<td><a href="${pageContext.request.contextPath}/companyone/admin/staffstatus/contract.jsp?empno=<%=dto.getEmpNo()%>">
+							<td><a href="${pageContext.request.contextPath}/companyone/admin/staffstatus/contract.jsp?empno=<%=empdto.getEmpNo()%>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
 							  <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
 							  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5z"/>
