@@ -416,17 +416,18 @@ public class Com1SaleDao {
 	    try {
 	        conn = new DbcpBean().getConn();
 	        String sql = """
-				SELECT TO_CHAR(salesdate, 'YYYY') AS year,
+				SELECT TO_CHAR(salesdate, 'YYYY') AS syear,
 	        		    	SUM(dailySales) AS yearlysales
 					FROM test_com1_sales
-					GROUP BY TO_CHAR(salesdate, 'YYYY');
+					GROUP BY TO_CHAR(salesdate, 'YYYY')
+					order by syear desc
 	        """;
 	        pstmt = conn.prepareStatement(sql);
 	  
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
 	            Com1SaleDto dto = new Com1SaleDto();
-	            dto.setSalesDate(rs.getString("year"));
+	            dto.setSyear(rs.getString("syear"));
 	            dto.setYearlySales(rs.getInt("Yearlysales"));
 	            
 	            list.add(dto);
@@ -454,18 +455,18 @@ public class Com1SaleDao {
 	    try {
 	        conn = new DbcpBean().getConn();
 	        String sql = """
-					SELECT TO_CHAR(salesdate, 'YYYY-MM') AS month,
+					SELECT TO_CHAR(salesdate, 'YYYY-MM') AS smonth,
 	        		    	SUM(dailySales) AS monthlysales
 					FROM test_com1_sales
 					GROUP BY TO_CHAR(salesdate, 'YYYY-MM')
-					order by year, month desc
+					order by smonth desc
 	        """;
 	        pstmt = conn.prepareStatement(sql);
 	  
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
 	            Com1SaleDto dto = new Com1SaleDto();
-	            dto.setSalesDate(rs.getString("month"));
+	            dto.setSmonth(rs.getString("smonth"));
 	            dto.setMonthlySales(rs.getInt("monthlysales"));
 	            list.add(dto);
 	        }
@@ -494,10 +495,10 @@ public class Com1SaleDao {
 		    try {
 		        conn = new DbcpBean().getConn();
 		        String sql = """
-					SELECT To_char(salesDate, 'YYYY-MM-DD') salesDate, storeNum, dailySales 
+					SELECT To_char(salesDate, 'YYYY-MM-DD') sDate, storeNum, dailySales 
 					from test_com1_sales
 					where storenum=?
-					order by storenum, salesDate asc
+					order by storenum, sDate asc
 		        """;
 		        pstmt = conn.prepareStatement(sql);
 		        pstmt.setInt(1,storenum);
@@ -505,7 +506,7 @@ public class Com1SaleDao {
 		        rs = pstmt.executeQuery();
 		        while (rs.next()) {
 		            Com1SaleDto dto = new Com1SaleDto();
-		            dto.setSalesDate(rs.getString("salesDate"));
+		            dto.setSdate(rs.getString("sDate"));
 		            dto.setStoreNum(rs.getInt("storeNum"));
 		            dto.setDailySales(rs.getInt("dailySales"));
 		            
@@ -534,12 +535,12 @@ public class Com1SaleDao {
 		    try {
 		        conn = new DbcpBean().getConn();
 		        String sql = """
-							SELECT TO_CHAR(salesdate, 'YYYY-MM') AS month,
+							SELECT TO_CHAR(salesdate, 'YYYY-MM') AS smonth,
 	        		    	SUM(dailySales) AS monthlysales
 		        		    FROM test_com1_sales
 		        		    where storenum =?
 		        		    GROUP BY TO_CHAR(salesdate, 'YYYY-MM')
-		        		    order by year, month desc
+		        		    order by smonth desc
 						""";
 		        pstmt = conn.prepareStatement(sql);
 		        pstmt.setInt(1,storenum);
@@ -547,8 +548,7 @@ public class Com1SaleDao {
 		        rs = pstmt.executeQuery();
 		        while (rs.next()) {
 		            Com1SaleDto dto = new Com1SaleDto();
-		            dto.setYear(rs.getInt("year"));
-		            dto.setMonth(rs.getInt("month"));
+		            dto.setSmonth(rs.getString("smonth"));
 		            dto.setMonthlySales(rs.getInt("monthlySales"));
 		            
 		            list.add(dto);
@@ -577,11 +577,11 @@ public class Com1SaleDao {
 		    try {
 		        conn = new DbcpBean().getConn();
 		        String sql = """
-					SELECT extract(year from salesdate) year, sum(dailySales) yearlySales 
+					SELECT to_char(salesDate, 'YYYY') syear, sum(dailySales) yearlySales 
 					from test_com1_sales
 					where storenum=?
-					group by extract(year from salesDate)
-					order by year desc
+					group by to_char(salesDate, 'YYYY')
+					order by syear desc
 		        """;
 		        pstmt = conn.prepareStatement(sql);
 		        pstmt.setInt(1,storenum);
@@ -589,7 +589,7 @@ public class Com1SaleDao {
 		        rs = pstmt.executeQuery();
 		        while (rs.next()) {
 		            Com1SaleDto dto = new Com1SaleDto();
-		            dto.setYear(rs.getInt("year"));
+		            dto.setSyear(rs.getString("syear"));
 		            dto.setYearlySales(rs.getInt("yearlySales"));
 		            
 		            list.add(dto);

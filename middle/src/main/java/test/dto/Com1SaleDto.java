@@ -8,12 +8,33 @@ public class Com1SaleDto {
 	private int month;
 	private int monthlySales;
 	private int yearlySales;
+	private String syear;
+	private String smonth;
+	private String sdate;
 	
 	public String getSalesDate() {
 		return salesDate;
 	}
 	public void setSalesDate(String salesDate) {
 		this.salesDate = salesDate;
+	}
+	public String getSyear() {
+		return syear;
+	}
+	public void setSyear(String syear) {
+		this.syear = syear;
+	}
+	public String getSmonth() {
+		return smonth;
+	}
+	public void setSmonth(String smonth) {
+		this.smonth = smonth;
+	}
+	public String getSdate() {
+		return sdate;
+	}
+	public void setSdate(String sdate) {
+		this.sdate = sdate;
 	}
 	public int getStoreNum() {
 		return storeNum;
