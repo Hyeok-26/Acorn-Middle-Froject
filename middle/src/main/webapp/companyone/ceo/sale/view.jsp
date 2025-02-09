@@ -34,14 +34,23 @@
 	List<Com1SaleDto> listbystore =null;
 	List<Com1SaleDto> listbystoremonthly =null;
 	List<Com1SaleDto> listbystoreyearly=null;
-	
-	if(strStoreNum!=null){
+
+	if(strStoreNum!=null&&!strStoreNum.isEmpty()){
 		storenum = Integer.parseInt(strStoreNum);
 		listbystore = saledao.getListbyStore(storenum);
 		listbystoremonthly = saledao.getListMonthlybyStore(storenum);
 		listbystoreyearly= saledao.getListYearlybyStore(storenum);
 	}
 
+	
+	//request에 정보 담아두기 
+	request.setAttribute("listall", listall);
+	request.setAttribute("listsalemonth", listsalemonth);
+	request.setAttribute("listsaleyear", listsaleyear);
+	request.setAttribute("listbystore", listbystore);
+	request.setAttribute("listbystoremonthly", listbystoremonthly);
+	request.setAttribute("listbystoreyearly", listbystoreyearly);
+	
 	// request 영역에 필요한 정보 저장
 	request.setAttribute("storenum", storenum);
 %>
@@ -72,20 +81,23 @@
 		<h4>매출 현황</h4>
 
 		<!-- 조회 조건 -->
-		<div class="tab-button" >
+		<div>
 			<ul class="nav nav-tabs">
-				<li class=" nav-item" id="allTab" onclick="switchTab('all')" ><a class="nav-link" aria-current="page" href="view.jsp" >매출 전체</a></li><%--매장상관없이 전체 일매출 --%>
-				<li class="nav-item" id="allyearTab"><a class="nav-link" aria-current="page"href="view.jsp" onclick="switchTab('allyear')">연매출</a></li><%--매장상관없이 연매출: 년/월/일, 매출 --%>
-				<li class="nav-item" id="allmonthTab" ><a class="nav-link" aria-current="page" href="view.jsp" onclick="switchTab('allmonth')">월매출</a></li><%--매장상관없이 월매출 : 년/월/일,매출 --%>
+				<li class="nav-item" id="all">
+					<a class="nav-link" aria-current="page" href="#" >매출 전체</a>
+				</li><%--매장상관없이 전체 일매출 --%>
+				<li class="nav-item" id="allyear">
+					<a class="nav-link" aria-current="page"href="#" >연매출</a>
+				</li><%--매장상관없이 연매출: 년/월/일, 매출 --%>
+				<li class="nav-item" "id=allmonth">
+					<a class="nav-link" aria-current="page" href="#">월매출</a>
+				</li><%--매장상관없이 월매출 : 년/월/일,매출 --%>
 
-				<li class="nav-item dropdown" id="allstore" ><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" onclick="switchTab('allstore')"
-					role="button" aria-expanded="false"> 호점 별 매출</a>
-					<form action="view.jsp" method>
-					
-					</form>
+				<li class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false"> 매장별 매출 </a>
 					<ul class="dropdown-menu">
 						<c:forEach var="num" items="${storeList}">
-							<li><a class="dropdown-item" href="viewsale.jsp">${num}</a></li>
+							<li class="nav-item" id = "store"><a class="dropdown-item"	href="#"> ${num} </a></li>
 						</c:forEach>
 					</ul></li>
 			</ul>
@@ -93,168 +105,163 @@
 
 
 		<!-- 전체매출 탭 -->
-		<div id = "allContent" class="tab-content p-3 bg-light rounded shadow-sm"
-			style="height: 500px">
+		<div id = "all" class="p-3 bg-light rounded shadow-sm" style="">
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
-						<tr>
-							<th>호점</th>
-							<th>년/월/일</th>
-							<th>매출</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% if (listall != null && !listall.isEmpty()) { 
-				            for (Com1SaleDto tmp : listall) { %>
-					<tr>
-						<td><%= tmp.getStoreNum() %></td>
-						<td><%= tmp.getSalesDate() %></td>
-						<td><%= tmp.getDailySales() %></td>
-					</tr>
-					<%  } 
-				           } else { %>
-					<tr>
-						<td>매출 정보가 없습니다.</td>
-					</tr>
-					<% } %>
-					</tbody>
-				</table>
+						<c:choose>
+							<c:when test="${empty listall}">
+								<p>출력할 전체 매출 데이터가 없습니다.</p>
+							</c:when>
+							<c:otherwise>
+									<tr>
+										<th>호점</th>
+										<th>날짜 구분</th>
+										<th>매출</th>
+									</tr>
+									<c:forEach var="tmp" items="${listall}">
+										<tr>
+											<td>${tmp.storenum}</td>
+											<td>${tmp.salesDate}</td>
+											<td>${tmp.dailySales}</td>
+										</tr>
+									</c:forEach>
+							</c:otherwise>
+						</c:choose>
+				</table>		
 			</div>
 		</div>
+		
 		<%-- 연매출 탭 --%>
-		<div id = "allyearContent" class="tab-content p-3 bg-light rounded shadow-sm"
-			style="height: 500px">
+		<div id = "allyear" class="p-3 bg-light rounded shadow-sm" style="">
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
-						<tr>
-							<th>년/월/일</th>
-							<th>매출</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% if (listsaleyear != null && !listsaleyear.isEmpty()) { 
-				            for (Com1SaleDto tmp : listsaleyear) { %>
-					<tr>
-						<td><%= tmp.getYear() %></td>
-						<td><%= tmp.getYearlySales() %></td>
-					</tr>
-					<%  } 
-				           } else { %>
-					<tr>
-						<td>매출 정보가 없습니다.</td>
-					</tr>
-					<% } %>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<%-- 월매출 탭--%>
-		<div id = "allmonthContent" class="tab-content p-3 bg-light rounded shadow-sm"
-			style="height: 500px">
-			<div class="table-responsive">
-				<table class="table table-hover text-center align-middle">
-					<thead class="table-dark">
-						<tr>
-							<th>년/월</th>
-							<th>매출</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% if (listsalemonth != null && !listsalemonth.isEmpty()) { 
-				            for (Com1SaleDto tmp : listsalemonth) { %>
-					<tr>
-						<td><%= tmp.getMonth() %></td>
-						<td><%= tmp.getDailySales() %></td>
-					</tr>
-					<%  } 
-				           } else { %>
-					<tr>
-						<td >매출 정보가 없습니다.</td>
-					</tr>
-					<% } %>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<%-- 매장별 조회 --%>
-		<div id = "allstoreContent" class="tab-content p-3 bg-light rounded shadow-sm"
-			style="height: 500px">
-			<div class="table-responsive">
-				<table class="table table-hover text-center align-middle">
-					<thead class="table-dark">
-						<tr>
-							<th>년/월/일</th>
-							<th>매출</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% if (listbystore != null && !listbystore.isEmpty()) { 
-				            for (Com1SaleDto tmp : listbystore) { %>
-					<tr>
-						<td><%= tmp.getSalesDate() %></td>
-						<td><%= tmp.getDailySales() %></td>
-					</tr>
-					<%  } 
-				           } else { %>
-					<tr>
-						<td>매출 정보가 없습니다.</td>
-					</tr>
-					<% } %>
-					</tbody>
-				</table>
-			</div>
-			<div class="table-responsive">
-				<table class="table table-hover text-center align-middle">
-					<thead class="table-dark">
-						<tr>
-							<th>년/월/일</th>
-							<th>매출</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% if (listbystoremonthly!= null && !listbystoremonthly.isEmpty()) { 
-				            for (Com1SaleDto tmp : listbystoremonthly) { %>
-					<tr>
-						<td><%= tmp.getMonth() %></td>
-						<td><%= tmp.getMonthlySales() %></td>
-					</tr>
-					<%  } 
-				           } else { %>
-					<tr>
-						<td>매출 정보가 없습니다.</td>
-					</tr>
-					<% } %>
-					</tbody>
-				</table>
-			</div>
-			<div class="table-responsive">
-				<table class="table table-hover text-center align-middle">
-					<thead class="table-dark">
-						<tr>
-							<th>년/월/일</th>
-							<th>매출</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% if (listbystoreyearly!= null && !listbystoreyearly.isEmpty()) { 
-				            for (Com1SaleDto tmp : listbystoreyearly) { %>
-					<tr>
-						<td><%= tmp.getYear() %></td>
-						<td><%= tmp.getYearlySales() %></td>
-					</tr>
-					<%  } 
-				           } else { %>
-					<tr>
-						<td>매출 정보가 없습니다.</td>
-					</tr>
-					<% } %>
-					</tbody>
+						<c:choose>
+							<c:when test="${empty listsaleyear}">
+								<p>출력할 연매출 데이터가 없습니다.</p>
+							</c:when>
+							<c:otherwise>
+									<tr>
+										<th>날짜 구분</th>
+										<th>매출</th>
+									</tr>
+									<c:forEach var="tmp" items="${listsaleyear}">
+										<tr>
+											<td>${tmp.year}</td>
+											<td>${tmp.yearlySales}</td>
+
+										</tr>
+									</c:forEach>
+								
+							</c:otherwise>
+						</c:choose>
 				</table>
 			</div>
 		</div>
 		
+		<%-- 월매출 탭--%>
+		<div id = "allmonth" class="p-3 bg-light rounded shadow-sm" style="">
+			<div class="table-responsive">
+				<table class="table table-hover text-center align-middle">
+					<thead class="table-dark">
+						<c:choose>
+							<c:when test="${empty listsalemonth}">
+								<p>출력할 월매출 데이터가 없습니다.</p>
+							</c:when>
+							<c:otherwise>
+									<tr>
+										<th>날짜 구분</th>
+										<th>매출</th>
+									</tr>
+									<c:forEach var="tmp" items="${listsalemonth}">
+										<tr>
+											<td>${tmp.month}</td>
+											<td>${tmp.monthlySales}</td>
+
+										</tr>
+									</c:forEach>
+			
+							</c:otherwise>
+						</c:choose>
+					</table>
+			</div>
+		</div>
+		
+		
+		
+		<%-- 매장별 조회 --%>
+		<div id = "store" class="p-3 bg-light rounded shadow-sm"  style="">
+			<div class="table-responsive">
+				<c:choose>
+					<c:when test="${empty listbystoreyearly}">
+						<p>현매장 ${storenum} 호점의 연매출 정보가 없습니다.</p>
+					</c:when>
+					<c:otherwise>
+						<table class="table table-hover text-center align-middle">
+							<thead>
+								<tr>
+									<th>날짜 구분</th>
+									<th>매출</th>
+								</tr>
+							</thead>
+							<c:forEach var="tmp" items="${listbystoreyearly}">
+								<tr>
+									<td>${tmp.year}</td>
+									<td>${tmp.yearlySales}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<div class="table-responsive">
+				<c:choose>
+					<c:when test="${empty listbystoremonthly}">
+						<p>현매장 ${storenum} 호점의 월매출 정보가 없습니다.</p>
+					</c:when>
+					<c:otherwise>
+						<table class="table table-hover text-center align-middle">
+							<thead>
+								<tr>
+									<th>날짜 구분</th>
+									<th>매출</th>
+								</tr>
+							</thead>
+							<c:forEach var="tmp" items="${listbystoremonthly}">
+								<tr>
+									<td>${tmp.month}</td>
+									<td>${tmp.monthlySales}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<div class="table-responsive">
+				<c:choose>
+					<c:when test="${empty listbystore}">
+						<p>현매장 ${storenum} 호점의 매출 정보가 없습니다.</p>
+					</c:when>
+					<c:otherwise>
+						<table class="table table-hover text-center align-middle">
+							<thead>
+								<tr>
+									<th>날짜 구분</th>
+									<th>매출</th>
+								</tr>
+							</thead>
+							<c:forEach var="tmp" items="${listbystore}">
+								<tr>
+									<td>${tmp.salesDate}</td>
+									<td>${tmp.dailySales}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
 	</div>
 
 
@@ -263,32 +270,6 @@
 	<div class="position-fixed bottom-0 w-100">
 		<jsp:include page="/include/footer.jsp" />
 	</div>
-	<script>
-	 function switchTab(tab) {
-	        const tabs = ['all', 'allyear', 'allmonth', 'allstore'];
 	
-	        tabs.forEach(t => {
-	            document.getElementById(t + 'Content').style.display = 'none';
-	            document.getElementById(t + 'Tab').classList.remove('active-tab');
-	        });
-	
-	        document.getElementById(tab + 'Content').style.display = 'block';
-	        document.getElementById(tab + 'Tab').classList.add('active-tab');
-	    }
-	
-	    window.onload = function() {
-	        const tabs = ['all', 'allyear', 'allmonth', 'allstore'];
-	        tabs.forEach(t => {
-	            document.getElementById(t + 'Content').style.display = 'none';
-	            document.getElementById(t + 'Tab').classList.remove('active-tab');
-	        });
-
-	        const urlParams = new URLSearchParams(window.location.search);
-	        if (urlParams.has('storenum')) {
-	            switchTab('storeNum'); 
-	        }
-	    };
-
-	</script>
 </body>
 </html>
