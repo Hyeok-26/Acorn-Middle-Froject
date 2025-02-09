@@ -1,17 +1,16 @@
-<%@page import="test.dto.Com1EmpDto"%>
-<%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-
-	int empno=(int)session.getAttribute("empno");
-	
 	session.setAttribute("current_page", "salary");
 	
-	Com1EmpDao dao=Com1EmpDao.getInstance();
-	Com1EmpDto dto=dao.getData(empno);
-
+	int empno=(int)session.getAttribute("empno");
+	String ename = (String) session.getAttribute("ename");
+	int sal=(int)session.getAttribute("sal");
+	int hsal=(int)session.getAttribute("hsal");
+	
+	if(session.getAttribute("sal") == null || session.getAttribute("hsal") == null ) {
+			response.sendRedirect("${pageContext.request.contextPath }/companyone/admin/staffsalary/view.jsp");
 %>
 <!DOCTYPE html>
 <html>
@@ -76,18 +75,18 @@
        <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>
    
        <div class="tab-content" id="salContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h3><%=dto.geteName() %> 님 월급으로 급여 계산</h3>
+           <h3>${ename } 님 월급으로 급여 계산</h3>
            <button class="btn btn-dark" id="salBtn" style="padding: 10px;" onclick="show('sal')">급여 조회</button>
            <div class="result" id="sal">
-           	   <label for="baseSal" style="padding: 10px; width: 100%;">기본급: <%=dto.getSal() %> 원</label>
-         	   <label for="pension" style="padding: 10px; width: 100%;">국민연금: </label>
-               <label for="healthIns" style="padding: 10px; width: 100%;">건강보험료: <%=dto.getSal() %>*0.035</label>
-               <label for="longIns" style="padding: 10px; width: 100%;">장기요양보험료: <%=dto.getSal() %>*0.0045</label>
-               <label for="empIns" style="padding: 10px; width: 100%;">고용보험료: <%=dto.getSal() %>*0.0009</label>
-               <label for="totalSal" style="padding: 10px; width: 100%;">지급액 계: <%=dto.getSal() %></label>
+           	   <label for="baseSal" style="padding: 10px; width: 100%;">기본급: ${sal } 원</label>
+         	   <label for="pension" style="padding: 10px; width: 100%;">국민연금: ${sal*0.045 } 원</label>
+               <label for="healthIns" style="padding: 10px; width: 100%;">건강보험료: ${sal*0.035 } 원</label>
+               <label for="longIns" style="padding: 10px; width: 100%;">장기요양보험료: ${sal*0.0045 } 원</label>
+               <label for="empIns" style="padding: 10px; width: 100%;">고용보험료: ${sal*0.0009 } 원</label>
+               <label for="totalSal" style="padding: 10px; width: 100%;">지급액 계: ${sal } 원</label>
                <p>--------------------------------------<p>
-               <label for="deduction" style="padding: 10px; width: 100%;">공제액 계: <%=dto.getSal() %>*0.0854</label>
-               <label for="actualSal" style="padding: 10px; width: 100%;">실수령 액: <%=dto.getSal() %>*0.9146</label>
+               <label for="deduction" style="padding: 10px; width: 100%;">공제액 계: ${sal*0.0854 } 원</label>
+               <label for="actualSal" style="padding: 10px; width: 100%;">실수령 액: ${sal*0.9146 } 원</label>
                <label for="payDate" style="padding: 10px; width: 100%;">지급일: </label>
            
            
@@ -97,39 +96,50 @@
        </div>
    
        <div class="tab-content" id="hsalContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h3><%=dto.geteName() %> 님 시급으로 급여 계산</h3>
-           <input type="number" id=inputMsg1 min="0" step="0.01" placeholder="1주차 근무시간 입력"/><br>
-	       <input type="number" id=inputMsg2 min="0" step="0.01" placeholder="2주차 근무시간 입력"/><br>
-	       <input type="number" id=inputMsg3 min="0" step="0.01" placeholder="3주차 근무시간 입력"/><br>
-	       <input type="number" id=inputMsg4 min="0" step="0.01" placeholder="4주차 근무시간 입력"/><br>
-	       <input type="number" id=inputMsg5 min="0" step="0.01" placeholder="5주차 근무시간 입력"/><br>
-           <button class="btn btn-dark" id="hsalBtn" style="padding: 10px;" onclick="show('hsal')">급여 조회</button>
-           <div class="result" id="hsal">
-           		<p>기본 시급: <%=dto.getHsal() %> 원<p>
-           		<table id="hsalTable">
+           <h3>${ename } 님 시급으로 급여 계산</h3>
+		   <form id="inputForm">
+			   <label for="week1">1주차:</label>
+	           <input type="number" id="week1" name="week1" min="0" step="0.01" placeholder="1주차 근무시간 입력"/><br>
+			   
+			   <label for="week2">2주차:</label>
+			   <input type="number" id="week2" name="week2" min="0" step="0.01" placeholder="2주차 근무시간 입력"/><br>
+			   
+			   <label for="week3">3주차:</label>
+			   <input type="number" id="week3" name="week3" min="0" step="0.01" placeholder="3주차 근무시간 입력"/><br>
+			   
+			   <label for="week4">4주차:</label>
+			   <input type="number" id="week4" name="week4" min="0" step="0.01" placeholder="4주차 근무시간 입력"/><br>
+			   
+			   <label for="week5">5주차:</label>
+			   <input type="number" id="week5" name="week5" min="0" step="0.01" placeholder="5주차 근무시간 입력"/><br>
+	
+	           <button class="btn btn-dark" id="hsalBtn" style="padding: 10px;" onclick="show('hsal')">급여 조회</button>
+           </form>
+		   <div class="result" id="hsal">
+				<label for="hourlyRate">기본 시급: ${hsal } 원</label>
+           		
+				<h3>주차별 근무시간 및 주휴수당</h3>
+           		<table border="1" id="hsalTable">
 					<thead>
 						<tr>
 							<th>주차</th>
-							<th>근무 시간</th>
-							<th>주휴 수당</th>
+							<th>근무시간</th>
+							<th>주휴수당</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
+							
 						</tr>
 					</tbody>
 				</table>
            
-           
-           	   <label for="baseSal" style="padding: 10px; width: 100%;">총 기본급: </label>
-         	   <label for="allowance" style="padding: 10px; width: 100%;">총 주휴수당: </label>
-               <label for="totalSal" style="padding: 10px; width: 100%;">총 급여: </label>
+           	   <label for="baseSal" style="padding: 10px; width: 100%;">총 기본급: <span id="totalPay">0</span> 원</label>
+         	   <label for="allowance" style="padding: 10px; width: 100%;">총 주휴수당: <span id="totalOvertimePay">0</span> 원</label>
+               <label for="totalSal" style="padding: 10px; width: 100%;">총 급여: <span id="totalSal">0</span> 원</label>
                <p>--------------------------------------<p>
-               <label for="tax" style="padding: 10px; width: 100%;">세율: </label>
-               <label for="actualSal" style="padding: 10px; width: 100%;">세율적용 급여: </label>
+               <label for="tax" style="padding: 10px; width: 100%;">세율: 8.3 % </label>
+               <label for="actualSal" style="padding: 10px; width: 100%;">세율적용 급여: <span id="actualSal">0</span> 원</label>
            
            </div>
                
@@ -138,7 +148,8 @@
        
    </div>
    
-</div>   
+</div>
+   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>   
    <script>
        function switchTab(tab) {
            const tabs = ['sal', 'hsal'];
@@ -164,9 +175,47 @@
     	   document.getElementById(content).style.display = 'block';
        }
        
-       
-   </script>
-   
+	   // 폼 제출 버튼 클릭 시 처리
+	               $('#hsalBtn').click(function(event) {
+	                   event.preventDefault();  // 폼 제출 방지
+
+	  				   var hours = [];
+	                   for (let i = 1; i <= 5; i++) {
+	                       var time = $('#week' + i).val();
+	                       if (time) {
+	                           hours.push(time);
+	                       } else {
+	                           alert('모든 주차별 근무시간을 입력해주세요!');
+	                           return;
+	                       }
+	                   }
+
+					   var hourlyRate = ${hsal };  // 시급 값
+					   
+	                   // AJAX 요청 보내기
+	                   $.ajax({
+	                       type: 'POST',
+	                       url: 'salaryCalculation.jsp',  // 근무시간과 시급을 처리할 JSP 파일
+	                       data: { hours: hours.join(","), hourlyRate: hourlyRate },
+	                       success: function(response) {
+	                           // 서버에서 받은 응답으로 테이블 업데이트
+	                           $('#hsalTable tbody').append(response.tableRow);
+	                           $('#totalPay').text(response.totalPay);
+							   $('#totalOvertimePay').text(response.totalOvertimePay);
+							   $('#totalSal').text(response.totalSal);
+							   
+							   $('#actualSal').text(response.actualSal);
+	                           // 입력 필드 초기화
+	                           $('input[type="number"]').val('');
+	                       },
+	                       error: function() {
+	                           alert("에러가 발생했습니다.");
+	                       }
+	                   });
+	               });
+	           
+				   
+	       </script>
    <jsp:include page="/include/footer.jsp" />
 </body>
 
