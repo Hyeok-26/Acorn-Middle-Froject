@@ -608,4 +608,51 @@ public class Com1SaleDao {
 		}		
 		
 		
+		// 날짜로 매출 조회
+		public List<Com1SaleDto> getListByDate(String date) {
+			// Dto 객체 선언
+			List<Com1SaleDto> list = new ArrayList<>();
+
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				conn = new DbcpBean().getConn();
+				
+				// 실행할 SQL 문
+				String sql = """
+						    SELECT * 
+						    FROM test_com1_sales
+							WHERE SALESDATE = ?
+						""";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, date);
+
+				System.out.println(date);
+				System.out.println(sql);
+				// SQL 문 실행
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					Com1SaleDto dto = new Com1SaleDto();
+					dto.setSalesDate(rs.getString("salesDate"));
+					dto.setStoreNum(rs.getInt("storenum"));
+					dto.setDailySales(rs.getInt("dailySales"));
+					list.add(dto);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e) {
+				}
+			}
+			return list;
+		}
+		
 }
