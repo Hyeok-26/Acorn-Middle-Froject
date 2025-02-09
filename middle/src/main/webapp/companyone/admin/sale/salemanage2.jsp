@@ -3,6 +3,7 @@
 <%@page import="test.dao.Com1SaleDao"%>
 <%@page import="test.dto.Com1SaleDto"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	
 	//세션에 담긴 매장번호 가져오기
@@ -89,7 +90,7 @@
 							<tbody>
 								<tr>
 									<th>${salesdate }</th>
-									<th>${daySale }</th>
+									<th><fmt:formatNumber value="${daySale}" pattern="#,###" /></th>
 								</tr>
 							</tbody>
 						</table>
@@ -121,7 +122,7 @@
 								<tr>
 									<th>${dto.year }</th>
 									<th>${dto.month }</th>
-									<th>${dto.monthlySales }</th>
+									<th><fmt:formatNumber value="${dto.monthlySales}" pattern="#,###" /></th>
 								</tr>
 							</tbody>
 						</table>
@@ -151,7 +152,7 @@
 							<tbody>
 								<tr>
 									<th>${dto2.year }</th>
-									<th>${dto2.yearlySales }</th>
+									<th><fmt:formatNumber value="${dto2.yearlySales}" pattern="#,###" /></th>
 								</tr>
 							</tbody>
 						</table>
