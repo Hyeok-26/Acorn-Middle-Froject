@@ -200,8 +200,18 @@
         document.getElementById(tab + 'Content').style.display = 'block';
         document.getElementById(tab + 'Tab').classList.add('activetab');
     }
-
-    switchTab('day');
+	
+	// URL에서 현재 조회 중인 파라미터 확인
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('day')) { // 일을 가지고 있다면 일매출 탭으로
+        switchTab('day');
+    } else if (urlParams.has('month') && urlParams.has('year')) { // 달과 연도 데이터를 모두 가졌다면 달매출 보여주기
+        switchTab('month');
+    } else if (urlParams.has('year')) { // 연도 데이터를 가졌다면 연매출 탭 보여주기
+        switchTab('year');
+    } else {
+        switchTab('day'); // 기본 접속하면 일매출 탭 보여주기
+    }
 	</script>
 </body>
 </html>
