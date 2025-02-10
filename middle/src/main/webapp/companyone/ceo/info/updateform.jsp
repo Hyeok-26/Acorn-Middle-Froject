@@ -27,7 +27,7 @@
 <body>
 	<div class="container" id="app">
 		<h3>회원 정보 수정 양식</h3>
-		<form action="update.jsp" method="get" id="callupdateForm">
+		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
 			<div class="mb-2">
 				<label class="form-label" for="ename">이름</label>
 				<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
@@ -42,31 +42,35 @@
 				<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
 			</div>
 			<div class="mb-2">
-				<label class="form-label" for="password">기존 비밀번호</label> 
-				<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-					type="password" name="password" id="password" value="<%=dto.getePwd() %>" readonly/>
-			</div>
-			<div class="mb-2">
-			    <label class="form-label" for="newPassword">새 비밀번호</label> 
-			    <input class="form-control" type="password" name="newPassword" id="newPassword"
-			        @input="onNewPwdInput" v-model="newPassword"
-			        :class="{
-			            'is-invalid': (!isNewPwdValid && isNewPwdDirty) || (isSameOriginPwd && isSameOriginPwdDirty), 
-			            'is-valid': isNewPwdValid && !isSameOriginPwd
-			        }"/>
-			    <small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
-			    <div class="invalid-feedback" v-if="!isNewPwdValid && isNewPwdDirty">비밀번호 형식이 올바르지 않습니다.</div>
-			    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> <!-- ✅ 추가 -->
-			</div>
-			<div class="mb-2">
-				<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
-				<input class="form-control" type="password" id="newPassword2" 
-				    @input="onNewPwdConfirmInput" v-model="newPassword2"
-				    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
-				<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
-			</div>
+				    <label class="form-label" for="password">기존 비밀번호</label> 
+				    <input class="form-control" @input="onPwdInput"
+				        :class="{
+				            'is-invalid': (!isPwdValid && isPwdDirty) || (!isOriginPwdMatch && isOriginPwdMatchDirty), 
+				            'is-valid': isPwdValid && isOriginPwdMatch
+				        }"
+				        type="password" name="password" id="password" v-model="password" required/>
+				    <div class="invalid-feedback" v-if="!isOriginPwdMatch && isOriginPwdMatchDirty">비밀번호가 일치하지 않습니다.</div>
+				</div>
+				<div class="mb-2">
+				    <label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
+				    <input class="form-control" type="password" name="newPassword" id="newPassword"
+				        @input="onNewPwdInput" v-model="newPassword"
+				        :class="{
+				            'is-invalid': (!isNewPwdValid && isNewPwdDirty) || (isSameOriginPwd && isSameOriginPwdDirty), 
+				            'is-valid': isNewPwdValid && !isSameOriginPwd
+				        }"/>
+				    <small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
+				    <div class="invalid-feedback" v-if="!isNewPwdValid && isNewPwdDirty">비밀번호 형식이 올바르지 않습니다.</div>
+				    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> 
+				</div>
+				<div class="mb-2">
+					<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
+					<input class="form-control" type="password" id="newPassword2" 
+					    @input="onNewPwdConfirmInput" v-model="newPassword2"
+					    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
+					<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
+				</div>
 			<button class="btn btn-success" type="submit">수정하기</button>
-			<button class="btn btn-danger" type="reset">리셋</button>
 		</form>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -76,22 +80,22 @@
 			data:{
 				ename:"<%=dto.geteName()%>",
 	            ecall:"<%=dto.geteCall()%>",
-	            password: "<%=dto.getePwd()%>", 
-				isPwdValid:false,
-				isNewPwdValid:false,
-				isEcallValid:false,
-				isEnameValid: false,
-		        isEnameDirty: false,
-				newPassword:"",
-				newPassword2:"",
-				isNewPwdMatch: false,
-				isNewPwdMatchDirty: false,
-				isEcallDirty:false,
-				isPwdDirty:false,  //비밀번호 입력란에 한번이라도 입력했는지 여부
-				isNewPwdDirty:false, //새비밀번호 입력한에 한번이라도 입력했는지 여부 
-				isSameOriginPwd: false, // 기존 비밀번호와 새 비밀번호 비교
+	            password: "",  
+	            isPwdValid:false,
+	            isNewPwdValid:false,
+	            isEcallValid:false,
+	            isEnameValid: false,
+	            isEnameDirty: false,
+	            newPassword:"",
+	            newPassword2:"",
+	            isNewPwdMatch: false,
+	            isNewPwdMatchDirty: false,
+	            isEcallDirty:false,
+	            isPwdDirty:false,  // 비밀번호 입력란에 한 번이라도 입력했는지 여부
+	            isNewPwdDirty:false, // 새 비밀번호 입력란에 한 번이라도 입력했는지 여부
+	            isSameOriginPwd: false, // 기존 비밀번호와 새 비밀번호 비교
 		        isSameOriginPwdDirty: false 
-			},
+	        },
 			methods:{
 				onEnameInput(e) {
 					this.ename = e.target.value; 
@@ -106,13 +110,6 @@
 					const reg_ecall=/^01[016789]-\d{3,4}-\d{4}$/;
 					this.isEcallDirty = true;
 					this.isEcallValid = reg_ecall.test(this.ecall);
-					//if(reg_ecall.test(ecall)){
-						//this.isEcallValid=true;
-					//}else{
-						//this.isEcallValid=false;
-					//}
-					//this.isEcallDirty=true;
-					//this.isEcallValid = reg_ecall.test(this.ecall);
 					
 					if (this.isEcallValid) {
 	                    fetch("../../../checkEcall", {
@@ -137,28 +134,47 @@
 	                    });
 	                }  
 				},
-				onPwdInput(e){
-					//현재까지 입력한 비밀번호
-					const pwd=e.target.value;
-					//공백이 아닌 한글자가 한번이상 반복 되어야 통과 되는 정규표현식
-					const reg_pwd= /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-					if(reg_pwd.test(pwd)){
-						this.isPwdValid=true;
-					}else{
-						this.isPwdValid=false;
+				onPwdInput(e) {
+	                const enteredPwd = e.target.value;
+	                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+	                this.isPwdDirty = true;
+	                this.isPwdValid = reg_pwd.test(enteredPwd);
+
+	                // 기존 비밀번호와 입력한 비밀번호 비교
+	                this.isOriginPwdMatchDirty = true;
+	                this.isOriginPwdMatch = (enteredPwd === "<%=dto.getePwd()%>");
+	            },
+	            onNewPwdInput() {
+	                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+	                this.isNewPwdDirty = true;
+	                this.isNewPwdValid = reg_pwd.test(this.newPassword); 
+	                this.isSameOriginPwdDirty = true; 
+	                this.isSameOriginPwd = this.newPassword === this.password; 
+	            },
+				onNewPwdConfirmInput() {
+				    this.isNewPwdMatch = this.newPassword === this.newPassword2 && this.newPassword2.trim() !== ""; 
+				    this.isNewPwdMatchDirty = true; 
+				},
+				onSubmit(event) {
+	            	if (this.password==this.newPassword){
+						alert("새 비밀번호가 기존 비밀번호와 같습니다.")
+						event.preventDefault();
+						return;
 					}
-					this.isPwdDirty=true;
-				},
-				onNewPwdInput() {
-				    const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-				    this.isNewPwdDirty = true;
-				    this.isNewPwdValid = reg_pwd.test(this.newPassword); 
-				    this.isSameOriginPwdDirty = this.isNewPwdDirty;  
-				    this.isSameOriginPwd = this.newPassword === this.password; 
-				},
-			    onNewPwdConfirmInput() {
-			        this.isNewPwdMatch = this.newPassword === this.newPassword2; 
-			        this.isNewPwdMatchDirty = true; 
+				    if(this.isNewPwdDirty && this.isNewPwdMatchDirty){
+	            		if (this.newPassword != this.newPassword2) {
+				        	alert("비밀번호 확인란이 입력되지 않았습니다.");
+				        	event.preventDefault(); 
+				        	return;
+				    	}
+				    	if (!this.isNewPwdMatch) {
+				        	alert("비밀번호가 일치하지 않습니다.");
+				        	event.preventDefault();
+				        	return;
+				    	} 
+				    }
+				    document.getElementById("callupdateForm").submit();
 				}
 		}});
 	</script>

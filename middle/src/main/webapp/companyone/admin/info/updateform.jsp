@@ -7,6 +7,7 @@
 <%
 	int empno = (int) session.getAttribute("empno");
 	Com1EmpDto empdto = Com1EmpDao.getInstance().getData(empno);
+	String originpwd = empdto.getePwd();
 	
 	int comid = empdto.getComId();
 	String comname = UsingDao.getInstance().getComName(comid);
@@ -64,7 +65,7 @@
 		</jsp:include>
 		<div class="container" id="app">
 			<h3>회원 정보 수정</h3>
-			<form action="update.jsp" method="get" id="callupdateForm">
+			<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
 				<div class="mb-3">
 					<label class="form-label">회사</label> <input class="form-control"
 						type="text" name="comid" value="<%=comname%>" readonly />
@@ -95,26 +96,30 @@
 					<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
 				</div>
 				<div class="mb-2">
-					<label class="form-label" for="password">기존 비밀번호</label> 
-					<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-						type="password" name="password" id="password" value="<%=empdto.getePwd() %>" readonly/>
+				    <label class="form-label" for="password">기존 비밀번호</label> 
+				    <input class="form-control" @input="onPwdInput"
+				        :class="{
+				            'is-invalid': (!isPwdValid && isPwdDirty) || (!isOriginPwdMatch && isOriginPwdMatchDirty), 
+				            'is-valid': isPwdValid && isOriginPwdMatch
+				        }"
+				        type="password" name="password" id="password" v-model="password" required/>
+				    <div class="invalid-feedback" v-if="!isOriginPwdMatch && isOriginPwdMatchDirty">비밀번호가 일치하지 않습니다.</div>
 				</div>
 				<div class="mb-2">
-					<label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
-					<input class="form-control" type="password" name="newPassword" id="newPassword" 
-					    v-model="newPassword" @input="onNewPwdInput"
-					    :class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid': isNewPwdValid}" />
-					<small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
-					<div v-if="!isNewPwdValid && isNewPwdDirty" class="invalid-feedback">
-					    비밀번호는 영문자, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.
-					</div>
-					<div v-if="isNewPwdSame" class="invalid-feedback">
-        				기존 비밀번호와 같습니다.
-    				</div>
+				    <label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
+				    <input class="form-control" type="password" name="newPassword" id="newPassword"
+				        @input="onNewPwdInput" v-model="newPassword"
+				        :class="{
+				            'is-invalid': (!isNewPwdValid && isNewPwdDirty) || (isSameOriginPwd && isSameOriginPwdDirty), 
+				            'is-valid': isNewPwdValid && !isSameOriginPwd
+				        }"/>
+				    <small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
+				    <div class="invalid-feedback" v-if="!isNewPwdValid && isNewPwdDirty">비밀번호 형식이 올바르지 않습니다.</div>
+				    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> 
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
-					<input class="form-control" type="password" name="newPassword2" id="newPassword2" 
+					<input class="form-control" type="password" id="newPassword2" 
 					    @input="onNewPwdConfirmInput" v-model="newPassword2"
 					    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
 					<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
@@ -132,9 +137,9 @@
 						사용 가능한 이메일입니다.</div>
 				</div>
 				<button class="btn btn-success" type="submit">수정하기</button>
-				<button class="btn btn-danger" type="reset">리셋</button>
 			</form>
 		</div>
+		
 	</div>
 	<jsp:include page="/include/footer.jsp" />
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -145,7 +150,7 @@
             ename:"<%=empdto.geteName()%>",
             email:"<%=empdto.getEmail()%>",
             ecall:"<%=empdto.geteCall()%>",
-            password: "<%=empdto.getePwd()%>",  
+            password: "",  
             isPwdValid:false,
             isNewPwdValid:false,
             isEcallValid:false,
@@ -159,7 +164,9 @@
             isNewPwdMatchDirty: false,
             isEcallDirty:false,
             isPwdDirty:false,  // 비밀번호 입력란에 한 번이라도 입력했는지 여부
-            isNewPwdDirty:false // 새 비밀번호 입력란에 한 번이라도 입력했는지 여부
+            isNewPwdDirty:false, // 새 비밀번호 입력란에 한 번이라도 입력했는지 여부
+            isSameOriginPwd: false, // 기존 비밀번호와 새 비밀번호 비교
+	        isSameOriginPwdDirty: false 
         },
         computed: {
             isNewPwdSame() {
@@ -201,22 +208,28 @@
                     });
                 }  
             },
-            onPwdInput(e){
-                const pwd=e.target.value;
-                const reg_pwd= /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
-                this.isPwdValid = reg_pwd.test(pwd);
+            onPwdInput(e) {
+                const enteredPwd = e.target.value;
+                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
                 this.isPwdDirty = true;
+                this.isPwdValid = reg_pwd.test(enteredPwd);
+
+                // 기존 비밀번호와 입력한 비밀번호 비교
+                this.isOriginPwdMatchDirty = true;
+                this.isOriginPwdMatch = (enteredPwd === "<%=empdto.getePwd()%>");
             },
             onNewPwdInput() {
+                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
                 this.isNewPwdDirty = true;
-                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)\S{8,}$/;
-                this.isNewPwdValid = reg_pwd.test(this.newPassword) && !this.isNewPwdSame;
-                this.isNewPwdMatch = this.newPassword === this.newPassword2;
+                this.isNewPwdValid = reg_pwd.test(this.newPassword); 
+                this.isSameOriginPwdDirty = true; 
+                this.isSameOriginPwd = this.newPassword === this.password; 
             },
-            onNewPwdConfirmInput() {
-                this.isNewPwdMatch = this.newPassword === this.newPassword2;
-                this.isNewPwdMatchDirty = true;
-            },
+			onNewPwdConfirmInput() {
+			    this.isNewPwdMatch = this.newPassword === this.newPassword2 && this.newPassword2.trim() !== ""; 
+			    this.isNewPwdMatchDirty = true; 
+			},
             onEmailInput() {
                 const reg_email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 this.isEmailDirty = true;
@@ -244,11 +257,29 @@
                 } else {
                     this.isEmailAvailable = false; 
                 }
-            }
+            },
+			onSubmit(event) {
+            	if (this.password==this.newPassword){
+					alert("새 비밀번호가 기존 비밀번호와 같습니다.")
+					event.preventDefault();
+					return;
+				}
+			    if(this.isNewPwdDirty && this.isNewPwdMatchDirty){
+            		if (this.newPassword != this.newPassword2) {
+			        	alert("비밀번호 확인란이 입력되지 않았습니다.");
+			        	event.preventDefault(); 
+			        	return;
+			    	}
+			    	if (!this.isNewPwdMatch) {
+			        	alert("비밀번호가 일치하지 않습니다.");
+			        	event.preventDefault();
+			        	return;
+			    	} 
+			    }
+			    document.getElementById("callupdateForm").submit();
+			}
         }
     });
 </script>
-
-	
 </body>
 </html>

@@ -6,12 +6,11 @@
 <%
 
 int empno=(int)session.getAttribute("empno");
-session.setAttribute("current_page", "logTable");
 
 //Com1EmpLogDao dao=Com1EmpLogDao.getInstance();
 List<Com1EmpLogDto> list=Com1EmpLogDao.getInstance().getList(empno);
 
-
+String ename=(String)session.getAttribute("ename");
 %>
 
 <!DOCTYPE html>
@@ -47,36 +46,37 @@ List<Com1EmpLogDto> list=Com1EmpLogDao.getInstance().getList(empno);
 </style>
 </head>
 <body>
-<div class="container2" id="logTable">
-           	<h1><strong><%=empno %></strong> 님 월별 근태 기록</h1>
-           		<table>
-					<thead>
+<jsp:include page="/include/empNav.jsp"></jsp:include>
+	<div class="container2" id="logTable">
+    	<h1><strong><%=ename %></strong> 님 월별 근태 기록</h1>
+        	<table>
+				<thead>
+					<tr>
+						<th>날짜</th>
+						<th>출근 시간</th>
+						<th>퇴근 시간</th>
+						<th>근무 시간</th>
+						<th>비고</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%for(Com1EmpLogDto tmp:list){ %>
 						<tr>
-							<th>날짜</th>
-							<th>출근 시간</th>
-							<th>퇴근 시간</th>
-							<th>근무 시간</th>
-							<th>비고</th>
+							<td><%=tmp.getWorkingDate() %></td>
+							<td><%=tmp.getCheckIn() %></td>
+							<td><%=tmp.getCheckOut() %></td>
+							<td><%=tmp.getWorkingHours() %></td>
+							<td><%=tmp.getRemarks() %></td>
 						</tr>
-					</thead>
-					<tbody>
-						<%for(Com1EmpLogDto tmp:list){ %>
-							<tr>
-								<td><%=tmp.getWorkingDate() %></td>
-								<td><%=tmp.getCheckIn() %></td>
-								<td><%=tmp.getCheckOut() %></td>
-								<td><%=tmp.getWorkingHours() %></td>
-								<td><%=tmp.getRemarks() %></td>
-							</tr>
-						<%} %>
-					</tbody>
-				</table>
-           
+					<%} %>
+				</tbody>
+			</table>
+        <br>   
         <a href="log.jsp?empno=<%=empno %>">출퇴근 기록 페이지로 돌아가기</a>   
-</div>
-<jsp:include page="/include/footer.jsp" />
-<script>
+	</div>
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 
-</script>
 </body>
 </html>

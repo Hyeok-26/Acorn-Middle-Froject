@@ -18,7 +18,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>프로필</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
@@ -155,7 +155,8 @@
 				<td><%=dto.getHiredate() %></td>
 			</tr>
 			<tr>
-				<th><a href="contract.jsp?empno=<%=empno %>">근로 계약서 보기</a></th>
+				<th>근로계약서</th>
+				<td><a href="contract.jsp?empno=<%=empno %>">근로 계약서 보기</a></td>
 			</tr>
 			<%--
 			<tr>

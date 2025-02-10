@@ -204,7 +204,7 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         },
-                        body: 'ecall=' + encodeURIComponent(this.ecall)
+                        body: 'ecall=' + encodeURIComponent(this.ecall) + '&role=' + encodeURIComponent('ADMIN')
                     })
                     .then(res => res.json())  
                     .then(data => {
@@ -230,9 +230,9 @@
                     fetch("${pageContext.request.contextPath }/checkEmail", {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
+                            'Content-Type': 'application/x-www-form-urlencoded' 
                         },
-                        body: 'email=' + encodeURIComponent(this.email)
+                        body: 'email=' + encodeURIComponent(this.email) + '&role=' + encodeURIComponent('ADMIN')
                     })
                     .then(res => res.json())
                     .then(data => {

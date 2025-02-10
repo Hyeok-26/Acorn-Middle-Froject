@@ -64,11 +64,11 @@
 		<button class="tab-button nav-item nav-link" id="allTab" onclick="switchTab('all')">전체 매출</button>
 		<button class="tab-button nav-item nav-link" id="yearTab" onclick="switchTab('year')">전체 연매출</button>
 		<button class="tab-button nav-item nav-link" id="monthTab" onclick="switchTab('month')">전체 월매출</button>
-		<div class="tab-button nav-item nav-link" id="storeTab" onclick="switchTab('month')">
+		<div class="tab-button nav-item nav-link" id="storeTab" onclick="switchTab('store')">
 			<form action="view.jsp" method="get" id="storeForm">
 				<label for="storenum">지점 선택: </label> 
 				<select name="storenum"	id="storenum" onchange="switchTab('store'); document.getElementById('storeForm').submit();">
-					<option value="storenum">-- 지점을 선택하세요 --</option>
+					<option value="">-- 지점을 선택하세요 --</option>
 					<% for (Integer tmp : storenums) { %>
 					<option value="<%= tmp %>"	<%= (tmp.equals(storenum)) ? "selected" : ""%> > 	<%= tmp %>호점
 					</option>
@@ -174,10 +174,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<% if (listbystoreyearly == null) { %>
+						<% if (listbystoreyearly.size() == 0) { %>
 							<tr>
-								<td></td>
-								<td>현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
+								<td colspan="2">현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoreyearly) { %>
@@ -199,10 +198,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<% if (listbystoremonthly == null) { %>
+						<% if (listbystoremonthly.size()==0) { %>
 							<tr>
-								<td></td>
-								<td>현매장 <%=storenum %>호점의 월매출 정보가 없습니다.</td>
+								<td colspan="2">현매장 <%=storenum %>호점의 월매출 정보가 없습니다.</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoremonthly) { %>
@@ -224,7 +222,7 @@
 						</tr>
 					</thead>
 					
-						<% if (listbystore == null&&!storenum.{ %>
+						<% if (listbystore.size()==0){ %>
 							<tbody>
 								<tr>
 									<td colspan="2"> 현매장 <%=storenum %>호점의 매출 정보가 없습니다. </td>

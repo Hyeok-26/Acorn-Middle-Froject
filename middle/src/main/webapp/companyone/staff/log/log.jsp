@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>진세님 출퇴근 페이지</title>
+<title>출퇴근 페이지</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
@@ -63,6 +63,7 @@
 				<button id="endBtn" class="btn btn-primary">퇴근</button>
 			</div>
 		</div>
+		<br>
 		<a href="logTable.jsp">근태관리 확인</a> 
 	</div>
 	<div class="position-fixed bottom-0 w-100">

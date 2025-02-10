@@ -40,7 +40,6 @@
 		int year = Integer.parseInt(selectyear);
 		Com1SaleDto dto2 = Com1SaleDao.getInstance().getStoreYear(storenum, year);
 		pageContext.setAttribute("dto2", dto2);
-		
 
 	}
 %>
@@ -195,7 +194,6 @@
    </div> --%>
 
 
-	</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
 	
