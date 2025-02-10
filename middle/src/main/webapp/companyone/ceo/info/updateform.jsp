@@ -34,6 +34,8 @@
 </style>
 </head>
 <body>
+	<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
+	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	<div class="container2" id="app">
 		<h3>회원 정보 수정 양식</h3>
 		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
