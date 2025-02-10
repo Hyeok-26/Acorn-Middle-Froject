@@ -22,12 +22,116 @@
 <title>/ceo/protected/updateform_ceo</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
+table {
+	width: 100%; /* 화면 너비에 맞게 설정 */
+	border-spacing: 0;
+	border-collapse: collapse; /* 테이블의 경계를 합칩니다 */
+	margin-bottom: 50px;
+}
+
+th, td {
+	padding: 20px; /* 셀 안의 여백을 일정하게 */
+	text-align: left; /* 텍스트를 왼쪽 정렬 */
+	border-bottom: 1px solid #ddd; /* 셀에 테두리 추가 */
+}
+
+th {
+	background-color: #f4f4f4; /* 헤더 셀 배경색 */
+	text-align: right; /* 텍스트를 오른쪽 정렬 */
+	width: 25%; /* 각 열의 넓이를 고정 비율로 설정 */
+}
+
+td {
+	width: 75%; /* 데이터 셀의 넓이를 고정 비율로 설정 */
+}
+
+/* 페이지에 맞게 조정된 폰트 크기 */
+h1 {
+	margin-bottom: 30px;
+}
+
+/* 링크 스타일 수정 */
+a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.container2 {
+	max-width: 800px;
+	margin: 40px auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	border: 1px solid black;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #333;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0;
+}
+
+th, td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	font-weight: bold;
+}
+
+td a {
+	color: #007bff;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+td a:hover {
+	text-decoration: underline;
+}
+
+.btn-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.btn-container a {
+	margin: 0 10px;
+	padding: 10px 20px;
+	border-radius: 4px;
+	text-decoration: none;
+	font-weight: bold;
+	background-color: #007bff;
+	color: #fff;
+	transition: background-color 0.3s;
+}
+
+.btn-container a:hover {
+	background-color: #0056b3;
+}
 </style>
 </head>
 <body>
-	<div class="container" id="app">
+	<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
+	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+
+	<div class="container2" id="app">
 		<h3>회원 정보 수정 양식</h3>
 		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
+			
 			<div class="mb-2">
 				<label class="form-label" for="ename">이름</label>
 				<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
@@ -65,10 +169,14 @@
 				    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
 				<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
 			</div>
+			
 			<button class="btn btn-success" type="submit">수정하기</button>
 			<button class="btn btn-danger" type="reset">리셋</button>
 		</form>
 	</div>
+	<div class="position-fixed bottom-0 w-100">
+  	<jsp:include page="/include/footer.jsp" />
+  	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
@@ -173,6 +281,5 @@
 				}
 		}});
 	</script>
-	<jsp:include page="/include/footer.jsp" />
 </body>
 </html>
