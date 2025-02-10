@@ -39,7 +39,6 @@
 <style>
 	.table-container {
 	    padding-bottom: 100px; /* footer 높이보다 여유 있게 추가 */
-	}
 </style>
 <!-- 페이지 로딩에 필요한 자원 -->
 <jsp:include page="/include/resource.jsp"></jsp:include>
@@ -67,7 +66,7 @@
 			<form action="view.jsp" method="get" id="storeForm">
 				<label for="storenum">지점 선택: </label> 
 				<select name="storenum"	id="storenum" onchange="switchTab('store'); document.getElementById('storeForm').submit();">
-					<option value="storenum">-- 지점을 선택하세요 --</option>
+					<option value="">-- 지점을 선택하세요 --</option>
 					<% for (Integer tmp : storenums) { %>
 					<option value="<%= tmp %>"	<%= (tmp.equals(storenum)) ? "selected" : ""%> > 	<%= tmp %>호점
 					</option>
@@ -78,7 +77,7 @@
 	</div>
 	
 	<div class="contents text-center mt-3 mx-auto" style="width: 900px;">
-		<div id="allContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+		<div id="allContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -163,7 +162,7 @@
 		</div>
 		
 		
-		<div id="storeContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+		<div id="storeContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
 			<div  class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -175,7 +174,7 @@
 					<tbody>
 						<% if (listbystoreyearly == null) { %>
 							<tr>
-								<td>현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
+								<td colspan="2">현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoreyearly) { %>
@@ -199,7 +198,7 @@
 					<tbody>
 						<% if (listbystoremonthly == null) { %>
 							<tr>
-								<td>현매장 <%=storenum %>호점의 월매출 정보가 없습니다.</td>
+								<td colspan="2">현매장 <%=storenum %>호점의 월매출 정보가 없습니다.</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoremonthly) { %>
@@ -220,28 +219,34 @@
 							<th>매출</th>
 						</tr>
 					</thead>
-					<tbody>
-						<% if (listbystore == null) { %>
-							<tr>
-								<td>현매장 <%=storenum %>호점의 매출 정보가 없습니다.</td>
-							</tr>
+					
+						<% if (listbystore == null){ %>
+							<tbody>
+								<tr>
+									<td colspan="2"> 현매장 <%=storenum %>호점의 매출 정보가 없습니다. </td>
+								</tr>
+							</tbody>
 						<%}else{ %>
+						<tbody>
 							<%for (Com1SaleDto tmp: listbystore) { %>
 								<tr>
 									<td><%= tmp.getSdate() %></td>
-									<td><%= tmp.getMonthlySales() %></td>
+									<td><%= tmp.getDailySales() %></td>
 								</tr>
-						<%    }
-						}%>
-					</tbody>
+							<% }%>
+						</tbody>
+						<%}%>
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
 	
-	<!-- 푸터 -->
+<div class="table-container">
+</div>
+<div class="position-fixed bottom-0 w-100">
 <jsp:include page="/include/footer.jsp" />
+</div>
 	
 	<script>
 	    function switchTab(tab) {

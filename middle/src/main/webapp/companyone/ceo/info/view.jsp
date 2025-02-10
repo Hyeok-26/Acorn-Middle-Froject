@@ -8,6 +8,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
+	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
+	session.setAttribute("current_page", "myinfo");
 	int empno = (int)session.getAttribute("empno");
 	int comid = (int)session.getAttribute("comid");
 	String comname = UsingDao.getInstance().getComName(comid);
@@ -167,13 +169,16 @@ td a:hover {
 		</table>
 
 		<div class="btn-container">
-			<a href="${pageContext.request.contextPath }/index.jsp">메인 페이지로</a> <a href="logout.jsp">로그아웃</a>
+			<a href="${pageContext.request.contextPath }/companyone/ceo/ceoMain.jsp">메인 페이지로</a> <a href="logout.jsp">로그아웃</a>
 		</div>
 	</div>
+	
+	<div class="position-fixed bottom-0 w-100">
+  	<jsp:include page="/include/footer.jsp" />
+  	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-	<jsp:include page="/include/footer.jsp" />
 </body>
 </html>

@@ -42,42 +42,46 @@
 		<%=comname %>의  <%=ename %>님 접속 중
 	</p>
 	</div>
-	<div class="container">		
-		<p>
-			<a href="info/view.jsp" style="text-decoration: none; color: inherit;">
-				<button>나의 정보 보기</button>
-    		</a>
-		</p>
+	<div>
+		<div class="container">		
+			<p>
+				<a href="info/view.jsp" style="text-decoration: none; color: inherit;">
+					<button>나의 정보 보기</button>
+	    		</a>
+			</p>
+		</div>
+		<div class="container">
+			<p>
+				<a href="sale/view.jsp" style="text-decoration: none; color: inherit;">
+	       			<button>매출 관리</button>
+	       		</a>
+			</p>
+		</div>
+		<div class="container">
+			<p>
+				<a href="accept/acceptForm.jsp" style="text-decoration: none; color: inherit;">
+	        		<button>가입 승인</button>
+	        	</a>
+	    	</p>
+		</div>
+		<div class="container">
+			<p>
+				<a href="employee/manageForm.jsp" style="text-decoration: none; color: inherit;">
+	        		<button>직원 관리</button>
+	        	</a>
+	    	</p>
+		</div>
+		<div class="container">
+			<p>
+				<a href="quit/quitForm.jsp" style="text-decoration: none; color: inherit;">
+					<button>퇴사자 관리</button>
+	    		</a>
+			</p>
+		</div>
+
 	</div>
-	<div class="container">
-		<p>
-			<a href="accept/acceptForm.jsp" style="text-decoration: none; color: inherit;">
-        		<button>가입 승인</button>
-        	</a>
-    	</p>
-	</div>
-	<div class="container">
-		<p>
-			<a href="employee/manageForm.jsp" style="text-decoration: none; color: inherit;">
-        		<button>직원 관리</button>
-        	</a>
-    	</p>
-	</div>
-	<div class="container">
-		<p>
-			<a href="quit/quitForm.jsp" style="text-decoration: none; color: inherit;">
-				<button>퇴사자 관리</button>
-    		</a>
-		</p>
-	</div>
-	<div class="container">
-		<p>
-			<a href="sale/view.jsp" style="text-decoration: none; color: inherit;">
-       			<button>매출 관리</button>
-       		</a>
-		</p>
-	</div>
-	
-<jsp:include page="/include/footer.jsp" />
+	<div class="position-fixed bottom-0 w-100">
+  	<jsp:include page="/include/footer.jsp" />
+  	</div>
 </body>
 </html>

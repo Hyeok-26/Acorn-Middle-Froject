@@ -27,7 +27,7 @@
 <body>
 	<div class="container" id="app">
 		<h3>회원 정보 수정 양식</h3>
-		<form action="update.jsp" method="get" id="callupdateForm">
+		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
 			<div class="mb-2">
 				<label class="form-label" for="ename">이름</label>
 				<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
@@ -47,7 +47,7 @@
 					type="password" name="password" id="password" value="<%=dto.getePwd() %>" readonly/>
 			</div>
 			<div class="mb-2">
-			    <label class="form-label" for="newPassword">새 비밀번호</label> 
+			    <label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
 			    <input class="form-control" type="password" name="newPassword" id="newPassword"
 			        @input="onNewPwdInput" v-model="newPassword"
 			        :class="{
@@ -56,7 +56,7 @@
 			        }"/>
 			    <small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
 			    <div class="invalid-feedback" v-if="!isNewPwdValid && isNewPwdDirty">비밀번호 형식이 올바르지 않습니다.</div>
-			    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> <!-- ✅ 추가 -->
+			    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> 
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
@@ -106,13 +106,6 @@
 					const reg_ecall=/^01[016789]-\d{3,4}-\d{4}$/;
 					this.isEcallDirty = true;
 					this.isEcallValid = reg_ecall.test(this.ecall);
-					//if(reg_ecall.test(ecall)){
-						//this.isEcallValid=true;
-					//}else{
-						//this.isEcallValid=false;
-					//}
-					//this.isEcallDirty=true;
-					//this.isEcallValid = reg_ecall.test(this.ecall);
 					
 					if (this.isEcallValid) {
 	                    fetch("../../../checkEcall", {
@@ -156,9 +149,27 @@
 				    this.isSameOriginPwdDirty = this.isNewPwdDirty;  
 				    this.isSameOriginPwd = this.newPassword === this.password; 
 				},
-			    onNewPwdConfirmInput() {
-			        this.isNewPwdMatch = this.newPassword === this.newPassword2; 
-			        this.isNewPwdMatchDirty = true; 
+				onNewPwdConfirmInput() {
+				    this.isNewPwdMatch = this.newPassword === this.newPassword2 && this.newPassword2.trim() !== ""; 
+				    this.isNewPwdMatchDirty = true; 
+				},
+				onSubmit(event) {
+					if (this.password==this.newPassword){
+						alert("기존 비밀번호와 같습니다.")
+						event.preventDefault();
+						return;
+					}
+				    if (this.newPassword2.trim() === "") {
+				        alert("비밀번호 확인란이 입력되지 않았습니다.");
+				        event.preventDefault(); 
+				        return;
+				    }
+				    if (!this.isNewPwdMatch) {
+				        alert("비밀번호가 일치하지 않습니다.");
+				        event.preventDefault();
+				        return;
+				    }
+				    document.getElementById("callupdateForm").submit();
 				}
 		}});
 	</script>

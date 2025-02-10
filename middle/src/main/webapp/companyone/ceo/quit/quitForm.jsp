@@ -24,7 +24,7 @@
 	
 	// 검색 조건이 있는지 확인 
 	String condition = request.getParameter("condition");
-	String keyword = (String)request.getParameter("keyword");
+	String keyword = request.getParameter("keyword");
 	if(condition != null && keyword != null){			// 검색 조건이 있는 경우
 		Pattern pattern = Pattern.compile("[a-z]");		// 만약 직책명으로 키워드 검색 시 소문자가 섞여 있다면 대문자로 바꿔주기
 		Matcher matcher = pattern.matcher(keyword);
@@ -32,7 +32,7 @@
 		if(condition.equals("role") && result_reg) keyword = keyword.toUpperCase();
 		dto.setCondition(condition);					// DB 조회시 넘어갈 DTO 에 검색 조건 정보 담기
 		dto.setKeyword(keyword);
-		findQuery = "&condition="+condition+"&keyword="+keyword;
+		//findQuery = "&condition="+condition+"&keyword="+keyword;
 	}
 	
 	
@@ -44,7 +44,6 @@
 	}
 
 	
-
 	
 	// 페이지 번호가 있는지 확인
 	String strPageNum = request.getParameter("pageNum");
@@ -64,6 +63,7 @@
 	dto.setEndRowNum(endRowNum);
 	
 	
+	
 	// DB에서 데이터 가져오기
 	List<Com1QuitDto> list =  Com1QuitDao.getInstance().getList(dto);
 	
@@ -81,6 +81,8 @@
 	//request.setAttribute("totalRow", totalRow);
 	//request.setAttribute("dto", dto);
 	request.setAttribute("findQuery", findQuery);
+	
+	System.out.println("condition:" +condition);
 %>
 <!DOCTYPE html>
 <html>
@@ -105,7 +107,7 @@
 	
 	
 	<!-- 본문 -->
-	<div class="container contents text-center mt-3 mx-auto" style="width:900px;">
+	<div class="container contents text-center mt-3 mx-auto" style="width:900px;"  id="app">
 		<h4>퇴사자 명단</h4>
 		
 		<!--상단 컨트롤 바-->
@@ -114,7 +116,7 @@
 			<!-- 조회 버튼-->
 			<div class="p-2">
 				<div class="input-group">
-					<select v-model="condition"  name="condition" class="btn btn-outline-dark dropdown-toggle">
+					<select v-model="condition" name="condition" class="btn btn-outline-dark dropdown-toggle">
 							<option value="ename">이름</option>
 							<option value="storenum">지점</option>
 							<option value="role">직책</option>
@@ -130,7 +132,7 @@
 			<div class="p-2">
 				<div class="input-group">
 					<button type="button" class="btn btn-outline-dark" disabled>정렬 조건</button>
-					<select v-model="lineup" name="lineup" @change="onSearch" class="btn btn-outline-dark dropdown-toggle">
+					<select v-model="lineup" name="lineup" @change="onLineUp" class="btn btn-outline-dark dropdown-toggle">
 							<option value="">선택</option>
 							<option value="quitdate">퇴사일</option>
 							<option value="hiredate">입사일</option>
@@ -138,6 +140,7 @@
 							<option value="ename">이름</option>
 							<option value="storenum">지점</option>
 					</select>
+					
 				</div>
 			</div>
 			
@@ -318,25 +321,36 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
-			el:".container",
+			el:"#app",
 			data:{
+				condition:"${empty condition ? 'ename' : condition}",
+				keyword:"${keyword}",
+				lineup:"${lineup}",
 				search_empno:"",
-				dto:"",
-				lineup:"${dto.lineup}",
-				condition:"${empty dto.condition ? 'ename' : dto.condition}",
-				keyword:"${empty dto.keyword ? '' : dto.keyword}"
+				dto:""
 			},
 			methods:{
+				// 검색 버튼을 눌렀을 때
 				onSearch(){
 					if(this.keyword == ""){
+						alert("검색 키워드를 입력하세요")
+					} else {
+						location.href="quitForm.jsp?keyword="+this.keyword+"&condition="+this.condition;
+					}
+					
+					/* if(this.keyword == ""){
 						location.href="quitForm.jsp?lineup="+this.lineup;
 					}else{
 						location.href="quitForm.jsp?condition="+this.condition+"&keyword="+this.keyword+"&lineup="+this.lineup;
-					}
+					} */
 					
 				},
+				// 정렬 버튼을 눌렀을 때
+				onlineup(){
+					
+				}
 				// 모달창에서 사원 조회
-				clickSearchBtn(){
+				/* clickSearchBtn(){
 					fetch("searchInfo.jsp?empno="+this.search_empno)
 					.then(res => res.json())
 					.then(data=>{
@@ -352,9 +366,9 @@
 					});
 					
 					
-				},
+				}, */
 				// 퇴사자 복귀
-				onCancle(e){
+				/* onCancle(e){
 					// 복귀 처리 할 사람의 정보 추출
 					const empno = e.target.parentElement.parentElement.childNodes[0].innerText;
 					const ename = e.target.parentElement.parentElement.childNodes[2].innerText;
@@ -385,9 +399,9 @@
 							console.log(err);
 						});
 					}
-				},
+				}, */
 				// 퇴사자 추가 
-				onSubmit(e){
+				/* onSubmit(e){
 					// 폼 입력이 제대로 이루어 졌는지 확인
 					const data = new FormData(e.target);
 					const empno = e.target.empno.value;
@@ -431,9 +445,11 @@
 							console.log(err);
 						});
 					}
-				}
-			}//methods
-			
+				} */
+			},//methods
+			created(){
+				
+			}
 		});
 	</script>
 </body>
