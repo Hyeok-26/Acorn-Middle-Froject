@@ -152,15 +152,11 @@
                <label for="tax" style="padding: 10px; width: 100%;">세율: 8.3 % </label>
                <label for="actualSal" style="padding: 10px; width: 100%;"><strong>세율적용 급여: <span id="actualSal">0</span> 원</strong></label>
            
-           </div>
-               
+           </div>      
        </div>
-   
-       
-   </div>
-	
+   </div>	
 </div>
-<div class="position-fixed bottom-0 w-100">
+	<div class="position-fixed bottom-0 w-100">
   		<jsp:include page="/include/footer.jsp" />
   	</div>   
    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>   
@@ -230,8 +226,7 @@
                }
            });
        });
-				   
-	       </script>
+	</script>
 
 </body>
 </html>
