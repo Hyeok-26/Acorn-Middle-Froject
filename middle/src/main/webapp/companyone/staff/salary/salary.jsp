@@ -4,8 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-session.setAttribute("current_page", "salary");
-	
+	session.setAttribute("current_page", "salary");
 	int empno=(int)session.getAttribute("empno");
 	String ename = (String) session.getAttribute("ename");
 	
@@ -74,15 +73,17 @@ session.setAttribute("current_page", "salary");
         text-align: center;
     }
     th {
-        background-color: #f2f2f2;
+        background-color: #c8c8c8;
     }    
-    
+    button:hover {
+        background-color: grey;
+    }
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/empNav.jsp"></jsp:include>
 <div class="container2">
-   <div class="container flex-fill" style="width: 600px; height:600px; margin-top: 10px;">
+   <div class="container flex-fill" style="width: 600px; height:650px; margin-top: 10px;">
        <div class="d-inline-block tab-button" id="salTab" onclick="switchTab('sal')">월급</div>
        <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>
    
@@ -95,7 +96,7 @@ session.setAttribute("current_page", "salary");
                <label for="healthIns" style="padding: 10px; width: 100%;">건강보험료: ${sal*0.035 } 원</label>
                <label for="longIns" style="padding: 10px; width: 100%;">장기요양보험료: ${sal*0.0045 } 원</label>
                <label for="empIns" style="padding: 10px; width: 100%;">고용보험료: ${sal*0.0009 } 원</label>
-               <p>--------------------------------------<p>
+               <label for="space" style="padding: 10px; width: 100%;">--------------------------------------</label>
                <label for="totalSal" style="padding: 10px; width: 100%;">지급액 계: ${sal } 원</label>
                <label for="deduction" style="padding: 10px; width: 100%;">공제액 계: ${sal*0.0854 } 원</label>
                <label for="actualSal" style="padding: 10px; width: 100%;"><strong>실수령 액: ${sal*0.9146 } 원</strong></label>
@@ -128,8 +129,7 @@ session.setAttribute("current_page", "salary");
 	           <button class="btn btn-dark" id="hsalBtn" style="padding: 10px;" onclick="show('hsal')">급여 조회</button>
            </form>
 		   <div class="result" id="hsal">
-				<label for="hourlyRate">기본 시급: ${hsal } 원</label>
-           		<br>
+			
 				<h7>주차별 근무시간 및 주휴수당</h7>
            		<table id="hsalTable">
 					<thead>
@@ -145,21 +145,21 @@ session.setAttribute("current_page", "salary");
 						</tr>
 					</tbody>
 				</table>
-           
-           	   <label for="baseSal" style="padding: 10px; width: 100%;">총 기본급: <span id="totalPay">0</span> 원</label>
-         	   <label for="allowance" style="padding: 10px; width: 100%;">총 주휴수당: <span id="totalOvertimePay">0</span> 원</label>
-               <label for="totalSal" style="padding: 10px; width: 100%;">총 급여: <span id="totalSal">0</span> 원</label>
-               <p>--------------------------------------<p>
-               <label for="tax" style="padding: 10px; width: 100%;">세율: 8.3 % </label>
-               <label for="actualSal" style="padding: 10px; width: 100%;"><strong>세율적용 급여: <span id="actualSal">0</span> 원</strong></label>
+           	   <label for="hourlyRate" style="padding: 8px; width: 100%;">기본 시급: ${hsal } 원</label>
+           	   <label for="baseSal" style="padding: 8px; width: 100%;">총 기본급: <span id="totalPay">0</span> 원</label>
+         	   <label for="allowance" style="padding: 8px; width: 100%;">총 주휴수당: <span id="totalOvertimePay">0</span> 원</label>
+               <label for="totalSal" style="padding: 8px; width: 100%;">총 급여: <span id="totalSal">0</span> 원</label>
+               <label for="space" style="padding: 8px; width: 100%;">--------------------------------------</label>
+               <label for="tax" style="padding: 8px; width: 100%;">세율: 8.3 % </label>
+               <label for="actualSal" style="padding: 8px; width: 100%;"><strong>세율적용 급여: <span id="actualSal">0</span> 원</strong></label>
            
            </div>      
        </div>
    </div>	
 </div>
-	<div class="position-fixed bottom-0 w-100">
+
   		<jsp:include page="/include/footer.jsp" />
-  	</div>   
+
    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>   
    <script>
        function switchTab(tab) {
@@ -177,13 +177,19 @@ session.setAttribute("current_page", "salary");
        switchTab('sal');
        
        function show(content) {
+    	  
     	   const contents = ['sal', 'hsal'];
     	   
     	   contents.forEach(content => {
                document.getElementById(content).style.display = 'none';
            });
-    	   
+ 
     	   document.getElementById(content).style.display = 'block';
+    	   
+    	   if(content=='sal'){
+    		   $("#inputForm").show();
+    		   document.getElementById("hsalTable").getElementsByTagName("tbody")[0].innerHTML="";
+    	   }
        }
        
 	   // 폼 제출 버튼 클릭 시 처리

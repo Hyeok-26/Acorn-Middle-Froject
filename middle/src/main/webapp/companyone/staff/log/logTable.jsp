@@ -4,13 +4,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
-int empno=(int)session.getAttribute("empno");
-
-//Com1EmpLogDao dao=Com1EmpLogDao.getInstance();
-List<Com1EmpLogDto> list=Com1EmpLogDao.getInstance().getList(empno);
-
-String ename=(String)session.getAttribute("ename");
+	session.setAttribute("current_page", "log");
+	int empno=(int)session.getAttribute("empno");
+	
+	//Com1EmpLogDao dao=Com1EmpLogDao.getInstance();
+	List<Com1EmpLogDto> list=Com1EmpLogDao.getInstance().getList(empno);
+	
+	String ename=(String)session.getAttribute("ename");
 %>
 
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ String ename=(String)session.getAttribute("ename");
         text-align: center;
     }
     th {
-        background-color: #f2f2f2;
+        background-color: #c8c8c8;
     }    
 
 </style>
