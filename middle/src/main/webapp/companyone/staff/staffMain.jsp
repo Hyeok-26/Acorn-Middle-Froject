@@ -63,7 +63,8 @@
 	<jsp:param value="index" name="current" />
 </jsp:include>
     <div class="container">
-        <h2 class="text-center mb-4">직원 메인 페이지</h2>
+        <h2 class="text-center mb-4">${comname } </h2>
+        <h3>호점: ${storenum } 사원번호: ${empno }</h3>
         <h3>환영합니다, ${ename}님!</h3>
         <div class="btn-container">
         	<button><a href="${pageContext.request.contextPath }/companyone/staff/log/log.jsp">출/퇴근</a></button>
