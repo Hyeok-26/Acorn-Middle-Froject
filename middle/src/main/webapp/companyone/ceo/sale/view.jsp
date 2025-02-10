@@ -68,7 +68,7 @@
 			<form action="view.jsp" method="get" id="storeForm">
 				<label for="storenum">지점 선택: </label> 
 				<select name="storenum"	id="storenum" onchange="switchTab('store'); document.getElementById('storeForm').submit();">
-					<option value="storenum">-- 지점을 선택하세요 --</option>
+					<option value="">-- 지점을 선택하세요 --</option>
 					<% for (Integer tmp : storenums) { %>
 					<option value="<%= tmp %>"	<%= (tmp.equals(storenum)) ? "selected" : ""%> > 	<%= tmp %>호점
 					</option>
@@ -176,8 +176,7 @@
 					<tbody>
 						<% if (listbystoreyearly == null) { %>
 							<tr>
-								<td></td>
-								<td>현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
+								<td colspan="2">현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoreyearly) { %>
@@ -201,8 +200,7 @@
 					<tbody>
 						<% if (listbystoremonthly == null) { %>
 							<tr>
-								<td></td>
-								<td>현매장 <%=storenum %>호점의 월매출 정보가 없습니다.</td>
+								<td colspan="2">현매장 <%=storenum %>호점의 월매출 정보가 없습니다.</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoremonthly) { %>
@@ -224,7 +222,7 @@
 						</tr>
 					</thead>
 					
-						<% if (listbystore == null&&!storenum.{ %>
+						<% if (listbystore == null){ %>
 							<tbody>
 								<tr>
 									<td colspan="2"> 현매장 <%=storenum %>호점의 매출 정보가 없습니다. </td>
