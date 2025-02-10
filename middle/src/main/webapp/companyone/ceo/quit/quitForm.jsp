@@ -161,7 +161,6 @@
 					<!-- 차순 정렬 기준 선택 -->
 					<input type="radio" class="btn-check" name="options-outlined" id="ASC" v-model="picked" value="ASC" @change="onlineup" autocomplete="off">
 					<label class="btn btn-outline-dark" for="ASC">오름</label>
-					
 					<input type="radio" class="btn-check" name="options-outlined" id="DESC" v-model="picked" value="DESC" @change="onlineup" autocomplete="off">
 					<label class="btn btn-outline-dark" for="DESC">내림</label>
 				</div>
@@ -194,10 +193,8 @@
 					    	<div class="col-3"><button @click="clickSearchBtn" class="btn btn-primary">조회</button></div>
 						</div>
 						
-						
 						<!-- 조회된 데이터 보여줌 -->
 					    <form action="addQuit.jsp" @submit.prevent="onSubmit">
-					    
 					    	<div class="mb-3 row" style="display:none">
 					    		<div class="col-3"><label for="empno" class="form-label">사원번호 </label></div>
 					    		<div class="col-9"><input v-model="searchEmpno" type="text" class="form-control" id="empno" name="empno"  readonly></div>
@@ -274,7 +271,6 @@
 								<div class=" justify-content-center align-items-center vh-100">
 								  <div class="p-3 bg-light">퇴사자 정보가 없습니다!</div>
 								</div>
-								
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="qmember" items="${list}">
@@ -297,8 +293,6 @@
 		</div>
 		
 		
-		
-		
 		<!-- 하단 페이징 버튼 -->
 		<div class="mt-3 d-flex justify-content-center">
 			<nav>
@@ -306,7 +300,8 @@
 					<!-- Prev 버튼 -->
 					<c:if test="${startPageNum ne 1}">
 						<li class="page-item">
-							<a class="page-link" href="quitForm.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
+							<%-- <a class="page-link" href="quitForm.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a> --%>
+							<button type="button" class="page-link" @click="onPage">Prev</button>
 						</li>
 					</c:if>
 					<!-- 페이지 번호 -->
@@ -319,17 +314,15 @@
 					<!-- Next 버튼 -->
 					<c:if test="${endPageNum < totalPageCount}">
 						<li class="page-item">
-							<a class="page-link" href="quitForm.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a>
+							<button type="button" class="page-link" @click="onPage">Next</button>
+							<%-- <a class="page-link" href="quitForm.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a> --%>
 						</li>
 					</c:if>
 				</ul>		
 			</nav>
 		</div>
 		
-		
-		
-		
-		<!-- 추가 가능 -->
+		<!-- 나중에 추가 가능 -->
 		<div class="mt-3 d-flex justify-content-end">
 			<button class="btn btn-primary btn-sm">경력증명서 출력</button>
 		</div>
@@ -337,11 +330,9 @@
 	</div>
 	</div>
 	
-	
 	<!-- 푸터 -->
 	<jsp:include page="/include/footer.jsp" />
 
-  	
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
@@ -352,7 +343,9 @@
 				lineup:"${empty lineup ? 'QUITDATE' : lineup}",
 				picked: "${empty picked ? 'DESC' : picked}",
 				searchEmpno:"",
-				dto:""
+				dto:"",
+				startPageNum:"${startPageNum}",
+				endPageNum:"${endPageNum}"
 			},
 			computed: {
 				url:function(){
@@ -367,8 +360,14 @@
 				onPage(e){
 					const pageNum = e.target.innerText;
 					
-					if(pageNum.equ)
-					location.href= this.url;
+					switch (pageNum) {
+						case "Prev":
+					  		location.href= this.url + "&pageNum=" + (this.startPageNum - 1);
+						case "Next":
+					  		location.href= this.url + "&pageNum=" + (this.endPageNum + 1);
+					  default:
+						  location.href= this.url + "&pageNum=" + pageNum;
+					}
 				},
 				// 검색 버튼을 눌렀을 때
 				onSearch(){
@@ -385,7 +384,7 @@
 				// 모달창에서 사원 조회 버튼을 눌렀을 때
 				clickSearchBtn(){
 					// 사원번호를 입력했을 경우
-					if(this.serchEmpno){
+					if(this.searchEmpno){
 						fetch("searchInfo.jsp?empno="+this.searchEmpno)
 						.then(res => res.json())
 						.then(data=>{
@@ -402,9 +401,6 @@
 					}else{
 						alert("사원 번호를 입력하세요");
 					}
-					
-					
-					
 				}, 
 				// 퇴사자 복귀
 				onCancle(e){
