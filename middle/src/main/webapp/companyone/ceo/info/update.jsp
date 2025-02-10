@@ -35,7 +35,7 @@
 
     // 전화번호 업데이트
     if (newCall != null && !newCall.isEmpty()) {
-        if (newCall.matches(reg_call)) { // 전화번호 형식 검증
+        if (newCall.matches(reg_call)) {
             dto.seteCall(newCall);
             Com1CeoDao.getInstance().update(dto);
             isSuccess = true;
@@ -52,7 +52,7 @@
 
     // 비밀번호 업데이트
     if (newPassword != null && !newPassword.isEmpty()) {
-        if (newPassword.matches(reg_pwd)) { // 비밀번호 형식 검증
+        if (newPassword.matches(reg_pwd)) {
             dto.setePwd(newPassword);
             Com1CeoDao.getInstance().update(dto);
             isSuccess = true;

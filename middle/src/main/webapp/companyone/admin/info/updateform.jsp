@@ -64,7 +64,7 @@
 		</jsp:include>
 		<div class="container" id="app">
 			<h3>회원 정보 수정</h3>
-			<form action="update.jsp" method="get" id="callupdateForm">
+			<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
 				<div class="mb-3">
 					<label class="form-label">회사</label> <input class="form-control"
 						type="text" name="comid" value="<%=comname%>" readonly />
@@ -97,11 +97,11 @@
 				<div class="mb-2">
 					<label class="form-label" for="password">기존 비밀번호</label> 
 					<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-						type="password" name="password" id="password" value="<%=empdto.getePwd() %>" readonly/>
+						type="text" name="password" id="password" value="<%=empdto.getePwd() %>" readonly/>
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
-					<input class="form-control" type="password" name="newPassword" id="newPassword" 
+					<input class="form-control" type="text" name="newPassword" id="newPassword" 
 					    v-model="newPassword" @input="onNewPwdInput"
 					    :class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid': isNewPwdValid}" />
 					<small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
@@ -114,7 +114,7 @@
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
-					<input class="form-control" type="password" name="newPassword2" id="newPassword2" 
+					<input class="form-control" type="text" name="newPassword2" id="newPassword2" 
 					    @input="onNewPwdConfirmInput" v-model="newPassword2"
 					    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
 					<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
@@ -134,7 +134,10 @@
 				<button class="btn btn-success" type="submit">수정하기</button>
 				<button class="btn btn-danger" type="reset">리셋</button>
 			</form>
+			<p>isNewPwdValid : {{isNewPwdValid}}</p>
+			<p>isNewPwdSame : {{isNewPwdSame}}</p>
 		</div>
+		
 	</div>
 	<jsp:include page="/include/footer.jsp" />
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -244,7 +247,25 @@
                 } else {
                     this.isEmailAvailable = false; 
                 }
-            }
+            },
+			onSubmit(event) {
+            	if (this.password==this.newPassword){
+					alert("기존 비밀번호와 같습니다.")
+					event.preventDefault();
+					return;
+				}
+			    if (this.newPassword2.trim() === "") {
+			        alert("비밀번호 확인란이 입력되지 않았습니다.");
+			        event.preventDefault(); 
+			        return;
+			    }
+			    if (!this.isNewPwdMatch) {
+			        alert("비밀번호가 일치하지 않습니다.");
+			        event.preventDefault();
+			        return;
+			    }
+			    document.getElementById("callupdateForm").submit();
+			}
         }
     });
 </script>
