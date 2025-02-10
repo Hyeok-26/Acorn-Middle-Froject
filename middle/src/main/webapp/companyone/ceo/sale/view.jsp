@@ -237,7 +237,7 @@
 									<td><%= tmp.getSdate() %></td>
 									<td><%= tmp.getDailySales() %></td>
 								</tr>
-						<%    }%>
+							<% }%>
 						</tbody>
 						<%}%>
 				</table>
