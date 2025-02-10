@@ -26,15 +26,9 @@ Com1EmpDto dto=dao.getData(empno);
 		border: 1px solid black;
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	}
-	#app{
-		height: auto;
-		min-height: 100%;
-	  	padding-bottom: 300px;
-	}
-	.footer{
-	  height: 300px;
-	  position : relative;
-	  transform : translateY(-100%);
+	#contractLink{
+		width: 200px;
+		height: 250px;
 	}
 	#contractFile{
 		display: none;
@@ -64,12 +58,15 @@ Com1EmpDto dto=dao.getData(empno);
 					<%} %>
 				</a>
 			</div>
+			<br>
 			<button class="btn btn-dark" type="submit">확인</button>
 		</div>
 		</form>	
 			
 	</div>
-	
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 	<script>
 		
 		document.querySelector("#contractLink").addEventListener("click", ()=>{
@@ -99,6 +96,6 @@ Com1EmpDto dto=dao.getData(empno);
 			}
 		});
 	</script>
-<jsp:include page="/include/footer.jsp" />
+
 </body>
 </html>
