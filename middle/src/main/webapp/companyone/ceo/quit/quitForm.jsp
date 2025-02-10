@@ -13,76 +13,58 @@
 	String comname = (String)session.getAttribute("comname");
 	String ename = (String)session.getAttribute("ename");
 
-	// 페이지 로딩 uri
-	String findQuery="";
-	// 로딩 데이터
-	Com1QuitDto dto = new Com1QuitDto();
+	// 선언 초기화
+	String findQuery="";					// 페이지 로딩 uri
+	final int PAGE_ROW_COUNT = 6;			// 한 페이지에 표시할 개수
+	final int PAGE_DISPLAY_COUNT = 3;		// 하단 페이지에 표시할 개수
+	int pageNum = 1;						// 보여줄 페이지 번호 초기값
+	Com1QuitDto dto = new Com1QuitDto();	// 로딩 데이터			
 	
-		
 	
-	// 검색 조건이 있는지 request 영역 확인
+	
+	// 검색 조건이 있는지 확인 
 	String condition = request.getParameter("condition");
 	String keyword = (String)request.getParameter("keyword");
-	// 만약 직책명으로 키워드 검색 시 소문자가 섞여 있다면 대문자로 바꿔주기
-	if(condition != null && keyword != null){
-		Pattern pattern = Pattern.compile("[a-z]");
+	if(condition != null && keyword != null){			// 검색 조건이 있는 경우
+		Pattern pattern = Pattern.compile("[a-z]");		// 만약 직책명으로 키워드 검색 시 소문자가 섞여 있다면 대문자로 바꿔주기
 		Matcher matcher = pattern.matcher(keyword);
 		boolean result_reg = matcher.find();
-		if(condition.equals("role") && result_reg){
-			keyword = keyword.toUpperCase();
-		}
-	}
-	// 검색 조건이 있는 경우 dto 에 값 담기
-	if(condition != null && keyword != null){
-		dto.setCondition(condition);
+		if(condition.equals("role") && result_reg) keyword = keyword.toUpperCase();
+		dto.setCondition(condition);					// DB 조회시 넘어갈 DTO 에 검색 조건 정보 담기
 		dto.setKeyword(keyword);
 		findQuery = "&condition="+condition+"&keyword="+keyword;
 	}
 	
 	
+	
 	// 정렬 조건이 있는지 확인
 	String lineup = request.getParameter("lineup");
-	// 정렬 조건이 있는 경우 dto 에 값 담기
-	if(lineup != null && lineup != ""){
-		dto.setLineup(lineup);
+	if(lineup != null){			// 정렬 조건이 있는 경우
+		dto.setLineup(lineup);	// DB 조회시 넘어갈 DTO 에 정렬 조건 정보 담기
 	}
 
 	
+
 	
-	// 페이징 처리
-	final int PAGE_ROW_COUNT = 6;		//한 페이지에 표시할 개수
-	final int PAGE_DISPLAY_COUNT = 3;	// 하단 페이지에 표시할 개수
-	int pageNum = 1;	// 페이징 초기값 
-	
-	// 기존 페이지 번호가 있는지 request 영역 확인
-	String strPageNum = request.getParameter("pageNum"); // 원래 위치하던 페이지 번호
-	
-	// 페이지 번호가 있는 경우
+	// 페이지 번호가 있는지 확인
+	String strPageNum = request.getParameter("pageNum");
 	if(strPageNum != null){
 		pageNum = Integer.parseInt(strPageNum);
 	}
 	
-	// row 기본값
-	int startRowNum = (pageNum-1)*PAGE_ROW_COUNT + 1;	// 시작 row 번호 
-	int endRowNum = PAGE_ROW_COUNT*pageNum;				// 마지막 row 번호
-	
-	// 하단 페이지 기본값
-	int startPageNum = ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT + 1;
-	int endPageNum = startPageNum+PAGE_DISPLAY_COUNT - 1;
-	
-	// 전체 목록 개수 구해서 페이지 개수 계산
-	int totalRow = Com1QuitDao.getInstance().getCount(dto);
-	System.out.println("totalRow: " + totalRow);
-	int totalPageCount = (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+	// 페이징 처리 계산
+	int startRowNum = (pageNum-1)*PAGE_ROW_COUNT + 1;							// 시작 row 번호 
+	int endRowNum = PAGE_ROW_COUNT*pageNum;										// 마지막 row 번호
+	int startPageNum = ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT + 1; // 하단 페이지 시작 번호
+	int endPageNum = startPageNum+PAGE_DISPLAY_COUNT - 1;						// 하단 페이지 끝 번호
+	int totalRow = Com1QuitDao.getInstance().getCount(dto);						// 전체 row 개수
+	int totalPageCount = (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);		// 생성될 페이지 개수
 	if(endRowNum > totalPageCount) endPageNum = totalPageCount;
-	
-	// dto 에 보여줄 시작 row 와 마지막 row 값 담기
-	dto.setStartRowNum(startRowNum);
+	dto.setStartRowNum(startRowNum);									// DB 조회시 넘어갈 DTO 에 페이지 정보 담기
 	dto.setEndRowNum(endRowNum);
 	
 	
-	
-	// 리스트 목록 데이터 가져오기
+	// DB에서 데이터 가져오기
 	List<Com1QuitDto> list =  Com1QuitDao.getInstance().getList(dto);
 	
 	// request 영역에 필요한 정보 저장
@@ -90,9 +72,14 @@
 	request.setAttribute("startPageNum", startPageNum);
 	request.setAttribute("endPageNum", endPageNum);
 	request.setAttribute("totalPageCount", totalPageCount);
+	
+	request.setAttribute("condition", condition);
+	request.setAttribute("keyword", keyword);
+	request.setAttribute("lineup", lineup);
 	request.setAttribute("pageNum", pageNum);
-	request.setAttribute("totalRow", totalRow);
-	request.setAttribute("dto", dto);
+	
+	//request.setAttribute("totalRow", totalRow);
+	//request.setAttribute("dto", dto);
 	request.setAttribute("findQuery", findQuery);
 %>
 <!DOCTYPE html>
@@ -102,7 +89,6 @@
 <title>퇴사자 관리 페이지</title>
 <style>
 	/* div{ border:1px solid red; } */
-
 </style>
 <!-- 페이지 로딩에 필요한 자원 -->
 <jsp:include page="/include/resource.jsp"></jsp:include>
@@ -112,10 +98,10 @@
 	<!-- 관리자 페이지 전용 네비바 -->
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
  
-	<!-- 현재 접속 상태 표시 -->
+	<%-- <!-- 현재 접속 상태 표시 -->
 	<div>
 	<p><%=comname %>의  <%=ename %>님 접속 중</p>
-	</div>
+	</div> --%>
 	
 	
 	<!-- 본문 -->
@@ -281,8 +267,6 @@
 						</c:choose>
 			</div>
 		</div>
-		
-		
 		
 		
 		
