@@ -22,116 +22,12 @@
 <title>/ceo/protected/updateform_ceo</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
-table {
-	width: 100%; /* 화면 너비에 맞게 설정 */
-	border-spacing: 0;
-	border-collapse: collapse; /* 테이블의 경계를 합칩니다 */
-	margin-bottom: 50px;
-}
-
-th, td {
-	padding: 20px; /* 셀 안의 여백을 일정하게 */
-	text-align: left; /* 텍스트를 왼쪽 정렬 */
-	border-bottom: 1px solid #ddd; /* 셀에 테두리 추가 */
-}
-
-th {
-	background-color: #f4f4f4; /* 헤더 셀 배경색 */
-	text-align: right; /* 텍스트를 오른쪽 정렬 */
-	width: 25%; /* 각 열의 넓이를 고정 비율로 설정 */
-}
-
-td {
-	width: 75%; /* 데이터 셀의 넓이를 고정 비율로 설정 */
-}
-
-/* 페이지에 맞게 조정된 폰트 크기 */
-h1 {
-	margin-bottom: 30px;
-}
-
-/* 링크 스타일 수정 */
-a {
-	color: #007bff;
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-.container2 {
-	max-width: 800px;
-	margin: 40px auto;
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 8px;
-	border: 1px solid black;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-	text-align: center;
-	margin-bottom: 20px;
-	color: #333;
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin: 20px 0;
-}
-
-th, td {
-	padding: 10px;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
-}
-
-th {
-	font-weight: bold;
-}
-
-td a {
-	color: #007bff;
-	text-decoration: none;
-	font-weight: bold;
-}
-
-td a:hover {
-	text-decoration: underline;
-}
-
-.btn-container {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-}
-
-.btn-container a {
-	margin: 0 10px;
-	padding: 10px 20px;
-	border-radius: 4px;
-	text-decoration: none;
-	font-weight: bold;
-	background-color: #007bff;
-	color: #fff;
-	transition: background-color 0.3s;
-}
-
-.btn-container a:hover {
-	background-color: #0056b3;
-}
 </style>
 </head>
 <body>
-	<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
-	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
-
-	<div class="container2" id="app">
+	<div class="container" id="app">
 		<h3>회원 정보 수정 양식</h3>
 		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
-			
 			<div class="mb-2">
 				<label class="form-label" for="ename">이름</label>
 				<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
@@ -146,37 +42,37 @@ td a:hover {
 				<div class="invalid-feedback">전화번호 형식에 맞지 않습니다.</div>
 			</div>
 			<div class="mb-2">
-				<label class="form-label" for="password">기존 비밀번호</label> 
-				<input class="form-control" @input="onPwdInput"	:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}"
-					type="password" name="password" id="password" value="<%=dto.getePwd() %>" readonly/>
-			</div>
-			<div class="mb-2">
-			    <label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
-			    <input class="form-control" type="password" name="newPassword" id="newPassword"
-			        @input="onNewPwdInput" v-model="newPassword"
-			        :class="{
-			            'is-invalid': (!isNewPwdValid && isNewPwdDirty) || (isSameOriginPwd && isSameOriginPwdDirty), 
-			            'is-valid': isNewPwdValid && !isSameOriginPwd
-			        }"/>
-			    <small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
-			    <div class="invalid-feedback" v-if="!isNewPwdValid && isNewPwdDirty">비밀번호 형식이 올바르지 않습니다.</div>
-			    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> 
-			</div>
-			<div class="mb-2">
-				<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
-				<input class="form-control" type="password" id="newPassword2" 
-				    @input="onNewPwdConfirmInput" v-model="newPassword2"
-				    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
-				<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
-			</div>
-			
+				    <label class="form-label" for="password">기존 비밀번호</label> 
+				    <input class="form-control" @input="onPwdInput"
+				        :class="{
+				            'is-invalid': (!isPwdValid && isPwdDirty) || (!isOriginPwdMatch && isOriginPwdMatchDirty), 
+				            'is-valid': isPwdValid && isOriginPwdMatch
+				        }"
+				        type="password" name="password" id="password" v-model="password" required/>
+				    <div class="invalid-feedback" v-if="!isOriginPwdMatch && isOriginPwdMatchDirty">비밀번호가 일치하지 않습니다.</div>
+				</div>
+				<div class="mb-2">
+				    <label class="form-label" for="newPassword">새 비밀번호 (선택사항)</label> 
+				    <input class="form-control" type="password" name="newPassword" id="newPassword"
+				        @input="onNewPwdInput" v-model="newPassword"
+				        :class="{
+				            'is-invalid': (!isNewPwdValid && isNewPwdDirty) || (isSameOriginPwd && isSameOriginPwdDirty), 
+				            'is-valid': isNewPwdValid && !isSameOriginPwd
+				        }"/>
+				    <small class="form-text">영문자, 숫자, 특수문자를 포함하여 최소 8자리 이상 입력하세요.</small>
+				    <div class="invalid-feedback" v-if="!isNewPwdValid && isNewPwdDirty">비밀번호 형식이 올바르지 않습니다.</div>
+				    <div class="invalid-feedback" v-if="isSameOriginPwd && isSameOriginPwdDirty">기존 비밀번호와 같습니다.</div> 
+				</div>
+				<div class="mb-2">
+					<label class="form-label" for="newPassword2">새 비밀번호 확인</label> 
+					<input class="form-control" type="password" id="newPassword2" 
+					    @input="onNewPwdConfirmInput" v-model="newPassword2"
+					    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
+					<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
+				</div>
 			<button class="btn btn-success" type="submit">수정하기</button>
-			<button class="btn btn-danger" type="reset">리셋</button>
 		</form>
 	</div>
-	<div class="position-fixed bottom-0 w-100">
-  	<jsp:include page="/include/footer.jsp" />
-  	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
@@ -184,22 +80,22 @@ td a:hover {
 			data:{
 				ename:"<%=dto.geteName()%>",
 	            ecall:"<%=dto.geteCall()%>",
-	            password: "<%=dto.getePwd()%>", 
-				isPwdValid:false,
-				isNewPwdValid:false,
-				isEcallValid:false,
-				isEnameValid: false,
-		        isEnameDirty: false,
-				newPassword:"",
-				newPassword2:"",
-				isNewPwdMatch: false,
-				isNewPwdMatchDirty: false,
-				isEcallDirty:false,
-				isPwdDirty:false,  //비밀번호 입력란에 한번이라도 입력했는지 여부
-				isNewPwdDirty:false, //새비밀번호 입력한에 한번이라도 입력했는지 여부 
-				isSameOriginPwd: false, // 기존 비밀번호와 새 비밀번호 비교
+	            password: "",  
+	            isPwdValid:false,
+	            isNewPwdValid:false,
+	            isEcallValid:false,
+	            isEnameValid: false,
+	            isEnameDirty: false,
+	            newPassword:"",
+	            newPassword2:"",
+	            isNewPwdMatch: false,
+	            isNewPwdMatchDirty: false,
+	            isEcallDirty:false,
+	            isPwdDirty:false,  // 비밀번호 입력란에 한 번이라도 입력했는지 여부
+	            isNewPwdDirty:false, // 새 비밀번호 입력란에 한 번이라도 입력했는지 여부
+	            isSameOriginPwd: false, // 기존 비밀번호와 새 비밀번호 비교
 		        isSameOriginPwdDirty: false 
-			},
+	        },
 			methods:{
 				onEnameInput(e) {
 					this.ename = e.target.value; 
@@ -238,25 +134,24 @@ td a:hover {
 	                    });
 	                }  
 				},
-				onPwdInput(e){
-					//현재까지 입력한 비밀번호
-					const pwd=e.target.value;
-					//공백이 아닌 한글자가 한번이상 반복 되어야 통과 되는 정규표현식
-					const reg_pwd= /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-					if(reg_pwd.test(pwd)){
-						this.isPwdValid=true;
-					}else{
-						this.isPwdValid=false;
-					}
-					this.isPwdDirty=true;
-				},
-				onNewPwdInput() {
-				    const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-				    this.isNewPwdDirty = true;
-				    this.isNewPwdValid = reg_pwd.test(this.newPassword); 
-				    this.isSameOriginPwdDirty = this.isNewPwdDirty;  
-				    this.isSameOriginPwd = this.newPassword === this.password; 
-				},
+				onPwdInput(e) {
+	                const enteredPwd = e.target.value;
+	                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+	                this.isPwdDirty = true;
+	                this.isPwdValid = reg_pwd.test(enteredPwd);
+
+	                // 기존 비밀번호와 입력한 비밀번호 비교
+	                this.isOriginPwdMatchDirty = true;
+	                this.isOriginPwdMatch = (enteredPwd === "<%=dto.getePwd()%>");
+	            },
+	            onNewPwdInput() {
+	                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+	                this.isNewPwdDirty = true;
+	                this.isNewPwdValid = reg_pwd.test(this.newPassword); 
+	                this.isSameOriginPwdDirty = true; 
+	                this.isSameOriginPwd = this.newPassword === this.password; 
+	            },
 				onNewPwdConfirmInput() {
 				    this.isNewPwdMatch = this.newPassword === this.newPassword2 && this.newPassword2.trim() !== ""; 
 				    this.isNewPwdMatchDirty = true; 
@@ -281,5 +176,6 @@ td a:hover {
 				}
 		}});
 	</script>
+	<jsp:include page="/include/footer.jsp" />
 </body>
 </html>
