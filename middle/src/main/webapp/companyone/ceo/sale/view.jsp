@@ -2,8 +2,10 @@
 <%@page import="test.dao.Com1Dao"%>
 <%@page import="test.dto.Com1SaleDto"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%
     //현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "view");
@@ -17,9 +19,9 @@
 	List<Com1SaleDto> listall= saledao.getListAll();
 	List<Com1SaleDto> listmonth = saledao.getListSalebyMonth();
 	List<Com1SaleDto> listyear = saledao.getListSalebyYear();
-	List<Com1SaleDto> listbystore =null;
-	List<Com1SaleDto> listbystoremonthly =null;
-	List<Com1SaleDto> listbystoreyearly=null;
+	List<Com1SaleDto> listbystore = new ArrayList<>();
+	List<Com1SaleDto> listbystoremonthly = new ArrayList<>();
+	List<Com1SaleDto> listbystoreyearly = new ArrayList<>();
 	
 	String strStoreNum=request.getParameter("storenum");
 	if(strStoreNum!=null&&!strStoreNum.isEmpty()){
@@ -37,8 +39,9 @@
 <meta charset="UTF-8">
 <title>sale/view.jsp</title>
 <style>
-	.table-container {
-	    padding-bottom: 100px; /* footer 높이보다 여유 있게 추가 */
+.table-container {
+    padding-bottom: 100px; /* footer 높이보다 여유 있게 추가 */
+}
 </style>
 <!-- 페이지 로딩에 필요한 자원 -->
 <jsp:include page="/include/resource.jsp"></jsp:include>
@@ -76,7 +79,7 @@
 		</div>
 	</div>
 	
-	<div class="content text-center mt-3 mx-auto" style="width: 900px;">
+	<div class="contents text-center mt-3 mx-auto" style="width: 900px;">
 		<div id="allContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
@@ -84,7 +87,7 @@
 						<tr>
 							<th>호점</th>
 							<th>날짜 구분</th>
-							<th>매출</th>
+							<th class="thsale">매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -112,11 +115,11 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th>매출</th>
+							<th class="thsale">매출</th>
 						</tr>
 					</thead>
 					<tbody>
-						<% if ( listyear == null) { %>
+						<% if ( listyear==null) { %>
 							<tr>
 								<td>연매출 정보가 없습니다.</td>
 							</tr>
@@ -140,11 +143,11 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th>매출</th>
+							<th class="thsale">매출</th>
 						</tr>
 					</thead>
 					<tbody>
-						<% if (listmonth == null) { %>
+						<% if (listmonth==null) { %>
 							<tr>
 								<td>월매출 정보가 없습니다.</td>
 							</tr>
@@ -168,11 +171,11 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th>매출</th>
+							<th class="thsale">매출</th>
 						</tr>
 					</thead>
 					<tbody>
-						<% if (listbystoreyearly.size()==0) { %>
+						<% if (listbystoreyearly.size() == 0) { %>
 							<tr>
 								<td colspan="2">현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
 							</tr>
@@ -192,7 +195,7 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th>매출</th>
+							<th class="thsale">매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -216,7 +219,7 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th>매출</th>
+							<th class="thsale">매출</th>
 						</tr>
 					</thead>
 					
@@ -260,7 +263,7 @@
 	
 	        document.getElementById(tab + 'Content').style.display = 'block';
 	        document.getElementById(tab + 'Tab').classList.add('active-tab');
-	    };
+	    }
 	
 	    window.onload = function() {
 	        const tabs = ['all', 'year', 'month', 'store'];
@@ -272,7 +275,7 @@
 	        const urlParams = new URLSearchParams(window.location.search);
 	        if (urlParams.has('storenum')) {
 	            switchTab('store'); 
-	        };
+	        }
 	    };
 
 	</script>
