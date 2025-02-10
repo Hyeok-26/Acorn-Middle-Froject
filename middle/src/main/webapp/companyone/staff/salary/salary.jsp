@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
+session.setAttribute("current_page", "salary");
 	
 	int empno=(int)session.getAttribute("empno");
 	String ename = (String) session.getAttribute("ename");
