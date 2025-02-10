@@ -112,7 +112,7 @@
 <!-- 페이지 로딩에 필요한 자원 -->
 <jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-light">
 	
 	<!-- 관리자 페이지 전용 네비바 -->
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
@@ -122,7 +122,7 @@
 	<p><%=comname %>의  <%=ename %>님 접속 중</p>
 	</div> --%>
 	
-	
+	<div class="main flex-grow-1">  
 	<!-- 본문 -->
 	<div class="container contents text-center mt-3 mx-auto" style="width:900px;"  id="app">
 		<h4>퇴사자 명단</h4>
@@ -152,17 +152,17 @@
 					<!-- 정렬 기준 선택 -->
 					<select v-model="lineup" name="lineup" @change="onLineUp" class="btn btn-outline-dark dropdown-toggle">
 							<!-- <option value="">선택</option> -->
-							<option value="quitdate">퇴사일</option>
-							<option value="hiredate">입사일</option>
-							<option value="empno">사원번호</option>
-							<option value="ename">이름</option>
-							<option value="storenum">지점</option>
+							<option value="QUITDATE">퇴사일</option>
+							<option value="HIREDATE">입사일</option>
+							<option value="EMPNO">사원번호</option>
+							<option value="ENAME">이름</option>
+							<option value="STORENUM">지점</option>
 					</select>
 					<!-- 차순 정렬 기준 선택 -->
-					<input type="radio" class="btn-check" name="options-outlined" id="ASC"  v-model="picked" value="ASC" autocomplete="off">
+					<input type="radio" class="btn-check" name="options-outlined" id="ASC" v-model="picked" value="ASC" @change="onlineup" autocomplete="off">
 					<label class="btn btn-outline-dark" for="ASC">오름</label>
 					
-					<input type="radio" class="btn-check" name="options-outlined" id="DESC" v-model="picked" value="DESC" autocomplete="off">
+					<input type="radio" class="btn-check" name="options-outlined" id="DESC" v-model="picked" value="DESC" @change="onlineup" autocomplete="off">
 					<label class="btn btn-outline-dark" for="DESC">내림</label>
 				</div>
 			</div>
@@ -312,7 +312,8 @@
 					<!-- 페이지 번호 -->
 					<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
 						<li class="page-item ${i == pageNum ? 'active' : ''}">
-							<a class="page-link" href="quitForm.jsp?pageNum=${i}${findQuery}">${i}</a>
+							<button type="button" class="page-link" @click="onPage">${i}</button>
+							<%-- <a class="page-link" href="quitForm.jsp?pageNum=${i}${findQuery}">${i}</a> --%>
 						</li>
 					</c:forEach>
 					<!-- Next 버튼 -->
@@ -334,14 +335,12 @@
 		</div>
 	
 	</div>
-	
+	</div>
 	
 	
 	<!-- 푸터 -->
-	<div class="position-fixed bottom-0 w-100">
-  	<jsp:include page="/include/footer.jsp" />
-  	</div>
-  	
+	<jsp:include page="/include/footer.jsp" />
+
   	
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
@@ -350,35 +349,38 @@
 			data:{
 				condition:"${empty condition ? 'ename' : condition}",
 				keyword:"${keyword}",
-				lineup:"${empty lineup ? 'quitdate' : lineup}",
-				picked: "DESC",
+				lineup:"${empty lineup ? 'QUITDATE' : lineup}",
+				picked: "${empty picked ? 'DESC' : picked}",
 				searchEmpno:"",
 				dto:""
 			},
 			computed: {
-				queryString:function(){
-					return "condition=" + this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked;
+				url:function(){
+					/* const addr = "quitForm.jsp";
+					const encodedStr = encodeURI("?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked);
+					return addr + encodedStr; */
+					return "quitForm.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked;
 				}
 			},
 			methods:{
+				// 페이징 버튼 눌었을 때
+				onPage(e){
+					const pageNum = e.target.innerText;
+					
+					if(pageNum.equ)
+					location.href= this.url;
+				},
 				// 검색 버튼을 눌렀을 때
 				onSearch(){
 					if(this.keyword == ""){
 						alert("검색 키워드를 입력하세요")
 					} else {
-						location.href="quitForm.jsp?" + this.queryString;
+						location.href= this.url;
 					}
-					
-					/* if(this.keyword == ""){
-						location.href="quitForm.jsp?lineup="+this.lineup;
-					}else{
-						location.href="quitForm.jsp?condition="+this.condition+"&keyword="+this.keyword+"&lineup="+this.lineup;
-					} */
-					
 				},
 				// 정렬 조건을 변경했을 때
 				onlineup(){
-					
+					location.href= this.url;
 				},
 				// 모달창에서 사원 조회 버튼을 눌렀을 때
 				clickSearchBtn(){

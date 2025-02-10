@@ -95,7 +95,7 @@
 <!-- 페이지 로딩에 필요한 자원 -->
 <jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-light">
 	<%-- 관리자 페이지 전용 네비바 --%>
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	
@@ -104,140 +104,136 @@
 		<p><%=comname %>의  <%=ename %>님 접속 중</p>
 	</div>
 	
-	
-	<!-- 본문 -->
-	<div class="contents text-center mt-3 mx-auto" style="width:900px;">
-		<h4>근무 직원 현황</h4>
-		
-		<!-- 조회 조건 -->
-		<div>
-		<ul class="nav nav-tabs">
-		  	<li class="nav-item">
-		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ALL&pageNum=${pageNum}">전체 직원</a>
-		  	</li>
-		  	<li class="nav-item">
-		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ADMIN&pageNum=${pageNum}">점장</a>
-		  	</li>
-		  	<li class="nav-item">
-		  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=STAFF&pageNum=${pageNum}">직원</a>
-		  	</li>
-		  	
-		  	<li class="nav-item dropdown">
-		  		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">몇 호점 별 직원</a>
-		  		<ul class="dropdown-menu">
-		  			<c:forEach var="num" items="${storeList }">
-		  				<li><a class="dropdown-item" href="manageForm.jsp?condition=STORE&storenum=${num}">${num}</a></li>
-		  			</c:forEach>
-			    </ul>
-		  	</li>
-		</ul>
-		</div>
-		
-		
-		<!-- 조회 결과 -->
-		<div class="tab-content p-3 bg-light rounded shadow-sm" style="height:500px" id="myTabContent">
-			<div class="table-responsive">
-				<table class="table table-hover text-center align-middle">
-					<thead class="table-dark">
-						<tr>
-							<th>호점</th>
-							<th>사원 번호</th>
-							<th>이름</th>
-							<th>직급</th>
-							<th>전화번호</th>
-							<th>월급</th>
-							<th>입사일</th>
-							<th>이메일</th>
-						</tr>
-					</thead>
-					<tbody>
-					<c:choose>
-						<%-- 데이터가 없는 경우 --%>
-						<c:when test="${empty list}">
-							</tbody>
-							</table>
-							<div class=" justify-content-center align-items-center vh-100">
-							  <div class="p-3 bg-light">직원 정보가 없습니다!</div>
-							</div>
-						</c:when>
-						<%-- 데이터가 있는 경우 --%>
-						<c:otherwise>
-							<c:forEach var="tmp" items="${list}">
-								<c:choose>
-									<%-- 알바 경우 --%>
-									<c:when test="${tmp.sal eq 0}">
-										<tr>
-											<td>${tmp.storeNum }</td>
-											<td>${tmp.empNo }</td>
-											<td>${tmp.eName }</td>
-											<td>${tmp.role }</td>
-											<td>${tmp.eCall }</td>
-											<td>${tmp.hsal * tmp.worktime}</td>
-											<td>${tmp.hiredate }</td>
-											<td style="width:300px">${tmp.email }</td>
-										</tr>
-									</c:when>
-									<%-- 직원 경우 --%>
-									<c:otherwise>
-										<tr>
-											<td>${tmp.storeNum }</td>
-											<td>${tmp.empNo }</td>
-											<td>${tmp.eName }</td>
-											<td>${tmp.role }</td>
-											<td>${tmp.eCall }</td>
-											<td>${tmp.sal }</td>
-											<td>${tmp.hiredate }</td>
-											<td style="width:300px">${tmp.email }</td>
-										</tr>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							</tbody>
-							</table>
-						</c:otherwise>
-					</c:choose>
+	<div class="main flex-grow-1">  
+		<!-- 본문 -->
+		<div class="contents text-center mt-3 mx-auto" style="width:900px;">
+			<h4>근무 직원 현황</h4>
+			
+			<!-- 조회 조건 -->
+			<div>
+			<ul class="nav nav-tabs">
+			  	<li class="nav-item">
+			  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ALL&pageNum=${pageNum}">전체 직원</a>
+			  	</li>
+			  	<li class="nav-item">
+			  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ADMIN&pageNum=${pageNum}">점장</a>
+			  	</li>
+			  	<li class="nav-item">
+			  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=STAFF&pageNum=${pageNum}">직원</a>
+			  	</li>
+			  	
+			  	<li class="nav-item dropdown">
+			  		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">몇 호점 별 직원</a>
+			  		<ul class="dropdown-menu">
+			  			<c:forEach var="num" items="${storeList }">
+			  				<li><a class="dropdown-item" href="manageForm.jsp?condition=STORE&storenum=${num}">${num}</a></li>
+			  			</c:forEach>
+				    </ul>
+			  	</li>
+			</ul>
+			</div>
+			
+			
+			<!-- 조회 결과 -->
+			<div class="tab-content p-3 bg-light rounded shadow-sm" style="height:500px" id="myTabContent">
+				<div class="table-responsive">
+					<table class="table table-hover text-center align-middle">
+						<thead class="table-dark">
+							<tr>
+								<th>호점</th>
+								<th>사원 번호</th>
+								<th>이름</th>
+								<th>직급</th>
+								<th>전화번호</th>
+								<th>월급</th>
+								<th>입사일</th>
+								<th>이메일</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:choose>
+							<%-- 데이터가 없는 경우 --%>
+							<c:when test="${empty list}">
+								</tbody>
+								</table>
+								<div class=" justify-content-center align-items-center vh-100">
+								  <div class="p-3 bg-light">직원 정보가 없습니다!</div>
+								</div>
+							</c:when>
+							<%-- 데이터가 있는 경우 --%>
+							<c:otherwise>
+								<c:forEach var="tmp" items="${list}">
+									<c:choose>
+										<%-- 알바 경우 --%>
+										<c:when test="${tmp.sal eq 0}">
+											<tr>
+												<td>${tmp.storeNum }</td>
+												<td>${tmp.empNo }</td>
+												<td>${tmp.eName }</td>
+												<td>${tmp.role }</td>
+												<td>${tmp.eCall }</td>
+												<td>${tmp.hsal * tmp.worktime}</td>
+												<td>${tmp.hiredate }</td>
+												<td style="width:300px">${tmp.email }</td>
+											</tr>
+										</c:when>
+										<%-- 직원 경우 --%>
+										<c:otherwise>
+											<tr>
+												<td>${tmp.storeNum }</td>
+												<td>${tmp.empNo }</td>
+												<td>${tmp.eName }</td>
+												<td>${tmp.role }</td>
+												<td>${tmp.eCall }</td>
+												<td>${tmp.sal }</td>
+												<td>${tmp.hiredate }</td>
+												<td style="width:300px">${tmp.email }</td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								</tbody>
+								</table>
+							</c:otherwise>
+						</c:choose>
+				</div>
+			</div>
+			
+			
+			
+			
+			<%-- 하단 페이징 버튼 --%>
+			<div class="mt-3 d-flex justify-content-center">
+				<nav>
+					<ul class="pagination mx-auto">
+						<!-- Prev 버튼 -->
+						<c:if test="${startPageNum ne 1}">
+							<li class="page-item">
+								<a class="page-link" href="manageForm.jsp?pageNum=${startPageNum - 1}&condition=${condition}">Prev</a>
+							</li>
+						</c:if>
+						<!-- 페이지 번호 -->
+						<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
+							<li class="page-item ${i == pageNum ? 'active' : ''}">
+								<a class="page-link" href="manageForm.jsp?pageNum=${i}&condition=${condition}">${i}</a>
+							</li>
+						</c:forEach>
+						<!-- Next 버튼 -->
+						<c:if test="${endPageNum < totalPageCount}">
+							<li class="page-item">
+								<a class="page-link" href="manageForm.jsp?pageNum=${endPageNum + 1}&condition=${condition}">Next</a>
+							</li>
+						</c:if>
+					</ul>		
+				</nav>
 			</div>
 		</div>
-		
-		
-		
-		
-		<%-- 하단 페이징 버튼 --%>
-		<div class="mt-3 d-flex justify-content-center">
-			<nav>
-				<ul class="pagination mx-auto">
-					<!-- Prev 버튼 -->
-					<c:if test="${startPageNum ne 1}">
-						<li class="page-item">
-							<a class="page-link" href="manageForm.jsp?pageNum=${startPageNum - 1}&condition=${condition}">Prev</a>
-						</li>
-					</c:if>
-					<!-- 페이지 번호 -->
-					<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
-						<li class="page-item ${i == pageNum ? 'active' : ''}">
-							<a class="page-link" href="manageForm.jsp?pageNum=${i}&condition=${condition}">${i}</a>
-						</li>
-					</c:forEach>
-					<!-- Next 버튼 -->
-					<c:if test="${endPageNum < totalPageCount}">
-						<li class="page-item">
-							<a class="page-link" href="manageForm.jsp?pageNum=${endPageNum + 1}&condition=${condition}">Next</a>
-						</li>
-					</c:if>
-				</ul>		
-			</nav>
-		</div>
-	</div>
-			
+	</div>	
 			
 	
 	
-			
-			
 		
 	<!-- 푸터 -->
-	<div class="position-fixed bottom-0 w-100">
   	<jsp:include page="/include/footer.jsp" />
-  	</div>
 </body>
 </html>

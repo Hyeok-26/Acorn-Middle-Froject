@@ -256,8 +256,8 @@ public class Com1QuitDao {
 			
 			// 만약 정렬 옵션 값이 있다면
 			if(dto.getLineup() != null && dto.getPicked() != null) {
-				System.out.println("정렬 옵션값 설정한 쿼리 쓴다~~~");
-				sql.append("ORDER BY ? ?) ");
+				sql.append("ORDER BY ").append(dto.getLineup()).append(" ").append(dto.getPicked()).append(") ");
+				//sql.append("ORDER BY ? ?) ");
 			} else {
 				sql.append(") ");
 			}
@@ -266,10 +266,6 @@ public class Com1QuitDao {
 			
 			// ? 바인딩
 			pstmt = conn.prepareStatement(sql.toString());
-			System.out.println("dto.getLineup(): " + dto.getLineup());
-			System.out.println("dto.getPicked(): " + dto.getPicked());
-			System.out.println("dto.getStartRowNum(): " + dto.getStartRowNum());
-			System.out.println("dto.getEndRowNum(): " + dto.getEndRowNum());
 			
 			int paramIndex = 1;
 			// 만약 키워드 검색 옵션 값이 있다면
@@ -278,9 +274,8 @@ public class Com1QuitDao {
 			}
 			// 만약 정렬 옵션 값이 있다면
 			if(dto.getLineup() != null && dto.getPicked() != null) {
-				System.out.println("여기 안 오나???????????");
-				pstmt.setString(paramIndex++, dto.getLineup());
-				pstmt.setString(paramIndex++, dto.getPicked());
+				//pstmt.setString(paramIndex++, dto.getLineup());
+				//pstmt.setString(paramIndex++, dto.getPicked());
 			}
 			pstmt.setInt(paramIndex++, dto.getStartRowNum());
 			pstmt.setInt(paramIndex, dto.getEndRowNum());
@@ -288,7 +283,6 @@ public class Com1QuitDao {
 			System.out.println("실행 sql 문: " + sql);
 			// 쿼리 실행 및 결과 추출
 			rs = pstmt.executeQuery();
-			System.out.println("------------------------------------");
 			while(rs.next()) {
 				Com1QuitDto tmp = new Com1QuitDto();
 				tmp.setEmpNo(rs.getInt("empno"));
