@@ -7,6 +7,7 @@
 <%
 	int empno = (int) session.getAttribute("empno");
 	Com1EmpDto empdto = Com1EmpDao.getInstance().getData(empno);
+	String originpwd = empdto.getePwd();
 	
 	int comid = empdto.getComId();
 	String comname = UsingDao.getInstance().getComName(comid);
@@ -263,15 +264,17 @@
 					event.preventDefault();
 					return;
 				}
-			    if (this.newPassword2.trim() === "") {
-			        alert("비밀번호 확인란이 입력되지 않았습니다.");
-			        event.preventDefault(); 
-			        return;
-			    }
-			    if (!this.isNewPwdMatch) {
-			        alert("비밀번호가 일치하지 않습니다.");
-			        event.preventDefault();
-			        return;
+			    if(this.isNewPwdDirty && this.isNewPwdMatchDirty){
+            		if (this.newPassword != this.newPassword2) {
+			        	alert("비밀번호 확인란이 입력되지 않았습니다.");
+			        	event.preventDefault(); 
+			        	return;
+			    	}
+			    	if (!this.isNewPwdMatch) {
+			        	alert("비밀번호가 일치하지 않습니다.");
+			        	event.preventDefault();
+			        	return;
+			    	} 
 			    }
 			    document.getElementById("callupdateForm").submit();
 			}

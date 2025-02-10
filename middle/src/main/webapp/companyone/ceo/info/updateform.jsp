@@ -157,20 +157,22 @@
 				    this.isNewPwdMatchDirty = true; 
 				},
 				onSubmit(event) {
-					if (this.password==this.newPassword){
-						alert("기존 비밀번호와 같습니다.")
+	            	if (this.password==this.newPassword){
+						alert("새 비밀번호가 기존 비밀번호와 같습니다.")
 						event.preventDefault();
 						return;
 					}
-				    if (this.newPassword2.trim() === "") {
-				        alert("비밀번호 확인란이 입력되지 않았습니다.");
-				        event.preventDefault(); 
-				        return;
-				    }
-				    if (!this.isNewPwdMatch) {
-				        alert("비밀번호가 일치하지 않습니다.");
-				        event.preventDefault();
-				        return;
+				    if(this.isNewPwdDirty && this.isNewPwdMatchDirty){
+	            		if (this.newPassword != this.newPassword2) {
+				        	alert("비밀번호 확인란이 입력되지 않았습니다.");
+				        	event.preventDefault(); 
+				        	return;
+				    	}
+				    	if (!this.isNewPwdMatch) {
+				        	alert("비밀번호가 일치하지 않습니다.");
+				        	event.preventDefault();
+				        	return;
+				    	} 
 				    }
 				    document.getElementById("callupdateForm").submit();
 				}
