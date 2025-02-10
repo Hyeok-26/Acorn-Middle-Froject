@@ -78,7 +78,7 @@
 		</div>
 	</div>
 	
-	<div class="contents text-center mt-3 mx-auto" style="width: 900px;">
+	<div class="content text-center mt-3 mx-auto" style="width: 900px;">
 		<div id="allContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
@@ -174,7 +174,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<% if (listbystoreyearly.size() == 0) { %>
+						<% if (listbystoreyearly.size()==0) { %>
 							<tr>
 								<td colspan="2">현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
 							</tr>
@@ -262,7 +262,7 @@
 	
 	        document.getElementById(tab + 'Content').style.display = 'block';
 	        document.getElementById(tab + 'Tab').classList.add('active-tab');
-	    }
+	    };
 	
 	    window.onload = function() {
 	        const tabs = ['all', 'year', 'month', 'store'];
@@ -274,7 +274,7 @@
 	        const urlParams = new URLSearchParams(window.location.search);
 	        if (urlParams.has('storenum')) {
 	            switchTab('store'); 
-	        }
+	        };
 	    };
 
 	</script>
