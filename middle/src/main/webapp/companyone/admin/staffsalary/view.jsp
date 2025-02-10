@@ -4,6 +4,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	session.setAttribute("current_page", "staffsalaryview");
 
@@ -69,9 +70,9 @@
 								<tr>
 									<td><%=tmp.getEmpNo()%></td>
 									<td><%=tmp.geteName()%></td>
-									<td><%=tmp.getHsal()%></td>									
+									<td><fmt:formatNumber value="<%=tmp.getHsal()%>" pattern="#,###" /></td>								
 									<td><%=tmp.getWorktime()%></td>
-									<td><%=tmp.getSal()%></td>	
+									<td><fmt:formatNumber value="<%=tmp.getSal()%>" pattern="#,###" /></td>
 									<td><a href="../staffstatus/salupdateform.jsp?empno=<%=tmp.getEmpNo()%>&returnurl=../staffsalary/view.jsp">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
 									  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -111,7 +112,7 @@
 								<tr>
 									<td><%=tmp.getEmpNo()%></td>
 									<td><%=tmp.geteName()%></td>
-									<td><%=tmp.getSal()%></td>
+									<td><fmt:formatNumber value="<%=tmp.getSal()%>" pattern="#,###" /></td>
 								</tr>
 								<%} }%>
 							</tbody>
@@ -144,9 +145,9 @@
 								<tr>
 									<td><%=tmp.getEmpNo()%></td>
 									<td><%=tmp.geteName()%></td>
-									<td><%=tmp.getHsal()%></td>									
+									<td><fmt:formatNumber value="<%=tmp.getHsal()%>" pattern="#,###" /></td>						
 									<td><%=tmp.getWorktime()%></td>
-									<td><%=tmp.getHsal()*tmp.getWorktime()%></td>	
+									<td><fmt:formatNumber value="<%=tmp.getHsal()*tmp.getWorktime()%>" pattern="#,###" /></td>
 								</tr>
 							<%} }%>
 							</tbody>

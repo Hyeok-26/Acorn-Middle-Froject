@@ -95,9 +95,9 @@
     new Vue({
         el: "#app",
         data: {
-            sal: "",
-            hsal: "",
-            worktime: "",
+            sal: "<%=dto.getSal()%>",
+            hsal: "<%=dto.getHsal()%>",
+            worktime: "<%=dto.getWorktime()%>",
 			
             issalDirty: false,
             issalValid: false,

@@ -4,12 +4,14 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	session.setAttribute("current_page", "staffstatusview");
 
 	//dao이용해서 회원목록 얻어오기
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	List<Com1EmpDto> list=dao.getListStaff();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -54,8 +56,8 @@
 						<td><%=tmp.getEmpNo()%></td>
 						<td><%=tmp.geteName()%></td>
 						<td><%=tmp.geteCall()%></td>
-						<td><%=tmp.getSal()%></td>
-						<td><%=tmp.getHsal()%></td>
+						<td><fmt:formatNumber value="<%=tmp.getSal()%>" pattern="#,###" /></td>
+						<td><fmt:formatNumber value="<%=tmp.getHsal()%>" pattern="#,###" /></td>
 						<td><%=tmp.getWorktime()%></td>
 						<td><%=tmp.getEmail()%></td>										
 						<td>
