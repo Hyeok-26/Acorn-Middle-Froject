@@ -17,7 +17,6 @@
 	String findQuery="";					// 페이지 로딩 uri
 	final int PAGE_ROW_COUNT = 6;			// 한 페이지에 표시할 개수
 	final int PAGE_DISPLAY_COUNT = 3;		// 하단 페이지에 표시할 개수
-	int pageNum = 1;						// 보여줄 페이지 번호 초기값
 	Com1QuitDto dto = new Com1QuitDto();	// 로딩 데이터			
 	
 	
@@ -25,27 +24,39 @@
 	// 검색 조건이 있는지 확인 
 	String condition = request.getParameter("condition");
 	String keyword = request.getParameter("keyword");
-	if(condition != null && keyword != null){			// 검색 조건이 있는 경우
-		Pattern pattern = Pattern.compile("[a-z]");		// 만약 직책명으로 키워드 검색 시 소문자가 섞여 있다면 대문자로 바꿔주기
+	// 검색 조건이 있는 경우
+	if(condition != null && keyword != null){
+		// 만약 직책명으로 키워드 검색 시 소문자가 섞여 있다면 대문자로 바꿔주기
+		Pattern pattern = Pattern.compile("[a-z]");		
 		Matcher matcher = pattern.matcher(keyword);
 		boolean result_reg = matcher.find();
 		if(condition.equals("role") && result_reg) keyword = keyword.toUpperCase();
-		dto.setCondition(condition);					// DB 조회시 넘어갈 DTO 에 검색 조건 정보 담기
+		// DB 조회시 넘어갈 DTO 에 검색 조건 정보 담기
+		dto.setCondition(condition);					
 		dto.setKeyword(keyword);
 		//findQuery = "&condition="+condition+"&keyword="+keyword;
+	} else {
+		condition = "ename";
+		keyword = "";
 	}
 	
 	
 	
 	// 정렬 조건이 있는지 확인
 	String lineup = request.getParameter("lineup");
-	if(lineup != null){			// 정렬 조건이 있는 경우
-		dto.setLineup(lineup);	// DB 조회시 넘어갈 DTO 에 정렬 조건 정보 담기
+	String picked = request.getParameter("picked");
+	if(lineup == null && picked == null){		
+		// 정렬 조건이 없는 경우 디폴트 값 설정
+		lineup = "QUITDATE";
+		picked = "DESC";
 	}
-
+	// DB 조회시 넘어갈 DTO 에 정렬 조건 정보 담기
+	dto.setLineup(lineup);	
+	dto.setPicked(picked);
 	
 	
 	// 페이지 번호가 있는지 확인
+	int pageNum = 1;
 	String strPageNum = request.getParameter("pageNum");
 	if(strPageNum != null){
 		pageNum = Integer.parseInt(strPageNum);
@@ -76,13 +87,19 @@
 	request.setAttribute("condition", condition);
 	request.setAttribute("keyword", keyword);
 	request.setAttribute("lineup", lineup);
+	request.setAttribute("picked", picked);
 	request.setAttribute("pageNum", pageNum);
 	
 	//request.setAttribute("totalRow", totalRow);
 	//request.setAttribute("dto", dto);
 	request.setAttribute("findQuery", findQuery);
 	
+	
 	System.out.println("condition:" +condition);
+	System.out.println("keyword:" +keyword);
+	System.out.println("lineup:" +dto.getLineup());
+	System.out.println("picked:" +dto.getPicked());
+	System.out.println("총 row 개수:" +totalRow);
 %>
 <!DOCTYPE html>
 <html>
@@ -132,15 +149,21 @@
 			<div class="p-2">
 				<div class="input-group">
 					<button type="button" class="btn btn-outline-dark" disabled>정렬 조건</button>
+					<!-- 정렬 기준 선택 -->
 					<select v-model="lineup" name="lineup" @change="onLineUp" class="btn btn-outline-dark dropdown-toggle">
-							<option value="">선택</option>
+							<!-- <option value="">선택</option> -->
 							<option value="quitdate">퇴사일</option>
 							<option value="hiredate">입사일</option>
 							<option value="empno">사원번호</option>
 							<option value="ename">이름</option>
 							<option value="storenum">지점</option>
 					</select>
+					<!-- 차순 정렬 기준 선택 -->
+					<input type="radio" class="btn-check" name="options-outlined" id="ASC"  v-model="picked" value="ASC" autocomplete="off">
+					<label class="btn btn-outline-dark" for="ASC">오름</label>
 					
+					<input type="radio" class="btn-check" name="options-outlined" id="DESC" v-model="picked" value="DESC" autocomplete="off">
+					<label class="btn btn-outline-dark" for="DESC">내림</label>
 				</div>
 			</div>
 			
@@ -155,17 +178,19 @@
 				<div class="modal-dialog">
 				  <div class="modal-content">
 				  
+				  	<!-- 모달창 헤더 -->
 				    <div class="modal-header">
 				      <h1 class="modal-title fs-5" id="showModalLabel">퇴사자 추가</h1>
 				      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				    </div>
 				    
+				    <!-- 모달창 바디 -->
 				    <div class="modal-body ">
 				    	
 				    	<!-- 데이터 조회 -->
 					    <div class="mb-3 row" >
-					    	<div class="col-3"><label for="search_empno" class="form-label">사원번호*</label></div>
-					    	<div class="col-6"><input v-model="search_empno" type="text" class="form-control" id="search_empno" placeholder="사원번호를 입력하세요..."></div>
+					    	<div class="col-3"><label for="searchEmpno" class="form-label">사원번호*</label></div>
+					    	<div class="col-6"><input v-model="searchEmpno" type="text" class="form-control" id="searchEmpno" placeholder="사원번호를 입력하세요..."></div>
 					    	<div class="col-3"><button @click="clickSearchBtn" class="btn btn-primary">조회</button></div>
 						</div>
 						
@@ -175,7 +200,7 @@
 					    
 					    	<div class="mb-3 row" style="display:none">
 					    		<div class="col-3"><label for="empno" class="form-label">사원번호 </label></div>
-					    		<div class="col-9"><input v-model="search_empno" type="text" class="form-control" id="empno" name="empno"  readonly></div>
+					    		<div class="col-9"><input v-model="searchEmpno" type="text" class="form-control" id="empno" name="empno"  readonly></div>
 							</div>
 							
 							<div class="mb-3 row" style="display:flex">
@@ -325,9 +350,15 @@
 			data:{
 				condition:"${empty condition ? 'ename' : condition}",
 				keyword:"${keyword}",
-				lineup:"${lineup}",
-				search_empno:"",
+				lineup:"${empty lineup ? 'quitdate' : lineup}",
+				picked: "DESC",
+				searchEmpno:"",
 				dto:""
+			},
+			computed: {
+				queryString:function(){
+					return "condition=" + this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked;
+				}
 			},
 			methods:{
 				// 검색 버튼을 눌렀을 때
@@ -335,7 +366,7 @@
 					if(this.keyword == ""){
 						alert("검색 키워드를 입력하세요")
 					} else {
-						location.href="quitForm.jsp?keyword="+this.keyword+"&condition="+this.condition;
+						location.href="quitForm.jsp?" + this.queryString;
 					}
 					
 					/* if(this.keyword == ""){
@@ -345,30 +376,36 @@
 					} */
 					
 				},
-				// 정렬 버튼을 눌렀을 때
+				// 정렬 조건을 변경했을 때
 				onlineup(){
 					
-				}
-				// 모달창에서 사원 조회
-				/* clickSearchBtn(){
-					fetch("searchInfo.jsp?empno="+this.search_empno)
-					.then(res => res.json())
-					.then(data=>{
-						// 만약 없는 사원번호를 입력했을 경우
-						if(!data.isExist){
-							alert("없는 사원번호 입니다.");
-						} else {
-							this.dto = data.dto;
-						}
-					})
-					.catch((err)=>{
-						console.log(err);
-					});
+				},
+				// 모달창에서 사원 조회 버튼을 눌렀을 때
+				clickSearchBtn(){
+					// 사원번호를 입력했을 경우
+					if(this.serchEmpno){
+						fetch("searchInfo.jsp?empno="+this.searchEmpno)
+						.then(res => res.json())
+						.then(data=>{
+							// 만약 없는 사원번호를 입력했을 경우
+							if(!data.isExist){
+								alert("없는 사원번호 입니다.");
+							} else {
+								this.dto = data.dto;
+							}
+						})
+						.catch((err)=>{
+							console.log(err);
+						});
+					}else{
+						alert("사원 번호를 입력하세요");
+					}
 					
 					
-				}, */
+					
+				}, 
 				// 퇴사자 복귀
-				/* onCancle(e){
+				onCancle(e){
 					// 복귀 처리 할 사람의 정보 추출
 					const empno = e.target.parentElement.parentElement.childNodes[0].innerText;
 					const ename = e.target.parentElement.parentElement.childNodes[2].innerText;
@@ -399,9 +436,9 @@
 							console.log(err);
 						});
 					}
-				}, */
+				},
 				// 퇴사자 추가 
-				/* onSubmit(e){
+				onSubmit(e){
 					// 폼 입력이 제대로 이루어 졌는지 확인
 					const data = new FormData(e.target);
 					const empno = e.target.empno.value;
@@ -445,7 +482,7 @@
 							console.log(err);
 						});
 					}
-				} */
+				}
 			},//methods
 			created(){
 				
