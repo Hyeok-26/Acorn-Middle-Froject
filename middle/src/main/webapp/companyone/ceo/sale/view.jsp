@@ -4,7 +4,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%
     //현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "view");
@@ -38,9 +37,8 @@
 <meta charset="UTF-8">
 <title>sale/view.jsp</title>
 <style>
-.table-container {
-    padding-bottom: 100px; /* footer 높이보다 여유 있게 추가 */
-}
+	.table-container {
+	    padding-bottom: 100px; /* footer 높이보다 여유 있게 추가 */
 </style>
 <!-- 페이지 로딩에 필요한 자원 -->
 <jsp:include page="/include/resource.jsp"></jsp:include>

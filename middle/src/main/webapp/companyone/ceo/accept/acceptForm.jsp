@@ -140,7 +140,7 @@
 									<td>${item.storeNum }</td>
 									<td>${item.role }</td>
 									<td><a href="acceptAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">승인</a></td>
-									<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-success btn-sm">거절</a></td>
+									<td><a href="deleteAdmin.jsp?empno=${item.empNo}" class="btn btn-danger btn-sm">거절</a></td>
 								</tr>
 							</c:forEach>
 							</tbody>

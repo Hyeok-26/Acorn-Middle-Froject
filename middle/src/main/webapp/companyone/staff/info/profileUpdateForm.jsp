@@ -73,7 +73,7 @@
 						class="form-control" type="password" name="password" 
 						v-model="password" @input="validateOldPassword"
 						:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid': isPwdValid}" />
-					<div class="invalid-feedback">반드시 입력하세요</div>
+					<div class="valid-feedback">기존 비밀번호와 같습니다.</div>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">새 비밀번호 (선택사항)</label> <input
@@ -129,7 +129,13 @@
 	        methods: {
 	            validateOldPassword() {
 	                this.isPwdDirty = true;
-	                this.isPwdValid = this.password.trim() !== "";
+	                
+	                if(this.password==="<%=dto.getePwd()%>"){
+	                	this.isPwdValid=true;
+	                }else{
+	                	this.isPwdValid=false;
+	                }
+	                
 	            },
 	            validateNewPassword() {
 	                this.isNewPwdDirty = true;

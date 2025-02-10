@@ -5,6 +5,8 @@
 <%@page import="test.dao.Com1WaitDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	boolean isDeleteSuccess = false;
+	boolean isAddSuccess = false;
 
 	// 정보 추가에 필요한 데이터 추출 : 사원번호(empno)
 	int empno = Integer.parseInt(request.getParameter("empno"));
@@ -23,11 +25,14 @@
 	dto_emp.seteCall(dto_wait.geteCall());
 	dto_emp.setePwd(dto_wait.getePwd());
 	dto_emp.setEmail(dto_wait.getEmail());
-	boolean isAddSuccess = Com1EmpDao.getInstance().insert(dto_emp);
+	isAddSuccess = Com1EmpDao.getInstance().insert(dto_emp);
 
-	// 대기 리스트에서는 그 사람 정보 삭제
-	boolean isDeleteSuccess = Com1WaitDao.getInstance().delete(empno);
-
+	// 직원 테이블에 정보 추가 성공 시
+	if(isAddSuccess){
+		// 대기 리스트에서는 그 사람 정보 삭제
+		isDeleteSuccess = Com1WaitDao.getInstance().delete(empno);
+	}
+	
 	String empInsertMessage = (isAddSuccess) ? "사원 등록 성공" : "사원 등록 실패";
 	String waitDeleteMessage = (isDeleteSuccess) ? "대기 목록에서 삭제 성공" : "대기 목록 삭제 실패";
 

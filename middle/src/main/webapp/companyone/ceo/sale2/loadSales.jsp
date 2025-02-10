@@ -6,16 +6,12 @@
     pageEncoding="UTF-8"%>
 <%
 	String date = request.getParameter("date");
-	
-	// 날짜로 조회한 경우
+	List<Com1SaleDto> list=null;
 	if(date != null){
-		System.out.println(date);
+		System.out.println("date:"+date);
 		
-		List<Com1SaleDto> list = Com1SaleDao.getInstance().getListByDate(date);
-		
-		Gson gson = new Gson();
-		for(Com1SaleDto dto : list){
-			String jjj = gson.toJson(dto);
-		}
+		list = Com1SaleDao.getInstance().getListByDate(date);
 	}
+	Gson gson = new Gson();
 %>
+<%=gson.toJson(list)%>

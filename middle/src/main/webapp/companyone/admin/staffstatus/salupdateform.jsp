@@ -38,7 +38,6 @@
 		<div class="container" id ="app">
 		
 			<h1>근무시간 급여변경</h1>
-			<p>알바는 시급과 근무시간만 기입 / 직원은 월급만 기입해주세요</p>
 			<form action="salupdate.jsp?returnurl=<%=returnurl%>" method="post" id="myForm">
 			
 				<div class="mb-3">
@@ -57,7 +56,7 @@
 					<label class="form-label">이름</label> 
 					<input class="form-control" type="text" name="ename" value="<%=dto.geteName()%>" readonly />
 				</div>
-				
+				<p>알바는 시급과 근무시간만 기입 / 직원은 월급만 기입해주세요</p>
 				<div class="mb-3">
 					<label class="form-label">월급</label> 
 					<input class="form-control" type="text" name="sal" id="sal" value="<%=dto.getSal()%>" required oninput="salInput()"
@@ -79,10 +78,12 @@
 						:class="{'is-invalid': !isworktimeValid && isworktimeDirty, 'is-valid': isworktimeValid}"/>
 						<div class="invalid-feedback">양수를 입력하세요.</div>
 				</div>
-				<button class="btn btn-success" type="submit" id="subBtn" 
-					:disabled="!(issalValid && ishsalValid && isworktimeValid)"
-				>수정하기</button>
-				<button class="btn btn-danger" type="reset">기존급여보기</button>
+				<div class="d-flex justify-content-between">
+					<button class="btn btn-success" type="submit" id="subBtn" 
+						:disabled="!(issalValid && ishsalValid && isworktimeValid)"
+					>수정하기</button>
+					<a href="<%=returnurl%>" class="btn btn-danger btn-block mb-2">돌아가기</a>
+				</div>
 			</form>
 	
 		</div>

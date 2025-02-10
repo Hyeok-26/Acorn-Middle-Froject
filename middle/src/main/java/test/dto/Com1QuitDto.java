@@ -18,7 +18,17 @@ public class Com1QuitDto {
 	private String ePwd;
 	private int sal;
 	private String lineup;
+	private String picked;
 
+	
+	
+	public String getPicked() {
+		return picked;
+	}
+	public void setPicked(String picked) {
+		this.picked = picked;
+	}
+	
 	public String getLineup() {
 		return lineup;
 	}

@@ -253,29 +253,42 @@ public class Com1QuitDao {
 			if(dto.getCondition() != null && dto.getKeyword() != null && !dto.getKeyword().isEmpty()) {
 				sql.append("WHERE ").append(dto.getCondition()).append(" LIKE ? ");
 			}
-			// 만약 정렬 옵션 값이 있다면 (날짜도 제외)
-			if(dto.getLineup() != null && dto.getLineup() != "" && !dto.getLineup().isEmpty() && dto.getLineup() != "quitdate") {
-				sql.append("ORDER BY ").append(dto.getLineup()).append(" ASC) ");
+			
+			// 만약 정렬 옵션 값이 있다면
+			if(dto.getLineup() != null && dto.getPicked() != null) {
+				System.out.println("정렬 옵션값 설정한 쿼리 쓴다~~~");
+				sql.append("ORDER BY ? ?) ");
 			} else {
-				// 정렬 옵션이 없다면 기본으로 퇴사날짜로 정렬
-				sql.append("ORDER BY quitdate DESC) ");
+				sql.append(") ");
 			}
 			
 			sql.append("result1) WHERE rnum BETWEEN ? AND ?");
 			
 			// ? 바인딩
 			pstmt = conn.prepareStatement(sql.toString());
-			System.out.println(sql);
+			System.out.println("dto.getLineup(): " + dto.getLineup());
+			System.out.println("dto.getPicked(): " + dto.getPicked());
+			System.out.println("dto.getStartRowNum(): " + dto.getStartRowNum());
+			System.out.println("dto.getEndRowNum(): " + dto.getEndRowNum());
+			
 			int paramIndex = 1;
 			// 만약 키워드 검색 옵션 값이 있다면
 			if(dto.getCondition() != null && dto.getKeyword() != null && !dto.getKeyword().isEmpty()) {
 				pstmt.setString(paramIndex++, "%" + dto.getKeyword() + "%");
 			}
+			// 만약 정렬 옵션 값이 있다면
+			if(dto.getLineup() != null && dto.getPicked() != null) {
+				System.out.println("여기 안 오나???????????");
+				pstmt.setString(paramIndex++, dto.getLineup());
+				pstmt.setString(paramIndex++, dto.getPicked());
+			}
 			pstmt.setInt(paramIndex++, dto.getStartRowNum());
 			pstmt.setInt(paramIndex, dto.getEndRowNum());
 			
+			System.out.println("실행 sql 문: " + sql);
 			// 쿼리 실행 및 결과 추출
 			rs = pstmt.executeQuery();
+			System.out.println("------------------------------------");
 			while(rs.next()) {
 				Com1QuitDto tmp = new Com1QuitDto();
 				tmp.setEmpNo(rs.getInt("empno"));
