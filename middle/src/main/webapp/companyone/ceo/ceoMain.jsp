@@ -14,7 +14,7 @@
 <title>Insert title here</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
-    .container {
+    .container3 {
        
         text-align: center;
     }
@@ -34,52 +34,64 @@
     button:hover {
         background-color:black; /* 호버 시 색상 변화 */
     }
+    .container2 {
+	max-width: 800px;
+	margin: 40px auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	border: 1px solid black;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 </style>
 </head>
 <body>
-	<div class="container">
-	<p>
-		<%=comname %>의  <%=ename %>님 접속 중
-	</p>
-	</div>
-	<div>
-		<div class="container">		
+	<%-- 관리자 페이지 전용 네비바 --%>
+	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+		<div class="container">
 			<p>
-				<a href="info/view.jsp" style="text-decoration: none; color: inherit;">
-					<button>나의 정보 보기</button>
-	    		</a>
+				<%=comname %>의  <%=ename %>님 접속 중
 			</p>
 		</div>
-		<div class="container">
-			<p>
-				<a href="sale/view.jsp" style="text-decoration: none; color: inherit;">
-	       			<button>매출 관리</button>
-	       		</a>
-			</p>
-		</div>
-		<div class="container">
-			<p>
-				<a href="accept/acceptForm.jsp" style="text-decoration: none; color: inherit;">
-	        		<button>가입 승인</button>
-	        	</a>
-	    	</p>
-		</div>
-		<div class="container">
-			<p>
-				<a href="employee/manageForm.jsp" style="text-decoration: none; color: inherit;">
-	        		<button>직원 관리</button>
-	        	</a>
-	    	</p>
-		</div>
-		<div class="container">
-			<p>
-				<a href="quit/quitForm.jsp" style="text-decoration: none; color: inherit;">
-					<button>퇴사자 관리</button>
-	    		</a>
-			</p>
+	
+		<div class="container2">	
+			<div class="container3">		
+				<p>
+					<a href="info/view.jsp" style="text-decoration: none; color: inherit;">
+						<button>나의 정보 보기</button>
+		    		</a>
+				</p>
+			</div>
+			<div class="container3">
+				<p>
+					<a href="sale/view.jsp" style="text-decoration: none; color: inherit;">
+		       			<button>매출 관리</button>
+		       		</a>
+				</p>
+			</div>
+			<div class="container3">
+				<p>
+					<a href="accept/acceptForm.jsp" style="text-decoration: none; color: inherit;">
+		        		<button>가입 승인</button>
+		        	</a>
+		    	</p>
+			</div>
+			<div class="container3">
+				<p>
+					<a href="employee/manageForm.jsp" style="text-decoration: none; color: inherit;">
+		        		<button>직원 관리</button>
+		        	</a>
+		    	</p>
+			</div>
+			<div class="container3">
+				<p>
+					<a href="quit/quitForm.jsp" style="text-decoration: none; color: inherit;">
+						<button>퇴사자 관리</button>
+		    		</a>
+				</p>
+			</div>
 		</div>
 
-	</div>
 	<div class="position-fixed bottom-0 w-100">
   	<jsp:include page="/include/footer.jsp" />
   	</div>
