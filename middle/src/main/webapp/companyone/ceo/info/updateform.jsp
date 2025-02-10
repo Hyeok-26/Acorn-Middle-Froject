@@ -22,10 +22,19 @@
 <title>/ceo/protected/updateform_ceo</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
+.container2 {
+	max-width: 800px;
+	margin: 40px auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	border: 1px solid black;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 </style>
 </head>
 <body>
-	<div class="container" id="app">
+	<div class="container2" id="app">
 		<h3>회원 정보 수정 양식</h3>
 		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
 			<div class="mb-2">
@@ -73,6 +82,10 @@
 			<button class="btn btn-success" type="submit">수정하기</button>
 		</form>
 	</div>
+		
+	<div class="position-fixed bottom-0 w-100">
+  	<jsp:include page="/include/footer.jsp" />
+  	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
@@ -178,6 +191,5 @@
 				}
 		}});
 	</script>
-	<jsp:include page="/include/footer.jsp" />
 </body>
 </html>
