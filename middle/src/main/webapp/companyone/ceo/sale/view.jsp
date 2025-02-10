@@ -15,7 +15,7 @@
 	Com1SaleDao saledao = Com1SaleDao.getInstance();
 	List<Integer> storenums = Com1Dao.getInstance().getStoreNumList();
 	
-	int storenum=-1;
+	int storenum=0;
 	List<Com1SaleDto> listall= saledao.getListAll();
 	List<Com1SaleDto> listmonth = saledao.getListSalebyMonth();
 	List<Com1SaleDto> listyear = saledao.getListSalebyYear();
@@ -87,7 +87,7 @@
 						<tr>
 							<th>호점</th>
 							<th>날짜 구분</th>
-							<th class="thsale">매출</th>
+							<th>일매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -115,7 +115,7 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th class="thsale">매출</th>
+							<th>연매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -143,7 +143,7 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th class="thsale">매출</th>
+							<th>월매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -171,13 +171,13 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th class="thsale">매출</th>
+							<th>연매출</th>
 						</tr>
 					</thead>
 					<tbody>
-						<% if (listbystoreyearly.size() == 0) { %>
+						<% if (listbystoreyearly.size()==0) { %>
 							<tr>
-								<td colspan="2">현매장 <%=storenum %>호점의 연매출 정보가 없습니다.</td>
+								<td colspan="2">매장을 선택하세요!</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoreyearly) { %>
@@ -195,13 +195,13 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th class="thsale">매출</th>
+							<th>월매출</th>
 						</tr>
 					</thead>
 					<tbody>
 						<% if (listbystoremonthly.size()==0) { %>
 							<tr>
-								<td colspan="2">현매장 <%=storenum %>호점의 월매출 정보가 없습니다.</td>
+								<td colspan="2">매장을 선택하세요!</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoremonthly) { %>
@@ -219,14 +219,14 @@
 					<thead class="table-dark">
 						<tr>
 							<th>날짜 구분</th>
-							<th class="thsale">매출</th>
+							<th>일매출</th>
 						</tr>
 					</thead>
 					
 						<% if (listbystore.size()==0){ %>
 							<tbody>
 								<tr>
-									<td colspan="2"> 현매장 <%=storenum %>호점의 매출 정보가 없습니다. </td>
+									<td colspan="2">매장을 선택하세요!</td>
 								</tr>
 							</tbody>
 						<%}else{ %>
