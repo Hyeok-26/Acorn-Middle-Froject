@@ -1,14 +1,17 @@
+<%@page import="test.dto.Com1SaleDto"%>
+<%@page import="test.dao.Com1SaleDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="test.dao.Com1SaleDao"%>
-<%@page import="test.dto.Com1SaleDto"%>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
+	
 	session.setAttribute("current_page", "salemanage2");
+	
 	//세션에 담긴 매장번호 가져오기
 	int storenum = (int) session.getAttribute("storenum");
-	System.out.println(storenum);
+	
 	// 매출 조회 페이지에서 day에 입력한 날짜를 담기
 	String selectday = request.getParameter("day");
 	
@@ -21,18 +24,23 @@
 	;
 	// 매출 조회 페이지에서 입력한 달 가져오기
 	String selectmonth = request.getParameter("month");
+	
 	// 매출 조회 페이지에서 입력한 연 가져오기
 	String selectyear = request.getParameter("year");
+	
+	
 
 	if (selectmonth != null && selectyear != null) {
 		int month = Integer.parseInt(selectmonth);
 		int year = Integer.parseInt(selectyear);
 		Com1SaleDto dto = Com1SaleDao.getInstance().getStoreMonth(storenum, year, month);
 		pageContext.setAttribute("dto", dto);
+		
 	} else if (selectyear != null) {
 		int year = Integer.parseInt(selectyear);
 		Com1SaleDto dto2 = Com1SaleDao.getInstance().getStoreYear(storenum, year);
 		pageContext.setAttribute("dto2", dto2);
+		
 
 	}
 %>
@@ -122,9 +130,9 @@
 							</thead>
 							<tbody>
 								<tr>
-									<th>${dto.year }</th>
-									<th>${dto.month }</th>
-									<th><fmt:formatNumber value="${dto.monthlySales}" pattern="#,###" /></th>
+									<th>${pageScope.dto.year }</th>
+									<th>${pageScope.dto.month }</th>
+									<th><fmt:formatNumber value="${pageScope.dto.monthlySales}" pattern="#,###" /></th>
 								</tr>
 							</tbody>
 						</table>
