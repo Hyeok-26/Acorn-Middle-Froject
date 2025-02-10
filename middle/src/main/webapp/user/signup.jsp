@@ -187,7 +187,7 @@
                 this.hasSpecial = regSpecial.test(this.pwd);
                 this.hasMinLength = regMinLength.test(this.pwd);
                 this.isPwdValid = this.hasLetter && this.hasNumber && this.hasSpecial && this.hasMinLength;
-                this.onPwd2Input();
+                // this.onPwd2Input();
             },
             onPwd2Input() {
                 this.isPwd2Dirty = true;
