@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	int comid = (int)session.getAttribute("comid");
-	String comname = (String)session.getAttribute("comname");
-	int empno = (int)session.getAttribute("empno");
-	String role = (String)session.getAttribute("role");
-	String ename = (String)session.getAttribute("ename");
-%>
+<%@ include file="/include/header.jsp" %>
+    
 <!DOCTYPE html>
 <html>
 <head>

@@ -21,6 +21,7 @@
 			session.setAttribute("empno", empno);
 			session.setAttribute("role", dto.getRole());
 			session.setAttribute("ename", ename);
+			session.setAttribute("comid", -1);	// dummy for header.jsp
 %>
 	<script>
 		alert("사원 계정 로그인 성공!");

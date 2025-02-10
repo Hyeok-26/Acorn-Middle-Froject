@@ -22,6 +22,7 @@
         	session.setAttribute("empno", empno);
         	session.setAttribute("role", dto.getRole());
         	session.setAttribute("ename", ename);
+        	session.setAttribute("storenum", -1);	// dummy for header.jsp
 %> 
 	<script>
 		alert("관리자 계정 로그인 성공!");

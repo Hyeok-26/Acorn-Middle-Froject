@@ -1,22 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	session.setAttribute("current_page", "adminhome");
-	
-	String comname = (String)session.getAttribute("comname");
-	int storenum = (int)session.getAttribute("storenum");
-	int empno = (int)session.getAttribute("empno");
-	String role = (String)session.getAttribute("role");
-	String ename = (String)session.getAttribute("ename");
-%>
+<%@ include file="/include/header.jsp" %>	
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>점장 홈페이지</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.css">
 <style>
 	.col{
 		height: 150px;
@@ -48,9 +39,6 @@
 		</jsp:include>
 		<div class="container">
 			<h1 class="mb-5">점장 인덱스 페이지</h1>
-			<p>
-				회사이름:<%=comname %> 매장번호:<%=storenum %> 사원번호:<%=empno %> 역할:<%=role %> 이름:<%=ename %>
-			</p>
 			<div class="row row-cols-1 row-cols-md-2 g-4 ">
 				<%--개인 정보 보기 --%>
 				<div class="col">

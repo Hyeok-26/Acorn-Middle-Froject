@@ -1,4 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%
+	int comid = -1;
+	String comname = null;
+	int empno = -1;
+	String role = null;
+	String ename = null;
+	int storenum = -1;
+
+	if (session.getAttribute("role") != null) {
+		comid = (int)session.getAttribute("comid");
+		comname = (String)session.getAttribute("comname");
+		empno = (int)session.getAttribute("empno");
+		role = (String)session.getAttribute("role");
+		ename = (String)session.getAttribute("ename");
+		storenum = (int)session.getAttribute("storenum");
+	}
+%>
+
 <header class="bg-dark text-white py-3">
     <div class="container d-flex justify-content-between align-items-center">
         <!-- 제목 클릭 시 새로 고침 되는 부분 -->
@@ -6,8 +25,14 @@
         
         <nav class="nav">
             <a class="nav-link text-white" href="${pageContext.request.contextPath }/">홈</a>
-            <a class="nav-link text-white" href="${pageContext.request.contextPath }/user/loginform.jsp">로그인</a>
-            <a class="nav-link text-white" href="${pageContext.request.contextPath }/user/signup.jsp">회원가입</a>
+            
+            <% if (role == null) { %>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/loginform.jsp">로그인</a>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/signup.jsp">회원가입</a>
+            <% } else { %>
+            	<p class="nav-link text-white"><%=ename %>님 접속 중</p>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/logout.jsp">로그아웃</a>
+            <% } %>
         </nav>
     </div>
 </header>
