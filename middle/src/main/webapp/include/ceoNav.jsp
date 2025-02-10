@@ -10,13 +10,13 @@
     <a class="nav-link ${current_page eq 'myinfo' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/ceo/info/view.jsp">내 정보 보기</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link ${current_page eq 'view' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/ceo/sale/view.jsp">매출 관리</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link ${current_page eq 'acceptForm' ? 'active' : ''}" href="${pageContext.request.contextPath }/companyone/ceo/accept/acceptForm.jsp">가입 승인</a>
   </li>
   <li class="nav-item">
     <a class="nav-link ${current_page eq 'manageForm' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/ceo/employee/manageForm.jsp">직원 현황</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link ${current_page eq 'view' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/ceo/sale/view.jsp">매출 관리</a>
   </li>
   <li class="nav-item">
     <a class="nav-link ${current_page eq 'quitForm' ? 'active' : ''}" href="${pageContext.request.contextPath }/companyone/ceo/quit/quitForm.jsp">퇴사 관리</a>

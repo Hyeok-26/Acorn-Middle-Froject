@@ -52,6 +52,13 @@
 		</div>
 		<div class="container">
 			<p>
+				<a href="sale/view.jsp" style="text-decoration: none; color: inherit;">
+	       			<button>매출 관리</button>
+	       		</a>
+			</p>
+		</div>
+		<div class="container">
+			<p>
 				<a href="accept/acceptForm.jsp" style="text-decoration: none; color: inherit;">
 	        		<button>가입 승인</button>
 	        	</a>
@@ -71,13 +78,7 @@
 	    		</a>
 			</p>
 		</div>
-		<div class="container">
-			<p>
-				<a href="sale/view.jsp" style="text-decoration: none; color: inherit;">
-	       			<button>매출 관리</button>
-	       		</a>
-			</p>
-		</div>
+
 	</div>
 	<div class="position-fixed bottom-0 w-100">
   	<jsp:include page="/include/footer.jsp" />
