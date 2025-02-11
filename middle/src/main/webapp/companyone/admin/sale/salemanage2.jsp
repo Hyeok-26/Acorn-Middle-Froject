@@ -5,12 +5,13 @@
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ include file="/include/header.jsp" %>
 <%
 	
 	session.setAttribute("current_page", "salemanage2");
 	
 	//세션에 담긴 매장번호 가져오기
-	int storenum = (int) session.getAttribute("storenum");
+	
 	
 	// 매출 조회 페이지에서 day에 입력한 날짜를 담기
 	String selectday = request.getParameter("day");

@@ -87,8 +87,6 @@
 			</div>
 		</div>
 
-	<div class="position-fixed bottom-0 w-100">
-  	<jsp:include page="/include/footer.jsp" />
-  	</div>
+	<%@ include file="/include/footer.jsp" %>
 </body>
 </html>

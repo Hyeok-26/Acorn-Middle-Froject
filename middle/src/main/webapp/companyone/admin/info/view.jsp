@@ -5,15 +5,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/include/header.jsp" %>		
 <%
 	session.setAttribute("current_page", "infoview");
 
 	//점장이 로그인한 상태로 개인정보 조회
 	//필요한 정보 : 사원번호, 비밀번호, 이름,  이메일 , 전화번호, 소속회사, 소속지점
-	int empno = (int)session.getAttribute("empno");
+	
 	//비밀번호는 비밀번호 수정 페이지에서...
 	//이름 뽑아오기
-	String ename = (String)session.getAttribute("ename");
+	
 	
 	// DB에서 점장정보 뽑아오기
 	Com1EmpDao dao=Com1EmpDao.getInstance();
@@ -23,10 +24,9 @@
 		
 	//소속회사의 정보는 comid를 통해서 test_using_app에서 comname를 뽑아야 한다.
 	//로그인한 점장의 comId 가져오기
-	int comid=empdto.getComId();
+	
 	//로그인한 점장의 회사이름 뽑기
 	UsingDao dao_using=UsingDao.getInstance();
-	String comname=dao_using.getComName(comid);	
 	
 	session.setAttribute("comname", comname);
 	

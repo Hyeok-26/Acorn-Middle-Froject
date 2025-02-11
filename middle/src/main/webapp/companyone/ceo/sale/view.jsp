@@ -11,12 +11,9 @@
     //현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "view");
 	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
-	String comname = (String)session.getAttribute("comname");
-    String ename = (String)session.getAttribute("ename");
 	Com1SaleDao saledao = Com1SaleDao.getInstance();
 	List<Integer> storenums = Com1Dao.getInstance().getStoreNumList();
 	
-	int storenum=0;
 	List<Com1SaleDto> listall= saledao.getListAll();
 	List<Com1SaleDto> listmonth = saledao.getListSalebyMonth();
 	List<Com1SaleDto> listyear = saledao.getListSalebyYear();
@@ -63,9 +60,15 @@
 	
 	<!-- 조회조건 -->
 	<div class="nav nav-tabs">
-		<button class="tab-button nav-item nav-link" id="allTab" onclick="switchTab('all')">전체 매출</button>
-		<button class="tab-button nav-item nav-link" id="yearTab" onclick="switchTab('year')">전체 연매출</button>
-		<button class="tab-button nav-item nav-link" id="monthTab" onclick="switchTab('month')">전체 월매출</button>
+		<div>
+			<button class="tab-button nav-item nav-link" id="allTab" onclick="switchTab('all')">전체 매출</button>
+		</div>
+		<div>
+			<button class="tab-button nav-item nav-link" id="yearTab" onclick="switchTab('year')">전체 연매출</button>
+		</div>
+		<div>
+			<button class="tab-button nav-item nav-link" id="monthTab" onclick="switchTab('month')">전체 월매출</button>
+		</div>
 		<div class="tab-button nav-item nav-link" id="storeTab" onclick="switchTab('store')">
 			<form action="view.jsp" method="get" id="storeForm">
 				<label for="storenum">지점 선택: </label> 
@@ -248,9 +251,9 @@
 	
 <div class="table-container">
 </div>
-<div class="position-fixed bottom-0 w-100">
-<jsp:include page="/include/footer.jsp" />
-</div>
+
+
+
 	
 	<script>
 	    function switchTab(tab) {
@@ -280,5 +283,6 @@
 	    };
 
 	</script>
+	<%@ include file="/include/footer.jsp" %>
 </body>
 </html>

@@ -6,13 +6,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/include/header.jsp" %>
 
 <%
 	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "myinfo");
-	int empno = (int)session.getAttribute("empno");
-	int comid = (int)session.getAttribute("comid");
-	String comname = UsingDao.getInstance().getComName(comid);
+
 	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
 %>
 
@@ -75,7 +74,7 @@ a:hover {
 h1 {
 	text-align: center;
 	margin-bottom: 20px;
-	color: #333;
+	/* color: #333; */
 }
 
 table {
@@ -173,12 +172,10 @@ td a:hover {
 		</div>
 	</div>
 	
-	<div class="position-fixed bottom-0 w-100">
-  	<jsp:include page="/include/footer.jsp" />
-  	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
+	<%@ include file="/include/footer.jsp" %>
 </body>
 </html>
