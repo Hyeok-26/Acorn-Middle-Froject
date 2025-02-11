@@ -69,7 +69,7 @@
 	        <div class="col-md-4 mb-4">
 	            <div class="card shadow-lg border-primary">
 	                <div class="card-header bg-primary text-white">
-	                    <h5 class="card-title"><a href="#section1"><span style="color:white">CEO 입장</span></a></h5>
+	                    <h5 class="card-title"><a href="#section1" style="text-decoration: none;"><span style="color:white">CEO 입장</span></a></h5>
 	                </div>
 	                <div class="card-body">
 	                    <ul class="list-unstyled">
@@ -87,7 +87,7 @@
 	        <div class="col-md-4 mb-4">
 	            <div class="card shadow-lg border-success">
 	                <div class="card-header bg-success text-white">
-	                    <h5 class="card-title"><a href="#section2"><span style="color:white">점장 입장</span></a></h5>
+	                    <h5 class="card-title"><a href="#section2" style="text-decoration: none;"><span style="color:white">점장 입장</span></a></h5>
 	                </div>
 	                <div class="card-body">
 	                    <ul class="list-unstyled">
@@ -103,7 +103,7 @@
 	        <div class="col-md-4 mb-4">
 	            <div class="card shadow-lg border-warning">
 	                <div class="card-header bg-warning text-white">
-	                    <h5 class="card-title"><a href="#section3"><span style="color:white">직원 입장</span></a></h5>
+	                    <h5 class="card-title"><a href="#section3" style="text-decoration: none;"><span style="color:white">직원 입장</span></a></h5>
 	                </div>
 	                <div class="card-body">
 	                    <ul class="list-unstyled">
