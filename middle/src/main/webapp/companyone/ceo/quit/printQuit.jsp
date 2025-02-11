@@ -32,6 +32,7 @@
 		String filePath = templatePath + "\\proof-of-employment.xlsx";
 		System.out.println(filePath);
 		//C:\team\proj2\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\middle\file\proof-of-employment.xlsx
+		// file 폴더에 있는 엑셀 파일이 위 경로 안에 있어야 함
 		
 		// 엑셀 파일 불러오기  filePath.replace("\\", "//")
 		OPCPackage opcPackage = OPCPackage.open(new File(filePath.replace("\\", "//")));
