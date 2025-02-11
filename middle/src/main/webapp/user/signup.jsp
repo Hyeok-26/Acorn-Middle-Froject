@@ -45,9 +45,9 @@
 					<option value="">선택하세요</option>
 					<% 
             		if (comIdList != null && !comIdList.isEmpty()) {
-                	for (int comid : comIdList) { 
+                	for (int comidtmp : comIdList) { 
         		%>
-					<option value="<%= comid %>"><%= comid %></option>
+					<option value="<%= comidtmp %>"><%= comidtmp %></option>
 					<% 
                 		} 
             		} else { 
@@ -63,8 +63,8 @@
 					v-model="storenum" class="form-control" id="storenum"
 					name="storenum" required>
 					<option value="">선택하세요</option>
-					<% for (int storenum : storeNumList) { %>
-					<option value="<%= storenum %>"><%=storenum %></option>
+					<% for (int storenumtmp : storeNumList) { %>
+					<option value="<%= storenumtmp %>"><%=storenumtmp %></option>
 					<% } %>
 				</select>
 			</div>
