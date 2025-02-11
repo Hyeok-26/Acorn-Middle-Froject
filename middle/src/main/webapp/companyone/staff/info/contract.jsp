@@ -2,9 +2,10 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <%
 
-int empno=(int)session.getAttribute("empno");
+
 
 Com1EmpDao dao=Com1EmpDao.getInstance();
 Com1EmpDto dto=dao.getData(empno);
@@ -14,7 +15,7 @@ Com1EmpDto dto=dao.getData(empno);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>근로계약서</title>
+<title>근로계약서 조회</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
@@ -25,28 +26,36 @@ Com1EmpDto dto=dao.getData(empno);
 		border-radius: 8px;
 		border: 1px solid black;
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		text-align: center;
 	}
-	#contractLink{
-		width: 200px;
-		height: 250px;
+	#contractLink {
+		display: block;
+		margin: 10px auto;
+		cursor: pointer;
 	}
-	#contractFile{
+	#contractFile {
 		display: none;
+	}
+	#uploadBtn:hover {
+		background-color: grey;
+	}
+	#deleteBtn:hover {
+		background-color: darkred;
 	}
 </style>
 </head>
 <body>
 <jsp:include page="/include/empNav.jsp"></jsp:include>
-	<div class="container2" id="app">
+	<div class="container2">
 		<h1>근로 계약서 보기</h1>
-		<form action="contractUpdate.jsp?empno=<%=empno %>" method="post" id="contractForm">
+		<form action="uploadContract.jsp?empno=<%=empno %>" method="post" id="contractForm">
 		
 		<div>
-			<label><strong><%=dto.geteName() %></strong> 님의 근로계약서 입니다</label>
+			<h5><strong><%=dto.geteName() %></strong> 님의 근로계약서</h5>
 			<div>
 				<input type="file" name="contractFile" id="contractFile" accept="image/*"/>
 				<input type="hidden" name="srcurl" id="srcurl" />
-				<a href="javascript:" name="contractLink" id="contractLink">
+				<a href="javascript:" id="contractLink">
 					<%if(dto.getContract()==null){ %>
 						<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
 							<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
@@ -59,40 +68,58 @@ Com1EmpDto dto=dao.getData(empno);
 				</a>
 			</div>
 			<br>
-			<button class="btn btn-dark" type="submit">확인</button>
+			<button class="btn btn-dark" type="submit" id="uploadBtn">업로드</button>
+			<% if(dto.getContract() != null) { %>
+				<button class="btn btn-danger" id="deleteBtn">삭제</button>
+			<% } %>
 		</div>
 		</form>	
 			
 	</div>
-	<div class="position-fixed bottom-0 w-100">
-  		<jsp:include page="/include/footer.jsp" />
-  	</div>
+
+<%@ include file="/include/footer.jsp" %>
 	<script>
-		
-		document.querySelector("#contractLink").addEventListener("click", ()=>{
-			// input type="file" 요소를 강제 클릭해서 파일 선택 창을 띄운다.
+	document.querySelector("#uploadBtn").disabled = true;
+		// 파일 선택 버튼 클릭
+		document.querySelector("#contractLink").addEventListener("click", () => {
 			document.querySelector("#contractFile").click();
 		});
-		//새로운 이미지가 선택되었을때
-		document.querySelector("#contractFile").addEventListener("change", (e)=>{
-			
-			//선택된 파일 배열 객체를 얻어낸다.
+
+		// 새 이미지 선택 시 미리보기
+		document.querySelector("#contractFile").addEventListener("change", (e) => {
 			const files = e.target.files;
-			//만일 파일 데이터가 존재한다면
-			if(files.length > 0){
-				//파일로 부터 데이터를 읽어들일 객체 생성
-				const reader=new FileReader();
-				//로딩이 완료(파일데이터를 모드 읽었을때) 되었을때 실행할 함수 등록
-				reader.onload=(event)=>{
-					//읽은 파일 데이터 얻어내기 
-					const data=event.target.result;
-					//이미지 src 에 설정
-					document.querySelector("#srcurl").value=data;
+			if(files.length > 0) {
+				
+				const reader = new FileReader();
+				reader.onload = (event) => {
+					const data = event.target.result;
+					document.querySelector("#srcurl").value = data;
 					const img=`<img src="\${data}" id="contractImage" alt="계약서 이미지">`;
 					document.querySelector("#contractLink").innerHTML=img;
 				};
-				//파일을 DataURL 형식의 문자열로 읽어들이기
 				reader.readAsDataURL(files[0]);
+				
+		        // 파일이 선택되면 버튼 활성화
+		        document.querySelector("#uploadBtn").disabled = false;
+		    } else {
+		        // 파일이 없으면 버튼 비활성화
+		        document.querySelector("#uploadBtn").disabled = true;
+		    }
+			
+			
+		});
+
+		// 삭제 버튼 클릭 시 confirm 창 띄우고 삭제 요청
+		document.querySelector("#deleteBtn").addEventListener("click", (event) => {
+			event.preventDefault();
+			if (confirm("정말 삭제하시겠습니까?")) {
+				fetch("deleteContract.jsp?empno=<%= empno %>", { method: "POST" })
+				.then(response => response.text())
+				.then(data => {
+					alert("근로 계약서가 삭제되었습니다.");
+					location.reload();
+				})
+				.catch(error => alert("삭제 중 오류 발생"));
 			}
 		});
 	</script>
