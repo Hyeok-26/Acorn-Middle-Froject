@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp" %>
+<%
+	session.setAttribute("current_page", "");
+%>
     
 <!DOCTYPE html>
 <html>
@@ -40,15 +43,11 @@
 }
 </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-light">
 	<%-- 관리자 페이지 전용 네비바 --%>
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
-		<div class="container">
-			<p>
-				<%=comname %>의  <%=ename %>님 접속 중
-			</p>
-		</div>
-	
+	<div class="main flex-grow-1">  
+
 		<div class="container2">	
 			<div class="container3">		
 				<p>
@@ -86,6 +85,7 @@
 				</p>
 			</div>
 		</div>
+	</div>
 
 	<%@ include file="/include/footer.jsp" %>
 </body>

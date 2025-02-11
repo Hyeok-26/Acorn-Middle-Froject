@@ -16,6 +16,7 @@
 		ename = (String)session.getAttribute("ename");
 		storenum = (int)session.getAttribute("storenum");
 	}
+
 %>
 
 <header class="bg-dark text-white py-3">

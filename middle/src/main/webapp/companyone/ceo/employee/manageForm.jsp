@@ -4,7 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/include/header.jsp"></jsp:include>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
@@ -89,8 +89,15 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
+
+	<jsp:include page="/include/header.jsp"></jsp:include>
+
+
+
 	<%-- 관리자 페이지 전용 네비바 --%>
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+	
+	
 	
 	
 	<div class="main flex-grow-1">  
