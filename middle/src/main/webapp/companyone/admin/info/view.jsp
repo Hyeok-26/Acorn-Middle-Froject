@@ -153,7 +153,7 @@
 					</tbody>
 				</table>
 			</div>
-			<a href="${pageContext.request.contextPath}/companyone/admin/info/updateform.jsp" class="btn btn-primary mt-2" role="button" >개인정보수정</a>
+			<a href="${pageContext.request.contextPath}/companyone/admin/info/updateForm.jsp" class="btn btn-primary mt-2" role="button" >개인정보수정</a>
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />

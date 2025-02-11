@@ -85,7 +85,7 @@
 					<div class="card p-4">
 						<h1 class="mb-4">원하는 날짜의 일 매출 조회하기</h1>
 						<%--조회 버튼--%>
-						<form action="salemanage2.jsp?day=" method="get" class="mb-3">
+						<form action="saleManage2.jsp?day=" method="get" class="mb-3">
 							<input type="date" name="day" required />
 							<button type="submit">조회</button>
 						</form>
@@ -114,7 +114,7 @@
 					<div class="card p-4">
 						<h1 class="mb-4">원하는 달의 달 매출 조회하기</h1>
 						<%--입력 및 조회 버튼 --%>
-						<form action="salemanage2.jsp" method="get" class="mb-3">
+						<form action="saleManage2.jsp" method="get" class="mb-3">
 							<input type="number" name="year" required /> <input
 								type="number" name="month" required />
 							<button type="submit">조회</button>
@@ -146,7 +146,7 @@
 					<div class="card p-4">
 						<h1>원하는 년도의 연 매출 조회하기</h1>
 						<%--입력 및 조회 버튼 --%>
-						<form action="salemanage2.jsp" method="get" class="mb-3">
+						<form action="saleManage2.jsp" method="get" class="mb-3">
 							<input type="number" name="year" required />
 							<button type="submit">조회</button>
 						</form>

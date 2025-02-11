@@ -34,14 +34,14 @@
 %>
 	<script>
 		alert("입력 성공!");
-		window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/salemanage2.jsp";
+		window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/saleManage2.jsp";
 	</script>
 <%
 	} else{
 %>
 	<script>
 		alert("입력 실패!");
-		 window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/insertform.jsp";
+		 window.location.href = "<%= request.getContextPath() %>/companyone/admin/sale/insertForm.jsp";
 	</script>
 <%
 	}

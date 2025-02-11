@@ -60,7 +60,7 @@
 						<div class="card-body">
 							<h5 class="card-title">매출관리</h5>
 						</div>
-						<a href="${pageContext.request.contextPath}/companyone/admin/sale/insertform.jsp"
+						<a href="${pageContext.request.contextPath}/companyone/admin/sale/insertForm.jsp"
 							class="stretched-link"></a>
 					</div>
 				</div>

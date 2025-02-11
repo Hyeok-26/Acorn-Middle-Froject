@@ -106,7 +106,7 @@
 	<% } else { %>
 	    <script>
 	        alert("수정 실패했습니다.");
-	        location.href = "updateform.jsp";
+	        location.href = "updateForm.jsp";
 	    </script>
 	<% } %>
 </div>

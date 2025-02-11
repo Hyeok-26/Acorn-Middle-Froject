@@ -24,7 +24,7 @@
     <div class="d-flex align-items-center gap-2 mb-3">
 	    <button type="submit" class="btn btn-success" id="addBtn">매출추가</button>
 	    <button type="button" class="btn btn-primary" id="viewBtn"
-		    onclick="location.href='<%= request.getContextPath() %>/companyone/admin/sale/salemanage2.jsp'">
+		    onclick="location.href='<%= request.getContextPath() %>/companyone/admin/sale/saleManage2.jsp'">
 		    매출조회
 		</button>
 	</div>
