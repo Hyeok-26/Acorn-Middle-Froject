@@ -24,15 +24,23 @@
         <h1 class="m-0" onclick="refreshPage()"  style="cursor: pointer;">프랜차이즈 관리 시스템</h1>
         
         <nav class="nav">
-            <a class="nav-link text-white" href="${pageContext.request.contextPath }/">홈</a>
-            
             <% if (role == null) { %>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/">홈</a>
             	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/loginform.jsp">로그인</a>
             	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/signup.jsp">회원가입</a>
-            <% } else { %>
+            <% } else if(role.equals("CEO")){ %>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/companyone/ceo/ceoMain.jsp">홈</a>
             	<p class="nav-link text-white"><%=ename %>님 접속 중</p>
             	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/logout.jsp">로그아웃</a>
-            <% } %>
+            <% } else if(role.equals("ADMIN")) {%>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/companyone/admin/adminMain.jsp">홈</a>
+            	<p class="nav-link text-white"><%=ename %>님 접속 중</p>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/logout.jsp">로그아웃</a>
+            <% } else { %>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/companyone/staff/staffMain.jsp">홈</a>
+            	<p class="nav-link text-white"><%=ename %>님 접속 중</p>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/logout.jsp">로그아웃</a>
+            <%} %>
         </nav>
     </div>
 </header>
