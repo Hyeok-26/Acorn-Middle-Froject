@@ -5,7 +5,7 @@
 %>
     
 <%-- 관리자 전용 네비바: 내 정보 보기 | 가입 승인 | 직원 현황 | 매출 관리 | 퇴사 관리 --%>
-<ul class="mb-5 nav justify-content-center nav-pills nav-fill">
+<ul class="mt-2 mb-5 nav justify-content-center nav-pills nav-fill">
   <li class="nav-item">
     <a class="nav-link ${current_page eq 'myinfo' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/ceo/info/view.jsp">내 정보 보기</a>
   </li>

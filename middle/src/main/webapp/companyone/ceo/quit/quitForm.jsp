@@ -110,17 +110,16 @@
 	/* div{ border:1px solid red; } */
 </style>
 <!-- 페이지 로딩에 필요한 자원 -->
-<jsp:include page="/include/resource.jsp"></jsp:include>
+<%-- <jsp:include page="/include/resource.jsp"></jsp:include> --%>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	
+
+	<!-- 공통 네비바 -->
+	<jsp:include page="/include/header.jsp"></jsp:include>
 	<!-- 관리자 페이지 전용 네비바 -->
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
  
-	<%-- <!-- 현재 접속 상태 표시 -->
-	<div>
-	<p><%=comname %>의  <%=ename %>님 접속 중</p>
-	</div> --%>
 	
 	<div class="main flex-grow-1">  
 	<!-- 본문 -->
@@ -247,7 +246,7 @@
 		
 		
 		<!-- 퇴사자 리스트 -->	
-		<div style="margin:10px;">
+		<div style="margin:10px; width:900px;">
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead class="table-dark">
