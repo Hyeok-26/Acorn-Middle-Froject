@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter({"/post/protected/*"})
+@WebFilter({"/post/protected/*", "/companyone/*"})
 public class LoginFilter implements Filter{
 	
 	//@WebFilter() 에 명시한 패턴의 요청을 하면 아래의 메소드가 호출된다.

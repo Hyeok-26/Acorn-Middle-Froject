@@ -1,9 +1,10 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
+<%@ include file="/include/header.jsp" %>
 <%
-	int empno = Integer.parseInt(request.getParameter("empno"));
+	empno = Integer.parseInt(request.getParameter("empno"));
 	String returnurl = request.getParameter("returnurl");
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto= dao.getData(empno);
@@ -16,7 +17,7 @@
 <title>근무시간 수정폼</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
-	.container {
+	.containers {
         max-width: 600px;
         margin: 40px auto;
         background-color: #fff;
@@ -35,7 +36,7 @@
 	<jsp:include page="/include/adminNav.jsp"></jsp:include>
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
-		<div class="container" id ="app">
+		<div class="containers" id ="app">
 		
 			<h1>근무시간 급여변경</h1>
 			<form action="salupdate.jsp?returnurl=<%=returnurl%>" method="post" id="myForm">
