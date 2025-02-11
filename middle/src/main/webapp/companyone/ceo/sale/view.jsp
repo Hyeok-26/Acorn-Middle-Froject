@@ -44,16 +44,11 @@
 <!-- 페이지 로딩에 필요한 자원 -->
 <jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
-<body>
+<body  class="d-flex flex-column min-vh-100 bg-light">
 	<%-- 관리자 페이지 전용 네비바 --%>
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
-
-	<!-- 현재 접속 상태 표시 -->
-	<div class="container">
-		<p><%=comname %>의
-			<%=ename %>님 접속 중
-		</p>
-	</div>
+	<div class="main flex-grow-1">  
+	
 	
 <!-- 본문 -->
 <div class="contents text-center mt-3 mx-auto" style="width: 900px;">
@@ -251,6 +246,7 @@
 	
 <div class="table-container">
 </div>
+	</div>
 
 
 
