@@ -3,13 +3,13 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/include/header.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>	
 <%
-	int empno = (int) session.getAttribute("empno");
+	//int empno = (int) session.getAttribute("empno");
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
 	
-	int comid = dto.getComId();
-	String comname = UsingDao.getInstance().getComName(comid);
+	//int comid = dto.getComId();
+	//String comname = UsingDao.getInstance().getComName(comid);
 %>
 <!DOCTYPE html>
 <html>

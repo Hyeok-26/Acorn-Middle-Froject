@@ -4,9 +4,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/include/header.jsp" %>
 <%
 	// 세션의 로그인 정보
-	String role = (String)session.getAttribute("role");
+	//String role = (String)session.getAttribute("role");
 	
 	//검색조건이 있는지 읽어와 본다.
 	String condition=request.getParameter("condition");
@@ -21,7 +22,7 @@
 	}
 	
 	//한 페이지에 몇개씩 표시할 것인지
-	final int PAGE_ROW_COUNT=5;
+	final int PAGE_ROW_COUNT=10;
 	//하단 페이지를 몇개씩 표시할 것인지
 	final int PAGE_DISPLAY_COUNT=5;
 	
@@ -80,40 +81,57 @@
 <head>
 <meta charset="UTF-8">
 <title>/post/list.jsp</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<jsp:include page="/include/resource.jsp"></jsp:include>
+<style>
+	
+</style>
 </head>
 <body>
-	<div class="container">
-		<!-- CEO와 ADMIN만 새글 작성 보이게 코딩 -->
-		<c:if test="${not empty sessionScope.role and (sessionScope.role eq 'CEO' or sessionScope.role eq 'ADMIN')}">
-    		<a href="${pageContext.request.contextPath }/post/protected/new.jsp">새글 작성</a>
-		</c:if>
-		<h1>게시글 목록 입니다</h1>
-		<table class="table table-striped">
-			<thead class="table-dark">
-				<tr>
-					<th>번호</th>
-					<th>작성자</th>
-					<th>제목</th>
-					<th>조회수</th>
-					<th>등록일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="post" items="${list}">
+	<div class="container main flex-grow-1">
+		<div class="title-container d-flex justify-content-between mt-4 ms-2 me-2">
+			<h1>공지사항</h1>
+			<!-- CEO와 ADMIN만 새글 작성 보이게 코딩 -->
+			<c:if test="${not empty sessionScope.role and (sessionScope.role eq 'CEO' or sessionScope.role eq 'ADMIN')}">
+	    		<a href="${pageContext.request.contextPath }/post/protected/new.jsp" class="mt-3">
+	    			<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+					  	<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+					    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+					</svg>
+				</a>
+			</c:if>
+		</div>
+		<div class="table-responsive rounded-3 overflow-hidden  border border-secondary">
+			<table class="table table-striped text-center mb-0">
+				<thead class="table-Secondary">
 					<tr>
-						<td>${post.num}</td>
-						<td>${post.writer}</td>
-						<td>
-							<a href="view.jsp?num=${post.num}${findQuery}">${post.title}</a>
-						</td>
-						<td>${post.viewCount}</td>
-						<td>${post.createdAt}</td>
+						<th>번호</th>
+						<th>작성자</th>
+						<th>제목</th>
+						<th>조회수</th>
+						<th>등록일</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<nav>
+				</thead>
+				<tbody>
+					<c:forEach var="post" items="${list}">
+						<tr>
+							<td>${post.num}</td>
+							<td>${post.writer}</td>
+							<td>
+								<a href="view.jsp?num=${post.num}${findQuery}">${post.title}</a>
+							</td>
+							<td>${post.viewCount}</td>
+							<td>${post.createdAt}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		<c:if test="${not empty dto.keyword }">
+        	<p class="d-flex justify-content-end">
+        		<strong>${totalRow }</strong> 개의 자료가 검색 되었습니다.
+        	</p>
+        </c:if>	
+		<nav class="d-flex justify-content-center mt-2">
 			<ul class="pagination">
 				<!-- Prev 버튼 -->
 				<c:if test="${startPageNum ne 1}">
@@ -135,8 +153,7 @@
 				</c:if>
 			</ul>		
 		</nav>
-        <form action="${pageContext.request.contextPath }/post/list.jsp" method="get">
-        	<label for="condition">검색조건</label>
+        <form action="${pageContext.request.contextPath }/post/list.jsp" method="get" class="d-flex justify-content-end">
         	<select name="condition" id="condition">
         		<option value="title_content" ${dto.condition eq 'title_content' ? 'selected' : ''}>제목 + 내용</option>
         		<option value="title" ${dto.condition eq 'title' ? 'selected' : ''}>제목</option>
@@ -146,11 +163,9 @@
         	<button class="btn btn-primary btn-sm" type="submit">검색</button>
         	<a class="btn btn-success btn-sm" href="${pageContext.request.contextPath }/post/list.jsp">새로고침</a>
         </form>
-        <c:if test="${not empty dto.keyword }">
-        	<p>
-        		<strong>${totalRow }</strong> 개의 자료가 검색 되었습니다.
-        	</p>
-        </c:if>				
 	</div>
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 </body>
 </html>
