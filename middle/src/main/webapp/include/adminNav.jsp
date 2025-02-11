@@ -11,9 +11,7 @@
 
 <%-- 점장 전용 네비바: 홈 | 개인정보조회 | 매출관리 | 사원승인 | 직원관리 | 직원스케줄 | 직원월급 --%>
 <ul class="mb-5 nav justify-content-center nav-pills nav-fill">
-  <li class="nav-item">
-    <a class="nav-link ${current_page eq 'adminhome' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/admin/adminMain.jsp">점장홈</a>
-  </li>
+  
   
   <li class="nav-item">
     <a class="nav-link ${current_page eq 'infoview' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/admin/info/view.jsp">개인정보조회</a>
