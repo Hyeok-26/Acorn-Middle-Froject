@@ -60,9 +60,15 @@
 	
 	<!-- 조회조건 -->
 	<div class="nav nav-tabs">
-		<button class="tab-button nav-item nav-link" id="allTab" onclick="switchTab('all')">전체 매출</button>
-		<button class="tab-button nav-item nav-link" id="yearTab" onclick="switchTab('year')">전체 연매출</button>
-		<button class="tab-button nav-item nav-link" id="monthTab" onclick="switchTab('month')">전체 월매출</button>
+		<div>
+			<button class="tab-button nav-item nav-link" id="allTab" onclick="switchTab('all')">전체 매출</button>
+		</div>
+		<div>
+			<button class="tab-button nav-item nav-link" id="yearTab" onclick="switchTab('year')">전체 연매출</button>
+		</div>
+		<div>
+			<button class="tab-button nav-item nav-link" id="monthTab" onclick="switchTab('month')">전체 월매출</button>
+		</div>
 		<div class="tab-button nav-item nav-link" id="storeTab" onclick="switchTab('store')">
 			<form action="view.jsp" method="get" id="storeForm">
 				<label for="storenum">지점 선택: </label> 
