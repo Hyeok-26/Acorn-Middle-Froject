@@ -44,7 +44,7 @@
 		<%}else{ %>
 			<p class="alert alert-danger">
 				업로드 실패
-				<a class="alert-link" href="salupdateform.jsp?empno=<%=empno %>">다시 업로드해주세요</a>
+				<a class="alert-link" href="salUpdateForm.jsp?empno=<%=empno %>">다시 업로드해주세요</a>
 			</p>
 		<% } %>
 	

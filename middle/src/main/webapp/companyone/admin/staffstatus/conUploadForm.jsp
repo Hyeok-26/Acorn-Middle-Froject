@@ -32,7 +32,7 @@
                 <div class="col-lg-6">
                     <div class="card shadow-sm p-4">
 						<h1 class="text-center mb-4">근로계약서 업로드</h1>
-						<form action="conupload.jsp?empno=<%=empno%>" method="post"  id="ConForm">
+						<form action="conUpload.jsp?empno=<%=empno%>" method="post"  id="ConForm">
                             <div class="mb-3">
                                 <label for="imgcon" class="form-label">근로계약서 업로드</label>
                                 <input type="file" class="form-control" id="imgcon" accept="image/*" required onchange="previewImage(event)">

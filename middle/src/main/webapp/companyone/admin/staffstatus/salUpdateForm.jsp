@@ -39,7 +39,7 @@
 		<div class="containers" id ="app">
 		
 			<h1>근무시간 급여변경</h1>
-			<form action="salupdate.jsp?returnurl=<%=returnurl%>" method="post" id="myForm">
+			<form action="salUpdate.jsp?returnurl=<%=returnurl%>" method="post" id="myForm">
 			
 				<div class="mb-3">
 					<label class="form-label">회사ID</label> 

@@ -63,7 +63,7 @@
 			     	 	
 			     	 	<%--srcurl이 null이거나, 공백을 제거했을 때 빈 문자열이면 true --%>
 			     	    <% if (srcurl == null || srcurl.trim().isEmpty()) { %>
-			     	    <a href="uploadform.jsp?storenum=<%=storenum %>" class="btn btn-primary mt-3" role="button" >근무표업로드</a>
+			     	    <a href="uploadForm.jsp?storenum=<%=storenum %>" class="btn btn-primary mt-3" role="button" >근무표업로드</a>
 						<% } else { %>
 						<button class="btn btn-primary mt-3" disabled  >근무표업로드</button>
     					
