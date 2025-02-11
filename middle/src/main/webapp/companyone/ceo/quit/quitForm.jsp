@@ -4,21 +4,17 @@
 <%@page import="test.dao.Com1QuitDao"%>
 <%@page import="test.dto.Com1QuitDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="/include/header.jsp"></jsp:include>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	// 현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "quitForm");
-
-	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
-	String comname = (String)session.getAttribute("comname");
-	String ename = (String)session.getAttribute("ename");
 
 	// 선언 초기화
 	String findQuery="";					// 페이지 로딩 uri
 	final int PAGE_ROW_COUNT = 6;			// 한 페이지에 표시할 개수
 	final int PAGE_DISPLAY_COUNT = 3;		// 하단 페이지에 표시할 개수
 	Com1QuitDto dto = new Com1QuitDto();	// 로딩 데이터			
-	
 	
 	
 	// 검색 조건이 있는지 확인 
@@ -39,7 +35,6 @@
 		condition = "ename";
 		keyword = "";
 	}
-	
 	
 	
 	// 정렬 조건이 있는지 확인
@@ -74,7 +69,6 @@
 	dto.setEndRowNum(endRowNum);
 	
 	
-	
 	// DB에서 데이터 가져오기
 	List<Com1QuitDto> list =  Com1QuitDao.getInstance().getList(dto);
 	
@@ -105,18 +99,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>퇴사자 관리 페이지</title>
+<title>퇴사자 관리 페이지</title>	
+<!-- 페이지 로딩에 필요한 자원 -->
+<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	/* div{ border:1px solid red; } */
 </style>
-<!-- 페이지 로딩에 필요한 자원 -->
-<%-- <jsp:include page="/include/resource.jsp"></jsp:include> --%>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-
-	<!-- 공통 네비바 -->
-	<jsp:include page="/include/header.jsp"></jsp:include>
 	<!-- 관리자 페이지 전용 네비바 -->
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
  

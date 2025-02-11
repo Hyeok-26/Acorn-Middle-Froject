@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <%
-	int num = Integer.parseInt(request.getParameter("storenum"));
+	//int storenum = Integer.parseInt(request.getParameter("storenum"));
 %>
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@
                 <div class="col-lg-6">
                     <div class="card shadow-sm p-4">
 						<h1 class="text-center mb-4">직원 스케줄 업로드</h1>
-						<form action="upload.jsp?storenum=<%=num %>" method="post"  id="SchForm">
+						<form action="upload.jsp?storenum=<%=storenum %>" method="post"  id="SchForm">
                             <div class="mb-3">
                             	<input class="form-control" type="month" id="name" name="title" /> <br />
                                 <label for="imgEmpSchedule" class="form-label">스케줄 이미지 업로드</label>

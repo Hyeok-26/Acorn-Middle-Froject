@@ -4,21 +4,14 @@
 <%@page import="java.util.List"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="/include/header.jsp"></jsp:include>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "manageForm");
-
-
-
-	//로그인 상태 표시 : 세션 영역에서 접속 계정 정보 가져오기
-	String comname = (String)session.getAttribute("comname");
-	String ename = (String)session.getAttribute("ename");
-
 	
 	// DB 에서 조회할 때 넘겨줄 객체
 	Com1EmpDto dto = new Com1EmpDto();
-	
 	
 	// 보여줄 조건 기본 값
 	String condition = "ALL";
@@ -89,16 +82,13 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 목록 페이지</title>
+<!-- 페이지 로딩에 필요한 자원 -->
+<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	/* div{ border:1px solid red; } */
 </style>
-<!-- 페이지 로딩에 필요한 자원 -->
-<%-- <jsp:include page="/include/resource.jsp"></jsp:include> --%>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<!-- 공통 네비바 -->
-	<jsp:include page="/include/header.jsp"></jsp:include>
 	<%-- 관리자 페이지 전용 네비바 --%>
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	

@@ -16,7 +16,6 @@
 <meta charset="UTF-8">
 <title>점장정보조회</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.css">
 <style>
 	.tbl_row_wrap {
         border: 1px solid #dee2e6; /* 전체 테이블 테두리 */

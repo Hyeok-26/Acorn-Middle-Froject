@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <%
-
-	int empno = Integer.parseInt(request.getParameter("empno"));
+	//int empno = Integer.parseInt(request.getParameter("empno"));
 %>
 <!DOCTYPE html>
 <html>

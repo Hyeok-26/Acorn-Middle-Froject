@@ -2,13 +2,14 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <%
 
-	int num = Integer.parseInt(request.getParameter("empno"));
+	empno = Integer.parseInt(request.getParameter("empno"));
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpLogDao logdao=Com1EmpLogDao.getInstance();
-	boolean logisSuccess= logdao.delete(num);
-	boolean isSuccess= dao.delete(num);
+	boolean logisSuccess= logdao.delete(empno);
+	boolean isSuccess= dao.delete(empno);
 
 	
 
@@ -29,7 +30,7 @@
 			<h3>알림</h3>
 			<%if(isSuccess || logisSuccess){ %>
 				<p class="alert alert-success">
-					<strong><%=num %></strong>번 사원의 정보를 삭제했습니다.
+					<strong><%=empno %></strong>번 사원의 정보를 삭제했습니다.
 					<a class="alert-link" href="view.jsp">확인</a>
 				</p>
 			<%}else{ %>

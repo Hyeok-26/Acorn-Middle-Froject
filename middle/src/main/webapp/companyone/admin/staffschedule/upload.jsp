@@ -2,13 +2,14 @@
 <%@page import="test.dao.Com1SchDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <%
-	int num = Integer.parseInt(request.getParameter("storenum"));
+	//int storenum = Integer.parseInt(request.getParameter("storenum"));
 	String month = request.getParameter("title");
 	String srcurl = request.getParameter("srcurl");
 	
 	Com1SchDto dto = new Com1SchDto();
-	dto.setStoreNum(num);
+	dto.setStoreNum(storenum);
 	dto.setSchdate(month);
 	dto.setSrcurl(srcurl);
 
@@ -34,12 +35,12 @@
 		<%if(isSuccess){ %>
 			<p class="alert alert-success">
 				<strong><%=month %></strong>월 근무표 업로드됐습니다.
-				<a class="alert-link" href="view.jsp?storenum=<%=num %>">근무표확인</a>
+				<a class="alert-link" href="view.jsp?storenum=<%=storenum %>">근무표확인</a>
 			</p>
 		<%}else{ %>
 			<p class="alert alert-danger">
 				업로드 실패
-				<a class="alert-link" href="uploadform.jsp?storenum=<%=num %>">다시 업로드해주세요</a>
+				<a class="alert-link" href="uploadform.jsp?storenum=<%=storenum %>">다시 업로드해주세요</a>
 			</p>
 		<% } %>
 	
