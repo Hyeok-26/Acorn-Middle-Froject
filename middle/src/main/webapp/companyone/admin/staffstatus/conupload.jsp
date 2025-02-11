@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp" %>
 <%
-	//int empno = Integer.parseInt(request.getParameter("empno"));
+	empno = Integer.parseInt(request.getParameter("empno"));
 	String srcurl = request.getParameter("srcurl");
 
 	Com1EmpDao dao=Com1EmpDao.getInstance();

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp" %>
 <%
-	//int empno = Integer.parseInt(request.getParameter("empno"));
+	empno = Integer.parseInt(request.getParameter("empno"));
 %>
 <!DOCTYPE html>
 <html>

@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp" %>
 <%
-	//int empno = Integer.parseInt(request.getParameter("empno"));
+	empno = Integer.parseInt(request.getParameter("empno"));
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto= dao.getData(empno);
 	dto.setContract("");
