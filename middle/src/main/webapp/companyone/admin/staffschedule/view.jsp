@@ -66,11 +66,11 @@
 			     	    <a href="uploadForm.jsp?storenum=<%=storenum %>" class="btn btn-primary mt-3" role="button" >근무표업로드</a>
 						<% } else { %>
 						<button class="btn btn-primary mt-3" disabled  >근무표업로드</button>
-    					
+    					<%--삭제 버튼--%>
+			     	    <a href="delete.jsp?storenum=<%=storenum %>&date=<%=schdate %>" class="btn btn-danger mt-3" role="button" >근무표삭제</a>
 						<% } %>
 			     	    
-			     	    <%--삭제 버튼--%>
-			     	    <a href="delete.jsp?storenum=<%=storenum %>&date=<%=schdate %>" class="btn btn-danger mt-3" role="button" >근무표삭제</a>
+			     	    
 			    	    </div>
                     	
                     	<% if (srcurl != null && !srcurl.trim().isEmpty()) { %>     
