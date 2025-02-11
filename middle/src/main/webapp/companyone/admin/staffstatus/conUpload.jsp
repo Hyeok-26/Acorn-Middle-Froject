@@ -14,40 +14,19 @@
 
 	boolean isSuccess=dao.update(dto);
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>계약서업로드</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
-</head>
-<body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
-	<%--main컨텐츠감싸기 --%>
-	<div class="main flex-grow-1"> 
-		<div class="container mt-5"> 
+<%if(isSuccess==true){ %>
+	<script>
+		alert("<%=empno %> <%=dto.geteName() %>사원의 계약서 업로드됐습니다.");
+		window.location.href = "contract.jsp?empno=<%=empno%>";
+	</script>
+<%
+	} else{
+%>
+	<script>
+		alert("계약서 업로드실패! 다시 업로드해주세요");
+		 window.location.href = "conUploadForm.jsp?empno=<%=empno %>";
+	</script>
+<%
+	}
 	
-	
-		<h3>알림</h3>
-		<%if(isSuccess){ %>
-			<p class="alert alert-success">
-				<strong><%=empno %> <%=dto.geteName() %></strong>사원의 계약서 업로드됐습니다.
-				<a class="alert-link" href="contract.jsp?empno=<%=empno%>">계약서 확인</a>
-			</p>
-		<%}else{ %>
-			<p class="alert alert-danger">
-				업로드 실패
-				<a class="alert-link" href="conUploadForm.jsp?empno=<%=empno %>">다시 업로드해주세요</a>
-			</p>
-		<% } %>
-	
-	
-	
-	
-	
-		</div>
-	</div> <%--main --%>
-	<%--푸터 --%>
-    <jsp:include page="/include/footer.jsp" />
-</body>
-</html>
+%>
