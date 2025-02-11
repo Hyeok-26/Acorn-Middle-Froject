@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <%
 	session.setAttribute("current_page", "acceptStaff");
 
@@ -27,53 +28,48 @@
 <meta charset="UTF-8">
 <title>사원 승인 관리</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
 	<jsp:include page="/include/adminNav.jsp">
 			<jsp:param value="index" name="current" />
-		</jsp:include>
-	<div class="container my-5">
-		<h2 class="text-center mb-4">사원 승인 관리</h2>
-		<table class="table table-striped table-hover text-center">
-			<thead class="table-dark">
-				<tr>
-					<th>회사코드</th>
-					<th>매장번호</th>
-					<th>사원번호</th>
-					<th>이름</th>
-					<th>직위</th>
-					<th>전화번호</th>
-					<th>비밀번호</th>
-					<th>승인</th>
-					<th>거절</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%for (Com1WaitDto dto : list) {%>
-				<tr>
-					<td><%=dto.getComId()%></td>
-					<td><%=dto.getStoreNum()%></td>
-					<td><%=dto.getEmpNo()%></td>
-					<td><%=dto.geteName()%></td>
-					<td><%=dto.getRole()%></td>
-					<td><%=dto.geteCall()%></td>
-					<td><%=dto.getePwd()%></td>
-					<td><a href="insertStaff.jsp?empno=<%=dto.getEmpNo() %>" class="btn btn-success btn-sm">승인</a></td>
-					<td><a href="deleteStaff.jsp?empno=<%=dto.getEmpNo() %>" class="btn btn-success btn-sm">거절</a></td>
-				</tr>
-				<%}%>
-			</tbody>
-		</table>
+	</jsp:include>
+	<div class="main flex-grow-1"> 
+		<div class="container my-5">
+			<h2 class="text-center mb-4">사원 승인 관리</h2>
+			<table class="table table-striped table-hover text-center">
+				<thead class="table-dark">
+					<tr>
+						<th>회사코드</th>
+						<th>매장번호</th>
+						<th>사원번호</th>
+						<th>이름</th>
+						<th>직위</th>
+						<th>전화번호</th>
+						<th>비밀번호</th>
+						<th>승인</th>
+						<th>거절</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%for (Com1WaitDto dto : list) {%>
+					<tr>
+						<td><%=dto.getComId()%></td>
+						<td><%=dto.getStoreNum()%></td>
+						<td><%=dto.getEmpNo()%></td>
+						<td><%=dto.geteName()%></td>
+						<td><%=dto.getRole()%></td>
+						<td><%=dto.geteCall()%></td>
+						<td><%=dto.getePwd()%></td>
+						<td><a href="insertStaff.jsp?empno=<%=dto.getEmpNo() %>" class="btn btn-success btn-sm">승인</a></td>
+						<td><a href="deleteStaff.jsp?empno=<%=dto.getEmpNo() %>" class="btn btn-success btn-sm">거절</a></td>
+					</tr>
+					<%}%>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	
-	<!-- 푸터 -->
-	<div class="position-fixed bottom-0 w-100">
-  	<jsp:include page="/include/footer.jsp" />
-  	</div>	
+	<%--푸터 --%>
+	<jsp:include page="/include/footer.jsp" />
 </body>
 </html>
