@@ -65,7 +65,7 @@
 			</div>
 		</div>
 		<br>
-		<a href="logTable.jsp">근태관리 확인</a> 
+		<a href="logTable.jsp">근태 기록 확인</a> 
 	</div>
 	<div class="position-fixed bottom-0 w-100">
   		<jsp:include page="/include/footer.jsp" />
