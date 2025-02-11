@@ -15,12 +15,24 @@ Com1EmpDto dto=dao.getData(empno);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>근로계약서 조회</title>
+<title>근로계약서</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
+	html, body {
+	    height: 100%;
+	    margin: 0;
+	    display: flex;
+	    flex-direction: column;
+	}
 	.container2 {
+	    display: flex;
+    	flex-direction: column;
+    	justify-content: center;
+    	align-items: center;
+		flex-grow: 1;
+		width: 90%;  /* 부모 요소에 맞춰 자동 조정 */
 		max-width: 800px;
-		margin: 40px auto;
+		margin: 20px auto;
 		background-color: #fff;
 		padding: 20px;
 		border-radius: 8px;
@@ -28,9 +40,16 @@ Com1EmpDto dto=dao.getData(empno);
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		text-align: center;
 	}
+	.footer {
+    text-align: center;
+    width: 100%;
+    margin-top: 25px;
+	}
 	#contractLink {
 		display: block;
-		margin: 10px auto;
+		justify-content: center;
+		align-items: center;
+		margin: 100px auto;
 		cursor: pointer;
 	}
 	#contractFile {
@@ -42,44 +61,52 @@ Com1EmpDto dto=dao.getData(empno);
 	#deleteBtn:hover {
 		background-color: darkred;
 	}
+	#contractImage {
+		width: 600px;
+		height: 800px;
+	}
 </style>
 </head>
 <body>
 <jsp:include page="/include/empNav.jsp"></jsp:include>
 	<div class="container2">
-		<h1>근로 계약서 보기</h1>
+		<h1>근로계약서 조회</h1>
 		<form action="uploadContract.jsp?empno=<%=empno %>" method="post" id="contractForm">
-		
-		<div>
-			<h5><strong><%=dto.geteName() %></strong> 님의 근로계약서</h5>
 			<div>
-				<input type="file" name="contractFile" id="contractFile" accept="image/*"/>
-				<input type="hidden" name="srcurl" id="srcurl" />
-				<a href="javascript:" id="contractLink">
-					<%if(dto.getContract()==null){ %>
-						<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-							<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-							<path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-						</svg>
-						<p>근로계약서를 업로드해주십시오</p>	
-					<%}else{ %>
-						<img id="contractImage" src="<%=dto.getContract() %>" alt="계약서 이미지" />
-					<%} %>
-				</a>
+				<h5><strong><%=dto.geteName() %></strong> 님의 근로계약서</h5>
+				<div>
+					<input type="file" name="contractFile" id="contractFile" accept="image/*"/>
+					<input type="hidden" name="srcurl" id="srcurl" />
+					<a href="javascript:" id="contractLink">
+						<%if(dto.getContract()==null){ %>
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+								<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+								<path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+							</svg>
+							<p>근로계약서를 업로드해 주십시오</p>	
+						<%}else{ %>
+							<img id="contractImage" src="<%=dto.getContract() %>" alt="계약서 이미지" />
+						<%} %>
+					</a>
+				</div>
+				<br>
+				<button class="btn btn-dark" type="submit" id="uploadBtn">업로드</button>
+				<% if(dto.getContract() != null) { %>
+					<button class="btn btn-danger" id="deleteBtn">삭제</button>
+				<% } %>
 			</div>
-			<br>
-			<button class="btn btn-dark" type="submit" id="uploadBtn">업로드</button>
-			<% if(dto.getContract() != null) { %>
-				<button class="btn btn-danger" id="deleteBtn">삭제</button>
-			<% } %>
-		</div>
 		</form>	
 			
 	</div>
 
-<%@ include file="/include/footer.jsp" %>
+    <footer class="footer">
+        <jsp:include page="/include/footer.jsp" />
+    </footer>
+
+
 	<script>
-	document.querySelector("#uploadBtn").disabled = true;
+		// 버튼의 초기 설정
+		document.querySelector("#uploadBtn").disabled = true;
 		// 파일 선택 버튼 클릭
 		document.querySelector("#contractLink").addEventListener("click", () => {
 			document.querySelector("#contractFile").click();
@@ -110,7 +137,7 @@ Com1EmpDto dto=dao.getData(empno);
 		});
 
 		// 삭제 버튼 클릭 시 confirm 창 띄우고 삭제 요청
-		document.querySelector("#deleteBtn").addEventListener("click", (event) => {
+		document.querySelector("#deleteBtn")?.addEventListener("click", (event) => {
 			event.preventDefault();
 			if (confirm("정말 삭제하시겠습니까?")) {
 				fetch("deleteContract.jsp?empno=<%= empno %>", { method: "POST" })

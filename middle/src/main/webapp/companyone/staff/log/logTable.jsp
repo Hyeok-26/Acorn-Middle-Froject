@@ -49,7 +49,7 @@
 <body>
 <jsp:include page="/include/empNav.jsp"></jsp:include>
 	<div class="container2" id="logTable">
-    	<h1><strong><%=ename %></strong> 님 월별 근태 기록</h1>
+    	<h1><strong><%=ename %></strong> 님 날짜별 근태 기록</h1>
         	<table>
 				<thead>
 					<tr>
@@ -73,7 +73,7 @@
 				</tbody>
 			</table>
         <br>   
-        <a href="log.jsp?empno=<%=empno %>">출퇴근 기록 페이지로 돌아가기</a>   
+        <a href="log.jsp?empno=<%=empno %>">출퇴근 페이지로 돌아가기</a>   
 	</div>
 	<div class="position-fixed bottom-0 w-100">
   		<jsp:include page="/include/footer.jsp" />
