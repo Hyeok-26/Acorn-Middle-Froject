@@ -8,7 +8,7 @@
 <%@ include file="/include/header.jsp" %>
 <%
 	
-	session.setAttribute("current_page", "salemanage2");
+	session.setAttribute("current_page", "saleview");
 	
 	//세션에 담긴 매장번호 가져오기
 	
