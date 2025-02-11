@@ -4,7 +4,9 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<jsp:include page="/include/header.jsp"></jsp:include>
 <%
+	
 	int empno = (int) session.getAttribute("empno");
 	session.setAttribute("current_page", "profile");
 
@@ -30,13 +32,6 @@
 		border: 1px solid black;
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	}
-	
-	h1 {
-		text-align: center;
-		margin-bottom: 20px;
-		color: #333;
-	}
-	
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -90,7 +85,7 @@
 	<div class="container2">
 		<div
 			class="d-flex align-items-center justify-content-between border-bottom">
-			<h1 class="text-center flex-grow-1">프로필</h1>
+			<h1 class="text-center flex-grow-1 mb-3">프로필</h1>
 			<a href="profileUpdateForm.jsp" class="btn btn-link p-0"> <svg
 					xmlns="http://www.w3.org/2000/svg" width="25" height="25"
 					fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

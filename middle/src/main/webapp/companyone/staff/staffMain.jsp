@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="/include/header.jsp"></jsp:include>
 <%
 	session.setAttribute("current_page", "staffMain");
-
+	/*
 	String comname = (String) session.getAttribute("comname");
 	int storenum = (int) session.getAttribute("storenum");
 	int empno = (int) session.getAttribute("empno");
 	String role = (String) session.getAttribute("role");
 	String ename = (String) session.getAttribute("ename");
-	
+	*/
 	if(session.getAttribute("empno") == null) {
 		response.sendRedirect("loginform.jsp");
 	}
@@ -19,7 +20,7 @@
 <title>직원 메인 페이지</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
-    .container {
+    .container2 {
         max-width: 800px;
         margin: 40px auto;
         background-color: #fff;
@@ -62,7 +63,7 @@
 <jsp:include page="/include/empNav.jsp">
 	<jsp:param value="index" name="current" />
 </jsp:include>
-    <div class="container">
+    <div class="container2">
         <h2 class="text-center mb-4">${comname } </h2>
         <h3>호점: ${storenum } 사원번호: ${empno }</h3>
         <h3>환영합니다, ${ename}님!</h3>

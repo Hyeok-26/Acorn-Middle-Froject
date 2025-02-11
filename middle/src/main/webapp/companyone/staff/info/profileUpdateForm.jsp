@@ -3,6 +3,7 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:include page="/include/header.jsp"></jsp:include>
 <%
 	int empno = (int) session.getAttribute("empno");
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
@@ -26,17 +27,13 @@
         border: 1px solid black;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    h1 {
-        margin-bottom: 20px;
-        color: #333;
-    }
 </style>
 </head>
 <body>
 	<jsp:include page="/include/empNav.jsp"></jsp:include>
 	<div id="app">
 		<div class="container2">
-			<h1>프로필 수정</h1>
+			<h1 class="mb-3">프로필 수정</h1>
 			<form action="profileUpdate.jsp" method="post" id="myForm">
 				<div class="mb-3">
 					<label class="form-label">회사</label> <input class="form-control"

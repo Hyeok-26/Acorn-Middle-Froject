@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:include page="/include/header.jsp"></jsp:include>
 <%
 	session.setAttribute("current_page", "salary");
 	int empno=(int)session.getAttribute("empno");
@@ -29,7 +30,7 @@
 <meta charset="UTF-8">
 <title>급여 계산</title>
 <jsp:include page="/include/resource.jsp"></jsp:include>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
 <style>
 	.container2 {
 		max-width: 800px;
