@@ -2,10 +2,10 @@
 <%@page import="test.dto.Com1CeoDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 
 <%
 
-	int empno = (int) session.getAttribute("empno");
 	//Com1CeoDao dao = Com1CeoDao.getInstance();
 	//Com1CeoDto dto = dao.getData(empno);
 	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
@@ -193,5 +193,6 @@
 				}
 		}});
 	</script>
+		<%@ include file="/include/footer.jsp" %>
 </body>
 </html>
