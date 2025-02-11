@@ -19,7 +19,7 @@
     <a class="nav-link ${current_page eq 'infoview' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/admin/info/view.jsp">개인정보조회</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link ${current_page eq 'saleview' ? 'active' : ''}" href="${pageContext.request.contextPath }/companyone/admin/sale/insertform.jsp">매출관리</a>
+    <a class="nav-link ${current_page eq 'saleview' ? 'active' : ''}" href="${pageContext.request.contextPath }/companyone/admin/sale/insertForm.jsp">매출관리</a>
   </li>
   <li class="nav-item">
     <a class="nav-link ${current_page eq 'acceptStaff' ? 'active' : ''}" href="${pageContext.request.contextPath}/companyone/admin/accept/acceptStaff.jsp">사원승인</a>
