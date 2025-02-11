@@ -4,15 +4,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/include/header.jsp" %>
 <%
-	int empno = (int) session.getAttribute("empno");
+	
 	Com1EmpDto empdto = Com1EmpDao.getInstance().getData(empno);
 	String originpwd = empdto.getePwd();
-	
-	int comid = empdto.getComId();
-	String comname = UsingDao.getInstance().getComName(comid);
-	
-	
 %>
 <!DOCTYPE html>
 <html>
