@@ -239,7 +239,7 @@
 		<!-- 퇴사자 리스트 -->	
 		<div style="margin:10px; width:900px;">
 			<div class="table-responsive">
-				<table class="table table-striped">
+				<table class="table table-striped" id="quitListTable">
 					<thead class="table-dark">
 						<tr>
 							<th>사원번호</th>
@@ -272,7 +272,7 @@
 										<td>${qmember.hiredate }</td>
 										<td>${qmember.quitdate }</td>
 										<td>${qmember.eCall }</td>
-										<th><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @click.prevent="onCancle">복귀</a></th>
+										<td><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @click.prevent="onCancle">복귀</a></td>
 									</tr>
 								</c:forEach>
 									</tbody>
@@ -314,7 +314,7 @@
 		
 		<!-- 나중에 추가 가능 -->
 		<div class="mt-3 d-flex justify-content-end">
-			<button class="btn btn-primary btn-sm">경력증명서 출력</button>
+			<button class="btn btn-primary btn m-3" @click="printBtn">경력증명서 출력</button>
 		</div>
 	
 	</div>
@@ -335,7 +335,7 @@
 				searchEmpno:"",
 				dto:"",
 				startPageNum:"${startPageNum}",
-				endPageNum:"${endPageNum}"
+				endPageNum:"${endPageNum}",
 			},
 			computed: {
 				url:function(){
@@ -346,6 +346,14 @@
 				}
 			},
 			methods:{
+				// 경력 증명서 출력 버튼 눌렀을 때
+				printBtn(){
+					// 출력 받을 퇴사자 사원 번호 입력 받기
+					const quitNum = prompt("출력할 퇴사자 번호를 입력하세요");
+					
+					// 퇴사자 번호 달고 출력 기능을 가진 jsp 로 이동
+					location.href= "printQuit.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked + "&quitNum=" + quitNum;
+				},
 				// 페이징 버튼 눌었을 때
 				onPage(e){
 					const pageNum = e.target.innerText;

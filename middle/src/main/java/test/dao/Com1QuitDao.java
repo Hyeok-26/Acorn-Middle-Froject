@@ -103,6 +103,7 @@ public class Com1QuitDao {
 				dto.setWorktime(rs.getInt("worktime"));
 				dto.setEmail(rs.getString("email"));
 				dto.setHiredate((rs.getString("hiredate")).substring(0,(rs.getString("hiredate")).indexOf(" ")));
+				dto.setQuitdate((rs.getString("quitdate")).substring(0,(rs.getString("quitdate")).indexOf(" ")));
 				dto.setContract(rs.getString("contract"));
 			}
 		} catch (Exception e) {
