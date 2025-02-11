@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	
 	int empno = (int) session.getAttribute("empno");
 	session.setAttribute("current_page", "profile");
 
