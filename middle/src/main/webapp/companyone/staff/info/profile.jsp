@@ -4,17 +4,17 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:include page="/include/header.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>	
 <%
 	
-	int empno = (int) session.getAttribute("empno");
+	//int empno = (int) session.getAttribute("empno");
 	session.setAttribute("current_page", "profile");
 
 	Com1EmpDao dao = Com1EmpDao.getInstance();
 	Com1EmpDto dto = dao.getData(empno);
 	
-	int comid = dto.getComId();
-	String comname = UsingDao.getInstance().getComName(comid);
+	//int comid = dto.getComId();
+	//String comname = UsingDao.getInstance().getComName(comid);
 %>
 <!DOCTYPE html>
 <html>
@@ -160,7 +160,7 @@
 			 --%>
 		</table>
 		<div class="btn-container">
-			<a href="../staffMain.jsp">메인 페이지로</a> <a href="logout.jsp">로그아웃</a>
+			<a href="../staffMain.jsp">메인 페이지로</a> <%--<a href="logout.jsp">로그아웃</a> --%>		
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />

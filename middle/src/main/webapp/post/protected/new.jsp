@@ -1,31 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/post/form/new.jsp</title>
+<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	#content{
 		width: 100%;
 		height: 300px;
 	}
+	form{
+		padding:20px;
+	}
 </style>
 </head>
 <body>
 	<div class="container">
-		<h1>새글 작성 양식</h1>
-		<form action="insert.jsp" method="post">
-			<div>
-				<label for="title">제목</label>
-				<input type="text" name="title" id="title"/>
+		<h1 class="title-container d-flex justify-content-between mt-4 ms-2 me-2">
+			새글 작성 양식
+		</h1>
+		<form action="insert.jsp" method="post" class="rounded-3 overflow-hidden  border border-secondary">
+			<div class="mb-3">
+				<label class="form-label fs-4" for="title">제목</label>
+				<input class="form-control border border-secondary-subtle" type="text" name="title" id="title"/>
 			</div>
-			<div>
-				<label for="content">내용</label>
-				<textarea name="content" id="content"></textarea>
+			<div class="mb-3">
+				<label class="form-label fs-4" for="content">내용</label>
+				<textarea class="form-control border border-secondary-subtle" name="content" id="content"></textarea>
 			</div>
-			<button type="submit" onclick="submitContents(this)">저장</button>
+			<div class="mb-2 d-flex justify-content-end">
+				<button type="submit" onclick="submitContents(this)">저장</button>
+			</div>
 		</form>
+	</div>
+	<div class="position-fixed bottom-0 w-100">
+	  	<jsp:include page="/include/footer.jsp" />
 	</div>
 	<%--
 		[ SmartEditor 를 사용하기 위한 설정 ]

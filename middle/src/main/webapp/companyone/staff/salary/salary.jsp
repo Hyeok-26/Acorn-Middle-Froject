@@ -5,10 +5,10 @@
 <%@ include file="/include/header.jsp" %>
 <%
 
-
-
-Com1EmpDao dao=Com1EmpDao.getInstance();
-Com1EmpDto dto=dao.getData(empno);
+	session.setAttribute("current_page", "salary");
+	
+	Com1EmpDao dao=Com1EmpDao.getInstance();
+	Com1EmpDto dto=dao.getData(empno);
 
 %>
 <!DOCTYPE html>
@@ -77,7 +77,9 @@ Com1EmpDto dto=dao.getData(empno);
 			
 	</div>
 
-<%@ include file="/include/footer.jsp" %>
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 	<script>
 	document.querySelector("#uploadBtn").disabled = true;
 		// 파일 선택 버튼 클릭

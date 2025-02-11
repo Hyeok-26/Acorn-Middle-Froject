@@ -2,9 +2,9 @@
 <%@page import="test.dto.Com1EmpLogDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/include/header.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>	
 <%
-	int empno = (int)session.getAttribute("empno");
+	//int empno = (int)session.getAttribute("empno");
 	session.setAttribute("current_page", "log");
 
 	Com1EmpLogDto dto = new Com1EmpLogDto();
