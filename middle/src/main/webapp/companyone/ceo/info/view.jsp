@@ -168,7 +168,7 @@ td a:hover {
 		</table>
 
 		<div class="btn-container">
-			<a href="${pageContext.request.contextPath }/companyone/ceo/ceoMain.jsp">메인 페이지로</a> <a href="logout.jsp">로그아웃</a>
+			<a href="${pageContext.request.contextPath }/companyone/ceo/ceoMain.jsp">메인 페이지로</a>
 		</div>
 	</div>
 	</div>
