@@ -18,7 +18,7 @@
 <%
     }
 %>
-
+<jsp:include page="/include/resource.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
 <head>
