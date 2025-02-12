@@ -15,6 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>출퇴근 페이지</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <style>
 	.container2 {
         max-width: 800px;
@@ -52,15 +53,15 @@
 </head>
 <body>
 	<jsp:include page="/include/empNav.jsp"></jsp:include>
-	<div class="container2">
+	<div class="container2 animate__animated animate__fadeInUp">
 		<h1>출/퇴근</h1>
 		<div class="time-container">
 			<div class="clock">
         		<h1>00:00:00</h1>
    			</div>
 			<div class="btn-container d-flex justify-content-around">
-				<button id="startBtn" class="btn btn-primary">출근</button>
-				<button id="endBtn" class="btn btn-primary">퇴근</button>
+				<button id="startBtn" class="btn btn-primary animate__animated">출근</button>
+				<button id="endBtn" class="btn btn-primary animate__animated">퇴근</button>
 			</div>
 		</div>
 		<br>
@@ -89,10 +90,10 @@
 		// 초기 상태 설정: 퇴근 버튼 비활성화
 		endBtn.disabled = true;
 		
+		//출근 버튼 클릭 시
 		$("#startBtn").click(() => {
             startBtn.disabled = true;
             endBtn.disabled = false;
-
             $.ajax({
                 url: 'workStartLog.jsp',
                 method: 'post',

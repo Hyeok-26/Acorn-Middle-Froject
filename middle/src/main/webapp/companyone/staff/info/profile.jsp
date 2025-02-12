@@ -21,6 +21,7 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <style>
 	.container2 {
 		max-width: 800px;
@@ -97,59 +98,59 @@
 		</div>
 		<table>
 			<tr>
-				<th>회사명</th>
+				<th class="animate__animated animate__bounceInDown animate__infinite">회사명</th>
 				<td><%=comname%></td>
 			</tr>
 			<tr>
-				<th>회사번호</th>
+				<th class="animate__animated animate__bounceInLeft animate__infinite">회사번호</th>
 				<td><%=dto.getComId()%></td>
 			</tr>
 			<tr>
-				<th>호점</th>
+				<th class="animate__animated animate__bounceInRight animate__infinite">호점</th>
 				<td><%=dto.getStoreNum()%> 호점</td>
 			</tr>
 			<tr>
-				<th>사원번호</th>
+				<th class="animate__animated animate__bounceInUp animate__infinite">사원번호</th>
 				<td><%=dto.getEmpNo()%></td>
 			</tr>
 			<tr>
-				<th>유저 이름</th>
+				<th class="animate__animated animate__bounceInDown animate__infinite">유저 이름</th>
 				<td><%=dto.geteName() %></td>
 			</tr>
 			<tr>
-				<th>직급</th>
+				<th class="animate__animated animate__bounceInLeft animate__infinite">직급</th>
 				<td><%=dto.getRole() %></td>
 			</tr>
 			<tr>
-				<th>전화 번호</th>
+				<th class="animate__animated animate__bounceInRight animate__infinite">전화 번호</th>
 				<td><%=dto.geteCall() %></td>
 			</tr>
 			<tr>
-				<th>비밀번호</th>
+				<th class="animate__animated animate__bounceInUp animate__infinite">비밀번호</th>
 				<td>-----</td>
 			</tr>
 			<tr>
-				<th>월급</th>
+				<th class="animate__animated animate__bounceInDown animate__infinite">월급</th>
 				<td><%=dto.getSal() %></td>
 			</tr>
 			<tr>
-				<th>시급</th>
+				<th class="animate__animated animate__bounceInLeft animate__infinite">시급</th>
 				<td><%=dto.getHsal() %></td>
 			</tr>
 			<tr>
-				<th>근무 시간</th>
+				<th class="animate__animated animate__bounceInRight animate__infinite">근무 시간</th>
 				<td><%=dto.getWorktime() %></td>
 			</tr>
 			<tr>
-				<th>이메일</th>
+				<th class="animate__animated animate__bounceInUp animate__infinite">이메일</th>
 				<td><%=dto.getEmail() %></td>
 			</tr>
 			<tr>
-				<th>고용 날짜</th>
+				<th class="animate__animated animate__bounceInDown animate__infinite">고용 날짜</th>
 				<td><%=dto.getHiredate() %></td>
 			</tr>
 			<tr>
-				<th>근로계약서</th>
+				<th class="animate__animated animate__bounceInUp animate__infinite">근로계약서</th>
 				<td><a href="contract.jsp?empno=<%=empno %>">근로 계약서 보기</a></td>
 			</tr>
 			<%--

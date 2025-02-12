@@ -12,6 +12,60 @@
 	List<Com1EmpLogDto> list=Com1EmpLogDao.getInstance().getList(empno);
 	
 	//String ename=(String)session.getAttribute("ename");
+	
+	Com1EmpLogDto dto = new Com1EmpLogDto();
+	//한 페이지에 몇개씩 표시할 것인지
+	final int PAGE_ROW_COUNT=10;
+	//하단 페이지를 몇개씩 표시할 것인지
+	final int PAGE_DISPLAY_COUNT=5;
+	
+	//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
+	int pageNum=1;
+	
+	//페이지 번호가 파라미터로 전달되는지 읽어와 본다.
+	String strPageNum=request.getParameter("pageNum");
+	//만일 페이지 번호가 파라미터로 넘어 온다면
+	if(strPageNum != null){
+		//숫자로 바꿔서 보여줄 페이지 번호로 지정한다.
+		pageNum=Integer.parseInt(strPageNum);
+	}
+	
+	//보여줄 페이지의 시작 ROWNUM
+		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+		//보여줄 페이지의 끝 ROWNUM
+		int endRowNum=pageNum*PAGE_ROW_COUNT;
+		
+		//하단 시작 페이지 번호 
+		int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
+		//하단 끝 페이지 번호
+		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+		//전체 글의 갯수
+		int totalRow=Com1EmpLogDao.getInstance().getCount(dto);
+		//전체 페이지의 갯수 구하기
+		int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+		//끝 페이지 번호가 이미 전체 페이지 갯수보다 크게 계산되었다면 잘못된 값이다.
+		if(endPageNum > totalPageCount){
+			endPageNum=totalPageCount; //보정해 준다. 
+		}	
+		
+		// startRowNum 과 endRowNum 을 PostDto 객체에 담아서
+		dto.setStartRowNum(startRowNum);
+		dto.setEndRowNum(endRowNum);
+		
+		//보여줄 페이지에 해당하는 글 목록을 얻어온다.
+		List<Com1EmpLogDto> lists=Com1EmpLogDao.getInstance().getList(empno);
+		
+		/*
+			jsp 페이지에서 응답에 필요한 데이터를 el 에서 활용할수 있도록
+			request 객체에 특정 키값으로 담는다.
+		*/
+		request.setAttribute("list", lists);
+		request.setAttribute("startPageNum", startPageNum);
+		request.setAttribute("endPageNum", endPageNum);
+		request.setAttribute("totalPageCount", totalPageCount);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("totalRow", totalRow);
+		request.setAttribute("dto", dto);
 %>
 
 <!DOCTYPE html>
@@ -71,7 +125,29 @@
 					<%} %>
 				</tbody>
 			</table>
-        <br>   
+        <br>
+        <nav class="d-flex justify-content-center mt-2">
+			<ul class="pagination">
+				<!-- Prev 버튼 -->
+				<c:if test="${startPageNum ne 1}">
+					<li class="page-item">
+						<a class="page-link" href="logTable.jsp?pageNum=${startPageNum - 1}">Prev</a>
+					</li>
+				</c:if>
+				<!-- 페이지 번호 -->
+				<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
+					<li class="page-item ${i == pageNum ? 'active' : ''}">
+						<a class="page-link" href="logTable.jsp?pageNum=${i}">${i}</a>
+					</li>
+				</c:forEach>
+				<!-- Next 버튼 -->
+				<c:if test="${endPageNum < totalPageCount}">
+					<li class="page-item">
+						<a class="page-link" href="logTable.jsp?pageNum=${endPageNum + 1}">Next</a>
+					</li>
+				</c:if>
+			</ul>		
+		</nav>   
         <a href="log.jsp?empno=<%=empno %>">출퇴근 페이지로 돌아가기</a>   
 	</div>
 	<div class="position-fixed bottom-0 w-100">
