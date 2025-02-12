@@ -4,7 +4,6 @@
 <%@page import="java.util.List"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/include/header.jsp"></jsp:include>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
@@ -82,118 +81,128 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 목록 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	/* div{ border:1px solid red; } */
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
+	<jsp:include page="/include/header.jsp"></jsp:include>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 
 
 
 
-
-	<%-- 관리자 페이지 전용 네비바 --%>
-	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+	<%-- 관리자 페이지 전용 네비바
+	<jsp:include page="/include/ceoNav.jsp"></jsp:include> --%>
 	
 	
 	
 	
 	<div class="main flex-grow-1">  
 		<!-- 본문 -->
-		<div class="contents text-center mt-3 mx-auto" style="width:900px;">
+		<div class="contents text-center mt-3 mx-auto" style="width:1200px;">
 			<h4>근무 직원 현황</h4>
 			
-			<!-- 조회 조건 -->
-			<div>
-			<ul class="nav nav-tabs">
-			  	<li class="nav-item">
-			  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ALL&pageNum=${pageNum}">전체 직원</a>
-			  	</li>
-			  	<li class="nav-item">
-			  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ADMIN&pageNum=${pageNum}">점장</a>
-			  	</li>
-			  	<li class="nav-item">
-			  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=STAFF&pageNum=${pageNum}">직원</a>
-			  	</li>
-			  	
-			  	<li class="nav-item dropdown">
-			  		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">몇 호점 별 직원</a>
-			  		<ul class="dropdown-menu">
-			  			<c:forEach var="num" items="${storeList }">
-			  				<li><a class="dropdown-item" href="manageForm.jsp?condition=STORE&storenum=${num}">${num}</a></li>
-			  			</c:forEach>
-				    </ul>
-			  	</li>
-			</ul>
-			</div>
-			
-			
-			<!-- 조회 결과 -->
-			<div class="tab-content p-3 bg-light rounded shadow-sm" style="height:500px" id="myTabContent">
-				<div class="table-responsive">
-					<table class="table table-hover text-center align-middle">
-						<thead class="table-dark">
-							<tr>
-								<th>호점</th>
-								<th>사원 번호</th>
-								<th>이름</th>
-								<th>직급</th>
-								<th>전화번호</th>
-								<th>월급</th>
-								<th>입사일</th>
-								<th>이메일</th>
-							</tr>
-						</thead>
-						<tbody>
-						<c:choose>
-							<%-- 데이터가 없는 경우 --%>
-							<c:when test="${empty list}">
-								</tbody>
-								</table>
-								<div class=" justify-content-center align-items-center vh-100">
-								  <div class="p-3 bg-light">직원 정보가 없습니다!</div>
-								</div>
-							</c:when>
-							<%-- 데이터가 있는 경우 --%>
-							<c:otherwise>
-								<c:forEach var="tmp" items="${list}">
-									<c:choose>
-										<%-- 알바 경우 --%>
-										<c:when test="${tmp.sal eq 0}">
-											<tr>
-												<td>${tmp.storeNum }</td>
-												<td>${tmp.empNo }</td>
-												<td>${tmp.eName }</td>
-												<td>${tmp.role }</td>
-												<td>${tmp.eCall }</td>
-												<td>${tmp.hsal * tmp.worktime}</td>
-												<td>${tmp.hiredate }</td>
-												<td style="width:300px">${tmp.email }</td>
-											</tr>
-										</c:when>
-										<%-- 직원 경우 --%>
-										<c:otherwise>
-											<tr>
-												<td>${tmp.storeNum }</td>
-												<td>${tmp.empNo }</td>
-												<td>${tmp.eName }</td>
-												<td>${tmp.role }</td>
-												<td>${tmp.eCall }</td>
-												<td>${tmp.sal }</td>
-												<td>${tmp.hiredate }</td>
-												<td style="width:300px">${tmp.email }</td>
-											</tr>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								</tbody>
-								</table>
-							</c:otherwise>
-						</c:choose>
+			<div class="row">
+				<!-- 그래프 뷰 -->
+				<!-- <div class="col-3">
+					<div id="chart_month"></div>
+				</div> -->
+				
+				<!-- 탭 변환 뷰 -->
+				<div class="col-12">
+					<!-- 조회 조건 -->
+					<div>
+						<ul class="nav nav-tabs">
+						  	<li class="nav-item">
+						  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ALL&pageNum=${pageNum}">전체 직원</a>
+						  	</li>
+						  	<li class="nav-item">
+						  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=ADMIN&pageNum=${pageNum}">점장</a>
+						  	</li>
+						  	<li class="nav-item">
+						  		<a class="nav-link" aria-current="page" href="manageForm.jsp?condition=STAFF&pageNum=${pageNum}">직원</a>
+						  	</li>
+						  	
+						  	<li class="nav-item dropdown">
+						  		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">몇 호점 별 직원</a>
+						  		<ul class="dropdown-menu">
+						  			<c:forEach var="num" items="${storeList }">
+						  				<li><a class="dropdown-item" href="manageForm.jsp?condition=STORE&storenum=${num}">${num}</a></li>
+						  			</c:forEach>
+							    </ul>
+						  	</li>
+						</ul>
+					</div>
+					
+					
+					<!-- 조회 결과 -->
+					<div class="tab-content p-3 bg-light rounded shadow-sm" style="height:500px" id="myTabContent">
+						<div class="table-responsive">
+							<table class="table table-hover text-center align-middle">
+								<thead class="table-dark">
+									<tr>
+										<th>호점</th>
+										<th>사원 번호</th>
+										<th>이름</th>
+										<th>직급</th>
+										<th>전화번호</th>
+										<th>월급</th>
+										<th>입사일</th>
+										<th>이메일</th>
+									</tr>
+								</thead>
+								<tbody>
+								<c:choose>
+									<%-- 데이터가 없는 경우 --%>
+									<c:when test="${empty list}">
+										</tbody>
+										</table>
+										<div class=" justify-content-center align-items-center vh-100">
+										  <div class="p-3 bg-light">직원 정보가 없습니다!</div>
+										</div>
+									</c:when>
+									<%-- 데이터가 있는 경우 --%>
+									<c:otherwise>
+										<c:forEach var="tmp" items="${list}">
+											<c:choose>
+												<%-- 알바 경우 --%>
+												<c:when test="${tmp.sal eq 0}">
+													<tr>
+														<td>${tmp.storeNum }</td>
+														<td>${tmp.empNo }</td>
+														<td>${tmp.eName }</td>
+														<td>${tmp.role }</td>
+														<td>${tmp.eCall }</td>
+														<td>${tmp.hsal * tmp.worktime}</td>
+														<td>${tmp.hiredate }</td>
+														<td style="width:300px">${tmp.email }</td>
+													</tr>
+												</c:when>
+												<%-- 직원 경우 --%>
+												<c:otherwise>
+													<tr>
+														<td>${tmp.storeNum }</td>
+														<td>${tmp.empNo }</td>
+														<td>${tmp.eName }</td>
+														<td>${tmp.role }</td>
+														<td>${tmp.eCall }</td>
+														<td>${tmp.sal }</td>
+														<td>${tmp.hiredate }</td>
+														<td style="width:300px">${tmp.email }</td>
+													</tr>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										</tbody>
+										</table>
+									</c:otherwise>
+								</c:choose>
+						</div>
+					</div>
 				</div>
 			</div>
-			
-			
 			
 			
 			<%-- 하단 페이징 버튼 --%>
@@ -229,5 +238,10 @@
 		
 	<!-- 푸터 -->
   	<jsp:include page="/include/footer.jsp" />
+  	
+  	
+  	<script>
+
+  	</script>
 </body>
 </html>
