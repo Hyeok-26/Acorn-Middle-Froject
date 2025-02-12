@@ -639,6 +639,67 @@ public class Com1EmpDao {
 		}
 		return list;
 	}
+	//페이징처리를 위한 staff리스트 정보를 가져오는 메소드 //장희주
+	public List<Com1EmpDto> getList3(Com1EmpDto dto) {
+		List<Com1EmpDto> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = new DbcpBean().getConn();
+			
+			// SQL 문 생성
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * FROM ");
+			sql.append("(SELECT result1.*, ROWNUM AS rnum FROM ");
+			sql.append("(SELECT * FROM test_com1_emp ");
+						
+			sql.append("WHERE ROLE = 'STAFF' ");
+			sql.append("ORDER BY empno ASC) result1) WHERE rnum BETWEEN ? AND ?");
+			
+			//누적된 sql문 얻어내서 실행
+			pstmt = conn.prepareStatement(sql.toString());
+			// ? 바인딩 //페이징처리와 관련된 값 바인딩
+			int paramIndex = 1;
+			pstmt.setInt(paramIndex++, dto.getStartRowNum());
+			pstmt.setInt(paramIndex, dto.getEndRowNum());
+			
+			
+			System.out.println(sql.toString()); 
+			// 쿼리 실행 및 결과 추출
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Com1EmpDto tmp = new Com1EmpDto();
+				tmp.setComId(rs.getInt("comid"));
+				tmp.setStoreNum(rs.getInt("storenum"));
+				tmp.setEmpNo(rs.getInt("empno"));
+				tmp.seteName(rs.getString("ename"));
+				tmp.setRole(rs.getString("role"));
+				tmp.seteCall(rs.getString("ecall"));
+				tmp.setePwd(rs.getString("epwd"));
+				tmp.setSal(rs.getInt("sal"));
+				tmp.setHsal(rs.getInt("hsal"));
+				tmp.setWorktime(rs.getInt("worktime"));
+				tmp.setEmail(rs.getString("email"));
+				tmp.setHiredate(rs.getString("hiredate"));
+				tmp.setContract(rs.getString("contract"));
+				list.add(tmp);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {e.printStackTrace();}
+		}
+		return list;
+	}		
 }
 
 
