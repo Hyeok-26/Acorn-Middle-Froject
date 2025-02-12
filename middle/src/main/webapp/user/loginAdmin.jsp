@@ -32,7 +32,7 @@
 %>
 	<script>
 		alert("점장 계정 로그인 실패!");
-		window.location.href = "loginform.jsp";
+		window.location.href = "loginForm.jsp";
 	</script>
 <%
 	}
@@ -40,7 +40,7 @@
 %>
 	<script>
 		alert("없는 사원번호 입니다!");
-		window.location.href = "loginform.jsp";
+		window.location.href = "loginForm.jsp";
 	</script>
 <%
 	}

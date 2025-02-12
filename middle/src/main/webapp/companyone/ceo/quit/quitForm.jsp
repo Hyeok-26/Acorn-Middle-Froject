@@ -320,7 +320,6 @@
 	<!-- 푸터 -->
 	<jsp:include page="/include/footer.jsp" />
 
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		// 로딩 동작 화면 코드
 		const strLoadingView = `

@@ -20,7 +20,6 @@
 <head>
 <meta charset="UTF-8">
 <title>직원관리</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <jsp:include page="/include/adminNav.jsp"></jsp:include>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">

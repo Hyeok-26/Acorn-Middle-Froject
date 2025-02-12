@@ -10,7 +10,7 @@
 	String ename = (String) session.getAttribute("ename");
 	*/
 	if(session.getAttribute("empno") == null) {
-		response.sendRedirect("loginform.jsp");
+		response.sendRedirect("loginForm.jsp");
 	}
 %>
 <!DOCTYPE html>
@@ -18,7 +18,6 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 메인 페이지</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
     .container2 {
         max-width: 800px;

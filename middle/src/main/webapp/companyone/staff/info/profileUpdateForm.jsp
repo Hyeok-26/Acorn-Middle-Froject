@@ -16,7 +16,6 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필 수정</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
         max-width: 600px;
@@ -95,7 +94,6 @@
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 	    new Vue({
 	        el: "#app",

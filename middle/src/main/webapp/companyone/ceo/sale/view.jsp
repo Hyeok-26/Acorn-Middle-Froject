@@ -51,7 +51,6 @@
 }
 </style>
 <!-- 페이지 로딩에 필요한 자원 -->
-<jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 <body  class="d-flex flex-column min-vh-100 bg-light">
 	<%-- 관리자 페이지 전용 네비바 --%>
@@ -127,7 +126,6 @@
 			      				</div>
 					   		</div>
 					   </form>
-					   	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 						<script>
 							new Vue({
 								el:"#addStoreForm",

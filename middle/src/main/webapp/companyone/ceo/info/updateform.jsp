@@ -20,7 +20,6 @@
 <head>
 <meta charset="UTF-8">
 <title>/ceo/protected/updateform_ceo</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 .container2 {
 	max-width: 800px;
@@ -88,7 +87,6 @@
 	<div class="position-fixed bottom-0 w-100">
   	<jsp:include page="/include/footer.jsp" />
   	</div>
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
 			el:"#app",

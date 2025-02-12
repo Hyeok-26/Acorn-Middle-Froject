@@ -33,8 +33,6 @@
 <head>
 <meta charset="UTF-8">
 <title>/ceo/accept-form.jsp</title>
-<!-- 페이지 로딩에 필요한 자원 -->
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	/* div{ border:1px solid red; } */
 </style>
