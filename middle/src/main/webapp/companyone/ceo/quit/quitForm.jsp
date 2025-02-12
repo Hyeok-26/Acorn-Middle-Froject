@@ -4,7 +4,6 @@
 <%@page import="test.dao.Com1QuitDao"%>
 <%@page import="test.dto.Com1QuitDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/include/header.jsp"></jsp:include>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	// 현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
@@ -100,13 +99,16 @@
 <head>
 <meta charset="UTF-8">
 <title>퇴사자 관리 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+
 <style>
 	/* div{ border:1px solid red; } */
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light"  >
-	<!-- 관리자 페이지 전용 네비바 -->
-	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+	<jsp:include page="/include/header.jsp"></jsp:include>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	
 	<!-- 본문 -->
 	<div class="main flex-grow-1"  id="app">  
@@ -314,9 +316,13 @@
 		</div>
 	</div>
 	
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	
 	<!-- 푸터 -->
 	<jsp:include page="/include/footer.jsp" />
-
+	
 	<script>
 		new Vue({
 			el:"#app",
