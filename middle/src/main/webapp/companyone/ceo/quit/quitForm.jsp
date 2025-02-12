@@ -6,7 +6,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	// 현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "quitForm");
 
 	// 선언 초기화
@@ -14,7 +13,6 @@
 	final int PAGE_ROW_COUNT = 6;			// 한 페이지에 표시할 개수
 	final int PAGE_DISPLAY_COUNT = 3;		// 하단 페이지에 표시할 개수
 	Com1QuitDto dto = new Com1QuitDto();	// 로딩 데이터			
-	
 	
 	// 검색 조건이 있는지 확인 
 	String condition = request.getParameter("condition");
@@ -29,12 +27,10 @@
 		// DB 조회시 넘어갈 DTO 에 검색 조건 정보 담기
 		dto.setCondition(condition);					
 		dto.setKeyword(keyword);
-		//findQuery = "&condition="+condition+"&keyword="+keyword;
 	} else {
 		condition = "ename";
 		keyword = "";
 	}
-	
 	
 	// 정렬 조건이 있는지 확인
 	String lineup = request.getParameter("lineup");
@@ -47,7 +43,6 @@
 	// DB 조회시 넘어갈 DTO 에 정렬 조건 정보 담기
 	dto.setLineup(lineup);	
 	dto.setPicked(picked);
-	
 	
 	// 페이지 번호가 있는지 확인
 	int pageNum = 1;
@@ -67,7 +62,6 @@
 	dto.setStartRowNum(startRowNum);									// DB 조회시 넘어갈 DTO 에 페이지 정보 담기
 	dto.setEndRowNum(endRowNum);
 	
-	
 	// DB에서 데이터 가져오기
 	List<Com1QuitDto> list =  Com1QuitDao.getInstance().getList(dto);
 	
@@ -76,23 +70,11 @@
 	request.setAttribute("startPageNum", startPageNum);
 	request.setAttribute("endPageNum", endPageNum);
 	request.setAttribute("totalPageCount", totalPageCount);
-	
 	request.setAttribute("condition", condition);
 	request.setAttribute("keyword", keyword);
 	request.setAttribute("lineup", lineup);
 	request.setAttribute("picked", picked);
 	request.setAttribute("pageNum", pageNum);
-	
-	//request.setAttribute("totalRow", totalRow);
-	//request.setAttribute("dto", dto);
-	request.setAttribute("findQuery", findQuery);
-	
-	
-	System.out.println("condition:" +condition);
-	System.out.println("keyword:" +keyword);
-	System.out.println("lineup:" +dto.getLineup());
-	System.out.println("picked:" +dto.getPicked());
-	System.out.println("총 row 개수:" +totalRow);
 %>
 <!DOCTYPE html>
 <html>
@@ -100,8 +82,6 @@
 <meta charset="UTF-8">
 <title>퇴사자 관리 페이지</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-
-
 <style>
 	/* div{ border:1px solid red; } */
 </style>
