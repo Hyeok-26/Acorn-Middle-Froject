@@ -43,7 +43,7 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-<%@ include file="/include/header2.jsp" %>
+<%@ include file="/include/header.jsp" %>
 	<%-- 관리자 페이지 전용 네비바 --%>
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="main flex-grow-1">  
@@ -87,6 +87,6 @@
 		</div>
 	</div>
 
-	<%@ include file="/include/footer.jsp" %>
+<%@ include file="/include/footer.jsp" %>
 </body>
 </html>

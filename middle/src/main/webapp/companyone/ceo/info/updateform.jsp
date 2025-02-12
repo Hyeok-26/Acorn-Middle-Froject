@@ -2,10 +2,10 @@
 <%@page import="test.dto.Com1CeoDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+
 
 <%
-
+	int empno=(int)session.getAttribute("empno");
 	//Com1CeoDao dao = Com1CeoDao.getInstance();
 	//Com1CeoDto dto = dao.getData(empno);
 	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
@@ -20,6 +20,7 @@
 <head>
 <meta charset="UTF-8">
 <title>/ceo/protected/updateform_ceo</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 .container2 {
 	max-width: 800px;
@@ -33,8 +34,9 @@
 </style>
 </head>
 <body>
+	<%@ include file="/include/header.jsp" %>
 	<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
-	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2" id="app">
 		<h3>회원 정보 수정 양식</h3>
 		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
@@ -85,7 +87,7 @@
 	</div>
 		
 	<div class="position-fixed bottom-0 w-100">
-  	<jsp:include page="/include/footer.jsp" />
+	<%@ include file="/include/footer.jsp" %>
   	</div>
 	<script>
 		new Vue({
