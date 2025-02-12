@@ -273,7 +273,7 @@
 					<tbody>
 						<% if (listbystoreyearly.size()==0) { %>
 							<tr>
-								<td colspan="2">매장을 선택하세요!</td>
+								<td colspan="2">매출 정보가 없습니다. 매장을 선택하세요!</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoreyearly) { %>
@@ -297,7 +297,7 @@
 					<tbody>
 						<% if (listbystoremonthly.size()==0) { %>
 							<tr>
-								<td colspan="2">매장을 선택하세요!</td>
+								<td colspan="2">매출 정보가 없습니다. 매장을 선택하세요!</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoremonthly) { %>
@@ -322,7 +322,7 @@
 						<% if (listbystore.size()==0){ %>
 							<tbody>
 								<tr>
-									<td colspan="2">매장을 선택하세요!</td>
+									<td colspan="2">매출 정보가 없습니다. 매장을 선택하세요!</td>
 								</tr>
 							</tbody>
 						<%}else{ %>
