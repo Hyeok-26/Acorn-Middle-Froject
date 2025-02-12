@@ -36,7 +36,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 	<div class="main flex-grow-1">
-		<jsp:include page="/include/adminNav.jsp">
+		<jsp:include page="/include/navbar.jsp">
 			<jsp:param value="index" name="current" />
 		</jsp:include>
 		<div class="container">

@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	session.setAttribute("current_page", "staffMain");
 	/*
@@ -18,6 +17,7 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 메인 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
     .container2 {
         max-width: 800px;
@@ -59,7 +59,8 @@
 </style>
 </head>
 <body>
-<jsp:include page="/include/empNav.jsp">
+<%@ include file="/include/header2.jsp" %>	
+<jsp:include page="/include/navbar.jsp">
 	<jsp:param value="index" name="current" />
 </jsp:include>
     <div class="container2">
