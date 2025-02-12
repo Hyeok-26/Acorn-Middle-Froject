@@ -19,6 +19,11 @@
 <head>
 <meta charset="UTF-8">
 <title>직원관리</title>
+<style>
+	th, td {
+	    white-space: nowrap;
+	}
+</style>
 <jsp:include page="/include/adminNav.jsp"></jsp:include>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">

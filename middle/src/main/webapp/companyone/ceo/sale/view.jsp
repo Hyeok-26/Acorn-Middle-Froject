@@ -84,10 +84,100 @@
 				</select>				
 			</form>		
 		</div>
+			
+			<!-- 매장 추가 버튼 -->
+			<div class="ms-auto p-2">
+				<button class="btn btn-primary" id="add-store" data-bs-toggle="modal" data-bs-target="#showModal">매장 추가</button>
+			</div>
+			
+			<!-- 매장 추가 버튼을 누르면 나오는 모달 창 -->
+			<div class="modal fade" id="showModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				  <div class="modal-content">
+				  
+				  	<!-- 모달창 헤더 -->
+				    <div class="modal-header">
+				      <h1 class="modal-title fs-5" id="showModalLabel">매장 추가</h1>
+				      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				    </div>
+				    
+				    <!-- 모달창 바디 -->
+				    <div class="modal-body ">
+				    	
+				    	<!-- 데이터 조회 -->
+					
+				    	<form action="addStore.jsp" method="POST" id="addStoreForm" >
+				    		<div class="mb-3 row" >
+				    			<div class="col-3">매장 번호</div>
+				    			<div class="col-9"><p style="text-align:left;">매장 번호는 자동으로 부여됩니다.</p></div>
+				    		</div>
+				    		<div class="mb-3 row" >
+				    			<div class="col-3">
+				    				<label for="storecall" class="form-label">매장 연락처</label>
+				    			</div>
+				    			<div class="col-6">
+					    			<input v-model="storecall" type="text" class="form-control" name="storecall" id="storecall" placeholder="매장 연락처를 입력하세요"
+					    			:class="{'is-invalid': !isCallValid && isCallDirty, 'is-valid':isCallValid}" 
+					    			@input="onInput" required>
+					    			<div class="invalid-feedback">전화 번호 형식으로 입력하세요</div>
+				    			</div>
+			      				<div class="col-3">
+			      					<button class="btn btn-primary" type="submit" :disabled="!isCallValid" @click="addStore">추가</button>
+			      				</div>
+					   		</div>
+					   </form>
+						<script>
+							new Vue({
+								el:"#addStoreForm",
+								data:{
+									storecall: "",  
+						            isCallValid:false,
+						            isCallDirty:false
+						        },
+								methods:{
+									onInput(){
+										this.isCallDirty = true;
+										const reg_call=/^0\d{1,2}(-|\))\d{3,4}-\d{4}$/;
+										this.isCallValid = reg_call.test(this.storecall);	
+										console.log(this.isCallValid);
+									},
+									addStore(){
+										
+										// 폼 입력이 제대로 이루어 졌는지 확인
+											//const storecall = this.storecall;
+											
+											fetch("addStore.jsp",{
+												method:"POST",
+												headers:{"Content-Type":"application/x-www-form-urlencoded; charset=utf-8"},
+												body: "storecall=" + encodeURIComponent(this.storecall)
+											})
+											.then(res => res.json())
+											.then(data=>{
+												console.log(data);
+												if(data.isSuccess){
+													alert("매장이 추가되었습니다");
+												}else {
+													alert("추가 실패. 개발자 확인 요망!");
+												}
+												location.href = "view.jsp";
+											})
+											.catch((err)=>{
+												console.log(err);
+											});
+										}
+								}
+							});
+						</script>
+
+				    </div>
+				  </div>
+				</div>
+			</div>
 	</div>
 	
 	<div class="contents text-center mt-3 mx-auto" style="width: 900px;">
 		<div id="allContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 전체 일매출</h5>
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -117,6 +207,7 @@
 		</div>
 
 		<div id="yearContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 연매출</h5>
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -145,6 +236,7 @@
 
 	
 		<div id="monthContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 월매출</h5>
 			<div  class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -173,6 +265,7 @@
 		
 		
 		<div id="storeContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>선택한 매장의 연매출</h5>
 			<div  class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -184,7 +277,7 @@
 					<tbody>
 						<% if (listbystoreyearly.size()==0) { %>
 							<tr>
-								<td colspan="2">매출 정보가 없습니다. 매장을 선택하세요!</td>
+								<td colspan="2">매장을 선택하세요!</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoreyearly) { %>
@@ -197,6 +290,7 @@
 					</tbody>
 				</table>
 			</div>
+			<h5>선택한 매장의 월매출</h5>
 			<div class="table-responsive">	
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -208,7 +302,7 @@
 					<tbody>
 						<% if (listbystoremonthly.size()==0) { %>
 							<tr>
-								<td colspan="2">매출 정보가 없습니다. 매장을 선택하세요!</td>
+								<td colspan="2">매장을 선택하세요!</td>
 							</tr>
 						<%}else{ %>
 							<%for (Com1SaleDto tmp: listbystoremonthly) { %>
@@ -222,6 +316,7 @@
 				</table>
 			</div>
 			<div  class="table-responsive">	
+				<h4>선택한 매장의 일매출</h4>
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
@@ -233,7 +328,7 @@
 						<% if (listbystore.size()==0){ %>
 							<tbody>
 								<tr>
-									<td colspan="2">매출 정보가 없습니다. 매장을 선택하세요!</td>
+									<td colspan="2">매장을 선택하세요!</td>
 								</tr>
 							</tbody>
 						<%}else{ %>
