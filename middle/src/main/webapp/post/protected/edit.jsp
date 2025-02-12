@@ -2,6 +2,7 @@
 <%@page import="test.post.dao.PostDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/include/header.jsp" %>
 <%
 	//1. GET 방식 파라미터로 전달되는 수정할 파일의 글번호 읽어오기
 	int num=Integer.parseInt(request.getParameter("num"));
@@ -24,25 +25,36 @@
 </style>
 </head>
 <body>
-	<div class="container">
-		<h1>글 수정 양식</h1>
+	<div class="container main flex-grow-1">
+		<div class="title-container d-flex justify-content-between mt-4 ms-2 me-2">
+			<h1>글 수정 양식</h1>
+		</div>
+		
 		<form action="update.jsp" method="post">
-			<div>
-				<label  for="num">번호</label>
-				<input type="text" id="num" name="num" value="${dto.num }" readonly/>
+			<div class="container rounded-3  border border-secondary p-3">
+				<div>
+					<label class="form-label fs-5" for="num">번호</label>
+					<input class="form-control  border border-secondary-subtle" type="text" id="num" name="num" value="${dto.num }" readonly/>
+				</div>
+				<div>
+					<label class="form-label fs-5" for="title">제목</label>
+					<input class="form-control  border border-secondary-subtle" type="text" id="title" name="title" value="${dto.title }"/>
+				</div>
+				<div>
+					<label class="form-label fs-5" for="content">내용</label>
+					<textarea class="form-control  border border-secondary-subtle" name="content" id="content" rows="10">${dto.content }</textarea>
+				</div>
 			</div>
-			<div>
-				<label for="title">제목</label>
-				<input type="text" id="title" name="title" value="${dto.title }"/>
+			<div class="btn-container d-flex justify-content-end m-2">
+				<button onclick="submitContents(this)" class="btn btn-primary" type="submit">수정확인</button>
+				<button class="btn btn-warning ms-2" type="reset">Reset</button>
 			</div>
-			<div>
-				<label for="content">내용</label>
-				<textarea name="content" id="content" rows="10">${dto.content }</textarea>
-			</div>
-			<button onclick="submitContents(this)" class="btn btn-primary" type="submit">수정확인</button>
-			<button class="btn btn-warning" type="reset">Reset</button>
 		</form>
+		
 	</div>
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 	<!-- SmartEditor 에서 필요한 javascript 로딩  -->
 	<script src="${pageContext.request.contextPath }/SmartEditor/js/HuskyEZCreator.js"></script>
 	<script>
