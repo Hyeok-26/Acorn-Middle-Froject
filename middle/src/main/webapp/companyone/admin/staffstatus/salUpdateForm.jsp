@@ -2,9 +2,9 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
-<%@ include file="/include/header.jsp" %>
+
 <%
-	empno = Integer.parseInt(request.getParameter("empno"));
+	int empno = Integer.parseInt(request.getParameter("empno"));
 	String returnurl = request.getParameter("returnurl");
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto= dao.getData(empno);
@@ -15,6 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>근무시간 수정폼</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	.containers {
         max-width: 600px;
@@ -32,7 +33,8 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
 		<div class="containers" id ="app">
@@ -91,6 +93,8 @@
 	</div> <%--메인 --%>
 	<%--푸터 --%>
 	<jsp:include page="/include/footer.jsp" />
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
     new Vue({
         el: "#app",
