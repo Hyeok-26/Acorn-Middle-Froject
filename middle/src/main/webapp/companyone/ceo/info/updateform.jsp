@@ -20,7 +20,6 @@
 <head>
 <meta charset="UTF-8">
 <title>/ceo/protected/updateform_ceo</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 .container2 {
 	max-width: 800px;

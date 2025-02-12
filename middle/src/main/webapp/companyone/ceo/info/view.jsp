@@ -21,7 +21,6 @@
 <head>
 <meta charset="UTF-8">
 <title>/ceo/myinfo_ceo.jsp</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 table {
 	width: 100%; /* 화면 너비에 맞게 설정 */
