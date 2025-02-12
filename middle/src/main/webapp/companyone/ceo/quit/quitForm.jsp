@@ -344,8 +344,25 @@
 					// 출력 받을 퇴사자 사원 번호 입력 받기
 					const empno = prompt("출력할 퇴사자 번호를 입력하세요");
 					
-					// 퇴사자 번호 달고 출력 기능을 가진 jsp 로 이동
-					location.href= "printQuit.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked + "&empno=" + empno;
+					// 뜨는 알림창에 확인 버튼을 눌렀을 때
+					if(empno){
+						// 유효한 번호를 입력했는지 확인
+						fetch("searchInfoQuit.jsp?empno="+empno)
+						.then(res => res.json())
+						.then(result=>{
+							// 만약 없는 사원번호를 입력했을 경우
+							if(!result.isExist){
+								alert("없는 사원번호 입니다.");
+							} else {
+								// 퇴사자 번호 달고 출력 기능을 가진 jsp 로 이동
+								location.href= "printQuit.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked + "&empno=" + empno;
+							}
+						})
+						.catch((err)=>{
+							console.log(err);
+						});
+					}
+					
 					
 				},
 				// 페이징 버튼 눌었을 때
