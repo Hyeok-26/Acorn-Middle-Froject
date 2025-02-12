@@ -266,8 +266,8 @@
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
-							<th>날짜 구분</th>
-							<th>연매출</th>
+							<th class="col-5">날짜 구분</th>
+							<th class="col-4">연매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -290,8 +290,8 @@
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
-							<th>날짜 구분</th>
-							<th>월매출</th>
+							<th class="col-5">날짜 구분</th>
+							<th class="col-4">월매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -314,8 +314,8 @@
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
-							<th>날짜 구분</th>
-							<th>일매출</th>
+							<th class="col-5">날짜 구분</th>
+							<th class="col-4">일매출</th>
 						</tr>
 					</thead>
 					
