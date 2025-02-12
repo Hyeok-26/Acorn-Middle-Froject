@@ -32,7 +32,6 @@
 <head>
 <meta charset="UTF-8">
 <title>스케줄 조회</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
     #imgsrcurl {
         max-width: 100%;
