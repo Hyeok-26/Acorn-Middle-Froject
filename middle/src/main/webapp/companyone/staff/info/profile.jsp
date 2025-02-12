@@ -4,14 +4,15 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	
 	//int empno = (int) session.getAttribute("empno");
 	session.setAttribute("current_page", "profile");
-
-	Com1EmpDao dao = Com1EmpDao.getInstance();
-	Com1EmpDto dto = dao.getData(empno);
+	
+	int empno=(int)session.getAttribute("empno");
+	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
+	//Com1EmpDao dao = Com1EmpDao.getInstance();
+	//Com1EmpDto dto = dao.getData(empno);
 	
 	//int comid = dto.getComId();
 	//String comname = UsingDao.getInstance().getComName(comid);
@@ -22,6 +23,7 @@
 <meta charset="UTF-8">
 <title>프로필</title>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	.container2 {
 		max-width: 800px;
@@ -81,7 +83,8 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/empNav.jsp"></jsp:include>
+	<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2">
 		<div
 			class="d-flex align-items-center justify-content-between border-bottom">
@@ -98,60 +101,60 @@
 		</div>
 		<table>
 			<tr>
-				<th class="animate__animated animate__bounceInDown animate__infinite">회사명</th>
-				<td><%=comname%></td>
+				<th>회사명</th>
+				<td>${comname }</td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInLeft animate__infinite">회사번호</th>
-				<td><%=dto.getComId()%></td>
+				<th>회사번호</th>
+				<td><%=dto.getComId() %></td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInRight animate__infinite">호점</th>
-				<td><%=dto.getStoreNum()%> 호점</td>
+				<th>호점</th>
+				<td>${storenum } 호점</td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInUp animate__infinite">사원번호</th>
-				<td><%=dto.getEmpNo()%></td>
+				<th>사원번호</th>
+				<td>${empno }</td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInDown animate__infinite">유저 이름</th>
-				<td><%=dto.geteName() %></td>
+				<th>유저 이름</th>
+				<td>${ename }</td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInLeft animate__infinite">직급</th>
-				<td><%=dto.getRole() %></td>
+				<th>직급</th>
+				<td>${role }</td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInRight animate__infinite">전화 번호</th>
+				<th>전화 번호</th>
 				<td><%=dto.geteCall() %></td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInUp animate__infinite">비밀번호</th>
+				<th>비밀번호</th>
 				<td>-----</td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInDown animate__infinite">월급</th>
+				<th>월급</th>
 				<td><%=dto.getSal() %></td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInLeft animate__infinite">시급</th>
+				<th>시급</th>
 				<td><%=dto.getHsal() %></td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInRight animate__infinite">근무 시간</th>
+				<th>근무 시간</th>
 				<td><%=dto.getWorktime() %></td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInUp animate__infinite">이메일</th>
+				<th>이메일</th>
 				<td><%=dto.getEmail() %></td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInDown animate__infinite">고용 날짜</th>
+				<th>고용 날짜</th>
 				<td><%=dto.getHiredate() %></td>
 			</tr>
 			<tr>
-				<th class="animate__animated animate__bounceInUp animate__infinite">근로계약서</th>
-				<td><a href="contract.jsp?empno=<%=empno %>">근로 계약서 보기</a></td>
+				<th>근로계약서</th>
+				<td><a href="contract.jsp?empno=${empno} ">근로 계약서 보기</a></td>
 			</tr>
 			<%--
 			<tr>

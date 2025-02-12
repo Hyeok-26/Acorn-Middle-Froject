@@ -2,13 +2,12 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
 <%
 
+	int empno=(int)session.getAttribute("empno");
 
-
-Com1EmpDao dao=Com1EmpDao.getInstance();
-Com1EmpDto dto=dao.getData(empno);
+	Com1EmpDao dao=Com1EmpDao.getInstance();
+	Com1EmpDto dto=dao.getData(empno);
 
 %>
 <!DOCTYPE html>
@@ -16,6 +15,7 @@ Com1EmpDto dto=dao.getData(empno);
 <head>
 <meta charset="UTF-8">
 <title>근로계약서</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	html, body {
 	    height: 100%;
@@ -67,12 +67,13 @@ Com1EmpDto dto=dao.getData(empno);
 </style>
 </head>
 <body>
-<jsp:include page="/include/empNav.jsp"></jsp:include>
+	<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2">
 		<h1>근로계약서 조회</h1>
-		<form action="uploadContract.jsp?empno=<%=empno %>" method="post" id="contractForm">
+		<form action="uploadContract.jsp?empno=${empno }" method="post" id="contractForm">
 			<div>
-				<h5><strong><%=dto.geteName() %></strong> 님의 근로계약서</h5>
+				<h5><strong>${ename }</strong> 님의 근로계약서</h5>
 				<div>
 					<input type="file" name="contractFile" id="contractFile" accept="image/*"/>
 					<input type="hidden" name="srcurl" id="srcurl" />
@@ -139,7 +140,7 @@ Com1EmpDto dto=dao.getData(empno);
 		document.querySelector("#deleteBtn")?.addEventListener("click", (event) => {
 			event.preventDefault();
 			if (confirm("정말 삭제하시겠습니까?")) {
-				fetch("deleteContract.jsp?empno=<%= empno %>", { method: "POST" })
+				fetch("deleteContract.jsp?empno=${empno}", { method: "POST" })
 				.then(response => response.text())
 				.then(data => {
 					alert("근로 계약서가 삭제되었습니다.");

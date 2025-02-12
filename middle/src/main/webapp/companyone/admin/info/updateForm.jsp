@@ -52,7 +52,7 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<%@ include file="/include/header.jsp" %>	
+	<%@ include file="/include/header.jsp" %>	
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="main flex-grow-1">
 		<div class="container" id="app">

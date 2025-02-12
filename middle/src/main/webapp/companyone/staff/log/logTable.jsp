@@ -3,7 +3,6 @@
 <%@page import="test.dao.Com1EmpLogDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	session.setAttribute("current_page", "log");
 	//int empno=(int)session.getAttribute("empno");

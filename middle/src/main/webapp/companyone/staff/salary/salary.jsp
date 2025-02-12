@@ -2,11 +2,10 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
 <%
 	session.setAttribute("current_page", "salary");
 
-	
+	int empno = (int)session.getAttribute("empno");
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
 	if(dto.getSal()==0 && dto.getHsal()==0){
 %>
@@ -28,6 +27,7 @@
 <meta charset="UTF-8">
 <title>급여 계산</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	html, body {
 	    height: 100%;
@@ -107,76 +107,77 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<jsp:include page="/include/empNav.jsp"></jsp:include>
-<div class="container2 animate__animated animate__fadeInUp">
-   <div class="container flex-fill" style="width: 600px; height:650px; margin-top: 10px;">
-       <div class="d-inline-block tab-button" id="salTab" onclick="switchTab('sal')">월급</div>
-       <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>
-   
-       <div class="tab-content" id="salContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h3><strong>${ename }</strong> 님 월급으로 급여 계산</h3>
-           <button class="btn btn-dark" id="salBtn" style="padding: 10px;" onclick="show('sal')">급여 조회</button>
-           <div class="result" id="sal">
-           	   <label class="salary-label">기본급: ${sal } 원</label>
-         	   <label class="salary-label">국민연금: ${sal*0.045 } 원</label>
-               <label class="salary-label">건강보험료: ${sal*0.035 } 원</label>
-               <label class="salary-label">장기요양보험료: ${sal*0.0045 } 원</label>
-               <label class="salary-label">고용보험료: ${sal*0.0009 } 원</label>
-               <label class="salary-label">--------------------------------------</label>
-               <label class="salary-label">지급액 계: ${sal } 원</label>
-               <label class="salary-label">공제액 계: ${sal*0.0854 } 원</label>
-               <label class="salary-label"><strong>실수령 액: ${sal*0.9146 } 원</strong></label>
-               <label class="salary-label">지급일: 2025년 02월 15일</label>
-           </div>
-       </div>
-   
-       <div class="tab-content" id="hsalContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h3><strong>${ename }</strong> 님 시급으로 급여 계산</h3>
-		   <form id="inputForm">
-			   <label for="week1">1주차:</label>
-	           <input type="number" id="week1" name="week1" min="0" step="0.01" placeholder="1주차 근무시간 입력"/><br>
-			   
-			   <label for="week2">2주차:</label>
-			   <input type="number" id="week2" name="week2" min="0" step="0.01" placeholder="2주차 근무시간 입력"/><br>
-			   
-			   <label for="week3">3주차:</label>
-			   <input type="number" id="week3" name="week3" min="0" step="0.01" placeholder="3주차 근무시간 입력"/><br>
-			   
-			   <label for="week4">4주차:</label>
-			   <input type="number" id="week4" name="week4" min="0" step="0.01" placeholder="4주차 근무시간 입력"/><br>
-			   
-			   <label for="week5">5주차:</label>
-			   <input type="number" id="week5" name="week5" min="0" step="0.01" placeholder="5주차 근무시간 입력"/><br>
-	
-	           <button class="btn btn-dark" id="hsalBtn" style="padding: 10px;" onclick="show('hsal')">급여 조회</button>
-           </form>
-		   <div class="result" id="hsal">
-				<label>주차별 근무시간 및 주휴수당</label>
-           		<table id="hsalTable">
-					<thead>
-						<tr>
-							<th>주차</th>
-							<th>근무시간</th>
-							<th>주휴수당</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							
-						</tr>
-					</tbody>
-				</table>
-           	    <label class="hsalary-label">기본 시급: ${hsal } 원</label>
-           	    <label class="hsalary-label">총 기본급: <span id="totalPay">0</span> 원</label>
-         	    <label class="hsalary-label">총 주휴수당: <span id="totalOvertimePay">0</span> 원</label>
-                <label class="hsalary-label">총 급여: <span id="totalSal">0</span> 원</label>
-                <label class="hsalary-label">--------------------------------------</label>
-                <label class="hsalary-label">세율: 8.3 % </label>
-                <label class="hsalary-label"><strong>세율적용 급여: <span id="actualSal">0</span> 원</strong></label>
-           </div>      
-       </div>
-   </div>	
-</div>
+	<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<div class="container2 animate__animated animate__fadeInUp">
+	   <div class="container flex-fill" style="width: 600px; height:650px; margin-top: 10px;">
+	       <div class="d-inline-block tab-button" id="salTab" onclick="switchTab('sal')">월급</div>
+	       <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>
+	   
+	       <div class="tab-content" id="salContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
+	           <h3><strong>${ename }</strong> 님 월급으로 급여 계산</h3>
+	           <button class="btn btn-dark" id="salBtn" style="padding: 10px;" onclick="show('sal')">급여 조회</button>
+	           <div class="result" id="sal">
+	           	   <label class="salary-label">기본급: ${sal } 원</label>
+	         	   <label class="salary-label">국민연금: ${sal*0.045 } 원</label>
+	               <label class="salary-label">건강보험료: ${sal*0.035 } 원</label>
+	               <label class="salary-label">장기요양보험료: ${sal*0.0045 } 원</label>
+	               <label class="salary-label">고용보험료: ${sal*0.0009 } 원</label>
+	               <label class="salary-label">--------------------------------------</label>
+	               <label class="salary-label">지급액 계: ${sal } 원</label>
+	               <label class="salary-label">공제액 계: ${sal*0.0854 } 원</label>
+	               <label class="salary-label"><strong>실수령 액: ${sal*0.9146 } 원</strong></label>
+	               <label class="salary-label">지급일: 2025년 02월 15일</label>
+	           </div>
+	       </div>
+	   
+	       <div class="tab-content" id="hsalContent" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
+	           <h3><strong>${ename }</strong> 님 시급으로 급여 계산</h3>
+			   <form id="inputForm">
+				   <label for="week1">1주차:</label>
+		           <input type="number" id="week1" name="week1" min="0" step="0.01" placeholder="1주차 근무시간 입력"/><br>
+				   
+				   <label for="week2">2주차:</label>
+				   <input type="number" id="week2" name="week2" min="0" step="0.01" placeholder="2주차 근무시간 입력"/><br>
+				   
+				   <label for="week3">3주차:</label>
+				   <input type="number" id="week3" name="week3" min="0" step="0.01" placeholder="3주차 근무시간 입력"/><br>
+				   
+				   <label for="week4">4주차:</label>
+				   <input type="number" id="week4" name="week4" min="0" step="0.01" placeholder="4주차 근무시간 입력"/><br>
+				   
+				   <label for="week5">5주차:</label>
+				   <input type="number" id="week5" name="week5" min="0" step="0.01" placeholder="5주차 근무시간 입력"/><br>
+		
+		           <button class="btn btn-dark" id="hsalBtn" style="padding: 10px;" onclick="show('hsal')">급여 조회</button>
+	           </form>
+			   <div class="result" id="hsal">
+					<label>주차별 근무시간 및 주휴수당</label>
+	           		<table id="hsalTable">
+						<thead>
+							<tr>
+								<th>주차</th>
+								<th>근무시간</th>
+								<th>주휴수당</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								
+							</tr>
+						</tbody>
+					</table>
+	           	    <label class="hsalary-label">기본 시급: ${hsal } 원</label>
+	           	    <label class="hsalary-label">총 기본급: <span id="totalPay">0</span> 원</label>
+	         	    <label class="hsalary-label">총 주휴수당: <span id="totalOvertimePay">0</span> 원</label>
+	                <label class="hsalary-label">총 급여: <span id="totalSal">0</span> 원</label>
+	                <label class="hsalary-label">--------------------------------------</label>
+	                <label class="hsalary-label">세율: 8.3 % </label>
+	                <label class="hsalary-label"><strong>세율적용 급여: <span id="actualSal">0</span> 원</strong></label>
+	           </div>      
+	       </div>
+	   </div>	
+	</div>
     <footer class="footer">
         <jsp:include page="/include/footer.jsp" />
     </footer>
