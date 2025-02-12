@@ -105,6 +105,7 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light"  id="app">
+	뭐냐 진짜
 	<!-- 관리자 페이지 전용 네비바 -->
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	
