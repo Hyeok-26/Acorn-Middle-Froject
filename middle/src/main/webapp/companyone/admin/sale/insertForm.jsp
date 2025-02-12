@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>    
+    pageEncoding="UTF-8"%> 
 <%
 	session.setAttribute("current_page", "saleview");
 %>
@@ -9,12 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>매출추가 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
+<%@ include file="/include/header.jsp" %>	
   <!-- 네비게이션 바 -->
-  <jsp:include page="/include/adminNav.jsp">
-    <jsp:param value="index" name="current" />
-  </jsp:include>
+  <jsp:include page="/include/navbar.jsp"></jsp:include>
 
   <!-- 메인 컨텐츠 -->
   <div class="container flex-grow-1 my-4">

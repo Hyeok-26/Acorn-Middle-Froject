@@ -3,11 +3,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
 	int empno=(int)session.getAttribute("empno");
 
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto=dao.getData(empno);
+	session.setAttribute("current_page", "profile");
+	
+	String ename = (String) session.getAttribute("ename");
 
 %>
 <!DOCTYPE html>
@@ -40,9 +42,9 @@
 		text-align: center;
 	}
 	.footer {
-    text-align: center;
-    width: 100%;
-    margin-top: 25px;
+	    text-align: center;
+	    width: 100%;
+	    margin-top: 25px;
 	}
 	#contractLink {
 		display: block;
@@ -67,7 +69,7 @@
 </style>
 </head>
 <body>
-	<%@ include file="/include/header.jsp" %>	
+	<%@ include file="/include/header.jsp" %>
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2">
 		<h1>근로계약서 조회</h1>
@@ -103,7 +105,7 @@
         <jsp:include page="/include/footer.jsp" />
     </footer>
 
-
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>  
 	<script>
 		// 버튼의 초기 설정
 		document.querySelector("#uploadBtn").disabled = true;

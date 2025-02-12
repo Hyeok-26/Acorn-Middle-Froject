@@ -3,7 +3,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+
 <%
 	session.setAttribute("current_page", "acceptStaff");
 
@@ -27,11 +27,11 @@
 <head>
 <meta charset="UTF-8">
 <title>사원 승인 관리</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 </head>
 <body class="d-flex flex-column min-vh-100">
-	<jsp:include page="/include/adminNav.jsp">
-			<jsp:param value="index" name="current" />
-	</jsp:include>
+	<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="main flex-grow-1"> 
 		<div class="container my-5">
 			<h2 class="text-center mb-4">사원 승인 관리</h2>

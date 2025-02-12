@@ -3,6 +3,7 @@
 <%@page import="test.dto.Com1SaleDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%
 	//세션에 담은 storenum 가져오기
 	//int storenum = (int)session.getAttribute("storenum");
@@ -19,10 +20,9 @@
 <title>매출조회 페이지</title>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
+<%@ include file="/include/header.jsp" %>	
   <!-- 네비게이션 바 -->
-  <jsp:include page="/include/adminNav.jsp">
-    <jsp:param value="index" name="current" />
-  </jsp:include>
+  <jsp:include page="/include/navbar.jsp"></jsp:include>
 
   <!-- 메인 컨텐츠 -->
   <div class="container flex-grow-1 my-4">

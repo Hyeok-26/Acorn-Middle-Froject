@@ -2,10 +2,9 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
 <%
 
-	empno = Integer.parseInt(request.getParameter("empno"));
+	int empno = Integer.parseInt(request.getParameter("empno"));
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpLogDao logdao=Com1EmpLogDao.getInstance();
 	boolean logisSuccess= logdao.delete(empno);

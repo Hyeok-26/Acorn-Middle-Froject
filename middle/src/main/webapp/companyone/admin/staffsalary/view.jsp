@@ -1,10 +1,9 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@page import="java.util.List"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>        
 <%
 	session.setAttribute("current_page", "staffsalaryview");
 
@@ -19,6 +18,7 @@
 <head>
 <meta charset="UTF-8">
 <title>직원월급</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
     .tabbutton {
         padding: 10px 20px;
@@ -35,7 +35,8 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
@@ -163,7 +164,7 @@
 	
 	<%--푸터 --%>
     <jsp:include page="/include/footer.jsp" />
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
 	    function switchTab(tab) {
 	        const tabs = ['yet', 'sal', 'hsal'];

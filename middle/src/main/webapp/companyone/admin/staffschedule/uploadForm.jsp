@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+
 <%
+	int storenum = (int)session.getAttribute("storenum");
 	//int storenum = Integer.parseInt(request.getParameter("storenum"));
 %>
 <!DOCTYPE html>
@@ -9,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>직원스케줄업로드폼</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
     /* 이미지 미리보기 스타일 */
     #preview {
@@ -22,7 +24,8 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
@@ -59,7 +62,7 @@
     </div> <%--main --%>
 	<%--푸터 --%>
     <jsp:include page="/include/footer.jsp" />
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <%-- 이미지 미리보기 기능 추가 --%>
     <script>
         function previewImage(event) {

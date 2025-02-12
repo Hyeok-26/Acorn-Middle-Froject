@@ -3,11 +3,12 @@
 <%@page import="test.dao.Com1SchDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
 <%
 	session.setAttribute("current_page", "staffscheduleview");
 
 	//int storenum = Integer.parseInt(request.getParameter("storenum"));
+	int storenum = (int)session.getAttribute("storenum");
+	
 	//dao이용해서 회원목록 얻어오기
 	Com1SchDao dao=Com1SchDao.getInstance();
 	List<Com1SchDto> list=dao.getListSchStore(storenum);
@@ -28,6 +29,7 @@
 <head>
 <meta charset="UTF-8">
 <title>직원스케줄조회</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
     #imgsrcurl {
         max-width: 100%;
@@ -46,7 +48,8 @@
 
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
