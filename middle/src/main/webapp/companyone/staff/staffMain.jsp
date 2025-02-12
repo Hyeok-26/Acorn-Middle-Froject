@@ -10,7 +10,7 @@
 	String ename = (String) session.getAttribute("ename");
 	*/
 	if(session.getAttribute("empno") == null) {
-		response.sendRedirect("loginform.jsp");
+		response.sendRedirect("loginForm.jsp");
 	}
 %>
 <!DOCTYPE html>

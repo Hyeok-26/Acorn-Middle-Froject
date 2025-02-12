@@ -13,7 +13,6 @@
     }
 %>
 
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <html>
 <head>
     <meta charset="UTF-8"> <!-- UTF-8 인코딩 설정 -->

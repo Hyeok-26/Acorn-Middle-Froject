@@ -31,7 +31,7 @@ public class LoginFilter implements Filter{
         if (role == null) {
         	//로그인 페이지로 리다이렉트 시키는 메소드를 호출해서 리다이렉트 시킨다
         	//redirectToLogin(req, res);
-            res.sendRedirect(req.getContextPath() + "/user/loginform.jsp");
+            res.sendRedirect(req.getContextPath() + "/user/loginForm.jsp");
             return;
         }   
 
@@ -50,6 +50,6 @@ public class LoginFilter implements Filter{
 //        		URLEncoder.encode(url, "UTF-8") :
 //        		URLEncoder.encode(url + "?" + query, "UTF-8");
 //        //로그인 페이지로 리다이렉트 이동하면서 원래 가려던 목적지 정보도 같이 넘겨준다.
-//        res.sendRedirect(req.getContextPath() + "/user/loginform.jsp?url=" + encodedUrl);
+//        res.sendRedirect(req.getContextPath() + "/user/loginForm.jsp?url=" + encodedUrl);
 //    }
 }

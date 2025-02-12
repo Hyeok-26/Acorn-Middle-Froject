@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <%
 	int comid = -1;
 	String comname = null;
@@ -27,7 +28,7 @@
         <nav class="nav">
             <% if (role == null) { %>
             	<a class="nav-link text-white" href="${pageContext.request.contextPath }/">홈</a>
-            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/loginform.jsp">로그인</a>
+            	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/loginForm.jsp">로그인</a>
             	<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/signup.jsp">회원가입</a>
             <% } else if(role.equals("CEO")){ %>
             	<a class="nav-link text-white" href="${pageContext.request.contextPath }/companyone/ceo/ceoMain.jsp">홈</a>
