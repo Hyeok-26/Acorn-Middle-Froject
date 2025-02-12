@@ -287,7 +287,6 @@
 						<!-- Prev 버튼 -->
 						<c:if test="${startPageNum ne 1}">
 							<li class="page-item">
-								<%-- <a class="page-link" href="quitForm.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a> --%>
 								<button type="button" class="page-link" @click="onPage">Prev</button>
 							</li>
 						</c:if>
@@ -295,14 +294,12 @@
 						<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
 							<li class="page-item ${i == pageNum ? 'active' : ''}">
 								<button type="button" class="page-link" @click="onPage">${i}</button>
-								<%-- <a class="page-link" href="quitForm.jsp?pageNum=${i}${findQuery}">${i}</a> --%>
 							</li>
 						</c:forEach>
 						<!-- Next 버튼 -->
 						<c:if test="${endPageNum < totalPageCount}">
 							<li class="page-item">
 								<button type="button" class="page-link" @click="onPage">Next</button>
-								<%-- <a class="page-link" href="quitForm.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a> --%>
 							</li>
 						</c:if>
 					</ul>		
