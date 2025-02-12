@@ -2,8 +2,9 @@
 <%@page import="test.dao.Com1SaleDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
 
-<%@ include file="/include/header.jsp" %>
 <%
 	
 	session.setAttribute("current_page", "saleview");
@@ -13,6 +14,7 @@
 	
 	// 매출 조회 페이지에서 day에 입력한 날짜를 담기
 	String selectday = request.getParameter("day");
+	int storenum=(int)session.getAttribute("storenum");
 	
 	if (selectday != null) {
 		//처음에 페이지 들어가면 입력한 날짜가 아무것도 안나오게
@@ -47,6 +49,7 @@
 <head>
 <meta charset="UTF-8">
 <title>점장 매출 조회 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
     .tabbutton {
         padding: 10px 20px;
@@ -64,7 +67,8 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<%--main 컨텐츠 감싸기 --%>
 	<div class="main flex-grow-1">
 		<div class="container">
@@ -97,7 +101,7 @@
 							<tbody>
 								<tr>
 									<th>${salesdate }</th>
-									<th><fmt:formatNumber value="${daySale}" pattern="#,###" /></th>
+									<th><fmt:formatNumber value="${pageScope.daySale}" pattern="#,###" /></th>
 								</tr>
 							</tbody>
 						</table>
@@ -159,7 +163,7 @@
 							<tbody>
 								<tr>
 									<th>${dto2.year }</th>
-									<th><fmt:formatNumber value="${dto2.yearlySales}" pattern="#,###" /></th>
+									<th><fmt:formatNumber value="${pageScope.dto2.yearlySales}" pattern="#,###" /></th>
 								</tr>
 							</tbody>
 						</table>
@@ -193,6 +197,7 @@
 
 
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<jsp:include page="/include/footer.jsp" />
 	
 	<script>
