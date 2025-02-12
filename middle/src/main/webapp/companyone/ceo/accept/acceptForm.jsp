@@ -5,6 +5,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% 
+	session.setAttribute("current_page", "acceptForm");
+	
 	// 로딩 데이터
 	Com1WaitDto dto = new Com1WaitDto();
 	// DB 에서 대기자 목록 가져오기
@@ -55,7 +57,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						
 						<c:choose>
 							<%-- 데이터가 없는 경우 --%>
 							<c:when test="<%=list_admin.isEmpty() %>">
@@ -134,11 +135,6 @@
 							</c:otherwise>
 						</c:choose>
 			</div>
-			
-			<%-- 페이징 --%>
-			<nav>
-			</nav>
-			
 		</div>
 	</div>
 	

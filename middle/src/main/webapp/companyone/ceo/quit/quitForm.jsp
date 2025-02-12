@@ -6,6 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
+	session.setAttribute("current_page", "quitForm");
+
 	// 선언 초기화
 	String findQuery="";					// 페이지 로딩 uri
 	final int PAGE_ROW_COUNT = 6;			// 한 페이지에 표시할 개수

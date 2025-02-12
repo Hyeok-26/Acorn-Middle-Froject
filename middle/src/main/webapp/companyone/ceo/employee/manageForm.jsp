@@ -6,6 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
+	session.setAttribute("current_page", "manageForm");
+
 	// DB 에서 조회할 때 넘겨줄 객체
 	Com1EmpDto dto = new Com1EmpDto();
 	
