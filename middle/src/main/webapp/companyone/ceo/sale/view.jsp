@@ -177,6 +177,7 @@
 	
 	<div class="contents text-center mt-3 mx-auto" style="width: 900px;">
 		<div id="allContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 전체 일매출</h5>
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -206,6 +207,7 @@
 		</div>
 
 		<div id="yearContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 연매출</h5>
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -234,6 +236,7 @@
 
 	
 		<div id="monthContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 월매출</h5>
 			<div  class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -262,6 +265,7 @@
 		
 		
 		<div id="storeContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>선택한 매장의 연매출</h5>
 			<div  class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -286,6 +290,7 @@
 					</tbody>
 				</table>
 			</div>
+			<h5>선택한 매장의 월매출</h5>
 			<div class="table-responsive">	
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -311,6 +316,7 @@
 				</table>
 			</div>
 			<div  class="table-responsive">	
+				<h4>선택한 매장의 일매출</h4>
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
