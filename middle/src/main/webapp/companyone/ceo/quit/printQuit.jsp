@@ -11,6 +11,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	
+	Thread.sleep(100000); // spinner 테스트를 위해 응답 시간을 2초 지연 시킨다.
+
 	String ename = (String)session.getAttribute("ename");
 
 	int empno = -1;
@@ -101,8 +104,6 @@
 		workbook.write(response.getOutputStream());
 		workbook.close();
 	}
-	
-
 %>
 <!DOCTYPE html>
 <html>

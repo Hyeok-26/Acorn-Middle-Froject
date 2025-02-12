@@ -16,9 +16,7 @@
 		ename = (String)session.getAttribute("ename");
 		storenum = (int)session.getAttribute("storenum");
 	}
-
 %>
-
 <header class="bg-dark text-white py-3">
     <div class="container d-flex justify-content-between align-items-center">
         <!-- 제목 클릭 시 새로 고침 되는 부분 -->
