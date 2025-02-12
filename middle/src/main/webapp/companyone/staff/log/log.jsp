@@ -69,7 +69,6 @@
 	<div class="position-fixed bottom-0 w-100">
   		<jsp:include page="/include/footer.jsp" />
   	</div>
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script>
 		//시간 함수
 		function Time(){

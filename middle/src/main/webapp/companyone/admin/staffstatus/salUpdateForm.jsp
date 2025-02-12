@@ -91,7 +91,6 @@
 	</div> <%--메인 --%>
 	<%--푸터 --%>
 	<jsp:include page="/include/footer.jsp" />
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
     new Vue({
         el: "#app",

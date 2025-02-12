@@ -172,9 +172,6 @@ td a:hover {
 	</div>
 	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 	<%@ include file="/include/footer.jsp" %>
 </body>
 </html>

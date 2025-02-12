@@ -173,8 +173,7 @@
 		// 파일 선택 버튼 클릭
 		document.querySelector("#contractLink").addEventListener("click", () => {
 			document.querySelector("#contractFile").click();
-		});
-   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>   
+		}); 
    <script>
        function switchTab(tab) {
            const tabs = ['sal', 'hsal'];

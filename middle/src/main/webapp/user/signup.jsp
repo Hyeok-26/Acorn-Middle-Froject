@@ -23,8 +23,6 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 페이지</title>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 #app {
 	padding: 20px;
@@ -140,7 +138,6 @@
 
 	<%@ include file="/include/footer.jsp"%>
 
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
     new Vue({
         el:"#app",

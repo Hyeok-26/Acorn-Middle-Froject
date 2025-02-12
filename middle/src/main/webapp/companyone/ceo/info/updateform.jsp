@@ -87,7 +87,6 @@
 	<div class="position-fixed bottom-0 w-100">
   	<jsp:include page="/include/footer.jsp" />
   	</div>
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
 			el:"#app",
