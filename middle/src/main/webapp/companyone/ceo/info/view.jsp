@@ -5,12 +5,13 @@
 <%@page import="test.dto.Com1CeoDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+
 
 <%
 	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "myinfo");
-
+	int empno=(int)session.getAttribute("empno");
+	String comname=(String)session.getAttribute("comname");
 	Com1CeoDto dto = Com1CeoDao.getInstance().getData(empno);
 %>
 
@@ -20,6 +21,7 @@
 <head>
 <meta charset="UTF-8">
 <title>/ceo/myinfo_ceo.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 table {
 	width: 100%; /* 화면 너비에 맞게 설정 */
@@ -125,9 +127,9 @@ td a:hover {
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<%-- <jsp:include page="/include/navbar.jsp"></jsp:include> --%>
+<%@ include file="/include/header.jsp" %>
 	<%-- 관리자 페이지 전용 네비바: 관리자 페이지 이동을 쉽게 하기 위함 --%>
-	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="main flex-grow-1"> 
 	<div class="container2 ">
 		<div
@@ -140,7 +142,7 @@ td a:hover {
 		<table>
 			<tr>
 				<th>회사</th>
-				<td><%=comname%>(회사 코드 : <%=dto.getComId()%>)</td>
+				<td>${comname }(회사 코드 : <%=dto.getComId()%>)</td>
 			</tr>
 			<tr>
 				<th>관리자 사원번호</th>
