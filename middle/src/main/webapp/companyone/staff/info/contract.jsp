@@ -2,13 +2,16 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+
 <%
-
-
-
-Com1EmpDao dao=Com1EmpDao.getInstance();
-Com1EmpDto dto=dao.getData(empno);
+	session.setAttribute("current_page", "profile");
+	
+	int empno = (int) session.getAttribute("empno");
+	
+	Com1EmpDao dao=Com1EmpDao.getInstance();
+	Com1EmpDto dto=dao.getData(empno);
+	
+	String ename = (String) session.getAttribute("ename");
 
 %>
 <!DOCTYPE html>
@@ -40,9 +43,9 @@ Com1EmpDto dto=dao.getData(empno);
 		text-align: center;
 	}
 	.footer {
-    text-align: center;
-    width: 100%;
-    margin-top: 25px;
+	    text-align: center;
+	    width: 100%;
+	    margin-top: 25px;
 	}
 	#contractLink {
 		display: block;
@@ -67,12 +70,13 @@ Com1EmpDto dto=dao.getData(empno);
 </style>
 </head>
 <body>
-<jsp:include page="/include/empNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>
+<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2">
 		<h1>근로계약서 조회</h1>
-		<form action="uploadContract.jsp?empno=<%=empno %>" method="post" id="contractForm">
+		<form action="uploadContract.jsp?empno=${empno }" method="post" id="contractForm">
 			<div>
-				<h5><strong><%=dto.geteName() %></strong> 님의 근로계약서</h5>
+				<h5><strong>${ename }</strong> 님의 근로계약서</h5>
 				<div>
 					<input type="file" name="contractFile" id="contractFile" accept="image/*"/>
 					<input type="hidden" name="srcurl" id="srcurl" />
@@ -102,7 +106,7 @@ Com1EmpDto dto=dao.getData(empno);
         <jsp:include page="/include/footer.jsp" />
     </footer>
 
-
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>  
 	<script>
 		// 버튼의 초기 설정
 		document.querySelector("#uploadBtn").disabled = true;

@@ -3,15 +3,17 @@
 <%@page import="test.dao.Com1EmpLogDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
+
 <%
 	session.setAttribute("current_page", "log");
-	//int empno=(int)session.getAttribute("empno");
+
+	int empno=(int)session.getAttribute("empno");
+	String ename=(String)session.getAttribute("ename");
 	
 	//Com1EmpLogDao dao=Com1EmpLogDao.getInstance();
 	List<Com1EmpLogDto> list=Com1EmpLogDao.getInstance().getList(empno);
 	
-	//String ename=(String)session.getAttribute("ename");
+	
 %>
 
 <!DOCTYPE html>
@@ -21,6 +23,7 @@
 <title>근태 기록 관리</title>
 <style>
 	.container2 {
+		flex-grow: 1;
 		max-width: 800px;
 		margin: 40px auto;
 		background-color: #fff;
@@ -42,13 +45,18 @@
     th {
         background-color: #c8c8c8;
     }    
-
+    .footer {
+	    text-align: center;
+	    width: 100%;
+	    margin-top: 25px;
+	}
 </style>
 </head>
 <body>
-<jsp:include page="/include/empNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>
+<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2" id="logTable">
-    	<h1><strong><%=ename %></strong> 님 날짜별 근태 기록</h1>
+    	<h1><strong>${ename }</strong> 님 날짜별 근태 기록</h1>
         	<table>
 				<thead>
 					<tr>
@@ -72,11 +80,10 @@
 				</tbody>
 			</table>
         <br>   
-        <a href="log.jsp?empno=<%=empno %>">출퇴근 페이지로 돌아가기</a>   
+        <a href="log.jsp?empno=${empno }">출퇴근 페이지로 돌아가기</a>   
 	</div>
-	<div class="position-fixed bottom-0 w-100">
-  		<jsp:include page="/include/footer.jsp" />
-  	</div>
-
+    <footer class="footer">
+        <jsp:include page="/include/footer.jsp" />
+    </footer>
 </body>
 </html>
