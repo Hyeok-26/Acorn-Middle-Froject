@@ -6,16 +6,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
-	session.setAttribute("current_page", "manageForm");
-	
 	// DB 에서 조회할 때 넘겨줄 객체
 	Com1EmpDto dto = new Com1EmpDto();
 	
 	// 보여줄 조건 기본 값
 	String condition = "ALL";
 	int storeNum = 1;
-	
 	
 	// 보여줄 조건을 파라미터로 받기
 	String strCondition = request.getParameter("condition"); 	// ALL | ADMIN | STAFF | STORE
@@ -24,8 +20,6 @@
 	if(strStoreNum != null) storeNum = Integer.parseInt(strStoreNum);
 	dto.setCondition(condition);
 	dto.setStoreNum(storeNum);
-	
-	
 	
 	// 페이징 처리
 	final int PAGE_ROW_COUNT = 10;
@@ -51,16 +45,13 @@
 	int totalPageCount =  (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
 	if(endRowNum > totalPageCount) endPageNum = totalPageCount;
 	
-
 	// DB 에서 정보 추출
 	List<Com1EmpDto> list = Com1EmpDao.getInstance().getList2(dto);
 	pageContext.setAttribute("list", list);
 	
-	
 	// 몇 호점 리스트 정보 가져오기
 	List<Integer> storeList = Com1Dao.getInstance().getStoreNumList();
 	pageContext.setAttribute("storeList", storeList);
-	
 	
 	// request 영역에 필요한 정보 저장
 	request.setAttribute("startPageNum", startPageNum);
@@ -70,11 +61,6 @@
 	request.setAttribute("totalRow", totalRow);
 	request.setAttribute("condition", condition);
 	request.setAttribute("storenum", storeNum);
-	
-	
-	// 디버깅용..
-	System.out.println("pageNum: "+pageNum);
-	System.out.println("condition: "+condition);
 %>
 <!DOCTYPE html>
 <html>
@@ -224,15 +210,7 @@
 		</div>
 	</div>	
 			
-	
-	
-		
 	<!-- 푸터 -->
   	<jsp:include page="/include/footer.jsp" />
-  	
-  	
-  	<script>
-
-  	</script>
 </body>
 </html>

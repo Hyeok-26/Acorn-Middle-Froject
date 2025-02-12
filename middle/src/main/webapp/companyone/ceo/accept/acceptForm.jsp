@@ -4,10 +4,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-	//현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
-	session.setAttribute("current_page", "acceptForm");
-  
+<% 
 	// 로딩 데이터
 	Com1WaitDto dto = new Com1WaitDto();
 	// DB 에서 대기자 목록 가져오기
@@ -147,6 +144,5 @@
 	
 	<!-- 푸터 -->
   	<jsp:include page="/include/footer.jsp" />
-	
 </body>
 </html>
