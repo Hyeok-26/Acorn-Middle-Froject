@@ -8,57 +8,57 @@
 <%
 	session.setAttribute("current_page", "staffstatusview");
 
-// DB 에서 조회할 때 넘겨줄 객체
-Com1EmpDto dto = new Com1EmpDto();
-
-// 페이징 처리
-final int PAGE_ROW_COUNT = 10;
-final int PAGE_DISPLAY_COUNT = 5;
-
-// 보여줄페이지 초기값1
-int pageNum = 1;
-String condition = "STAFF";
-dto.setCondition(condition);
-
-
-String strPageNum = request.getParameter("pageNum");
-if(strPageNum != null) pageNum = Integer.parseInt(strPageNum);
-
-
-// 보여줄 row 값
-int startRowNum = (pageNum-1)*PAGE_ROW_COUNT + 1;
-int endRowNum = PAGE_ROW_COUNT*pageNum;
-System.out.println("startRowNum: " + startRowNum);
-System.out.println("endRowNum: " + endRowNum);
-dto.setStartRowNum(startRowNum);
-dto.setEndRowNum(endRowNum);
-
-// 하단 페이징 값
-int startPageNum = ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT + 1;
-int endPageNum = startPageNum+PAGE_DISPLAY_COUNT - 1;
-System.out.println("startPageNum: " + startPageNum);
-System.out.println("endPageNum: " + endPageNum);
-
-// 페이지 수 계산
-int totalRow = Com1EmpDao.getInstance().getCount(dto);
-System.out.println("totalRow: " + totalRow);
-int totalPageCount =  (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-if(endRowNum > totalPageCount) endPageNum = totalPageCount;
-
-
-// DB 에서 정보 추출
-List<Com1EmpDto> list = Com1EmpDao.getInstance().getList3(dto);
-pageContext.setAttribute("list", list);
-
-System.out.println("startPageNum: " + startPageNum);
-System.out.println("endPageNum: " + endPageNum);
-
-// request 영역에 필요한 정보 저장
-request.setAttribute("startPageNum", startPageNum);
-request.setAttribute("endPageNum", endPageNum);
-request.setAttribute("totalPageCount", totalPageCount);
-request.setAttribute("pageNum", pageNum);
-request.setAttribute("totalRow", totalRow);
+	// DB 에서 조회할 때 넘겨줄 객체
+	Com1EmpDto dto = new Com1EmpDto();
+	
+	// 페이징 처리
+	final int PAGE_ROW_COUNT = 10;
+	final int PAGE_DISPLAY_COUNT = 5;
+	
+	// 보여줄페이지 초기값1
+	int pageNum = 1;
+	String condition = "STAFF";
+	dto.setCondition(condition);
+	
+	
+	String strPageNum = request.getParameter("pageNum");
+	if(strPageNum != null) pageNum = Integer.parseInt(strPageNum);
+	
+	
+	// 보여줄 row 값
+	int startRowNum = (pageNum-1)*PAGE_ROW_COUNT + 1;
+	int endRowNum = PAGE_ROW_COUNT*pageNum;
+	System.out.println("startRowNum: " + startRowNum);
+	System.out.println("endRowNum: " + endRowNum);
+	dto.setStartRowNum(startRowNum);
+	dto.setEndRowNum(endRowNum);
+	
+	// 하단 페이징 값
+	int startPageNum = ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT + 1;
+	int endPageNum = startPageNum+PAGE_DISPLAY_COUNT - 1;
+	System.out.println("startPageNum: " + startPageNum);
+	System.out.println("endPageNum: " + endPageNum);
+	
+	// 페이지 수 계산
+	int totalRow = Com1EmpDao.getInstance().getCount(dto);
+	System.out.println("totalRow: " + totalRow);
+	int totalPageCount =  (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+	if(endRowNum > totalPageCount) endPageNum = totalPageCount;
+	
+	
+	// DB 에서 정보 추출
+	List<Com1EmpDto> list = Com1EmpDao.getInstance().getList3(dto);
+	pageContext.setAttribute("list", list);
+	
+	System.out.println("startPageNum: " + startPageNum);
+	System.out.println("endPageNum: " + endPageNum);
+	
+	// request 영역에 필요한 정보 저장
+	request.setAttribute("startPageNum", startPageNum);
+	request.setAttribute("endPageNum", endPageNum);
+	request.setAttribute("totalPageCount", totalPageCount);
+	request.setAttribute("pageNum", pageNum);
+	request.setAttribute("totalRow", totalRow);
 
 	
 	
