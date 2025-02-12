@@ -5,7 +5,6 @@
 <%@page import="test.dto.Com1QuitDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/include/header.jsp"></jsp:include>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	// 현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "quitForm");
@@ -103,225 +102,235 @@
 <style>
 	/* div{ border:1px solid red; } */
 </style>
-
 </head>
-<body class="d-flex flex-column min-vh-100 bg-light">
+<body class="d-flex flex-column min-vh-100 bg-light"  id="app">
+	뭐냐 진짜
 	<!-- 관리자 페이지 전용 네비바 -->
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
- 
 	
 	<div class="main flex-grow-1">  
 	<!-- 본문 -->
-	<div class="container contents text-center mt-3 mx-auto" style="width:900px;"  id="app">
-		<h4>퇴사자 명단</h4>
-		
-		<!--상단 컨트롤 바-->
-		<div class="controlbar d-flex mt-2">
+		<div ref="loadView"></div>
+		<div class="container contents text-center mt-3 mx-auto" style="width:900px;">
+			<h4>퇴사자 명단</h4>
 			
-			<!-- 조회 버튼-->
-			<div class="p-2">
-				<div class="input-group">
-					<select v-model="condition" name="condition" class="btn btn-outline-dark dropdown-toggle">
-							<option value="ename">이름</option>
-							<option value="storenum">지점</option>
-							<option value="role">직책</option>
-							<option value="empno">사원번호</option>
-					</select>
-					<input v-model="keyword" type="text" name="keyword" placeholder=" 입력하세요.." />
-					<button @click="onSearch" class="btn btn-outline-dark">검색</button>
+			<!--상단 컨트롤 바-->
+			<div class="controlbar d-flex mt-2">
+				
+				<!-- 조회 버튼-->
+				<div class="p-2">
+					<div class="input-group">
+						<select v-model="condition" name="condition" class="btn btn-outline-dark dropdown-toggle">
+								<option value="ename">이름</option>
+								<option value="storenum">지점</option>
+								<option value="role">직책</option>
+								<option value="empno">사원번호</option>
+						</select>
+						<input v-model="keyword" type="text" name="keyword" placeholder=" 입력하세요.." />
+						<button @click="onSearch" class="btn btn-outline-dark">검색</button>
+					</div>
 				</div>
-			</div>
-			
-			
-			<!-- 정렬 버튼 -->
-			<div class="p-2">
-				<div class="input-group">
-					<button type="button" class="btn btn-outline-dark" disabled>정렬 조건</button>
-					<!-- 정렬 기준 선택 -->
-					<select v-model="lineup" name="lineup" @change="onLineUp" class="btn btn-outline-dark dropdown-toggle">
-							<!-- <option value="">선택</option> -->
-							<option value="QUITDATE">퇴사일</option>
-							<option value="HIREDATE">입사일</option>
-							<option value="EMPNO">사원번호</option>
-							<option value="ENAME">이름</option>
-							<option value="STORENUM">지점</option>
-					</select>
-					<!-- 차순 정렬 기준 선택 -->
-					<input type="radio" class="btn-check" name="options-outlined" id="ASC" v-model="picked" value="ASC" @change="onlineup" autocomplete="off">
-					<label class="btn btn-outline-dark" for="ASC">오름</label>
-					<input type="radio" class="btn-check" name="options-outlined" id="DESC" v-model="picked" value="DESC" @change="onlineup" autocomplete="off">
-					<label class="btn btn-outline-dark" for="DESC">내림</label>
+				
+				
+				<!-- 정렬 버튼 -->
+				<div class="p-2">
+					<div class="input-group">
+						<button type="button" class="btn btn-outline-dark" disabled>정렬 조건</button>
+						<!-- 정렬 기준 선택 -->
+						<select v-model="lineup" name="lineup" @change="onLineUp" class="btn btn-outline-dark dropdown-toggle">
+								<!-- <option value="">선택</option> -->
+								<option value="QUITDATE">퇴사일</option>
+								<option value="HIREDATE">입사일</option>
+								<option value="EMPNO">사원번호</option>
+								<option value="ENAME">이름</option>
+								<option value="STORENUM">지점</option>
+						</select>
+						<!-- 차순 정렬 기준 선택 -->
+						<input type="radio" class="btn-check" name="options-outlined" id="ASC" v-model="picked" value="ASC" @change="onlineup" autocomplete="off">
+						<label class="btn btn-outline-dark" for="ASC">오름</label>
+						<input type="radio" class="btn-check" name="options-outlined" id="DESC" v-model="picked" value="DESC" @change="onlineup" autocomplete="off">
+						<label class="btn btn-outline-dark" for="DESC">내림</label>
+					</div>
 				</div>
-			</div>
-			
-			
-			<!-- 퇴사자 추가 버튼 -->
-			<div class="ms-auto p-2">
-				<button class="btn btn-primary" id="add_quit" data-bs-toggle="modal" data-bs-target="#showModal">퇴사자 추가</button>
-			</div>
-			
-			<!-- 퇴사자 추가 버튼을 누르면 나오는 모달 창 -->
-			<div class="modal fade" id="showModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				  <div class="modal-content">
-				  
-				  	<!-- 모달창 헤더 -->
-				    <div class="modal-header">
-				      <h1 class="modal-title fs-5" id="showModalLabel">퇴사자 추가</h1>
-				      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				    </div>
-				    
-				    <!-- 모달창 바디 -->
-				    <div class="modal-body ">
-				    	
-				    	<!-- 데이터 조회 -->
-					    <div class="mb-3 row" >
-					    	<div class="col-3"><label for="searchEmpno" class="form-label">사원번호*</label></div>
-					    	<div class="col-6"><input v-model="searchEmpno" type="text" class="form-control" id="searchEmpno" placeholder="사원번호를 입력하세요..."></div>
-					    	<div class="col-3"><button @click="clickSearchBtn" class="btn btn-primary">조회</button></div>
-						</div>
-						
-						<!-- 조회된 데이터 보여줌 -->
-					    <form action="addQuit.jsp" @submit.prevent="onSubmit">
-					    	<div class="mb-3 row" style="display:none">
-					    		<div class="col-3"><label for="empno" class="form-label">사원번호 </label></div>
-					    		<div class="col-9"><input v-model="searchEmpno" type="text" class="form-control" id="empno" name="empno"  readonly></div>
-							</div>
-							
-							<div class="mb-3 row" style="display:flex">
-								<div class="col-3"><label for="ename" class="form-label">이름 </label></div>
-					    		<div class="col-9"><input v-model="dto.ename" type="text" class="form-control" id="ename" name="ename" readonly ></div>
-							</div>
-							
-							<div class="mb-3 row">
-								<div class="col-3"><label for="store" class="form-label">영업점 </label></div>
-					    		<div class="col-9"><input v-model="dto.store" type="text" class="form-control" id="store" name="store" readonly></div>
-							</div>
-							
-							<div class="mb-3 row">
-								<div class="col-3"><label for="role" class="form-label">역할 </label></div>
-					    		<div class="col-9"><input v-model="dto.role" type="text" class="form-control" id="role" name="role" readonly></div>
-							</div>
-							
-							<div class="mb-3 row">
-								<div class="col-3"><label for="email" class="form-label">이메일 </label></div>
-					    		<div class="col-9"><input v-model="dto.email" type="text" class="form-control" id="email" name="email" readonly></div>
-							</div>
-							
-							<div class="mb-3 row">
-								<div class="col-3"><label for="call" class="form-label">전화번호 </label></div>
-					    		<div class="col-9"><input v-model="dto.call" type="text" class="form-control" id="call" name="call" readonly></div>
-							</div>
+				
+				
+				<!-- 퇴사자 추가 버튼 -->
+				<div class="ms-auto p-2">
+					<button class="btn btn-primary" id="add_quit" data-bs-toggle="modal" data-bs-target="#showModal">퇴사자 추가</button>
+				</div>
+				
+				<!-- 퇴사자 추가 버튼을 누르면 나오는 모달 창 -->
+				<div class="modal fade" id="showModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					  <div class="modal-content">
+					  
+					  	<!-- 모달창 헤더 -->
+					    <div class="modal-header">
+					      <h1 class="modal-title fs-5" id="showModalLabel">퇴사자 추가</h1>
+					      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					    </div>
+					    
+					    <!-- 모달창 바디 -->
+					    <div class="modal-body ">
 					    	
-					    	<div class="mb-3 row">
-					    		<div class="col-3"><label for="hiredate" class="form-label">입사일 </label></div>
-					    		<div class="col-9"><input v-model="dto.hiredate" type="text" class="form-control" id="hiredate" name="hiredate" readonly></div>
+					    	<!-- 데이터 조회 -->
+						    <div class="mb-3 row" >
+						    	<div class="col-3"><label for="searchEmpno" class="form-label">사원번호*</label></div>
+						    	<div class="col-6"><input v-model="searchEmpno" type="text" class="form-control" id="searchEmpno" placeholder="사원번호를 입력하세요..."></div>
+						    	<div class="col-3"><button @click="clickSearchBtn" class="btn btn-primary">조회</button></div>
 							</div>
 							
-							<div class="mb-3 row">
-								<div class="col-3"><label for="quitdate" class="form-label">퇴사일 </label></div>
-					    		<div class="col-9"><input type="date" class="form-control" id="quitdate" name="quitdate"></div>
-							</div>
-					      
-					      	<!-- 이 데이터로 퇴사자 처리 -->
-				      		<button class="btn btn-primary" id="addQuitBtn">퇴사 처리</button>
-					    </form>
-				    </div>
-				  </div>
+							<!-- 조회된 데이터 보여줌 -->
+						    <form action="addQuit.jsp" @submit.prevent="onSubmit">
+						    	<div class="mb-3 row" style="display:none">
+						    		<div class="col-3"><label for="empno" class="form-label">사원번호 </label></div>
+						    		<div class="col-9"><input v-model="searchEmpno" type="text" class="form-control" id="empno" name="empno"  readonly></div>
+								</div>
+								
+								<div class="mb-3 row" style="display:flex">
+									<div class="col-3"><label for="ename" class="form-label">이름 </label></div>
+						    		<div class="col-9"><input v-model="dto.ename" type="text" class="form-control" id="ename" name="ename" readonly ></div>
+								</div>
+								
+								<div class="mb-3 row">
+									<div class="col-3"><label for="store" class="form-label">영업점 </label></div>
+						    		<div class="col-9"><input v-model="dto.store" type="text" class="form-control" id="store" name="store" readonly></div>
+								</div>
+								
+								<div class="mb-3 row">
+									<div class="col-3"><label for="role" class="form-label">역할 </label></div>
+						    		<div class="col-9"><input v-model="dto.role" type="text" class="form-control" id="role" name="role" readonly></div>
+								</div>
+								
+								<div class="mb-3 row">
+									<div class="col-3"><label for="email" class="form-label">이메일 </label></div>
+						    		<div class="col-9"><input v-model="dto.email" type="text" class="form-control" id="email" name="email" readonly></div>
+								</div>
+								
+								<div class="mb-3 row">
+									<div class="col-3"><label for="call" class="form-label">전화번호 </label></div>
+						    		<div class="col-9"><input v-model="dto.call" type="text" class="form-control" id="call" name="call" readonly></div>
+								</div>
+						    	
+						    	<div class="mb-3 row">
+						    		<div class="col-3"><label for="hiredate" class="form-label">입사일 </label></div>
+						    		<div class="col-9"><input v-model="dto.hiredate" type="text" class="form-control" id="hiredate" name="hiredate" readonly></div>
+								</div>
+								
+								<div class="mb-3 row">
+									<div class="col-3"><label for="quitdate" class="form-label">퇴사일 </label></div>
+						    		<div class="col-9"><input type="date" class="form-control" id="quitdate" name="quitdate"></div>
+								</div>
+						      
+						      	<!-- 이 데이터로 퇴사자 처리 -->
+					      		<button class="btn btn-primary" id="addQuitBtn">퇴사 처리</button>
+						    </form>
+					    </div>
+					  </div>
+					</div>
 				</div>
 			</div>
-		</div>
-		
-		
-		
-		<!-- 퇴사자 리스트 -->	
-		<div style="margin:10px; width:900px;">
-			<div class="table-responsive">
-				<table class="table table-striped" id="quitListTable">
-					<thead class="table-dark">
-						<tr>
-							<th>사원번호</th>
-							<th>이름</th>
-							<th>지점</th>
-							<th>직책</th>
-							<th>입사일</th>
-							<th>퇴사일</th>
-							<th>전화번호</th>
-							<th>복귀</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- 데이터가 없는 경우 -->
-						<c:choose>
-							<c:when test="${totalRow eq 0}">
-								</tbody>
-								</table>
-								<div class=" justify-content-center align-items-center vh-100">
-								  <div class="p-3 bg-light">퇴사자 정보가 없습니다!</div>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<c:forEach var="qmember" items="${list}">
-									<tr>
-										<td>${qmember.empNo }</td>
-										<td>${qmember.eName }</td>
-										<td>${qmember.storeNum }</td>
-										<td>${qmember.role }</td>
-										<td>${qmember.hiredate }</td>
-										<td>${qmember.quitdate }</td>
-										<td>${qmember.eCall }</td>
-										<td><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @click.prevent="onCancle">복귀</a></td>
-									</tr>
-								</c:forEach>
+			
+			
+			
+			<!-- 퇴사자 리스트 -->	
+			<div style="margin:10px; width:900px;">
+				<div class="table-responsive">
+					<table class="table table-striped" id="quitListTable">
+						<thead class="table-dark">
+							<tr>
+								<th>사원번호</th>
+								<th>이름</th>
+								<th>지점</th>
+								<th>직책</th>
+								<th>입사일</th>
+								<th>퇴사일</th>
+								<th>전화번호</th>
+								<th>복귀</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 데이터가 없는 경우 -->
+							<c:choose>
+								<c:when test="${totalRow eq 0}">
 									</tbody>
 									</table>
-							</c:otherwise>
-						</c:choose>
+									<div class=" justify-content-center align-items-center vh-100">
+									  <div class="p-3 bg-light">퇴사자 정보가 없습니다!</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="qmember" items="${list}">
+										<tr>
+											<td>${qmember.empNo }</td>
+											<td>${qmember.eName }</td>
+											<td>${qmember.storeNum }</td>
+											<td>${qmember.role }</td>
+											<td>${qmember.hiredate }</td>
+											<td>${qmember.quitdate }</td>
+											<td>${qmember.eCall }</td>
+											<td><a href="cancleQuit.jsp" class="btn btn-secondary btn-sm" @click.prevent="onCancle">복귀</a></td>
+										</tr>
+									</c:forEach>
+										</tbody>
+										</table>
+								</c:otherwise>
+							</c:choose>
+				</div>
 			</div>
-		</div>
+			
+			
+			<!-- 하단 페이징 버튼 -->
+			<div class="mt-3 d-flex justify-content-center">
+				<nav>
+					<ul class="pagination mx-auto">
+						<!-- Prev 버튼 -->
+						<c:if test="${startPageNum ne 1}">
+							<li class="page-item">
+								<%-- <a class="page-link" href="quitForm.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a> --%>
+								<button type="button" class="page-link" @click="onPage">Prev</button>
+							</li>
+						</c:if>
+						<!-- 페이지 번호 -->
+						<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
+							<li class="page-item ${i == pageNum ? 'active' : ''}">
+								<button type="button" class="page-link" @click="onPage">${i}</button>
+								<%-- <a class="page-link" href="quitForm.jsp?pageNum=${i}${findQuery}">${i}</a> --%>
+							</li>
+						</c:forEach>
+						<!-- Next 버튼 -->
+						<c:if test="${endPageNum < totalPageCount}">
+							<li class="page-item">
+								<button type="button" class="page-link" @click="onPage">Next</button>
+								<%-- <a class="page-link" href="quitForm.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a> --%>
+							</li>
+						</c:if>
+					</ul>		
+				</nav>
+			</div>
+			
+			<!-- 나중에 추가 가능 -->
+			<div class="mt-3 d-flex justify-content-end">
+				<button class="btn btn-primary btn m-3" @click="printBtn">경력증명서 출력</button>
+			</div>
 		
-		
-		<!-- 하단 페이징 버튼 -->
-		<div class="mt-3 d-flex justify-content-center">
-			<nav>
-				<ul class="pagination mx-auto">
-					<!-- Prev 버튼 -->
-					<c:if test="${startPageNum ne 1}">
-						<li class="page-item">
-							<%-- <a class="page-link" href="quitForm.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a> --%>
-							<button type="button" class="page-link" @click="onPage">Prev</button>
-						</li>
-					</c:if>
-					<!-- 페이지 번호 -->
-					<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
-						<li class="page-item ${i == pageNum ? 'active' : ''}">
-							<button type="button" class="page-link" @click="onPage">${i}</button>
-							<%-- <a class="page-link" href="quitForm.jsp?pageNum=${i}${findQuery}">${i}</a> --%>
-						</li>
-					</c:forEach>
-					<!-- Next 버튼 -->
-					<c:if test="${endPageNum < totalPageCount}">
-						<li class="page-item">
-							<button type="button" class="page-link" @click="onPage">Next</button>
-							<%-- <a class="page-link" href="quitForm.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a> --%>
-						</li>
-					</c:if>
-				</ul>		
-			</nav>
 		</div>
-		
-		<!-- 나중에 추가 가능 -->
-		<div class="mt-3 d-flex justify-content-end">
-			<button class="btn btn-primary btn m-3" @click="printBtn">경력증명서 출력</button>
-		</div>
-	
-	</div>
 	</div>
 	
 	<!-- 푸터 -->
 	<jsp:include page="/include/footer.jsp" />
 
 	<script>
+		// 로딩 동작 화면 코드
+		const strLoadingView = `
+		    <div style="z-index: 1; position: fixed; background-color: rgba(0, 0, 0, 0.346); width: 100%; height: 100%;"></div>
+
+		    <div style="z-index: 2; position: fixed; left: 50%; top: 50%; width: 4rem; height: 4rem;" class="spinner-grow text-primary" role="status">
+		        <span class="visually-hidden">Loading...</span>
+		    </div>
+		`;
+		
+	
 		new Vue({
 			el:"#app",
 			data:{
@@ -336,9 +345,6 @@
 			},
 			computed: {
 				url:function(){
-					/* const addr = "quitForm.jsp";
-					const encodedStr = encodeURI("?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked);
-					return addr + encodedStr; */
 					return "quitForm.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked;
 				}
 			},
@@ -348,8 +354,14 @@
 					// 출력 받을 퇴사자 사원 번호 입력 받기
 					const quitNum = prompt("출력할 퇴사자 번호를 입력하세요");
 					
+					// 로딩중 화면 띄우기
+					this.$refs.loadView.innerHTML = strLoadingView;
+					
 					// 퇴사자 번호 달고 출력 기능을 가진 jsp 로 이동
 					location.href= "printQuit.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked + "&quitNum=" + quitNum;
+					
+					// 로딩중 화면 띄우던거 없애기
+					this.$refs.loadView.empty();
 				},
 				// 페이징 버튼 눌었을 때
 				onPage(e){

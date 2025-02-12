@@ -145,7 +145,7 @@ Com1EmpDto dto=dao.getData(empno);
 					alert("근로 계약서가 삭제되었습니다.");
 					location.reload();
 				})
-				.catch(error => alert("삭제 중 오류 발생"));
+				.catch(error => alert("삭제 중 오류가 발생하였습니다."));
 			}
 		});
 	</script>
