@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>/post/form/new.jsp</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	#content{
 		width: 100%;
