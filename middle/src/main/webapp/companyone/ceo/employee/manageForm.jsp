@@ -82,8 +82,6 @@
 <head>
 <meta charset="UTF-8">
 <title>직원 목록 페이지</title>
-<!-- 페이지 로딩에 필요한 자원 -->
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	/* div{ border:1px solid red; } */
 </style>

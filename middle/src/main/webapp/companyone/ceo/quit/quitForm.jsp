@@ -99,9 +99,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>퇴사자 관리 페이지</title>	
-<!-- 페이지 로딩에 필요한 자원 -->
-<jsp:include page="/include/resource.jsp"></jsp:include>
+<title>퇴사자 관리 페이지</title>
 <style>
 	/* div{ border:1px solid red; } */
 </style>
