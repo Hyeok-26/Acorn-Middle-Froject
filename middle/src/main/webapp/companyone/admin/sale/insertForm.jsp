@@ -9,7 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>매출추가 페이지</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
   <!-- 네비게이션 바 -->

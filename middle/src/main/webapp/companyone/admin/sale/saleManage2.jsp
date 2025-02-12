@@ -63,7 +63,6 @@
         border-bottom: 2px solid #999; 
     }    
 </style>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">

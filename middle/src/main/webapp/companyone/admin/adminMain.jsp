@@ -10,7 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>점장 홈페이지</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.col{
 		height: 150px;
