@@ -59,7 +59,7 @@
 				<p style="color: green">알바는 시급과 근무시간만 기입 / 직원은 월급만 기입해주세요</p>
 				<div class="mb-3">
 					<label class="form-label">월급</label> 
-					<input class="form-control" type="text" name="sal" id="sal" value="<%=dto.getSal()%>" required oninput="salInput()"
+					<input class="form-control" type="text" name="sal" id="sal" required oninput="salInput()"
 						v-model="sal" @input="validatesal" 
 						:class="{'is-invalid': !issalValid && issalDirty, 'is-valid': issalValid}"/>
 					<div class="invalid-feedback">양수를 입력하세요.</div>
@@ -67,14 +67,14 @@
 				</div>
 				<div class="mb-3">
 					<label class="form-label">시급</label> 
-					<input class="form-control" type="text" name="hsal" id="hsal" value="<%=dto.getHsal()%>" required oninput="hsalInput()"
+					<input class="form-control" type="text" name="hsal" id="hsal" required oninput="hsalInput()"
 						v-model="hsal"  @input="validatehsal"
 						:class="{'is-invalid': !ishsalValid && ishsalDirty, 'is-valid': ishsalValid}"/>
 						<div class="invalid-feedback">양수를 입력하세요.(시급과 근무시간을 함께 입력하세요)</div>
 				</div>
 				<div class="mb-3">
 					<label class="form-label">근무시간</label> 
-					<input class="form-control" type="text" name="worktime" id="worktime" value="<%=dto.getWorktime()%>" required oninput="hsalInput()"
+					<input class="form-control" type="text" name="worktime" id="worktime" required oninput="hsalInput()"
 						v-model="worktime" @input="validateworktime"
 						:class="{'is-invalid': !isworktimeValid && isworktimeDirty, 'is-valid': isworktimeValid}"/>
 						<div class="invalid-feedback">양수를 입력하세요.(시급과 근무시간을 함께 입력하세요)</div>
