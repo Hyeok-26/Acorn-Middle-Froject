@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	session.setAttribute("current_page", "adminhome");
 %>
@@ -10,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>점장 홈페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	.col{
 		height: 150px;
@@ -35,10 +35,9 @@
 </style>	
 </head>
 <body class="d-flex flex-column min-vh-100">
-	<div class="main flex-grow-1">
-		<jsp:include page="/include/adminNav.jsp">
-			<jsp:param value="index" name="current" />
-		</jsp:include>
+<%@ include file="/include/header.jsp" %>	
+		<jsp:include page="/include/navbar.jsp"></jsp:include>
+		<div class="main flex-grow-1">
 		<div class="container">
 			<h1 class="mb-5">점장 인덱스 페이지</h1>
 			<div class="row row-cols-1 row-cols-md-2 g-4 ">
@@ -79,7 +78,7 @@
 						<div class="card-body">
 							<h5 class="card-title">직원스케줄관리</h5>
 						</div>
-					<a href="${pageContext.request.contextPath}/companyone/admin/staffschedule/view.jsp?storenum=<%=storenum %>" class="stretched-link"></a>
+					<a href="${pageContext.request.contextPath}/companyone/admin/staffschedule/view.jsp?storenum="${session.storenum}" class="stretched-link"></a>
 					</div>
 				</div>
 				

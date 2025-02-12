@@ -60,8 +60,7 @@
 </style>
 </head>
 <body>
-<%@ include file="/include/header2.jsp" %>	
-<jsp:include page="/include/navbar.jsp">
+<jsp:include page="/include/empNav.jsp">
 	<jsp:param value="index" name="current" />
 </jsp:include>
     <div class="container2">

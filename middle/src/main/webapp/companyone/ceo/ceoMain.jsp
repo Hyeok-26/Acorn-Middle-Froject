@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
 <%
 	session.setAttribute("current_page", "");
 %>
@@ -10,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
     .container3 {
        
@@ -43,8 +43,9 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
+<%@ include file="/include/header2.jsp" %>
 	<%-- 관리자 페이지 전용 네비바 --%>
-	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="main flex-grow-1">  
 
 		<div class="container2">	
