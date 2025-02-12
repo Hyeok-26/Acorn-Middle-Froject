@@ -3,8 +3,7 @@
 <%@page import="test.dao.Com1CeoDao"%>
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>		
+	pageEncoding="UTF-8"%>	
 <%
 	session.setAttribute("current_page", "infoview");
 
@@ -18,7 +17,8 @@
 	// DB에서 점장정보 뽑아오기
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	//dao로 로그인한 사원번호에 해당하는 사람의 정보 가져오기
-	Com1EmpDto empdto=dao.getData(empno);
+	int empno=(int)session.getAttribute("empno");
+	Com1EmpDto empdto = Com1EmpDao.getInstance().getData(empno);
 	session.setAttribute("empdto", empdto);
 		
 	//소속회사의 정보는 comid를 통해서 test_using_app에서 comname를 뽑아야 한다.
@@ -26,7 +26,7 @@
 	
 	//로그인한 점장의 회사이름 뽑기
 	UsingDao dao_using=UsingDao.getInstance();
-	
+	String comname=(String)session.getAttribute("comname");
 	session.setAttribute("comname", comname);
 	
 %>
@@ -35,7 +35,7 @@
 <head>
 <meta charset="UTF-8">
 <title>점장정보조회</title>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	.tbl_row_wrap {
         border: 1px solid #dee2e6; /* 전체 테이블 테두리 */
@@ -73,10 +73,9 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-	<div class="main flex-grow-1">
-		<jsp:include page="/include/adminNav.jsp">
-			<jsp:param value="index" name="current" />
-		</jsp:include>
+<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>		
+		<div class="main flex-grow-1">
 		<div class="container">
 			<h1 class="mb-2">회원정보조회 페이지</h1>
 			<div class="tbl_row_wrap">
@@ -153,7 +152,6 @@
 			</div>
 
 			<a href="${pageContext.request.contextPath}/companyone/admin/info/updateForm.jsp" class="btn btn-primary mt-2 mb-4" role="button">개인정보수정</a>
-
 
 		</div>
 	</div>

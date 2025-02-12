@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>점장 홈페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	.col{
 		height: 150px;
@@ -35,9 +36,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <%@ include file="/include/header.jsp" %>	
-		<jsp:include page="/include/navbar.jsp">
-			<jsp:param value="index" name="current" />
-		</jsp:include>
+		<jsp:include page="/include/navbar.jsp"></jsp:include>
 		<div class="main flex-grow-1">
 		<div class="container">
 			<h1 class="mb-5">점장 인덱스 페이지</h1>

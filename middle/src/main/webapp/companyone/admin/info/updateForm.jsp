@@ -5,7 +5,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp" %>
 <%
-	
+	int empno=(int)session.getAttribute("empno");
 	Com1EmpDto empdto = Com1EmpDao.getInstance().getData(empno);
 	String originpwd = empdto.getePwd();
 %>
@@ -52,16 +52,15 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
+<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="main flex-grow-1">
-		<jsp:include page="/include/adminNav.jsp">
-			<jsp:param value="index" name="current" />
-		</jsp:include>
 		<div class="container" id="app">
 			<h3>회원 정보 수정</h3>
 			<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
 				<div class="mb-3">
 					<label class="form-label">회사</label> <input class="form-control"
-						type="text" name="comid" value="<%=comname%>" readonly />
+						type="text" name="comid" value="${session.comname }" readonly />
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="storenum">소속 지점</label>
@@ -134,7 +133,9 @@
 		</div>
 		
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<jsp:include page="/include/footer.jsp" />
+
 <script>
     new Vue({
         el:"#app",
