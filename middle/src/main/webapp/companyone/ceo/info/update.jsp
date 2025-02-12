@@ -81,7 +81,8 @@
             alert("개인 정보를 수정했습니다.");
             location.href = "${pageContext.request.contextPath }/companyone/ceo/info/view.jsp";
         </script>
-    <% } else { %>
+    <% 	session.setAttribute("ename", newName);
+    	} else { %>
         <script>
             alert("수정 실패했습니다.");
             location.href = "updateform.jsp";

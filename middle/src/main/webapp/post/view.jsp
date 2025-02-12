@@ -2,7 +2,6 @@
 <%@page import="test.post.dto.PostDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	//검색조건이 있는지 읽어와 본다.
 	String condition=request.getParameter("condition");
