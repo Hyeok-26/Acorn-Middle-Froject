@@ -315,8 +315,13 @@
 			</section>
 		</div>
 	</div>
-
+	<script>
+	document.body.addEventListener('click', function() {
+		console.log("click!");
+		  // 페이지가 하단에 있으면
+		 window.scrollTo({top:0});
+	});
+	</script>
 	<%@ include file="/include/footer.jsp" %>
-
 </body>
 </html>

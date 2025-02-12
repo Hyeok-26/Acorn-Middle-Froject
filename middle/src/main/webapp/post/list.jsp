@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/include/header.jsp" %>
+<%-- 홍석쿤 간바레~~~!! --%>
 <%
 	// 세션의 로그인 정보
 	//String role = (String)session.getAttribute("role");
@@ -80,9 +81,6 @@
 <head>
 <meta charset="UTF-8">
 <title>/post/list.jsp</title>
-<style>
-	
-</style>
 </head>
 <body>
 	<div class="container main flex-grow-1">
@@ -152,14 +150,14 @@
 			</ul>		
 		</nav>
         <form action="${pageContext.request.contextPath }/post/list.jsp" method="get" class="d-flex justify-content-end">
-        	<select name="condition" id="condition">
+        	<select class="me-1" name="condition" id="condition">
         		<option value="title_content" ${dto.condition eq 'title_content' ? 'selected' : ''}>제목 + 내용</option>
         		<option value="title" ${dto.condition eq 'title' ? 'selected' : ''}>제목</option>
         		<option value="writer" ${dto.condition eq 'writer' ? 'selected' : ''}>작성자</option>
         	</select>
         	<input type="text" name="keyword" placeholder="검색어..." value="${dto.keyword }"/>
-        	<button class="btn btn-primary btn-sm" type="submit">검색</button>
-        	<a class="btn btn-success btn-sm" href="${pageContext.request.contextPath }/post/list.jsp">새로고침</a>
+        	<button class="btn btn-primary btn-sm ms-1" type="submit">검색</button>
+        	<a class="btn btn-success btn-sm ms-1" href="${pageContext.request.contextPath }/post/list.jsp">새로고침</a>
         </form>
 	</div>
 	<div class="position-fixed bottom-0 w-100">

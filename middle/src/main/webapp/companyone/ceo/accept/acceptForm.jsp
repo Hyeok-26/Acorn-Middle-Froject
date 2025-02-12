@@ -47,8 +47,8 @@
 			<h4>회원가입 대기자 명단</h4>
 			
 			<div style="height:500px; margin:10px;">
-				<table class="table table-striped ">
-					<thead class="table-dark">
+				<table class="table table-striped text-center">
+					<thead class="table-dark ">
 						<tr>
 							<th>번호</th>
 							<th>이름</th>
