@@ -16,7 +16,6 @@ Com1EmpDto dto=dao.getData(empno);
 <head>
 <meta charset="UTF-8">
 <title>근로계약서</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	html, body {
 	    height: 100%;

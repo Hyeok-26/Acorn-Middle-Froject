@@ -21,7 +21,6 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
 		max-width: 800px;

@@ -19,7 +19,6 @@
 <head>
 <meta charset="UTF-8">
 <title>근태 기록 관리</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.container2 {
 		max-width: 800px;
