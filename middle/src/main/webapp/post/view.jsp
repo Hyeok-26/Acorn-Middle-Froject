@@ -2,8 +2,7 @@
 <%@page import="test.post.dto.PostDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/include/header.jsp" %>	
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>	
 <%
 	//검색조건이 있는지 읽어와 본다.
 	String condition=request.getParameter("condition");
@@ -45,6 +44,7 @@
 <head>
 <meta charset="UTF-8">
 <title>/post/view.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
     #contents {
         margin-top: 20px;
@@ -156,7 +156,9 @@
 	}
 </style>
 </head>
+
 <body>
+<%@ include file="/include/header.jsp" %>
 	<div class="container main flex-grow-1">
 		<div class="title-container d-flex justify-content-between mt-4 ms-2 me-2">
 			<h1>글 상세 보기</h1>

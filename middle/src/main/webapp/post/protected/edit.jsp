@@ -1,8 +1,7 @@
 <%@page import="test.post.dto.PostDto"%>
 <%@page import="test.post.dao.PostDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%
 	//1. GET 방식 파라미터로 전달되는 수정할 파일의 글번호 읽어오기
 	int num=Integer.parseInt(request.getParameter("num"));
@@ -17,6 +16,7 @@
 <head>
 <meta charset="UTF-8">
 <title>/post/protected/edit.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	#content{
 		width: 100%;
@@ -25,6 +25,7 @@
 </style>
 </head>
 <body>
+<%@ include file="/include/header.jsp" %>
 	<div class="container main flex-grow-1">
 		<div class="title-container d-flex justify-content-between mt-4 ms-2 me-2">
 			<h1>글 수정 양식</h1>
