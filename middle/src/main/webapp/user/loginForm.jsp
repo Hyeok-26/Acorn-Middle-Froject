@@ -73,7 +73,7 @@
        </div>
    
        <div id="staffContent" class="tab-content" style="padding: 20px; background-color: #fff; border-top: 1px solid #ddd; display: none;">
-           <h1>직원 로그인</h1>
+           <h1>사원 로그인</h1>
            <form action="loginStaff.jsp" class="login-form">
                <label for="comid">회사코드</label>
                <input type="text" name="comid" style="padding: 10px; width: 100%;">

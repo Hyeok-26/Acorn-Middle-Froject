@@ -2,35 +2,25 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/include/header.jsp" %>
 <%
 	session.setAttribute("current_page", "salary");
 
 	
-	Com1EmpDao dao=Com1EmpDao.getInstance();
-	Com1EmpDto dto=dao.getData(empno);
-	/*
-	int sal=dto.getSal();
-	session.setAttribute("sal", sal);
-	
-	int hsal=dto.getHsal();
-	session.setAttribute("hsal", hsal);
-	*/
-	//급여 값이 입력되지 않은 경우 페이지 이동
-	String salStr = Integer.toString(dto.getSal());
-	String hsalStr = Integer.toString(dto.getHsal());
-
-	if (salStr == null && hsalStr == null) {
-	    System.out.println("급여 값이 입력되지 않았습니다.");
-	    response.sendRedirect(request.getContextPath()+"/companyone/admin/staffsalary/view.jsp?empno="+empno);
+	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
+	if(dto.getSal()==0 && dto.getHsal()==0){
+%>
+	<script>
+		alert("점장님이 월급/시급 을 입력하지 않았어요!");
+		window.location.href = "../staffMain.jsp";
+	</script>
+<% 
 	} else {
-	    int sal = Integer.parseInt(salStr);
-	    session.setAttribute("sal", sal);
-	    int hsal = Integer.parseInt(hsalStr);
-	    session.setAttribute("hsal", hsal);
+		int sal = dto.getSal();
+		int hsal = dto.getHsal();
+		pageContext.setAttribute("sal", sal);
+		pageContext.setAttribute("hsal", hsal);
 	}
-
 %>
 <!DOCTYPE html>
 <html>
@@ -196,8 +186,8 @@
    <script>
    	   //페이지 로딩 시
 	   window.onload = function () {
-		    let sal = <%= session.getAttribute("sal") %>;
-		    let hsal = <%= session.getAttribute("hsal") %>;
+		    let sal = <%= pageContext.getAttribute("sal") %>;
+		    let hsal = <%= pageContext.getAttribute("hsal") %>;
 	
 		    if (sal == 0) {
 		        document.getElementById("salTab").classList.add("disabled");

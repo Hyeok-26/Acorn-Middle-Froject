@@ -8,18 +8,14 @@
 <%@page import="org.apache.poi.openxml4j.opc.OPCPackage"%>
 <%@page import="test.dto.Com1QuitDto"%>
 <%@page import="test.dao.Com1QuitDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	
-	Thread.sleep(100000); // spinner 테스트를 위해 응답 시간을 2초 지연 시킨다.
-
 	String ename = (String)session.getAttribute("ename");
 
 	int empno = -1;
-	String strEmpno = request.getParameter("quitNum");
+	String strEmpno = request.getParameter("empno");
 	if(strEmpno != null){
-		empno = Integer.parseInt(request.getParameter("quitNum")); 
+		empno = Integer.parseInt(strEmpno); 
 	}
 
 	if(empno >= 0){
@@ -35,7 +31,6 @@
 		String filePath = templatePath + "\\proof-of-employment.xlsx";
 		System.out.println(filePath);
 		//C:\team\proj2\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\middle\file\proof-of-employment.xlsx
-		// file 폴더에 있는 엑셀 파일이 위 경로 안에 있어야 함
 		
 		// 엑셀 파일 불러오기  filePath.replace("\\", "//")
 		OPCPackage opcPackage = OPCPackage.open(new File(filePath.replace("\\", "//")));
@@ -104,6 +99,8 @@
 		workbook.write(response.getOutputStream());
 		workbook.close();
 	}
+	
+
 %>
 <!DOCTYPE html>
 <html>
@@ -113,6 +110,7 @@
 </head>
 <body>
 	<script>
+	// 다시 원래 자리로 돌아가기
 	location.href= "printQuit.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked;
 	</script>
 </body>

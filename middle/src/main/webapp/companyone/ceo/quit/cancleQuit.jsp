@@ -30,19 +30,5 @@
 	// quit 테이블에서 그 사람 row 삭제
 	boolean isDeleteSuccess = Com1QuitDao.getInstance().delete(empno);
 	
-	System.out.println("isAddSuccess 결과: " + isAddSuccess);
-	System.out.println("isDeleteSuccess 결과: " + isAddSuccess);
-	
-	
-	/*
-	System.out.println(dto_quit.getComId());
-	System.out.println(dto_quit.getStoreNum());
-	System.out.println(dto_quit.getEmpNo());
-	System.out.println(dto_quit.geteName());
-	System.out.println(dto_quit.getRole());
-	System.out.println(dto_quit.geteCall());
-	System.out.println(dto_quit.getePwd());
-	System.out.println(dto_quit.getEmail());
-	*/
 %>
 {"isAddSuccess":<%=isAddSuccess %>,"isDeleteSuccess":<%=isDeleteSuccess %>}

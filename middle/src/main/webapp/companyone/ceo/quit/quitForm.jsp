@@ -5,7 +5,7 @@
 <%@page import="test.dto.Com1QuitDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/include/header.jsp"></jsp:include>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	// 현재 페이지 위치를 세션 영역에 저장 (관리자 전용 네비바에 활성 상태 표시 위함)
 	session.setAttribute("current_page", "quitForm");
@@ -104,14 +104,13 @@
 	/* div{ border:1px solid red; } */
 </style>
 </head>
-<body class="d-flex flex-column min-vh-100 bg-light"  id="app">
-	뭐냐 진짜
+<body class="d-flex flex-column min-vh-100 bg-light"  >
 	<!-- 관리자 페이지 전용 네비바 -->
 	<jsp:include page="/include/ceoNav.jsp"></jsp:include>
 	
-	<div class="main flex-grow-1">  
 	<!-- 본문 -->
-		<div ref="loadView"></div>
+	<div class="main flex-grow-1"  id="app">  
+		<div ref="loadView" id="loadViewId"></div>
 		<div class="container contents text-center mt-3 mx-auto" style="width:900px;">
 			<h4>퇴사자 명단</h4>
 			
@@ -322,16 +321,6 @@
 	<jsp:include page="/include/footer.jsp" />
 
 	<script>
-		// 로딩 동작 화면 코드
-		const strLoadingView = `
-		    <div style="z-index: 1; position: fixed; background-color: rgba(0, 0, 0, 0.346); width: 100%; height: 100%;"></div>
-
-		    <div style="z-index: 2; position: fixed; left: 50%; top: 50%; width: 4rem; height: 4rem;" class="spinner-grow text-primary" role="status">
-		        <span class="visually-hidden">Loading...</span>
-		    </div>
-		`;
-		
-	
 		new Vue({
 			el:"#app",
 			data:{
@@ -353,16 +342,11 @@
 				// 경력 증명서 출력 버튼 눌렀을 때
 				printBtn(){
 					// 출력 받을 퇴사자 사원 번호 입력 받기
-					const quitNum = prompt("출력할 퇴사자 번호를 입력하세요");
-					
-					// 로딩중 화면 띄우기
-					this.$refs.loadView.innerHTML = strLoadingView;
+					const empno = prompt("출력할 퇴사자 번호를 입력하세요");
 					
 					// 퇴사자 번호 달고 출력 기능을 가진 jsp 로 이동
-					location.href= "printQuit.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked + "&quitNum=" + quitNum;
+					location.href= "printQuit.jsp?condition="+ this.condition + "&keyword=" + this.keyword + "&lineup=" + this.lineup + "&picked=" + this.picked + "&empno=" + empno;
 					
-					// 로딩중 화면 띄우던거 없애기
-					this.$refs.loadView.empty();
 				},
 				// 페이징 버튼 눌었을 때
 				onPage(e){
@@ -386,13 +370,18 @@
 					}
 				},
 				// 정렬 조건을 변경했을 때
+				onLineUp(){
+					location.href= this.url;
+				},
 				onlineup(){
 					location.href= this.url;
 				},
 				// 모달창에서 사원 조회 버튼을 눌렀을 때
 				clickSearchBtn(){
+					
 					// 사원번호를 입력했을 경우
 					if(this.searchEmpno){
+						
 						fetch("searchInfo.jsp?empno="+this.searchEmpno)
 						.then(res => res.json())
 						.then(data=>{
@@ -409,6 +398,7 @@
 					}else{
 						alert("사원 번호를 입력하세요");
 					}
+					
 				}, 
 				// 퇴사자 복귀
 				onCancle(e){
