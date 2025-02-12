@@ -6,27 +6,38 @@
 <%@ include file="/include/header.jsp" %>
 <%
 	session.setAttribute("current_page", "salary");
+
 	
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto=dao.getData(empno);
-	
+	/*
 	int sal=dto.getSal();
 	session.setAttribute("sal", sal);
 	
 	int hsal=dto.getHsal();
 	session.setAttribute("hsal", hsal);
-	
-	/*
-	if( sal == null || hsal == null ) {
-			response.sendRedirect("${pageContext.request.contextPath }/companyone/admin/staffsalary/view.jsp");
-	}
 	*/
+	//급여 값이 입력되지 않은 경우 페이지 이동
+	String salStr = Integer.toString(dto.getSal());
+	String hsalStr = Integer.toString(dto.getHsal());
+
+	if (salStr == null && hsalStr == null) {
+	    System.out.println("급여 값이 입력되지 않았습니다.");
+	    response.sendRedirect(request.getContextPath()+"/companyone/admin/staffsalary/view.jsp?empno="+empno);
+	} else {
+	    int sal = Integer.parseInt(salStr);
+	    session.setAttribute("sal", sal);
+	    int hsal = Integer.parseInt(hsalStr);
+	    session.setAttribute("hsal", hsal);
+	}
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>급여 계산</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	html, body {
 	    height: 100%;
@@ -87,6 +98,22 @@
     width: 100%;
     margin-top: 25px;
 	}
+	.salary-label {
+	    padding: 10px;
+	    width: 100%;
+	    display: block;
+	}
+	.hsalary-label {
+	    padding: 8px;
+	    width: 100%;
+	    display: block;
+	}
+	.disabled {
+	    background-color: #ddd !important;
+	    color: #999 !important;
+	    cursor: not-allowed !important;
+	}
+	
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -100,16 +127,16 @@
            <h3><strong>${ename }</strong> 님 월급으로 급여 계산</h3>
            <button class="btn btn-dark" id="salBtn" style="padding: 10px;" onclick="show('sal')">급여 조회</button>
            <div class="result" id="sal">
-           	   <label for="baseSal" style="padding: 10px; width: 100%;">기본급: ${sal } 원</label>
-         	   <label for="pension" style="padding: 10px; width: 100%;">국민연금: ${sal*0.045 } 원</label>
-               <label for="healthIns" style="padding: 10px; width: 100%;">건강보험료: ${sal*0.035 } 원</label>
-               <label for="longIns" style="padding: 10px; width: 100%;">장기요양보험료: ${sal*0.0045 } 원</label>
-               <label for="empIns" style="padding: 10px; width: 100%;">고용보험료: ${sal*0.0009 } 원</label>
-               <label for="space" style="padding: 10px; width: 100%;">--------------------------------------</label>
-               <label for="totalSal" style="padding: 10px; width: 100%;">지급액 계: ${sal } 원</label>
-               <label for="deduction" style="padding: 10px; width: 100%;">공제액 계: ${sal*0.0854 } 원</label>
-               <label for="actualSal" style="padding: 10px; width: 100%;"><strong>실수령 액: ${sal*0.9146 } 원</strong></label>
-               <label for="payDate" style="padding: 10px; width: 100%;">지급일: 2025년 02월 15일</label>
+           	   <label class="salary-label">기본급: ${sal } 원</label>
+         	   <label class="salary-label">국민연금: ${sal*0.045 } 원</label>
+               <label class="salary-label">건강보험료: ${sal*0.035 } 원</label>
+               <label class="salary-label">장기요양보험료: ${sal*0.0045 } 원</label>
+               <label class="salary-label">고용보험료: ${sal*0.0009 } 원</label>
+               <label class="salary-label">--------------------------------------</label>
+               <label class="salary-label">지급액 계: ${sal } 원</label>
+               <label class="salary-label">공제액 계: ${sal*0.0854 } 원</label>
+               <label class="salary-label"><strong>실수령 액: ${sal*0.9146 } 원</strong></label>
+               <label class="salary-label">지급일: 2025년 02월 15일</label>
            </div>
        </div>
    
@@ -134,8 +161,7 @@
 	           <button class="btn btn-dark" id="hsalBtn" style="padding: 10px;" onclick="show('hsal')">급여 조회</button>
            </form>
 		   <div class="result" id="hsal">
-			
-				<h5>주차별 근무시간 및 주휴수당</h5>
+				<label>주차별 근무시간 및 주휴수당</label>
            		<table id="hsalTable">
 					<thead>
 						<tr>
@@ -150,13 +176,13 @@
 						</tr>
 					</tbody>
 				</table>
-           	    <label for="hourlyRate" style="padding: 8px; width: 100%;">기본 시급: ${hsal } 원</label>
-           	    <label for="baseSal" style="padding: 8px; width: 100%;">총 기본급: <span id="totalPay">0</span> 원</label>
-         	    <label for="allowance" style="padding: 8px; width: 100%;">총 주휴수당: <span id="totalOvertimePay">0</span> 원</label>
-                <label for="totalSal" style="padding: 8px; width: 100%;">총 급여: <span id="totalSal">0</span> 원</label>
-                <label for="space" style="padding: 8px; width: 100%;">--------------------------------------</label>
-                <label for="tax" style="padding: 8px; width: 100%;">세율: 8.3 % </label>
-                <label for="actualSal" style="padding: 8px; width: 100%;"><strong>세율적용 급여: <span id="actualSal">0</span> 원</strong></label>
+           	    <label class="hsalary-label">기본 시급: ${hsal } 원</label>
+           	    <label class="hsalary-label">총 기본급: <span id="totalPay">0</span> 원</label>
+         	    <label class="hsalary-label">총 주휴수당: <span id="totalOvertimePay">0</span> 원</label>
+                <label class="hsalary-label">총 급여: <span id="totalSal">0</span> 원</label>
+                <label class="hsalary-label">--------------------------------------</label>
+                <label class="hsalary-label">세율: 8.3 % </label>
+                <label class="hsalary-label"><strong>세율적용 급여: <span id="actualSal">0</span> 원</strong></label>
            </div>      
        </div>
    </div>	
@@ -165,46 +191,44 @@
         <jsp:include page="/include/footer.jsp" />
     </footer>
 
-	<div class="position-fixed bottom-0 w-100">
-  		<jsp:include page="/include/footer.jsp" />
-  	</div>
-	<script>
-	document.querySelector("#uploadBtn").disabled = true;
-		// 파일 선택 버튼 클릭
-		document.querySelector("#contractLink").addEventListener("click", () => {
-			document.querySelector("#contractFile").click();
-		}); 
+
+   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>   
    <script>
-       function switchTab(tab) {
-           const tabs = ['sal', 'hsal'];
-   
-           tabs.forEach(tab => {
-               document.getElementById(tab + 'Content').style.display = 'none';
-               document.getElementById(tab + 'Tab').classList.remove('active-tab');
-           });
-   
-           document.getElementById(tab + 'Content').style.display = 'block';
-           document.getElementById(tab + 'Tab').classList.add('active-tab');
-       }
-   
-       switchTab('sal');
-       
-       function show(content) {
-    	  
-    	   const contents = ['sal', 'hsal'];
-    	   
-    	   contents.forEach(content => {
-               document.getElementById(content).style.display = 'none';
-           });
- 
-    	   document.getElementById(content).style.display = 'block';
-    	   
-    	   if(content=='sal'){
-    		   $("#inputForm").show();
-    		   document.getElementById("hsalTable").getElementsByTagName("tbody")[0].innerHTML="";
-    	   }
-       }
-       
+   	   //페이지 로딩 시
+	   window.onload = function () {
+		    let sal = <%= session.getAttribute("sal") %>;
+		    let hsal = <%= session.getAttribute("hsal") %>;
+	
+		    if (sal == 0) {
+		        document.getElementById("salTab").classList.add("disabled");
+		        document.getElementById("salTab").style.pointerEvents = "none";  // 클릭 방지
+		        switchTab('hsal');  // 시급 탭 활성화
+		    } else if (hsal == 0) {
+		        document.getElementById("hsalTab").classList.add("disabled");
+		        document.getElementById("hsalTab").style.pointerEvents = "none"; // 클릭 방지
+		        switchTab('sal');  // 월급 탭 활성화
+		    } else {
+		        switchTab('sal'); // 기본 설정 월급 탭 활성화
+		    }
+		};
+	
+		function switchTab(tab) {
+		    const tabs = ['sal', 'hsal'];
+	
+		    tabs.forEach(t => {
+		        document.getElementById(t + 'Content').style.display = (t == tab) ? 'block' : 'none';
+		        document.getElementById(t + 'Tab').classList.toggle('active-tab', t == tab);
+		    });
+		}
+		
+	    function show(content) {
+	  	  
+	 	   const contents = ['sal', 'hsal'];
+	 	   
+	 	   document.getElementById(content).style.display = 'block'; // 급여 조회 버튼 누르면 내용 표시
+	 	   
+	    }
+	       
 	   // 폼 제출 버튼 클릭 시 처리
        $('#hsalBtn').click(function(event) {
            event.preventDefault();  // 폼 제출 방지
@@ -216,7 +240,7 @@
                    hours.push(time);
                } else {
                    alert('모든 주차별 근무시간을 입력해주세요!');
-                   $("#hsal").hide();
+                   $('#hsal').hide();
                    return;
                }
            }
@@ -235,13 +259,15 @@
 				   $('#totalOvertimePay').text(response.totalOvertimePay);
 				   $('#totalSal').text(response.totalSal);
 				   $('#actualSal').text(response.actualSal);
-                   // 입력 필드 초기화
-                   $('input[type="number"]').val('');
+
                    // 입력 폼 숨기기
-              	   $("#inputForm").hide();
+              	   $('#inputForm').hide();
                },
                error: function() {
                    alert("에러가 발생했습니다.");
+                   $('input[type="number"]').val(''); //입력 필드 초기화
+                   $('#hsal').hide();
+                   return;
                }
            });
        });
