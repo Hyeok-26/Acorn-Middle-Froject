@@ -27,11 +27,10 @@
 
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
-		<div class="container">
+		<div class="container my-5">
 
 		
-			<h1>직원관리 페이지</h1>
-    	    
+			<h1 class="text-center mb-4">사원 관리</h1>
 			<%--테이블--%>
 			<table class="table table-borederd table-hover text-center">
 				<thead class="table-dark">
@@ -45,7 +44,7 @@
 						<th>시급</th>
 						<th>일한시간</th>
 						<th>이메일</th>
-						<th>근로계약서보기</th>
+						<th>근로계약서</th>
 						<th>근로시간 및 급여변경</th>
 						<th>삭제</th>
 					</tr>
@@ -68,7 +67,7 @@
 							  <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
 							  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5z"/>
 							</svg>
-							<span>근로계약서</span>
+							<span class="visually-hidden">근로계약서</span>
 							</a>
 						</td>
 						<td><a href="salUpdateForm.jsp?empno=<%=tmp.getEmpNo()%>&returnurl=view.jsp">
