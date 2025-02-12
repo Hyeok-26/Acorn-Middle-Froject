@@ -90,15 +90,6 @@
 	<jsp:include page="/include/header.jsp"></jsp:include>
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 
-
-
-
-	<%-- 관리자 페이지 전용 네비바
-	<jsp:include page="/include/ceoNav.jsp"></jsp:include> --%>
-	
-	
-	
-	
 	<div class="main flex-grow-1">  
 		<!-- 본문 -->
 		<div class="contents text-center mt-3 mx-auto" style="width:1200px;">
