@@ -9,7 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>직원스케줄업로드폼</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
     /* 이미지 미리보기 스타일 */
     #preview {

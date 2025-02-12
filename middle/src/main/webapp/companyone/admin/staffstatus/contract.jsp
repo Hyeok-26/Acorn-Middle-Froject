@@ -16,7 +16,6 @@
 <head>
 <meta charset="UTF-8">
 <title>근로계약서조회</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.containers {
         max-width: 700px;

@@ -15,7 +15,6 @@
 <head>
 <meta charset="UTF-8">
 <title>근무시간 수정폼</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
 	.containers {
         max-width: 600px;

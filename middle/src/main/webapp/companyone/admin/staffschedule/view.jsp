@@ -28,7 +28,6 @@
 <head>
 <meta charset="UTF-8">
 <title>직원스케줄조회</title>
-<jsp:include page="/include/resource.jsp"></jsp:include>
 <style>
     #imgsrcurl {
         max-width: 100%;
