@@ -40,6 +40,7 @@
 		border: 1px solid black;
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		text-align: center;
+		
 	}
 	.footer {
 	    text-align: center;
@@ -62,9 +63,15 @@
 	#deleteBtn:hover {
 		background-color: darkred;
 	}
+
 	#contractImage {
-		width: 600px;
-		height: 800px;
+	    max-width: 100%;  /* 부모 요소 내에서 최대 너비 */
+	    max-height: 80vh; /* 화면 높이의 80%까지만 */
+	    width: auto;  /* 비율 유지 */
+	    height: auto; /* 비율 유지 */
+	    object-fit: contain; /* 이미지가 잘리거나 왜곡되지 않도록 */
+	    display: block;  /* 여백 문제 방지 */
+	    margin: 0 auto;  /* 가운데 정렬 */
 	}
 </style>
 </head>
@@ -85,7 +92,8 @@
 								<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
 								<path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 							</svg>
-							<p>근로계약서를 업로드해 주십시오</p>	
+							<br>
+							<label>근로계약서를 업로드해 주십시오</label>	
 						<%}else{ %>
 							<img id="contractImage" src="<%=dto.getContract() %>" alt="계약서 이미지" />
 						<%} %>
