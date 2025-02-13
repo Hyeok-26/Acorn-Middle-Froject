@@ -13,7 +13,7 @@
 	
 	// 페이징 처리
 	final int PAGE_ROW_COUNT = 10;
-	final int PAGE_DISPLAY_COUNT = 5;
+	final int PAGE_DISPLAY_COUNT = 3;
 	
 	// 보여줄페이지 초기값1
 	int pageNum = 1;
@@ -43,7 +43,8 @@
 	int totalRow = Com1EmpDao.getInstance().getCount(dto);
 	System.out.println("totalRow: " + totalRow);
 	int totalPageCount =  (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-	if(endRowNum > totalPageCount) endPageNum = totalPageCount;
+//	if(endRowNum > totalPageCount) endPageNum = totalPageCount;
+	if(endPageNum > totalPageCount) endPageNum = totalPageCount;
 	
 	
 	// DB 에서 정보 추출
@@ -153,7 +154,7 @@
 					<!-- Prev 버튼 -->
 					<c:if test="${startPageNum ne 1}">
 						<li class="page-item">
-							<a class="page-link" href="test.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
+							<a class="page-link" href="view.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
 						</li>
 					</c:if>
 					<!-- 페이지 번호 -->
