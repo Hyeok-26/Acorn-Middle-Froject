@@ -163,7 +163,7 @@ td a:hover {
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><%=dto.getePwd()%></td>
+				<td>********</td>
 			</tr>
 		</table>
 
