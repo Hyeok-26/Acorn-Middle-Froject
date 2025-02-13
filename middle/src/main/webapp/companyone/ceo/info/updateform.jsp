@@ -12,6 +12,7 @@
 	
 	// 로그인한 사용자의 정보를 DB에서 가져오기 (예시)
 	//Com1CeoDto ceoInfo = Com1CeoDao.getInstance().getData(empno); // 사원번호를 이용하여 CEO 정보를 조회
+
 %>
 
 
@@ -39,10 +40,10 @@
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2" id="app">
 		<h3>회원 정보 수정 양식</h3>
-		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit">
+		<form action="update.jsp" method="get" id="callupdateForm" @submit.prevent="onSubmit" novalidate>
 			<div class="mb-2">
 				<label class="form-label" for="ename">이름</label>
-				<input v-model="ename" :class="{'is-valid': isEnameValid, 'is-invalid': !isEnameValid && isEnameDirty}"
+				<input v-model="ename" :class="{'is-valid': isEnameValid && isEnameDirty, 'is-invalid': !isEnameValid && isEnameDirty}"
 					@input="onEnameInput" class="form-control" type="text" name="ename" id="ename" value="<%=dto.geteName() %>" required/>
 				<div class="invalid-feedback">이름을 올바르게 입력하세요.</div>
 			</div>
@@ -82,13 +83,15 @@
 					    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
 					<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
 				</div>
-			<button class="btn btn-success" type="submit">수정하기</button>
+			<button class="btn btn-success" type="submit" v-bind:disabled="(!isEcallValid && isEcallDirty) || !isPwdValid || !isNewPwdValid || !isEnameValid || !isNewPwdMatch">수정하기</button>
 		</form>
 	</div>
 		
 	<div class="position-fixed bottom-0 w-100">
 	<%@ include file="/include/footer.jsp" %>
   	</div>
+  	
+  	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 		new Vue({
 			el:"#app",
@@ -99,7 +102,7 @@
 	            isPwdValid:false,
 	            isNewPwdValid:false,
 	            isEcallValid:false,
-	            isEnameValid: false,
+	            isEnameValid: true,
 	            isEnameDirty: false,
 	            newPassword:"",
 	            newPassword2:"",
@@ -109,14 +112,20 @@
 	            isPwdDirty:false,  // 비밀번호 입력란에 한 번이라도 입력했는지 여부
 	            isNewPwdDirty:false, // 새 비밀번호 입력란에 한 번이라도 입력했는지 여부
 	            isSameOriginPwd: false, // 기존 비밀번호와 새 비밀번호 비교
-		        isSameOriginPwdDirty: false 
+		        isSameOriginPwdDirty: false,
+		        isOriginPwdMatch: false,
+		        isOriginPwdMatchDirty: false
 	        },
 			methods:{
 				onEnameInput(e) {
+					this.isEnameValid = false;
 					this.ename = e.target.value; 
 	                const reg_ename = /^[가-힣]{2,5}$/; 
 	                this.isEnameDirty = true;
-	                this.isEnameValid = reg_ename.test(this.ename);
+	                
+	                if(this.isEnameDirty){
+	                	this.isEnameValid = reg_ename.test(this.ename);
+	                }
 	            },
 				onEcallInput(){
 					//현재까지 입력한 비밀번호
@@ -158,7 +167,7 @@
 
 	                // 기존 비밀번호와 입력한 비밀번호 비교
 	                this.isOriginPwdMatchDirty = true;
-	                this.isOriginPwdMatch = (enteredPwd === "<%=dto.getePwd()%>");
+	                this.isOriginPwdMatch = (enteredPwd =="<%=dto.getePwd()%>");
 	            },
 	            onNewPwdInput() {
 	                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
