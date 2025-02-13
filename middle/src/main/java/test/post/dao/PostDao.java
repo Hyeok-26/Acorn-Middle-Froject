@@ -221,6 +221,7 @@ public class PostDao {
 	        sql.append("SELECT * FROM ");
 	        sql.append("(SELECT num, writer, title, content, viewCount, ");
 	        sql.append("TO_CHAR(createdAt, 'YYYY.MM.DD HH24:MI') AS createdAt, ");
+	        sql.append("TO_CHAR(updatedAt, 'YYYY.MM.DD HH24:MI') AS updatedAt, ");
 	        sql.append("LAG(num, 1, 0) OVER (ORDER BY num DESC) AS prevNum, ");
 	        sql.append("LEAD(num, 1, 0) OVER (ORDER BY num DESC) AS nextNum ");
 	        sql.append("FROM posts ");
@@ -259,6 +260,7 @@ public class PostDao {
 	            data.setContent(rs.getString("content"));
 	            data.setViewCount(rs.getInt("viewCount"));
 	            data.setCreatedAt(rs.getString("createdAt"));
+	            data.setUpdatedAt(rs.getString("updatedAt"));
 	            data.setPrevNum(rs.getInt("prevNum"));
 	            data.setNextNum(rs.getInt("nextNum"));
 	        }
