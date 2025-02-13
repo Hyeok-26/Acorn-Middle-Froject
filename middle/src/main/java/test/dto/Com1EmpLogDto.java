@@ -18,6 +18,7 @@ public class Com1EmpLogDto {
 	private int endRowNum;
 	private long prevNum; //이전글의 글번호
 	private long nextNum; //다음글의 글번호
+	//수정
 	
 	public int getLogid() {
 		return logid;

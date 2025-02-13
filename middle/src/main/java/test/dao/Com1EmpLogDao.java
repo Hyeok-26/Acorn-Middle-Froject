@@ -182,7 +182,7 @@ public class Com1EmpLogDao {
 			return false;
 		}
 	}
-	
+	//월 계산
 	public int getCountByMonth(int empno, String month) {
 	    int count = 0;
 
