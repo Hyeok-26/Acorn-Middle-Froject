@@ -33,7 +33,7 @@ public class Com1EmpLogDao {
 			String sql = """
 					        insert into test_com1_emp_log
 					        (logid, empno, check_in, working_date)
-					        values (test_emplog_seq.NEXTVAL, ?, SYSDATE, TRUNC(SYSDATE))
+					        values (test_emplog_seq.NEXTVAL, ?, SYSDATE + (9/24), TRUNC(SYSDATE))
 					""";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getEmpno()); // 직원 번호
@@ -67,7 +67,7 @@ public class Com1EmpLogDao {
 			conn = new DbcpBean().getConn();
 			String sql = """
 						UPDATE test_com1_emp_log
-						SET check_out = SYSDATE
+						SET check_out = SYSDATE + (9/24)
 						WHERE empno = ? 
 						AND check_out IS NULL 
 						AND TRUNC(working_date) = TRUNC(SYSDATE)

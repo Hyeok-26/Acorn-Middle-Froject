@@ -164,7 +164,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<nav>
+		<nav class="d-flex justify-content-center ">
 			<ul class="pagination">
 				<!-- Prev 버튼 -->
 				<c:if test="${startPageNum ne 1}">

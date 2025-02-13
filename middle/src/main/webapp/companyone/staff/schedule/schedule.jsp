@@ -10,10 +10,10 @@
 	int empno = (int)session.getAttribute("empno");
 	
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
-	int num = dto.getStoreNum();
+	int storenum = dto.getStoreNum();
 	
 	//dao이용해서 호점별 스케줄 목록 
-	List<Com1SchDto> list = Com1SchDao.getInstance().getListSchStore(num);
+	List<Com1SchDto> list = Com1SchDao.getInstance().getListSchStore(storenum);
 
     String schdate = "";
     if (!list.isEmpty()) {
@@ -58,16 +58,21 @@
             <div class="row justify-content-center">
                 <div class="col-sm">
                     <div class="card shadow-sm p-4">
-						<h1>${storenum }호점 ${schdate }월 근무표조회</h1>
-                    		 <img src="${srcurl }" alt="직원근무표" id="imgsrcurl" />
-                  </div>
-              </div>                          
-          </div>			
-			
-			
-			
-			
-			
+						<h1><%=storenum %>호점 <%=schdate %>월 근무표조회</h1>
+						
+						
+						<%--업로드 버튼--%>
+						<div class="d-flex justify-content-between mb-3 ">
+			    	    </div>
+                    	
+                    	<% if (srcurl != null && !srcurl.trim().isEmpty()) { %>     
+                    		 <p id="smalltext">근무표를 삭제한 후 새로운 근무표를 업로드할 수 있습니다.</p>
+                    		 <img src="<%=srcurl %>" alt="직원근무표" id="imgsrcurl" />
+                    		
+                        <% } %>
+                	</div>
+            	</div>                          
+        	</div>		
 		</div>    	
     </div> <%--main --%>
 	<%--푸터 --%>
