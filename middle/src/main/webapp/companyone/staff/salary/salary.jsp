@@ -33,7 +33,6 @@
 <head>
 <meta charset="UTF-8">
 <title>급여 계산</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	html, body {
@@ -116,7 +115,7 @@
 <body class="d-flex flex-column min-vh-100">
 	<%@ include file="/include/header.jsp" %>	
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
-	<div class="container2 animate__animated animate__fadeInUp">
+	<div class="container2">
 	   <div class="container flex-fill" style="width: 600px; height:650px; margin-top: 10px;">
 	       <div class="d-inline-block tab-button" id="salTab" onclick="switchTab('sal')">월급</div>
 	       <div class="d-inline-block tab-button" id="hsalTab" onclick="switchTab('hsal')">시급</div>
