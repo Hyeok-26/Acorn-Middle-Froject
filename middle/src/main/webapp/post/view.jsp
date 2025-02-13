@@ -54,7 +54,7 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         border: 1px solid #ddd;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height:150px;
+        height:300px;
     }
     #contents:hover {
         transform: translateY(-5px);

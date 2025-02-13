@@ -93,6 +93,7 @@
 	
 	<div class="contents text-center mt-3 mx-auto" style="width: 900px;">
 		<div id="allContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 전체 일매출</h5>
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -122,6 +123,7 @@
 		</div>
 
 		<div id="yearContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 전체 연매출</h5>
 			<div class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -150,6 +152,7 @@
 
 	
 		<div id="monthContent" class="tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>전체 매장의 전체 월매출</h5>
 			<div  class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
@@ -178,12 +181,13 @@
 		
 		
 		<div id="storeContent" class="table-container tab-content p-3 bg-light rounded shadow-sm" style="display: block;">
+			<h5>현 매장의 전체 연매출</h5>
 			<div  class="table-responsive">
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
-							<th>날짜 구분</th>
-							<th>연매출</th>
+							<th class="col-5">날짜 구분</th>
+							<th class="col-4">연매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -202,12 +206,13 @@
 					</tbody>
 				</table>
 			</div>
+			<h5>현 매장의 전체 월매출</h5>
 			<div class="table-responsive">	
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
-							<th>날짜 구분</th>
-							<th>월매출</th>
+							<th class="col-5">날짜 구분</th>
+							<th class="col-4">월매출</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -226,12 +231,13 @@
 					</tbody>
 				</table>
 			</div>
+			<h5>현 매장의 전체 일매출</h5>
 			<div  class="table-responsive">	
 				<table class="table table-hover text-center align-middle">
 					<thead class="table-dark">
 						<tr>
-							<th>날짜 구분</th>
-							<th>일매출</th>
+							<th class="col-5">날짜 구분</th>
+							<th class="col-4">일매출</th>
 						</tr>
 					</thead>
 					
