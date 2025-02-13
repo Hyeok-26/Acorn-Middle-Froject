@@ -330,6 +330,7 @@ public class Com1EmpDao {
 			String sql = """
 					select * from test_com1_emp
 					where role = ?
+					ORDER BY empno ASC
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩할게 있으면 여기서 하기
