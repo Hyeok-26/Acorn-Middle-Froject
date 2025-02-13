@@ -88,11 +88,7 @@
     button:hover {
         background-color: grey;
     }
-    .footer {
-    text-align: center;
-    width: 100%;
-    margin-top: 25px;
-	}
+
 	.salary-label {
 	    padding: 10px;
 	    width: 100%;
@@ -109,7 +105,11 @@
 	    color: #999 !important;
 	    cursor: not-allowed !important;
 	}
-	
+	.footer {
+	    text-align: center;
+	    width: 100%;
+	    margin-top: 25px;
+	}
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
