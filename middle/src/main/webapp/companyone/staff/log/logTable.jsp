@@ -10,10 +10,10 @@
 	int empno=(int)session.getAttribute("empno");
 	String ename=(String)session.getAttribute("ename");
 	String month = request.getParameter("month"); //선택한 월 가져오기
-	/*if (month == null || month.isEmpty()) {
+	if (month == null || month.isEmpty()) {
 	    month = "01"; // 기본값: 1월
 	}
-	*/
+	
 	
 	String findQuery = "";
 	
@@ -147,7 +147,7 @@
 				<form action="logTable.jsp" method="get" id="logForm">
 					<label for="month">월 선택: </label> 
 					<select name="month" id="month" onchange="document.getElementById('logForm').submit();">
-						<option value="">-- 월을 선택하세요 --</option>
+						<!-- <option value="">-- 월을 선택하세요 --</option> -->
 					    <% 
 				            String selectedMonth = request.getParameter("month"); // 선택한 월 가져오기
 				            for (int tmp = 1; tmp <= 12; tmp++) { 

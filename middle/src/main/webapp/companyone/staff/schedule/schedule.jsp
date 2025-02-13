@@ -76,12 +76,6 @@
 		</div>    	
     </div> <%--main --%>
 	<%--푸터 --%>
-    
-<<<<<<< HEAD
-  		<jsp:include page="/include/footer.jsp" />
-=======
-  	<jsp:include page="/include/footer.jsp" />
->>>>>>> branch 'project' of https://github.com/Acorn-Middle-Project/m-project.git
-  	
+  	<jsp:include page="/include/footer.jsp" /> 	
 </body>
 </html>
