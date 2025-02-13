@@ -22,6 +22,7 @@
 	List<Com1SaleDto> listbystoremonthly = new ArrayList<>();
 	List<Com1SaleDto> listbystoreyearly = new ArrayList<>();
 	
+	int storenum = -1;
 	String strStoreNum=request.getParameter("storenum");
 	if(strStoreNum!=null&&!strStoreNum.isEmpty()){
 		storenum = Integer.parseInt(strStoreNum);
@@ -45,6 +46,7 @@
 <head>
 <meta charset="UTF-8">
 <title>sale/view.jsp</title>
+
 <style>
 .table-container {
     padding-bottom: 100px; /* footer 높이보다 여유 있게 추가 */
