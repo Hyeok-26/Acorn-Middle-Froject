@@ -10,7 +10,6 @@
            			<a class="nav-link text-white" href="${pageContext.request.contextPath }/">홈</a>
             		<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/loginForm.jsp">로그인</a>
             		<a class="nav-link text-white" href="${pageContext.request.contextPath }/user/signup.jsp">회원가입</a>
-            		<a class="nav-link text-white" href="${pageContext.request.contextPath }/post/list.jsp">공지사항</a>
            		</c:when>
            		<c:when test="${role.equals('CEO') }">
            			<a class="nav-link text-white" href="${pageContext.request.contextPath }/companyone/ceo/ceoMain.jsp">홈</a>
