@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header2.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>등록 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
     .tab-button {
         padding: 10px 20px;
@@ -29,7 +29,7 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<%@ include file="/include/header.jsp" %>
    <div class="container flex-fill" style="width: 600px; margin-top: 50px;">
        <div class="d-inline-block tab-button" id="companyTab" onclick="switchTab('company')">회사 등록</div>
        <div class="d-inline-block tab-button" id="storeTab" onclick="switchTab('store')">체인점 등록</div>

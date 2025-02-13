@@ -31,7 +31,6 @@
 <head>
 <meta charset="UTF-8">
 <title>스케줄 조회</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
     #imgsrcurl {
@@ -55,7 +54,7 @@
 	
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
-        <div class="container animate__animated animate__fadeInUp">
+        <div class="container">
             <div class="row justify-content-center">
                 <div class="col-sm">
                     <div class="card shadow-sm p-4">
