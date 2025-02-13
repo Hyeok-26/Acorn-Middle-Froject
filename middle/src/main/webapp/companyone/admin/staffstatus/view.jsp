@@ -153,7 +153,7 @@
 					<!-- Prev 버튼 -->
 					<c:if test="${startPageNum ne 1}">
 						<li class="page-item">
-							<a class="page-link" href="test.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
+							<a class="page-link" href="view.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
 						</li>
 					</c:if>
 					<!-- 페이지 번호 -->
