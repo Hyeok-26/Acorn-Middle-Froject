@@ -29,9 +29,10 @@
 }
 </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-light">
 <%@ include file="/include/header.jsp"%>
-	<div class="container mt-4 mb-4" id="app">
+
+	<div class="container mt-4 mb-4 flex-fill" id="app">
 		<h1>회원가입</h1>
 		<form action="${pageContext.request.contextPath}/signup" method="post"
 			id="signupForm" novalidate>
@@ -137,8 +138,10 @@
 	</div>
 
 	<%@ include file="/include/footer.jsp"%>
-
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
+	
     new Vue({
         el:"#app",
         data:{

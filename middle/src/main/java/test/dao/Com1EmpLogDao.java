@@ -239,7 +239,7 @@ public class Com1EmpLogDao {
 	        sql.append("        FROM test_com1_emp_log ");
 	        sql.append("        WHERE empno = ? ");
 	        sql.append("        AND TO_CHAR(working_date, 'MM') = ? "); // 월 필터링
-	        sql.append("        ORDER BY working_date DESC ");
+	        sql.append("        ORDER BY check_in DESC "); // working_date DESC 로 바꾸기
 	        sql.append("    ) result1 ");
 	        sql.append(") WHERE rnum BETWEEN ? AND ?");
 

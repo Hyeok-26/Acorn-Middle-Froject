@@ -58,8 +58,8 @@
 				    <label class="form-label" for="password">기존 비밀번호</label> 
 				    <input class="form-control" @input="onPwdInput"
 				        :class="{
-				            'is-invalid': (!isPwdValid && isPwdDirty) || (!isOriginPwdMatch && isOriginPwdMatchDirty), 
-				            'is-valid': isPwdValid && isOriginPwdMatch
+				            'is-invalid':!isOriginPwdMatch && isOriginPwdMatchDirty, 
+				            'is-valid': isOriginPwdMatchDirty && isOriginPwdMatch
 				        }"
 				        type="password" name="password" id="password" v-model="password" required/>
 				    <div class="invalid-feedback" v-if="!isOriginPwdMatch && isOriginPwdMatchDirty">비밀번호가 일치하지 않습니다.</div>
@@ -83,7 +83,7 @@
 					    :class="{'is-invalid': !isNewPwdMatch && isNewPwdMatchDirty, 'is-valid': isNewPwdMatch && isNewPwdMatchDirty}" />
 					<div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
 				</div>
-			<button class="btn btn-success" type="submit" v-bind:disabled="(!isEcallValid && isEcallDirty) || !isPwdValid || !isNewPwdValid || !isEnameValid || !isNewPwdMatch">수정하기</button>
+			<button class="btn btn-success" type="submit" :disabled="!(isOriginPwdMatch&&((isEcallValid&isEcallDirty)||(isEnameValid&&isEnameDirty)||(isNewPwdMatchDirty&&isNewPwdMatch)))">수정하기</button>
 		</form>
 	</div>
 		
@@ -160,10 +160,10 @@
 				},
 				onPwdInput(e) {
 	                const enteredPwd = e.target.value;
-	                const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+	                //const reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
-	                this.isPwdDirty = true;
-	                this.isPwdValid = reg_pwd.test(enteredPwd);
+	                //this.isPwdDirty = true;
+	                //this.isPwdValid = reg_pwd.test(enteredPwd);
 
 	                // 기존 비밀번호와 입력한 비밀번호 비교
 	                this.isOriginPwdMatchDirty = true;

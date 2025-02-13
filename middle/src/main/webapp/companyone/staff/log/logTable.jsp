@@ -90,12 +90,25 @@
 <title>근태 기록 관리</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
+	html, body {
+	    height: 100%;
+	    margin: 0;
+	    padding: 0;
+	}
+	
+	.wrapper {
+	    display: flex;
+	    flex-direction: column;
+	    min-height: 100vh; /* 뷰포트 높이만큼 최소 유지 */
+	}
+
 	.container2 {
-		flex-grow: 1;
+		flex-grow: 1; /* 본문 영역이 확장되도록 설정 */
+		width: 100%;
 		max-width: 800px;
-		margin: 40px auto;
+		margin: auto;
 		background-color: #fff;
-		padding: 20px;
+		padding: 20px 40px;
 		border-radius: 8px;
 		border: 1px solid black;
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -114,83 +127,89 @@
         background-color: #c8c8c8;
     }    
     .footer {
-    text-align: center;
-    width: 100%;
-    margin-top: 25px;
+	    text-align: center;
+	    width: 100%;
+	    margin-top: auto;    
+		margin-top: 40px;
+	    position: relative;
+	    bottom: 0;   
 	}
 </style>
 </head>
 <body>
-<%@ include file="/include/header.jsp" %>
-<jsp:include page="/include/navbar.jsp"></jsp:include>
-	<div class="container2" id="logTable">
-	    <a href="log.jsp?empno=<%=empno %>">출퇴근 페이지로 돌아가기</a>
-		<h1><strong><%=ename %></strong> 님 월별 근태 기록</h1>
-	
-			<form action="logTable.jsp" method="get" id="logForm">
-				<label for="month">월 선택: </label> 
-				<select name="month" id="month" onchange="document.getElementById('logForm').submit();">
-					<option value="">-- 월을 선택하세요 --</option>
-				    <% 
-			            String selectedMonth = request.getParameter("month"); // 선택한 월 가져오기
-			            for (int tmp = 1; tmp <= 12; tmp++) { 
-			        %>
-			            <option value="<%= tmp %>" <%= (String.valueOf(tmp).equals(selectedMonth) ? "selected" : "") %>>
-							<%= tmp %>월
-						</option>
-					<% } %>
-				</select>				
-			</form>		
+	<div class="wrapper">
+	<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
+		<div class="container2" id="logTable">
+		    <a href="log.jsp?empno=<%=empno %>">출퇴근 페이지로 돌아가기</a>
+			<h1><strong><%=ename %></strong> 님 월별 근태 기록</h1>
 		
-		<table class="table table-striped">
-			<thead class="table-dark">
-				<tr>
-					<th>날짜</th>
-					<th>출근 시간</th>
-					<th>퇴근 시간</th>
-					<th>근무 시간</th>
-					<th>비고</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="log" items="${list}">
+				<form action="logTable.jsp" method="get" id="logForm">
+					<label for="month">월 선택: </label> 
+					<select name="month" id="month" onchange="document.getElementById('logForm').submit();">
+						<option value="">-- 월을 선택하세요 --</option>
+					    <% 
+				            String selectedMonth = request.getParameter("month"); // 선택한 월 가져오기
+				            for (int tmp = 1; tmp <= 12; tmp++) { 
+				        %>
+				            <option value="<%= tmp %>" <%= (String.valueOf(tmp).equals(selectedMonth) ? "selected" : "") %>>
+								<%= tmp %>월
+							</option>
+						<% } %>
+					</select>				
+				</form>		
+			
+			<table class="table table-striped">
+				<thead class="table-dark">
 					<tr>
-						<td>${log.workingDate}</td>
-						<td>${log.checkIn}</td>
-						<td>${log.checkOut}</td>
-						<td>${log.workingHours}</td>
-						<td>${log.remarks}</td>
+						<th>날짜</th>
+						<th>출근 시간</th>
+						<th>퇴근 시간</th>
+						<!-- <th>근무 시간</th> -->
+						<th>비고</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<nav class="d-flex justify-content-center ">
-			<ul class="pagination">
-				<!-- Prev 버튼 -->
-				<c:if test="${startPageNum ne 1}">
-					<li class="page-item">
-						<a class="page-link" href="logTable.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
-					</li>
-				</c:if>
-				<!-- 페이지 번호 -->
-				<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
-					<li class="page-item ${i == pageNum ? 'active' : ''}">
-						<a class="page-link" href="logTable.jsp?pageNum=${i}${findQuery}">${i}</a>
-					</li>
-				</c:forEach>
-				<!-- Next 버튼 -->
-				<c:if test="${endPageNum < totalPageCount}">
-					<li class="page-item">
-						<a class="page-link" href="logTable.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a>
-					</li>
-				</c:if>
-			</ul>		
-		</nav>
-        
+				</thead>
+				<tbody>
+					<c:forEach var="log" items="${list}">
+						<tr>
+							<td>${log.workingDate}</td>
+							<td>${log.checkIn}</td>
+							<td>${log.checkOut}</td>
+							<!-- <td>${log.workingHours}</td> -->
+							<td>${log.remarks}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			
+			<nav class="d-flex justify-content-center ">
+				<ul class="pagination">
+					<!-- Prev 버튼 -->
+					<c:if test="${startPageNum ne 1}">
+						<li class="page-item">
+							<a class="page-link" href="logTable.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
+						</li>
+					</c:if>
+					<!-- 페이지 번호 -->
+					<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
+						<li class="page-item ${i == pageNum ? 'active' : ''}">
+							<a class="page-link" href="logTable.jsp?pageNum=${i}${findQuery}">${i}</a>
+						</li>
+					</c:forEach>
+					<!-- Next 버튼 -->
+					<c:if test="${endPageNum < totalPageCount}">
+						<li class="page-item">
+							<a class="page-link" href="logTable.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a>
+						</li>
+					</c:if>
+				</ul>		
+			</nav>
+	        
+		</div>
+		
+		<footer class="footer">
+	        <jsp:include page="/include/footer.jsp" />
+	    </footer>
 	</div>
-	
-	<footer class="footer">
-        <jsp:include page="/include/footer.jsp" />
-    </footer>
 </body>
 </html>
