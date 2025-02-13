@@ -90,9 +90,12 @@
 	                </div>
 	                <div class="card-body">
 	                    <ul class="list-unstyled">
+	                        <li><a href="#" class="btn btn-outline-success btn-block mb-2 w-100 d-flex justify-content-center align-items-center">개인정보 조회</a></li>
 	                        <li><a href="#" class="btn btn-outline-success btn-block mb-2 w-100 d-flex justify-content-center align-items-center">매출 관리</a></li>
+	                        <li><a href="#" class="btn btn-outline-success btn-block mb-2 w-100 d-flex justify-content-center align-items-center">사원 승인</a></li>
 	                        <li><a href="#" class="btn btn-outline-success btn-block mb-2 w-100 d-flex justify-content-center align-items-center">직원 관리</a></li>
-	                        <li><a href="#" class="btn btn-outline-success btn-block mb-2 w-100 d-flex justify-content-center align-items-center">알바 시간표</a></li>
+	                        <li><a href="#" class="btn btn-outline-success btn-block mb-2 w-100 d-flex justify-content-center align-items-center">직원 스케줄</a></li>
+	                        <li><a href="#" class="btn btn-outline-success btn-block mb-2 w-100 d-flex justify-content-center align-items-center">직원 월급</a></li>
 	                    </ul>
 	                </div>
 	            </div>
