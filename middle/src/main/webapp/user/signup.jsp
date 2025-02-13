@@ -2,7 +2,6 @@
 <%@page import="test.dao.UsingDao"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp"%>
 
 <%
 	List<Integer> comIdList= UsingDao.getInstance().getComIdList();
@@ -23,6 +22,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 #app {
 	padding: 20px;
@@ -30,7 +30,7 @@
 </style>
 </head>
 <body>
-
+<%@ include file="/include/header.jsp"%>
 	<div class="container mt-4 mb-4" id="app">
 		<h1>회원가입</h1>
 		<form action="${pageContext.request.contextPath}/signup" method="post"
