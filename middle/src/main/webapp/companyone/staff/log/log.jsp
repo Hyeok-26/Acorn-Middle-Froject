@@ -14,7 +14,6 @@
 <head>
 <meta charset="UTF-8">
 <title>출퇴근 페이지</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	.container2 {
@@ -54,15 +53,15 @@
 <body>
 	<%@ include file="/include/header.jsp" %>	
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
-	<div class="container2 animate__animated animate__fadeInUp">
+	<div class="container2">
 		<h1>출/퇴근</h1>
 		<div class="time-container">
 			<div class="clock">
         		<h1>00:00:00</h1>
    			</div>
 			<div class="btn-container d-flex justify-content-around">
-				<button id="startBtn" class="btn btn-primary animate__animated">출근</button>
-				<button id="endBtn" class="btn btn-primary animate__animated">퇴근</button>
+				<button id="startBtn" class="btn btn-primary">출근</button>
+				<button id="endBtn" class="btn btn-primary">퇴근</button>
 			</div>
 		</div>
 		<br>
