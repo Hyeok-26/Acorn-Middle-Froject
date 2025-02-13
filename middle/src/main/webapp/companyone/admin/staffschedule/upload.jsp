@@ -2,8 +2,8 @@
 <%@page import="test.dao.Com1SchDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
 <%
+	int storenum = (int)session.getAttribute("storenum");
 	//int storenum = Integer.parseInt(request.getParameter("storenum"));
 	String month = request.getParameter("title");
 	String srcurl = request.getParameter("srcurl");

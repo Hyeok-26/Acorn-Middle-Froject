@@ -29,7 +29,7 @@
 %>
 	    <script>
 	        alert("이름 형식이 올바르지 않습니다.");
-	        location.href = "updateform.jsp";
+	        location.href = "updateForm.jsp";
 	    </script>
 <%
 	        return;
@@ -46,7 +46,7 @@
 %>
 	    <script>
 	        alert("전화번호 형식이 올바르지 않습니다.");
-	        location.href = "updateform.jsp";
+	        location.href = "updateForm.jsp";
 	    </script>
 <%
 	        return;
@@ -63,7 +63,7 @@
 %>
 	    <script>
 	        alert("비밀번호 형식이 올바르지 않습니다.");
-	        location.href = "updateform.jsp";
+	        location.href = "updateForm.jsp";
 	    </script>
 <%
 	        return;
@@ -80,7 +80,7 @@
 	%>
 		    <script>
 		        alert("이메일 형식이 올바르지 않습니다.");
-		        location.href = "updateform.jsp";
+		        location.href = "updateForm.jsp";
 		    </script>
 	<%
 		        return;

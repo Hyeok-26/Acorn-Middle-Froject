@@ -2,19 +2,20 @@
 <%@page import="test.dto.Com1EmpLogDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	//int empno = (int)session.getAttribute("empno");
 	session.setAttribute("current_page", "log");
 
 	Com1EmpLogDto dto = new Com1EmpLogDto();
-	dto.setEmpno(empno);
+	//dto.setEmpno(empno);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>출퇴근 페이지</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	.container2 {
         max-width: 800px;
@@ -51,16 +52,17 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/empNav.jsp"></jsp:include>
-	<div class="container2">
+	<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<div class="container2 animate__animated animate__fadeInUp">
 		<h1>출/퇴근</h1>
 		<div class="time-container">
 			<div class="clock">
         		<h1>00:00:00</h1>
    			</div>
 			<div class="btn-container d-flex justify-content-around">
-				<button id="startBtn" class="btn btn-primary">출근</button>
-				<button id="endBtn" class="btn btn-primary">퇴근</button>
+				<button id="startBtn" class="btn btn-primary animate__animated">출근</button>
+				<button id="endBtn" class="btn btn-primary animate__animated">퇴근</button>
 			</div>
 		</div>
 		<br>
@@ -69,6 +71,7 @@
 	<div class="position-fixed bottom-0 w-100">
   		<jsp:include page="/include/footer.jsp" />
   	</div>
+  	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script>
 		//시간 함수
 		function Time(){
@@ -89,15 +92,15 @@
 		// 초기 상태 설정: 퇴근 버튼 비활성화
 		endBtn.disabled = true;
 		
+		//출근 버튼 클릭 시
 		$("#startBtn").click(() => {
             startBtn.disabled = true;
             endBtn.disabled = false;
-
             $.ajax({
                 url: 'workStartLog.jsp',
                 method: 'post',
                 data: {
-                    empno: '<%= empno %>',
+                    empno: '${empno}',
                 },
                 success: (res) => {
                     alert("출근 완료!");
@@ -116,7 +119,7 @@
                 url: 'workEndLog.jsp',
                 method: 'post',
                 data: {
-                    empno: '<%= empno %>',
+                    empno: '${empno}',
                 },
                 success: (res) => {
                     alert("퇴근 완료!");

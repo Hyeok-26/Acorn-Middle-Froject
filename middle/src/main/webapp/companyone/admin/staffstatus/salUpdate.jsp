@@ -2,12 +2,11 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
 <%
 
 	String returnurl = request.getParameter("returnurl");
-	empno = Integer.parseInt(request.getParameter("empno"));
-	ename = request.getParameter("ename");
+	int empno = Integer.parseInt(request.getParameter("empno"));
+	String ename = request.getParameter("ename");
 	int sal = Integer.parseInt(request.getParameter("sal"));
 	int hsal = Integer.parseInt(request.getParameter("hsal"));
 	int worktime = Integer.parseInt(request.getParameter("worktime"));

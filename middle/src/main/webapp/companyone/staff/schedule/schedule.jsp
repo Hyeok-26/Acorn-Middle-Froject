@@ -5,10 +5,9 @@
 <%@page import="test.dao.Com1SchDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	session.setAttribute("current_page", "schedule");
-	//int empno = (int)session.getAttribute("empno");
+	int empno = (int)session.getAttribute("empno");
 	
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
 	int num = dto.getStoreNum();
@@ -32,6 +31,8 @@
 <head>
 <meta charset="UTF-8">
 <title>스케줄 조회</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
     #imgsrcurl {
         max-width: 100%;
@@ -49,16 +50,17 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/empNav.jsp"></jsp:include>
+	<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
-        <div class="container">
+        <div class="container animate__animated animate__fadeInUp">
             <div class="row justify-content-center">
                 <div class="col-sm">
                     <div class="card shadow-sm p-4">
-						<h1><%=num %>호점 <%=schdate %>월 근무표조회</h1>
-                    		 <img src="<%=srcurl %>" alt="직원근무표" id="imgsrcurl" />
+						<h1>${storenum }호점 ${schdate }월 근무표조회</h1>
+                    		 <img src="${srcurl }" alt="직원근무표" id="imgsrcurl" />
                   </div>
               </div>                          
           </div>			
@@ -70,8 +72,8 @@
 		</div>    	
     </div> <%--main --%>
 	<%--푸터 --%>
-    <jsp:include page="/include/footer.jsp" />
-
-    
+    <div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
 </body>
 </html>

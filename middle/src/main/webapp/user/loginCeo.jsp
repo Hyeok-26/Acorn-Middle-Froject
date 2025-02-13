@@ -15,7 +15,7 @@
 	String comname = UsingDao.getInstance().getComName(comid);
 	
 	if(dto != null) {
-		if(empno == dto.getEmpNo() && role.equals("CEO") && comid == dto.getComId() 
+		if(empno == dto.getEmpNo() && role.equals(dto.getRole()) && comid == dto.getComId() 
 		   && ename.equals(dto.geteName()) && epwd.equals(dto.getePwd())) {
 			session.setAttribute("comid", comid);
 			session.setAttribute("comname", comname);

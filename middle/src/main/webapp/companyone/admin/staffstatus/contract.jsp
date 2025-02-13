@@ -3,10 +3,9 @@
 <%@page import="test.dao.Com1EmpDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	session.setAttribute("current_page", "staffstatusview");
-	empno = Integer.parseInt(request.getParameter("empno"));
+	int empno = Integer.parseInt(request.getParameter("empno"));
 	Com1EmpDao dao=Com1EmpDao.getInstance();
 	Com1EmpDto dto= dao.getData(empno);
 	String Contract = dto.getContract();
@@ -16,6 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>근로계약서조회</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	.containers {
         max-width: 700px;
@@ -32,7 +32,8 @@
 </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
-	<jsp:include page="/include/adminNav.jsp"></jsp:include>
+<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 			
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  

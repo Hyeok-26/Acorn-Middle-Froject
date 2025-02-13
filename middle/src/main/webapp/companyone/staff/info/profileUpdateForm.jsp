@@ -3,9 +3,8 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
-	//int empno = (int) session.getAttribute("empno");
+	int empno = (int) session.getAttribute("empno");
 	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
 	
 	//int comid = dto.getComId();
@@ -16,6 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필 수정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	.container2 {
         max-width: 600px;
@@ -29,22 +29,23 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/empNav.jsp"></jsp:include>
+	<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div id="app">
 		<div class="container2">
 			<h1 class="mb-3">프로필 수정</h1>
 			<form action="profileUpdate.jsp" method="post" id="myForm">
 				<div class="mb-3">
 					<label class="form-label">회사</label> <input class="form-control"
-						type="text" name="comid" value="<%=comname%>" readonly />
+						type="text" name="comid" value="${comname }" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label">소속 지점</label> <input class="form-control"
-						type="text" name="empno" value="<%=dto.getStoreNum()%>" readonly />
+					<label class="form-label">사원 번호</label> <input class="form-control"
+						type="text" name="empno" value="${empno }" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label">이름</label> <input class="form-control"
-						type="text" name="ename" value="<%=dto.geteName()%>" required />
+						type="text" name="ename" value="${ename }" required />
 				</div>
 				<div class="mb-2">
 					<label class="form-label" for="ecall">전화번호</label> <input
@@ -93,7 +94,10 @@
 			</form>
 		</div>
 	</div>
-	<jsp:include page="/include/footer.jsp" />
+	<div class="position-fixed bottom-0 w-100">
+  		<jsp:include page="/include/footer.jsp" />
+  	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 	    new Vue({
 	        el: "#app",

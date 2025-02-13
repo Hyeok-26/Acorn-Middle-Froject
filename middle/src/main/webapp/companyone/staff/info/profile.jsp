@@ -4,14 +4,15 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>	
 <%
 	
 	//int empno = (int) session.getAttribute("empno");
 	session.setAttribute("current_page", "profile");
-
-	Com1EmpDao dao = Com1EmpDao.getInstance();
-	Com1EmpDto dto = dao.getData(empno);
+	
+	int empno=(int)session.getAttribute("empno");
+	Com1EmpDto dto = Com1EmpDao.getInstance().getData(empno);
+	//Com1EmpDao dao = Com1EmpDao.getInstance();
+	//Com1EmpDto dto = dao.getData(empno);
 	
 	//int comid = dto.getComId();
 	//String comname = UsingDao.getInstance().getComName(comid);
@@ -21,6 +22,8 @@
 <head>
 <meta charset="UTF-8">
 <title>프로필</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	.container2 {
 		max-width: 800px;
@@ -80,7 +83,8 @@
 </style>
 </head>
 <body>
-	<jsp:include page="/include/empNav.jsp"></jsp:include>
+	<%@ include file="/include/header.jsp" %>	
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	<div class="container2">
 		<div
 			class="d-flex align-items-center justify-content-between border-bottom">
@@ -98,27 +102,27 @@
 		<table>
 			<tr>
 				<th>회사명</th>
-				<td><%=comname%></td>
+				<td>${comname }</td>
 			</tr>
 			<tr>
 				<th>회사번호</th>
-				<td><%=dto.getComId()%></td>
+				<td><%=dto.getComId() %></td>
 			</tr>
 			<tr>
 				<th>호점</th>
-				<td><%=dto.getStoreNum()%> 호점</td>
+				<td>${storenum } 호점</td>
 			</tr>
 			<tr>
 				<th>사원번호</th>
-				<td><%=dto.getEmpNo()%></td>
+				<td>${empno }</td>
 			</tr>
 			<tr>
 				<th>유저 이름</th>
-				<td><%=dto.geteName() %></td>
+				<td>${ename }</td>
 			</tr>
 			<tr>
 				<th>직급</th>
-				<td><%=dto.getRole() %></td>
+				<td>${role }</td>
 			</tr>
 			<tr>
 				<th>전화 번호</th>
@@ -150,7 +154,7 @@
 			</tr>
 			<tr>
 				<th>근로계약서</th>
-				<td><a href="contract.jsp?empno=<%=empno %>">근로 계약서 보기</a></td>
+				<td><a href="contract.jsp?empno=${empno} ">근로 계약서 보기</a></td>
 			</tr>
 			<%--
 			<tr>

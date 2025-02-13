@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>/post/form/new.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	#content{
 		width: 100%;
@@ -16,7 +16,9 @@
 	}
 </style>
 </head>
+
 <body>
+	<%@ include file="/include/header.jsp" %>
 	<div class="container">
 		<h1 class="title-container d-flex justify-content-between mt-4 ms-2 me-2">
 			새글 작성 양식
@@ -97,7 +99,7 @@
 			// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
 			
 			try {
-				// submit 버튼의 제출 대상이 되는 form 의 참조값을 얻어와서 submit() 호출해서 폼 제출 
+				// submit 버튼의 제출 대상이 되는 form 의 참조값을 얻어와서 submit() 호출해서 폼 제출
 				elClickedObj.form.submit();
 			} catch(e) {}
 		}

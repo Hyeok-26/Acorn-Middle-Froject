@@ -1,17 +1,66 @@
 <%@page import="test.dto.Com1EmpDto"%>
 <%@page import="test.dao.Com1EmpDao"%>
 <%@page import="java.util.List"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>     	
 <%
 	session.setAttribute("current_page", "staffstatusview");
 
+	// DB 에서 조회할 때 넘겨줄 객체
+	Com1EmpDto dto = new Com1EmpDto();
+	
+	// 페이징 처리
+	final int PAGE_ROW_COUNT = 10;
+	final int PAGE_DISPLAY_COUNT = 5;
+	
+	// 보여줄페이지 초기값1
+	int pageNum = 1;
+	String condition = "STAFF";
+	dto.setCondition(condition);
+	
+	
+	String strPageNum = request.getParameter("pageNum");
+	if(strPageNum != null) pageNum = Integer.parseInt(strPageNum);
+	
+	
+	// 보여줄 row 값
+	int startRowNum = (pageNum-1)*PAGE_ROW_COUNT + 1;
+	int endRowNum = PAGE_ROW_COUNT*pageNum;
+	System.out.println("startRowNum: " + startRowNum);
+	System.out.println("endRowNum: " + endRowNum);
+	dto.setStartRowNum(startRowNum);
+	dto.setEndRowNum(endRowNum);
+	
+	// 하단 페이징 값
+	int startPageNum = ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT + 1;
+	int endPageNum = startPageNum+PAGE_DISPLAY_COUNT - 1;
+	System.out.println("startPageNum: " + startPageNum);
+	System.out.println("endPageNum: " + endPageNum);
+	
+	// 페이지 수 계산
+	int totalRow = Com1EmpDao.getInstance().getCount(dto);
+	System.out.println("totalRow: " + totalRow);
+	int totalPageCount =  (int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+	if(endRowNum > totalPageCount) endPageNum = totalPageCount;
+	
+	
+	// DB 에서 정보 추출
+	List<Com1EmpDto> list = Com1EmpDao.getInstance().getList3(dto);
+	pageContext.setAttribute("list", list);
+	
+	System.out.println("startPageNum: " + startPageNum);
+	System.out.println("endPageNum: " + endPageNum);
+	
+	// request 영역에 필요한 정보 저장
+	request.setAttribute("startPageNum", startPageNum);
+	request.setAttribute("endPageNum", endPageNum);
+	request.setAttribute("totalPageCount", totalPageCount);
+	request.setAttribute("pageNum", pageNum);
+	request.setAttribute("totalRow", totalRow);
 
-	//dao이용해서 회원목록 얻어오기
-	Com1EmpDao dao=Com1EmpDao.getInstance();
-	List<Com1EmpDto> list=dao.getListStaff();
+	
 	
 %>
 <!DOCTYPE html>
@@ -19,21 +68,22 @@
 <head>
 <meta charset="UTF-8">
 <title>직원관리</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 <style>
 	th, td {
 	    white-space: nowrap;
 	}
 </style>
-<jsp:include page="/include/adminNav.jsp"></jsp:include>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
+<%@ include file="/include/header.jsp" %>
+	<jsp:include page="/include/navbar.jsp"></jsp:include>
 	
 
 	<%--main컨텐츠감싸기 --%>
 	<div class="main flex-grow-1">  
 		<div class="container my-5">
-
-		
+	
 			<h1 class="text-center mb-4">사원 관리</h1>
 			<%--테이블--%>
 			<table class="table table-borederd table-hover text-center">
@@ -95,6 +145,33 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<%-- 하단 페이징 버튼 --%>
+		<div class="mt-3 d-flex justify-content-center">
+			<nav class="d-flex justify-content-center mt-2">
+				<ul class="pagination">
+					<!-- Prev 버튼 -->
+					<c:if test="${startPageNum ne 1}">
+						<li class="page-item">
+							<a class="page-link" href="test.jsp?pageNum=${startPageNum - 1}${findQuery}">Prev</a>
+						</li>
+					</c:if>
+					<!-- 페이지 번호 -->
+					<c:forEach begin="${startPageNum}" end="${endPageNum}" var="i">
+						<li class="page-item ${i == pageNum ? 'active' : ''}">
+							<a class="page-link" href="view.jsp?pageNum=${i}${findQuery}">${i}</a>
+						</li>
+					</c:forEach>
+					<!-- Next 버튼 -->
+					<c:if test="${endPageNum < totalPageCount}">
+						<li class="page-item">
+							<a class="page-link" href="view.jsp?pageNum=${endPageNum + 1}${findQuery}">Next</a>
+						</li>
+					</c:if>
+				</ul>		
+			</nav>
+		</div>
+		
 	</div> <%--메인 --%>
 
 

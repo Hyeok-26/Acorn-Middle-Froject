@@ -1,14 +1,9 @@
 <%@page import="java.util.List"%>
 <%@page import="test.post.dto.PostDto"%>
 <%@page import="test.post.dao.PostDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/include/header.jsp" %>
-<%-- 홍석쿤 간바레~~~!! --%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-	// 세션의 로그인 정보
-	//String role = (String)session.getAttribute("role");
-	
 	//검색조건이 있는지 읽어와 본다.
 	String condition=request.getParameter("condition");
 	String keyword=request.getParameter("keyword");
@@ -24,7 +19,7 @@
 	//한 페이지에 몇개씩 표시할 것인지
 	final int PAGE_ROW_COUNT=10;
 	//하단 페이지를 몇개씩 표시할 것인지
-	final int PAGE_DISPLAY_COUNT=5;
+	final int PAGE_DISPLAY_COUNT=10;
 	
 	//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 	int pageNum=1;
@@ -81,8 +76,11 @@
 <head>
 <meta charset="UTF-8">
 <title>/post/list.jsp</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 </head>
+
 <body>
+<%@ include file="/include/header.jsp" %>
 	<div class="container main flex-grow-1">
 		<div class="title-container d-flex justify-content-between mt-4 ms-2 me-2">
 			<h1>공지사항</h1>
