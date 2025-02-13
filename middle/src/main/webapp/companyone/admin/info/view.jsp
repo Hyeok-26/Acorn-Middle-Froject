@@ -115,7 +115,7 @@
 						</tr>
 						<tr>
 							<th scope="row">비밀번호</th>
-							<td><%=empdto.getePwd() %></td>
+							<td>-----</td>
 						</tr>
 						<tr>
 							<th scope="row">월급</th>
