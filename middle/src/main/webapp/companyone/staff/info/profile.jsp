@@ -82,9 +82,10 @@
 	}
 </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100" >
 	<%@ include file="/include/header.jsp" %>	
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
+	<div class="main flex-grow-1">
 	<div class="container2">
 		<div
 			class="d-flex align-items-center justify-content-between border-bottom">
@@ -165,6 +166,7 @@
 		<div class="btn-container">
 			<a href="../staffMain.jsp">메인 페이지로</a> <%--<a href="logout.jsp">로그아웃</a> --%>		
 		</div>
+	</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
 </body>
