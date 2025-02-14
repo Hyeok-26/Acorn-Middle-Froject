@@ -209,10 +209,22 @@
 			    <div class="container">
 			        <div class="row align-items-center">
 			            <div class="col-md-6">
-			                <img src="https://images.unsplash.com/photo-1591696205602-2f950c417cb9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+			                <img src="https://plus.unsplash.com/premium_photo-1681487814165-018814e29155?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 			                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 			            </div>
 			            <div class="col-md-6 text-start">
+			                <h3>프로필 관리</h3>
+							<p>
+								점장의 가입 정보를 조회하고 수정할 수 있는 기능을 제공합니다.<br /> 등록된 정보를 손쉽게 확인하고, 필요한
+								경우 직접 수정하여 최신 상태로 유지할 수 있습니다.<br /> 간편한 인터페이스를 통해 빠르고 정확한 정보
+								관리를 지원합니다.
+							</p>
+						</div>
+			        </div>
+			    </div>
+			    <div class="container">
+			        <div class="row align-items-center">
+			        	<div class="col-md-6 text-start">
 			                <h3>매출 관리</h3>
 			                <p>
 							    연매출, 월매출, 일매출을 손쉽게 조회할 수 있습니다.<br />
@@ -220,36 +232,28 @@
 							    직관적인 인터페이스를 통해 빠르고 정확한 매출 정보를 확인하세요.
 							</p>
 			            </div>
+			            <div class="col-md-6">
+			                <img src="https://images.unsplash.com/photo-1591696205602-2f950c417cb9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+			                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
+			            </div>
 			        </div>
 			    </div>
 			    <div class="container">
 			        <div class="row align-items-center">
-			        	<div class="col-md-6 text-end">
-			                <h3>직원 관리</h3>
-			                <p>직원의 기본 정보(이름, 연락처, 이메일 등)와 급여, 수당, 근무 시간을 확인하고 관리할 수 있습니다. 
-			                <br />또한, 근로계약서를 확인하거나 근무 시간을 변경하는 기능도 제공합니다.
-			                </p>
-			            </div>
-			            <div class="col-md-6">
+			        	<div class="col-md-6">
 			                <img src="https://images.unsplash.com/photo-1641122669951-3e2aff778d3b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 			                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 			            </div>
-			        </div>
-			    </div>
-			    <div class="container">
-			        <div class="row align-items-center">
-			            <div class="col-md-6">
-			                <img src="https://images.unsplash.com/37/tEREUy1vSfuSu8LzTop3_IMG_2538.jpg?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-			                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
-			            </div>
-			            <div class="col-md-6 text-start">
-			                <h3>알바 시간표</h3>
-			                <p>해당 월의 근무 스케줄을 확인할 수 있는 기능을 제공합니다. 
-			                <br />이를 통해 직원들이 쉽게 자신의 근무 일정을 파악할 수 있습니다.
-			                </p>
+			        	<div class="col-md-6 text-end">
+			                <h3>직원 관리</h3>
+			                <p>
+				                직원의 기본 정보(이름, 연락처, 이메일 등)와 급여, 수당, 근무 시간을 확인하고 관리할 수 있습니다.  
+				                또한, 근로계약서를 확인하거나 근무 시간을 변경하는 기능도 제공합니다.
+				            </p>
 			            </div>
 			        </div>
 			    </div>
+			    
 			</section>
 		</div>
 		
