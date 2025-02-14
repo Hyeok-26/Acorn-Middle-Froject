@@ -48,7 +48,7 @@
 			</div>
 			<div class="btn-container d-flex justify-content-end m-2">
 				<button onclick="submitContents(this)" class="btn btn-primary" type="submit">수정확인</button>
-				<button class="btn btn-warning ms-2" type="reset">Reset</button>
+				<!-- <button class="btn btn-warning ms-2" type="reset">Reset</button> -->
 			</div>
 		</form>
 		
