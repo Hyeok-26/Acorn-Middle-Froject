@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <style>
 	.container2 {
-        max-width: 600px;
+        max-width: 700px;
         margin: 40px auto;
         background-color: #fff;
         padding: 20px;
@@ -28,10 +28,10 @@
     }
 </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<%@ include file="/include/header.jsp" %>	
 	<jsp:include page="/include/navbar.jsp"></jsp:include>
-	<div id="app">
+	<div class="main flex-grow-1" id="app">
 		<div class="container2">
 			<h1 class="mb-3">프로필 수정</h1>
 			<form action="profileUpdate.jsp" method="post" id="myForm">
@@ -94,9 +94,9 @@
 			</form>
 		</div>
 	</div>
-	<div class="position-fixed bottom-0 w-100">
+	
   		<jsp:include page="/include/footer.jsp" />
-  	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script>
 	    new Vue({
