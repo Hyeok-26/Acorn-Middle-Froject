@@ -72,10 +72,9 @@
 	                </div>
 	                <div class="card-body">
 	                    <ul class="list-unstyled">
-	                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2 w-100 d-flex justify-content-center align-items-center ">지점별 재무 현황</a></li>
-	                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2 w-100 d-flex justify-content-center align-items-center">가맹점 관리</a></li>
+	                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2 w-100 d-flex justify-content-center align-items-center">직원 관리</a></li>
 	                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2 w-100 d-flex justify-content-center align-items-center">매출 관리</a></li>
-	                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2 w-100 d-flex justify-content-center align-items-center">회원 가입 승인</a></li>
+	                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2 w-100 d-flex justify-content-center align-items-center">가입 승인</a></li>
 	                        <li><a href="#" class="btn btn-outline-primary btn-block mb-2 w-100 d-flex justify-content-center align-items-center">퇴사자 관리</a></li>
 	                    </ul>
 	                </div>
@@ -150,7 +149,7 @@
 			            </div>
 			            <div class="col-md-6">
 			                <img src="https://media.istockphoto.com/id/2015223595/ko/%EB%B2%A1%ED%84%B0/%EC%A0%9C%ED%95%9C-%EA%B5%AC%EC%97%AD-%EA%B8%88%EC%A7%80-%ED%91%9C%EC%A7%80%ED%8C%90.jpg?s=1024x1024&w=is&k=20&c=3r9AX3UE5PAUzhw3oLiBe37LeaSxWZR3Pwt99oe83O4="
-			                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px; width: 100%; height: 300px; object-fit: cover;">
+			                		alt="설명 이미지" class="img-fluid" style="border-radius: 8px; margin-top: 20px;">
 			            </div>
 			        </div>
 			    </div>
